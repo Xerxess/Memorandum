@@ -145,8 +145,19 @@ $ git remote rm paul 远程仓库移除
 $ git tag 列出标签  
 
 创建标签
-Git 使用两种主要类型的标签：轻量标签（lightweight）与附注标签（annotated）。
-$ git tag -a v1.4 -m 'my version 1.4'
+Git 使用两种主要类型的标签：轻量标签与附注标签。
+
+1.轻量标签（lightweight）:轻量标签本质上是将提交校验和存储到一个文件中 - 没有保存任何其他信息.
+
+2.附注标签（annotated）:附注标签是存储在 Git 数据库中的一个完整对象.
+
+$ git tag -a [tag] -m 'my version 1.4' 附注标签 建议创建附注标签，可以拥有以上所有信息
+$ git tag [tag] 轻量标签 不需要使用 -a、-s 或 -m 选项
+
+$ git push origin [tagname] 共享标签
+$ git push origin --tags 共享标签  一次性推送很多标签
+
+$ git checkout -b [branchname] [tagname]  检出标签
 ```
 
 > 配置工具
