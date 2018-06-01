@@ -160,6 +160,43 @@ $ git push origin --tags 共享标签  一次性推送很多标签
 $ git checkout -b [branchname] [tagname]  检出标签
 ```
 
+> 分支简介
+
+```
+$ git branch 分支的一个列表
+$ git branch -v 查看每一个分支的最后一次提交
+$ git branch [branchname] 分支创建
+$ git checkout [branchname] 分支切换
+
+// master 主分支 （即所有分支需要合并到主分支）
+// HEAD 指向当前工作分支的指针
+
+$ git checkout -b [branchname] 创建分支并切换到该分支
+  等同
+  $ git branch [branchname]
+  $ git checkout [branchname]
+
+$ git merge [branchname] *回到master合并指定分支
+ git branch -d [branchname] 删除这个分支
+```
+```
+分支合并可参考：https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6
+```
+> 远程分支
+```
+$ git push (remote) (branch) 推送
+$ git push origin --delete [branchname] 删除一个远程分支
+```
+
+```
+Note:
+
+如何避免每次输入密码
+如果你正在使用 HTTPS URL 来推送，Git 服务器会询问用户名与密码。 默认情况下它会在终端中提示服务器是否允许你进行推送。
+
+如果不想在每一次推送时都输入用户名与密码，你可以设置一个 “credential cache”。 最简单的方式就是将其保存在内存中几分钟，可以简单地运行 git config --global credential.helper cache 来设置它。
+```
+
 > 配置工具
 
 ```
