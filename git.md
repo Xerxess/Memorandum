@@ -31,6 +31,124 @@
  * 暂存区域 staging area
  ![images/git/areas.png](images/git/areas.png)
 
+ ```
+ * 仓库目录是 Git 用来保存项目的元数据和对象数据库的地方。 这是 Git 中最重要的部分，从其它计算机克隆仓库时，拷贝的就是这里的数据。
+
+ * 工作目录是对项目的某个版本独立提取出来的内容。 这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。
+
+ * 暂存区域是一个文件，保存了下次将提交的文件列表信息，一般在 Git 仓库目录中。 有时候也被称作`‘索引’'，不过一般说法还是叫暂存区域。
+
+基本的 Git 工作流程如下：
+
+       1.在工作目录中修改文件。
+
+       2.暂存文件，将文件的快照放入暂存区域。
+
+       3.提交更新，找到暂存区域的文件，将快照永久性存储到 Git 仓库目录。
+ ```
+
+ > 初次运行 Git 前的配置
+ ```
+ Git 自带一个 git config 的工具来帮助设置控制 Git 外观和行为的配置变量。 这些变量存储在三个不同的位置：
+
+      1./etc/gitconfig 文件: 包含系统上每一个用户及他们仓库的通用配置。 如果使用带有 --system 选项的 git config 时，它会从此文件读写配置变量。
+
+      2.~/.gitconfig 或 ~/.config/git/config 文件：只针对当前用户。 可以传递 --global 选项让 Git 读写此文件。
+
+      3.当前使用仓库的 Git 目录中的 config 文件（就是 .git/config）：针对该仓库。
+
+      每一个级别覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
+ ```
+
+> 用户信息
+
+```
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+
+你在该系统上做任何事情， Git 都会使用那些信息。
+```
+
+
+> Git 基础 - 获取 Git 仓库
+
+```
+$ git init 
+在现有目录中初始化仓库
+
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+```
+
+> 克隆现有的仓库
+```
+$ git clone https://github.com/libgit2/libgit2
+$ git clone https://github.com/libgit2/libgit2 mylibgit
+```
+
+> 忽略文件
+```
+.gitignore 的文件
+
+.gitignore 的格式规范如下：
+
+     * 所有空行或者以 ＃ 开头的行都会被 Git 忽略。
+
+     * 可以使用标准的 glob 模式匹配。
+
+     * 匹配模式可以以（/）开头防止递归。
+
+     * 匹配模式可以以（/）结尾指定目录。
+
+     * 要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。
+```
+  .gitignore 文件的例子：
+
+```
+# no .a files
+*.a
+
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+
+# ignore all files in the build/ directory
+build/
+
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+
+# ignore all .pdf files in the doc/ directory
+doc/**/*.pdf
+```
+
+> 远程仓库的使用
+```
+$ git remote 查看远程仓库
+$ git remote -v
+
+$ git remote add pb https://github.com/paulboone/ticgit 添加远程仓库
+$ git remote show origin 查看远程仓库
+
+$ git fetch [remote-name] 从远程仓库中抓取与拉取
+$ git push origin master 推送到远程仓库
+
+$ git remote rename pb paul 远程仓库重命名
+$ git remote rm paul 远程仓库移除
+```
+
+> 打标签
+```
+$ git tag 列出标签  
+
+创建标签
+Git 使用两种主要类型的标签：轻量标签（lightweight）与附注标签（annotated）。
+$ git tag -a v1.4 -m 'my version 1.4'
+```
+
 > 配置工具
 
 ```
