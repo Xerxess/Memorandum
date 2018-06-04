@@ -29,7 +29,7 @@
  * Git 仓库 repository  
  * 工作目录 working directory
  * 暂存区域 staging area
- ![images/git/areas.png](images/git/areas.png)
+ ![images/git/areas.png](images/areas.png)
 
  ```
  * 仓库目录是 Git 用来保存项目的元数据和对象数据库的地方。 这是 Git 中最重要的部分，从其它计算机克隆仓库时，拷贝的就是这里的数据。
