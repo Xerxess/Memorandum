@@ -1,9 +1,4 @@
 
-<style>
-.red{
-  color:red;
-}
-</style>
 
 > RegExp 构造函数
 
@@ -152,8 +147,8 @@ string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)�
 
 ## Array.prototype
 
-* arr.fill(value[, start[, end]])用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。
-[polyfill]
+* arr.fill(value[, start[, end]])用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。[Result:Array] [Browser：polyfill]
+
 
 ```javascript
 [1, 2, 3].fill(4);               // [4, 4, 4]
@@ -167,114 +162,414 @@ string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)�
 Array(3).fill(4);                // [4, 4, 4]
 ```
 
-* arr.pop()删除数组的最后一个元素，并返回这个元素。
-* arr.push(element1, ..., elementN)在数组的末尾增加一个或多个元素，并返回数组的新长度。
-* arr.reverse()颠倒数组中元素的排列顺序，即原先的第一个变为最后一个，原先的最后一个变为第一个。
-* arr.shift()删除数组的第一个元素，并返回这个元素。
-* arr.sort([compareFunction])排序 compareFunction可选。用来指定按某种顺序进行排列的函数。如果省略，元素按照转换为的字符串的各个字符的Unicode位点进行排序。
-* array.splice(start[, deleteCount[, item1[, item2[, ...]]]])删除现有元素和/或添加新元素来更改一个数组的内容。
-* arr.unshift(element1, ..., elementN)将一个或多个元素添加到数组的开头，并返回新数组的长度。
-* var new_array = old_array.concat(value1[, value2[, ...[, valueN]]])用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。
-* arr.includes(searchElement)||arr.includes(searchElement, fromIndex)判断当前数组是否包含某指定的值，如果是返回 true，否则返回 false。
-* arr.join(separator) 连接所有数组元素组成一个字符串。默认是','隔开
-* arr.slice(begin, end)抽取当前数组中的一段元素组合成一个新数组。
-* arr.toString()返回一个由所有数组元素组合而成的字符串 该字符串由数组中的每个元素的 toString() 返回值经调用 join() 方法连接（由逗号隔开）组成
-* arr.indexOf()返回数组中第一个与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。
-* arr.lastIndexOf()返回数组中最后一个（从右边数第一个）与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。
+* arr.pop()删除数组的最后一个元素，并返回这个元素。[Result:ArrayItem]
 
-对数组的每个元素执行一次提供的函数
-array.forEach(callback(currentValue, index, array){}, this) 
-result:undefined
-callback(currentValue, index, array)
-currentValue:(当前值)数组中正在处理的当前元素。
-index:(索引)数组中正在处理的当前元素的索引。
-array:forEach()方法正在操作的数组。
-注*没有办法中止或者跳出 forEach 循环，除了抛出一个异常。如果你需要这样，使用forEach()方法是错误的，你可以用一个简单的循环作为替代。
+```js
+let myFish = ["angel", "clown", "mandarin", "surgeon"];
 
-测试数组的所有元素是否都通过了指定函数的测试
-arr.every(callback[, thisArg])
-result:bool
-callback 被调用时传入三个参数：元素值，元素的索引，原数组。
-数组中的每个元素执行一次 callback 函数，直到它找到一个使 callback 返回 false（表示可转换为布尔值 false 的值）的元素。如果发现了一个这样的元素，every 方法将会立即返回 false。否则，callback 为每一个元素返回 true，every 就会返回 true。
-注*every 不会改变原数组。
+let popped = myFish.pop();
 
-测试数组中的某些元素是否通过由提供的函数实现的测试。
-arr.some(callback[, thisArg])
-result:bool
-callback 被调用时传入三个参数：元素的值，元素的索引，被遍历的数组。
-数组中的每一个元素执行一次 callback 函数，直到找到一个使得 callback 返回一个“真值”（即可转换为布尔值 true 的值）。如果找到了这样一个值，some 将会立即返回 true。否则，some 返回 false。
-注*some 不会改变原数组。
+console.log(myFish); 
+// ["angel", "clown", "mandarin"]
+
+console.log(popped); 
+// surgeon
+```
+
+* arr.push(element1, ..., elementN)在数组的末尾增加一个或多个元素，并返回数组的新长度。[Result:length] 
+
+```js
+var sports = ["soccer", "baseball"];
+var total = sports.push("football", "swimming");
+
+console.log(sports); 
+// ["soccer", "baseball", "football", "swimming"]
+
+console.log(total);  
+// 4
+```
+
+* arr.reverse()颠倒数组中元素的排列顺序，即原先的第一个变为最后一个，原先的最后一个变为第一个。[Result:Array]
+
+```js
+var myArray = ['one', 'two', 'three'];
+myArray.reverse(); 
+
+console.log(myArray) // ['three', 'two', 'one']
+```
+
+* arr.shift()删除数组的第一个元素，并返回这个元素。[Result:arrayItem]
+
+```js
+let myFish = ['angel', 'clown', 'mandarin', 'surgeon'];
+
+console.log('调用 shift 之前: ' + myFish);
+// "调用 shift 之前: angel,clown,mandarin,surgeon"
+
+var shifted = myFish.shift(); 
+
+console.log('调用 shift 之后: ' + myFish); 
+// "调用 shift 之后: clown,mandarin,surgeon" 
+
+console.log('被删除的元素: ' + shifted); 
+// "被删除的元素: angel"
+```
+
+* arr.sort([compareFunction])排序 compareFunction可选。用来指定按某种顺序进行排列的函数。如果省略，元素按照转换为的字符串的各个字符的Unicode位点进行排序。[Result:Array]  
+1.没有指明 compareFunction 元素会按照转换为的字符串的诸个字符的Unicode位点进行排序;  
+2.指明了 compareFunction：  
+    * 如果 compareFunction(a, b) 小于 0 ，那么 a 会被排列到 b 之前；  
+    * 如果 compareFunction(a, b) 等于 0 ， a 和 b 的相对位置不变。
+
+```js
+var numbers = [4, 2, 5, 1, 3];
+var numbers2 = [4, 2, 5, 1, 3];
+numbers.sort();
+numbers2.sort(function(a, b) {
+  return a - b;
+});
+console.log(numbers);//[1, 2, 3, 4, 5]
+console.log(numbers2);// [1, 2, 3, 4, 5]
+```
+
+* array.splice(start[, deleteCount[, item1[, item2[, ...]]]])删除现有元素和/或添加新元素来更改一个数组的内容。[Result:RemoveArrayItems]
+
+  * 注：splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。
+
+```js
+//从第2位开始删除0个元素，插入“drum”
+var myFish = ["angel", "clown", "mandarin", "surgeon"]; 
+var removed = myFish.splice(2, 0, "drum"); 
+//myFish:["angel", "clown", "drum", "mandarin", "surgeon"] 
+//被删除元素数组：[]，没有元素被删除
+```
+
+```js
+//从第3位开始删除1个元素
+var myFish = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon'];
+var removed = myFish.splice(3, 1);
+//myFish：["angel", "clown", "drum", "sturgeon"]
+//被删除元素数组：["mandarin"]
+```
+
+* arr.unshift(element1, ..., elementN)将一个或多个元素添加到数组的开头，并返回新数组的长度。[Result:length] 
+
+```js
+var arr = [1, 2];
+
+arr.unshift(0); 
+//arr is [0, 1, 2]
+
+arr.unshift(-2, -1); // = 5
+//arr is [-2, -1, 0, 1, 2]
+```
+
+* arr.concat(value1[, value2[, ...[, valueN]]])用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。[Result:newArray]
+
+    `concat`方法不会改变this或任何作为参数提供的数组，而是返回一个浅拷贝，它包含与原始数组相结合的相同元素的副本。
+    * `对象引用` 对象内容随对象修改
+    * `数据类型如字符串，数字和布尔`（不是String，Number 和 Boolean 对象）内容不变
+
+```js
+var alpha = ['a', 'b', 'c'];
+var numeric = [1, 2, 3];
+
+alpha.concat(numeric);
+// result in ['a', 'b', 'c', 1, 2, 3]
+```
+
+* arr.includes(searchElement)||arr.includes(searchElement, fromIndex)判断当前数组是否包含某指定的值，如果是返回 true，否则返回 false。[Result:Boolean] [Browser：polyfill]
+
+```js
+[1, 2, 3].includes(2);     // true
+[1, 2, 3].includes(4);     // false
+[1, 2, 3].includes(3, 3);  // false
+[1, 2, 3].includes(3, -1); // true
+[1, 2, NaN].includes(NaN); // true
+```
+
+* arr.join(separator) 连接所有数组元素组成一个字符串。默认是','隔开[Result:string]
+
+```js
+var a = ['Wind', 'Rain', 'Fire'];
+var myVar1 = a.join();      // myVar1的值变为"Wind,Rain,Fire"
+var myVar2 = a.join(', ');  // myVar2的值变为"Wind, Rain, Fire"
+var myVar3 = a.join(' + '); // myVar3的值变为"Wind + Rain + Fire"
+var myVar4 = a.join('');    // myVar4的值变为"WindRainFire"
+```
+
+* arr.slice(begin, end)抽取当前数组中的一段元素组合成一个新数组。[Result:newArray]
+
+    抽取规则（包含begin，但不包含end）  
+    slice 不修改原数组，只会返回一个浅复制了原数组中的元素的一个新数组。原数组的元素会按照下述规则拷贝：
+    * 对象引用 内容跟随原对象
+    * 字符串、数字及布尔值来说（不是 String、Number 或者 Boolean 对象）不变
+
+```js
+var fruits = ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango'];
+var citrus = fruits.slice(1, 3);
+
+// fruits contains ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
+// citrus contains ['Orange','Lemon']
+```
+
+* arr.toString()返回一个由所有数组元素组合而成的字符串 该字符串由数组中的每个元素的 toString() 返回值经调用 join() 方法连接（由逗号隔开）组成[Result:string] 
+
+```js
+var monthNames = ['Jan', 'Feb', 'Mar', 'Apr'];
+var myVar = monthNames.toString(); // assigns "Jan,Feb,Mar,Apr" to myVar.
+```
+
+* arr.indexOf()返回数组中第一个与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:index] [Browser：polyfill]
+
+```js
+var array = [2, 5, 9];
+array.indexOf(2);     // 0
+array.indexOf(7);     // -1
+array.indexOf(9, 2);  // 2
+array.indexOf(2, -1); // -1
+array.indexOf(2, -3); // 0
+```
+* arr.lastIndexOf()返回数组中最后一个（从右边数第一个）与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:Array] [Browser：polyfill]
+
+## 迭代方法
 
 
-创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 
-var new_array = arr.filter(callback[, thisArg])
-result:新的通过测试的元素的集合的数组
-callback 被调用时传入三个参数：元素的值，元素的索引，被遍历的数组。
-数组中的每个元素调用一次 callback 函数，并利用所有使得 callback 返回 true 或 等价于 true 的值 的元素创建一个新数组。
-注*filter 不会改变原数组，它返回过滤后的新数组。
+* array.forEach(callback, this) 对数组的每个元素执行一次提供的函数
+[Result:Array] [Browser：polyfill] 
+
+        callback:function(currentValue, index, array){}  
+
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  **没有办法中止或者跳出 `forEach 循环`，除了抛出一个异常。如果你需要这样，使用forEach()方法是错误的，你可以用一个简单的循环作为替代。**
+
+```js
+function logArrayElements(element, index, array) {
+    console.log("a[" + index + "] = " + element);
+}
+
+[2, 5, ,9].forEach(logArrayElements);
+
+// a[0] = 2
+// a[1] = 5
+// a[3] = 9
+```
 
 
-返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。
-arr.find(callback[, thisArg])
-result:返回数组中的一个值，否则返回 undefined。
-callback 被调用时传入三个参数：元素的值，元素的索引，被遍历的数组。
-对数组中的每一项元素执行一次 callback 函数，直至有一个 callback 返回 true。当找到了这样一个元素后，该方法会立即返回这个元素的值，否则返回 undefined。
+* arr.every(callback[, thisArg])测试数组的所有元素是否都通过了指定函数的测试
+[Result:Boolean] [Browser：polyfill]
+
+       callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  数组中的每个元素执行一次 callback 函数，直到它找到一个使 callback 返回 false（表示可转换为布尔值 false 的值）的元素。如果发现了一个这样的元素，every 方法将会立即返回 false。否则，callback 为每一个元素返回 true，every 就会返回 true。  
+
+  **`every` 不会改变原数组。**
+
+```js
+function isBigEnough(element, index, array) {
+  return (element >= 10);
+}
+
+var passed = [12, 5, 8, 130, 44].every(isBigEnough);
+// passed is false
+
+passed = [12, 54, 18, 130, 44].every(isBigEnough);
+// passed is true
+  ```
+
+* arr.some(callback[, thisArg])测试数组中的某些元素是否通过由提供的函数实现的测试。[Result:Boolean] [Browser：polyfill]
+
+       callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  数组中的每一个元素执行一次 callback 函数，直到找到一个使得 callback 返回一个“真值”（即可转换为布尔值 true 的值）。如果找到了这样一个值，some 将会立即返回 true。否则，some 返回 false。 
+
+  **`some` 不会改变原数组。**
+
+```js 
+function isBiggerThan10(element, index, array) {
+  return element > 10;
+}
+
+[2, 5, 8, 1, 4].some(isBiggerThan10);  // false 
+
+[12, 5, 8, 1, 4].some(isBiggerThan10); // true  
+  ```
 
 
-返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1。
-arr.findIndex(callback[, thisArg])
-result:元素的索引
-callback 被调用时传入三个参数：元素的值，元素的索引，被遍历的数组。
-对数组中的每个数组索引0..length-1（包括）执行一次callback函数，直到找到一个callback函数返回真实值（强制为true）的值。如果找到这样的元素，findIndex会立即返回该元素的索引。如果回调从不返回真值，或者数组的length为0，则findIndex返回-1。
+* arr.filter(callback[, thisArg])创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 [Result:newArray] [Browser：polyfill]
+
+      callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  数组中的每个元素调用一次 callback 函数，并利用所有使得 callback 返回 true 或 等价于 true 的值 的元素创建一个新数组。
+
+  **`filter` 不会改变原数组，它返回过滤后的新数组。**
+
+```js
+function isBigEnough(element) {
+  return element >= 10;
+}
+var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
+// filtered is [12, 130, 44]
+```
 
 
-创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。
-arr.map(function callback(currentValue, index, array) { }[, thisArg])
-result:新数组，每个元素都是回调函数的结果
-callback 函数会被自动传入三个参数：数组元素，元素索引，原数组本身
-会给原数组中的每个元素都按顺序调用一次  callback 函数。callback 每次执行后的返回值（包括 undefined）组合起来形成一个新数组。
-注*map 不修改调用它的原数组本身
+* arr.find(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。
+[Result:ArrayItem] [Browser：polyfill]
+
+      callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  对数组中的每一项元素执行一次 callback 函数，直至有一个 callback 返回 true。当找到了这样一个元素后，该方法会立即返回这个元素的值，否则返回 undefined。
+
+  **`find` 方法不会改变数组**
+
+```js
+var inventory = [
+    {name: 'apples', quantity: 2},
+    {name: 'bananas', quantity: 0},
+    {name: 'cherries', quantity: 5}
+];
+
+function findCherries(fruit) { 
+    return fruit.name === 'cherries';
+}
+
+console.log(inventory.find(findCherries)); 
+// { name: 'cherries', quantity: 5 }
+```
 
 
-对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值。
-arr.reduce(callback[, initialValue])
-result:函数累计处理的结果
-initialValue参数：初始值
-callback 函数会被自动传入三个参数：accumulator累加器累加回调的返回值，currentValue当前元素，currentIndex元素索引,array原数组本身
+
+* arr.findIndex(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1。
+[Result:index] [Browser：polyfill]
+
+      callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  对数组中的每个数组索引0..length-1（包括）执行一次callback函数，直到找到一个callback函数返回真实值（强制为true）的值。如果找到这样的元素，findIndex会立即返回该元素的索引。如果回调从不返回真值，或者数组的length为0，则findIndex返回-1。
+
+  **`findIndex` 不会修改所调用的数组。**
+
+```js
+function isPrime(element, index, array) {
+  var start = 2;
+  while (start <= Math.sqrt(element)) {
+    if (element % start++ < 1) {
+      return false;
+    }
+  }
+  return element > 1;
+}
+
+console.log([4, 6, 8, 12].findIndex(isPrime)); // -1, not found
+console.log([4, 6, 7, 12].findIndex(isPrime)); // 2
+```
 
 
-arr.reduceRight(callback[, initialValue])
+
+* arr.map(function callback(currentValue, index, array) { }[, thisArg])创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。[Result:newArray] [Browser：polyfill]
+
+      callback:function(currentValue, index, array){}  
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  会给原数组中的每个元素都按顺序调用一次  callback 函数。callback 每次执行后的返回值（包括 undefined）组合起来形成一个新数组。
+
+  **注`map` 不修改调用它的原数组本身**
+
+```js
+var numbers = [1, 4, 9];
+var doubles = numbers.map(function(num) {
+  return num * 2;
+});
+
+console.log(doubles);
+// doubles数组的值为： [2, 8, 18]
+```
+
+
+
+* arr.reduce(callback[, initialValue])对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值。[Result:result] [Browser：polyfill]
+
+      callback:function(accumulator,currentValue, index, array){}  
+  * accumulator:累加器累加回调的返回值; 它是上一次调用回调时返回的累积值，或initialValue（如下所示）。
+  * currentValue:数组当前项的值。  
+  * index:数组当前项的索引。  
+  * array:数组对象本身。 
+
+  initialValue参数：**初始值**  callback第一次回调时 accumulator参数初始值  
+ 
+```js
+var sum = [0, 1, 2, 3].reduce(function (a, b) {
+  return a + b;
+}, 0);
+// sum is 6
+```
+
+```js
+//数组去重
+let arr = [1,2,1,2,3,5,4,5,3,4,4,4,4];
+let result = arr.sort().reduce((init, current)=>{
+    if(init.length===0 || init[init.length-1]!==current){
+        init.push(current);
+    }
+    return init;
+}, []);
+console.log(result); //[1,2,3,4,5]
+```
+
+
+* arr.reduceRight(callback[, initialValue])
+[Result:result] [Browser：polyfill]
 相对与arr.reduce（）向右开始
 
 
 
-DOM Event
+# DOM Event
 
 
-Location
+## Location
 
-####Properties
+#### Properties
 
-URLUtils.href 包含整个URL的一个DOMString
-URLUtils.protocol 包含URL对应协议包含":"。
-URLUtils.host 包含了域名带有一个":"并跟上URL的端口号。
-URLUtils.hostname 包含URL域名。
-URLUtils.port 端口号。
-URLUtils.pathname 包含URL中路径部分有一个“/"。
-URLUtils.search 包含URL参数的一个DOMString，开头有一个“?”。
-URLUtils.hash 包含块标识符的DOMString，开头有一个“#”。
-URLUtils.username
-URLUtils.password
-URLUtils.origin(只读)
+* URLUtils.href 包含整个URL的一个DOMString  
+* URLUtils.protocol 包含URL对应协议包含":"。  
+* URLUtils.host 包含了域名带有一个":"并跟上URL的端口号。  
+* URLUtils.hostname 包含URL域名。  
+* URLUtils.port 端口号。  
+* URLUtils.pathname 包含URL中路径部分有一个“/"。  
+* URLUtils.search 包含URL参数的一个DOMString，开头有一个“?”。  
+* URLUtils.hash 包含块标识符的DOMString，开头有一个“#”。  
+* URLUtils.username  
+* URLUtils.password  
+* URLUtils.origin(只读)  
 
-####Methods
+#### Methods
 
-Location.assign() 触发窗口加载并显示指定的URL的内容
-Location.reload(forcedReload[bool])用来刷新当前页面。该方法只有一个参数，当值为 true 时，将强制浏览器从服务器加载页面资源，当值为 false 或者未传参时，浏览器则可能从缓存中读取页面。该方法在跨域调用（执行该方法的脚本文件的域和 Location 对象所在页面的跨不同）时，将会抛出 DOMException 异常。
-Location.replace() 给定的URL来替换当前的资源。 与assign() 方法 不同的是调用replace()方法后，当前页面不会保存到会话历史中（session History），这样用户点击回退按钮将不会再跳转到该页面。
-URLUtils.toString() === URLUtils.href
+* Location.assign() 触发窗口加载并显示指定的URL的内容  
+* Location.reload(forcedReload[bool])用来刷新当前页面。该方法只有一个参数，当值为 true 时，将强制浏览器从服务器加载页面资源，当值为 false 或者未传参时，浏览器则可能从缓存中读取页面。该方法在跨域调用（执行该方法的脚本文件的域和 Location 对象所在页面的跨不同）时，将会抛出 DOMException 异常。  
+* Location.replace() 给定的URL来替换当前的资源。 与assign() 方法 不同的是调用replace()方法后，当前页面不会保存到会话历史中（session History），这样用户点击回退按钮将不会再跳转到该页面。  
+* URLUtils.toString() === URLUtils.href  
 
-url.href = 'https://developer.mozilla.org/en-US/search?q=URL#search-results-close-container';
+```js
+url.href = 'https://developer.mozilla.org/en-US/search?q=URL#search-results-close-container';  
 console.log(url.href);      // https://developer.mozilla.org/en-US/search?q=URL#search-results-close-container
 console.log(url.protocol);  // https:
 console.log(url.host);      // developer.mozilla.org
@@ -284,24 +579,34 @@ console.log(url.pathname);  // /en-US/search
 console.log(url.search);    // ?q=URL
 console.log(url.hash);      // #search-results-close-container
 console.log(url.origin);    // https://developer.mozilla.org
+```
 
 
 
-Number
-####Properties
 
-####Methods
-Number.parseFloat(string) 和全局对象 parseFloat() 一样。 需要被解析成为浮点数的字符串.
-Number.parseInt(string[, radix])和全局对象 parseInt() 一样。返回解析后的整数值。 如果被解析参数的第一个字符无法被转化成数值类型，则返回 NaN。radix基数 比如参数"10"表示使用我们通常使用的十进制数值系统。
-Number.isFinite()确定传递的值类型及本身是否是有限数。
-Number.isInteger()确定传递的值类型是“number”，且是整数。
-Number.isNaN(value)确定传递的值是否是 NaN。   和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。
+## Number
 
-############################################################
-Number.isNaN(NaN);        // true
-Number.isNaN(Number.NaN); // true
-Number.isNaN(0 / 0)       // true
+#### Methods
+* Number.parseFloat(string) 和全局对象 parseFloat() 一样。 需要被解析成为浮点数的字符串.  
+* Number.parseInt(string[, radix])和全局对象 parseInt() 一样。返回解析后的整数值。 如果被解析参数的第一个字符无法被转化成数值类型，则返回 NaN。radix基数 比如参数"10"表示使用我们通常使用的十进制数值系统。  
 
+```js
+// radix为指定基数，说明字符串为多少进制的数字表示。
+
+let strObj = '101101';
+
+console.log(Number.parseInt(strObj, 2)); // 45
+
+console.log(Number.parseInt(strObj, 10)); // 101101
+
+console.log(Number.parseInt(strObj, 16)); // 1052929
+```
+
+* Number.isFinite()确定传递的值类型及本身是否是有限数。  
+* Number.isInteger()确定传递的值类型是“number”，且是整数。  
+* Number.isNaN(value)确定传递的值是否是 NaN。   和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。  
+
+```js
 //和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。
 Number.isNaN(NaN);        // true
 Number.isNaN(Number.NaN); // true
@@ -321,156 +626,231 @@ Number.isNaN("37");
 Number.isNaN("37.37");
 Number.isNaN("");
 Number.isNaN(" ");
-#############################################################
+```
 
-Number.isSafeInteger()
-numObj.toFixed(digits)使用定点表示法来格式化一个数 digits(0-20 default:0);
+* Number.isSafeInteger()
+* Number.toFixed(digits)使用定点表示法来格式化一个数 digits(0-20 default:0);
 
 
 
-Math
-Math.abs()绝对值
-sin(), cos(), tan() 正三角
-asin(), acos(), atan(), atan2()反三角
-sinh(), cosh(), tanh()双曲
-asinh(), acosh(), atanh()
-Math.floor() 向下取整
-Math.ceil()向上取整
-Math.round()四舍五入
-Math.random() 返回0到1之间的伪随机数.
+#### Math
+* Math.abs()绝对值
+* sin(), cos(), tan() 正三角
+* asin(), acos(), atan(), atan2()反三角
+* sinh(), cosh(), tanh()双曲
+* asinh(), acosh(), atanh()
+* Math.floor() 向下取整
+* Math.ceil()向上取整
+* Math.round()四舍五入
+* Math.random() 返回0到1之间的伪随机数.  
 
-返回了一个在指定值之间的随机整数(包含min和max)
+```js
+//返回了一个在指定值之间的随机整数(包含min和max)
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
+```
 
-Math.sign() 返回x的符号函数, 判定x是正数,负数还是0.
+* Math.sign() 返回x的符号函数, 判定x是正数,负数还是0.
 
 
 
-Date
-UTC 世界协调时间 GMT 格林威治标准时间(UTC==GMT 北京时间=UTC+8时差)
+## Date
+UTC **世界协调时间** GMT **格林威治标准时间**(UTC==GMT 北京时间=UTC+8时差)
+```js
 new Date();
 new Date(value);
 new Date(dateString);
 new Date(year, month[, day[, hour[, minutes[, seconds[, milliseconds]]]]]);
+```
+```js
+//获得时间毫秒
+console.log(Date.now());
+console.log(+new Date());
+console.log(new Date().getTime());
+console.log(new Date().valueOf());
+console.log(Date.UTC(2018, 5, 4, 14, 40, 20, 100));//不常用
+```
 
-##获得时间毫秒###################################################################
-
-        console.log(Date.now());
-        console.log(+new Date());
-        console.log(new Date().getTime());
-        console.log(new Date().valueOf());
-        console.log(Date.UTC(2018, 5, 4, 14, 40, 20, 100));//不常用
-
-###################################################################################
-
-        var today = new Date(2018,6,28,18,55,59,500);
-        //var today = new Date();
-        console.log(today.getFullYear());//2018
-        console.log(today.getMonth());//6 实际月份为6+1 原因是所引是从0开始
-        console.log(today.getDate());//28
-        console.log(today.getHours());//18
-        console.log(today.getMinutes());//55
-        console.log(today.getSeconds());//59
-        console.log(today.getMilliseconds());//500
-        console.log(today.getDay());//一周的第几天，(星期天是0)
+```js
+var today = new Date(2018,6,28,18,55,59,500);
+//var today = new Date();
+console.log(today.getFullYear());//2018
+console.log(today.getMonth());//6 实际月份为6+1 原因是所引是从0开始
+console.log(today.getDate());//28
+console.log(today.getHours());//18
+console.log(today.getMinutes());//55
+console.log(today.getSeconds());//59
+console.log(today.getMilliseconds());//500
+console.log(today.getDay());//一周的第几天，(星期天是0)
+```
 
 
+## 严格模式
 
-严格模式
-
-为某个单独的脚本文件开启严格模式
+* 为某个单独的脚本文件开启严格模式
+```js
 <script>
 'use strict';
 </script>
+```
 
-为某个函数开启严格模式
+* 为某个函数开启严格模式
+```js
 function strict(){  
   'use strict';
   function nested() { return "And so am I!"; }
   return "Hi!  I'm a strict mode function!  " + nested();
 }
+```
 
-非严格模式到严格模式的区别
 
-语法错误
-1.八进制语法:var n = 023和var s = "\047"
-2.with语句
-3.使用delete删除一个变量名(而不是属性名):delete myVariable
-4.使用eval或arguments作为变量名或函数名
-5.使用未来保留字(也许会在ECMAScript 6中使用):implements, interface, let, package, private, protected, public, static,和yield作为变量名或函数名
-6.在语句块中使用函数声明:if(a<b){ function f(){} }
-7.其他错误
-  7-1.对象字面量中使用两个相同的属性名:{a: 1, b: 3, a: 7}
-  7-2.函数形参中使用两个相同的参数名:function f(a, b, b){}
+> 非严格模式到严格模式的区别
 
-新的运行时错误
-1.给一个未声明的变量赋值
-<script>
-        "use strict";
-        var a = 16;
-        b = 17; //Uncaught ReferenceError: b is not defined
-</script>
-2.尝试删除一个不可配置的属性
-3.arguments对象和函数属性 访问arguments.callee, arguments.caller, anyFunction.caller以及anyFunction.arguments都会抛出异常
+* 语法错误
+1.八进制语法:var n = 023和var s = "\047"  
+2.with语句  
+3.使用delete删除一个变量名(而不是属性名):delete myVariable  
+4.使用eval或arguments作为变量名或函数名  
+5.使用未来保留字(也许会在ECMAScript 6中使用):implements, interface, let, package, private, protected, public, static,和yield作为变量名或函数名  
+6.在语句块中使用函数声明:if(a<b){ function f(){} }  
+7.其他错误  
+  * 对象字面量中使用两个相同的属性名:{a: 1, b: 3, a: 7}
+  * 函数形参中使用两个相同的参数名:function f(a, b, b){}
+
+> 运行时错误
+
+* 给一个未声明的变量赋值
+```js
+"use strict";
+var a = 16;
+b = 17; //Uncaught ReferenceError: b is not defined
+```
+
+* 尝试删除一个不可配置的属性
+* arguments对象和函数属性 访问arguments.callee, arguments.caller, anyFunction.caller以及anyFunction.arguments都会抛出异常
 var args = Array.prototype.slice.call(arguments) 总是通过形参的名字获取函数参数，或者在函数的第一行拷贝
 
 
-语义差异
-1.在普通的函数调用f()中,this的值会指向全局对象.在严格模式中,this的值会指向undefined.当函数通过call和apply调用时,如果传入的thisvalue参数是一个null和undefined除外的原始值(字符串,数字,布尔值),则this的值会成为那个原始值对应的包装对象,如果thisvalue参数的值是undefined或null,则this的值会指向全局对象.在严格模式中,this的值就是thisvalue参数的值,没有任何类型转换.
-2.arguments 对象属性不与对应的形参变量同步更新
-3.eval 在严格模式中,eval不会在当前的作用域内创建新的变量.另外,传入eval的字符串参数也会按照严格模式来解析.你需要全面测试来确保没有代码收到影响。另外，如果你并不是为了解决一个非常实际的解决方案中，尽量不要使用eval。
+> 语义差异
+* 在普通的函数调用f()中,this的值会指向全局对象.在严格模式中,this的值会指向undefined.当函数通过call和apply调用时,如果传入的thisvalue参数是一个null和undefined除外的原始值(字符串,数字,布尔值),则this的值会成为那个原始值对应的包装对象,如果thisvalue参数的值是undefined或null,则this的值会指向全局对象.在严格模式中,this的值就是thisvalue参数的值,没有任何类型转换.  
+* arguments 对象属性不与对应的形参变量同步更新  
+* eval 在严格模式中,eval不会在当前的作用域内创建新的变量.另外,传入eval的字符串参数也会按照严格模式来解析.你需要全面测试来确保没有代码收到影响。另外，如果你并不是为了解决一个非常实际的解决方案中，尽量不要使用eval。
 
 
 
-EVAL
-eval(string); 执行指定代码之后的返回值。如果返回值为空，返回undefined 函数会将传入的字符串当做 JavaScript 代码进行执行
-eval 中函数作为字符串被定义需要“（”和“）”作为前缀和后缀
+## EVAL
+eval(string); 执行指定代码之后的返回值。如果返回值为空，返回undefined 函数会将传入的字符串当做 JavaScript 代码进行执行  
+eval 中函数作为字符串被定义需要`“（”和“）”`作为前缀和后缀
+```js
 var fctStr1 = 'function a() {}'
 var fctStr2 = '(function a() {})'
 var fct1 = eval(fctStr1)  // return undefined
 var fct2 = eval(fctStr2)  // return a function​​​​​​
 var d=  eval('({"key":"abc"})');
+```
 
 
-JSON
-JSON.parse(text[, reviver]);
-reviver函数 function (k, v) {}
-不允许用逗号作为结尾 JSON.parse("[1, 2, 3, 4, ]");  JSON.parse('{"foo" : 1, }');
 
-使用 reviver 函数 
+## JSON
+* JSON.parse(text[, reviver]);  
+  reviver函数 function (k, v) {}  
+  `不允许用逗号作为结尾 JSON.parse("[1, 2, 3, 4, ]");  JSON.parse('{"foo" : 1, }');`
+
+`使用 reviver 函数 `  
+```js
 JSON.parse('{"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}}', function (k, v) {
     console.log(k); // 输出当前的属性名，从而得知遍历顺序是从内向外的，
                     // 最后一个属性名会是个空字符串。
     return v;       // 返回原始属性值，相当于没有传递 reviver 参数。
 });
+```
 
-当遍历到最顶层的值（解析值）时，传入 reviver 函数的参数会是空字符串 ""（因为此时已经没有真正的属性）和当前的解析值（有可能已经被修改过了），当前的 this 值会是 {"": 修改过的解析值}，在编写 reviver 函数时，要注意到这个特例。
-function(k,v)k='';v={"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}};所以不能 return '';
- var d = JSON.parse('{"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}}', function (k, v) {
-            return 'a';       // d 的值为'a';
-        });
+  当遍历到最顶层的值（解析值）时，传入 reviver 函数的参数会是空字符串 ""（因为此时已经没有真正的属性）和当前的解析值（有可能已经被修改过了），当前的 this 值会是 {"": 修改过的解析值}，在编写 reviver 函数时，要注意到这个特例。
+  
+  ```js
+  function(k,v){}
+  ```
+
+  * k='';  
+  * v={"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}};  
+  所以不能 return '';
+
+```js
+var d = JSON.parse('{"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}}', function (k, v) {
+    return 'a';       // d 的值为'a';
+});
+//d='a';
+```
 
 
-JSON.stringify(value[, replacer [, space]])
+* JSON.stringify(value[, replacer [, space]])
+
+```js
 JSON.stringify({});                        // '{}'
 JSON.stringify(true);                      // 'true'
 JSON.stringify("foo");                     // '"foo"'
 JSON.stringify([1, "false", false]);       // '[1,"false",false]'
 JSON.stringify({ x: 5 });                  // '{"x":5}'
+```
 
-replacer:function(k,v){}
-1.如果返回一个 Number, 转换成相应的字符串被添加入JSON字符串。
-2.如果返回一个 String, 该字符串作为属性值被添加入JSON。
-3.如果返回一个 Boolean, "true" 或者 "false"被作为属性值被添加入JSON字符串。
-4.如果返回任何其他对象，该对象递归地序列化成JSON字符串，对每个属性调用replacer方法。除非该对象是一个函数，这种情况将不会被序列化成JSON字符串。
-5.如果返回undefined，该属性值不会在JSON字符串中输出。
+ > replacer:function(k,v){}
 
+  1.如果返回一个 Number, 转换成相应的字符串被添加入JSON字符串。  
+  2.如果返回一个 String, 该字符串作为属性值被添加入JSON。  
+  3.如果返回一个 Boolean, "true" 或者 "false"被作为属性值被添加入JSON字符串。  
+  4.如果返回任何其他对象，该对象递归地序列化成JSON字符串，对每个属性调用replacer方法。除非该对象是一个函数，这种情况将不会被序列化成JSON字符串。  
+  5.如果返回undefined，该属性值不会在JSON字符串中输出。
 
-replacer:array 只保留[..]的属性值
+```js
+function replacerNumber(key, value) {
+    if (typeof value === "string") {
+        return 99;
+    }
+    return value;
+}
+
+function replacerString(key, value) {
+    if (typeof value === "string") {
+        return 'string';
+    }
+    return value;
+
+}
+
+function replacerBoolean(key, value) {
+    if (typeof value === "string") {
+        return true;
+    }
+    return value;
+}
+
+function replacerUndefined(key, value) {
+    if (typeof value === "string") {
+        return undefined;
+    }
+    return value;
+}
+
+var foo = { foundation: "Mozilla", model: "box", week: 45, transport: "car", month: 7 };
+var jsonStringNumber = JSON.stringify(foo, replacerNumber);//{"week":45,"month":7}
+var jsonStringString = JSON.stringify(foo, replacerString);//{"week":45,"month":7}
+var jsonStringBoolean = JSON.stringify(foo, replacerBoolean);//{"week":45,"month":7}
+var jsonStringUndefined = JSON.stringify(foo, replacerUndefined);//{"week":45,"month":7}
+console.log(jsonStringNumber);//{"foundation":99,"model":99,"week":45,"transport":99,"month":7}
+console.log(jsonStringString);//{"foundation":"string","model":"string","week":45,"transport":"string","month":7}
+console.log(jsonStringBoolean);//{"foundation":true,"model":true,"week":45,"transport":true,"month":7}
+console.log(jsonStringUndefined);//{"week":45,"month":7}
+
+```
+
+> replacer:array 只保留[..]的属性值
+```js
+JSON.stringify(foo, ['week', 'month']);  
+// '{"week":45,"month":7}', 只保留“week”和“month”属性值。
+```
 
 
 
