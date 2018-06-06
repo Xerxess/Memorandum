@@ -581,8 +581,294 @@ console.log(url.hash);      // #search-results-close-container
 console.log(url.origin);    // https://developer.mozilla.org
 ```
 
+## String
+
+转义字符
+column0 | column1
+------- | -------
+Code | Output
+\0 | 空字符
+\' | 单引号
+\" | 双引号
+\\ | 反斜杠
+\n | 换行
+\r | 回车
+\v | 垂直制表符
+\t | 水平制表符
+\b | 退格
+\f | 换页
+\uXXXX | unicode 码
+\u{X} ... \u{XXXXXX} | unicode codepoint 
+\xXX | Latin-1 字符(x小写)
+
+### 方法
+
+> String.fromCharCode()   
+通过一串 Unicode 创建字符串
+
+```js
+console.log(String.fromCharCode(20013));//十进制 '中'
+console.log(String.fromCharCode(0b100111000101101));//二进制 '中'
+console.log(String.fromCharCode(0o47055));//吧进制 '中'
+console.log(String.fromCharCode(0x4e2d));//十六进制 '中'
+console.log(String.fromCharCode(65,66,67));//'ABC'
+```
+ ### 实例
+
+ > str.charAt(index) 从左向右索引，第一个字符的索引值为 0，最后一个字符（假设该字符位于字符串 stringName 中）的索引值为 stringName.length - 1。
+
+```js 
+var anyString = "Brave new world";
+console.log(anyString.charAt(0)); //'B'
+```
+
+> str.charCodeAt(index) 返回给定索引处（String中index索引处）字符的 UTF-16 代码单元值的数字；
+
+```js
+"ABC".charCodeAt(0) // returns 65:"A"
+
+"ABC".charCodeAt(1) // returns 66:"B"
+
+"ABC".charCodeAt(2) // returns 67:"C"
+
+"ABC".charCodeAt(3) // returns NaN
+```
+
+> str.codePointAt(pos)  [Browser：polyfill]
+
+* JavaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。
+```js
+var s = "𠮷";//4字节字符
+s.length // 2
+s.charAt(0) // ''
+s.charAt(1) // ''
+s.charCodeAt(0) // 55362
+s.charCodeAt(1) // 57271//
 
 
+let s = '𠮷a';
+s.codePointAt(0) // 134071
+s.codePointAt(1) // 57271
+s.codePointAt(2) // 97
+```
+
+> str.concat(string2, string3[, ..., stringN])
+```js
+var hello = "Hello, ";
+console.log(hello.concat("Kevin", " have a nice day.")); /* Hello, Kevin have a nice day. */
+```
+
+> str.includes(searchString[, position]) 如果当前字符串包含被搜寻的字符串，就返回true；否则，返回false。[Browser：polyfill]
+
+```js
+var str = 'To be, or not to be, that is the question.';
+
+console.log(str.includes('To be'));       // true
+console.log(str.includes('question'));    // true
+console.log(str.includes('nonexistent')); // false
+console.log(str.includes('To be', 1));    // false
+console.log(str.includes('TO BE'));       // false
+```
+
+> str.endsWith(searchString [, position]);判断当前字符串是否是以另外一个给定的子字符串“结尾”的，根据判断结果返回 true 或 false。[Browser：polyfill]
+
+#### 参数
+ * searchString 要搜索的子字符串。
+ * position在 str 中搜索 searchString 的结束位置，默认值为 str.length，也就是真正的字符串结尾处。
+
+ ```js
+ var str = "To be, or not to be, that is the question.";
+
+alert( str.endsWith("question.") );  // true
+alert( str.endsWith("to be") );      // false
+alert( str.endsWith("to be", 19) );  // true
+alert( str.endsWith("To be", 5) );   // true
+ ```
+
+ > str.indexOf(searchValue[, fromIndex])
+ ```js
+ "Blue Whale".indexOf("Blue");     // returns  0
+"Blue Whale".indexOf("Blute");    // returns -1
+"Blue Whale".indexOf("Whale", 0); // returns  5
+"Blue Whale".indexOf("Whale", 5); // returns  5
+"Blue Whale".indexOf("", 9);      // returns  9
+"Blue Whale".indexOf("", 10);     // returns 10
+"Blue Whale".indexOf("", 11);     // returns 10
+ ```
+
+ > str.lastIndexOf(searchValue[, fromIndex]) 从该字符串的`后面向前`查找，从 fromIndex 处开始[Browser：polyfill]
+```js
+"canal".lastIndexOf("a")   // returns 3
+"canal".lastIndexOf("a",2) // returns 1
+"canal".lastIndexOf("a",0) // returns -1
+"canal".lastIndexOf("x")   // returns -1
+```
+
+> referenceStr.localeCompare(compareString[, locales[, options]]) 返回一个数字来指示一个参考字符串是否在排序顺序前面或之后或与给定字符串相同。[Browser：polyfill]
+```js
+// The letter "a" is before "c" yielding a negative value
+'a'.localeCompare('c'); 
+// -2 or -1 (or some other negative value)
+
+// Alphabetically the word "check" comes after "against" yielding a positive value
+'check'.localeCompare('against'); 
+// 2 or 1 (or some other positive value)
+
+// "a" and "a" are equivalent yielding a neutral value of zero
+'a'.localeCompare('a'); 
+// 0
+```
+> str.match(regexp); 与一个正则表达式匹配时， match()方法检索匹配项
+
+> str.normalize([form]);按照指定的一种 Unicode 正规形式将当前字符串正规化.[Browser：polyfill]
+* form:四种 Unicode 正规形式 "NFC", "NFD", "NFKC", 以及 "NFKD" 其中的一个, 默认值为 "NFC".
+
+> str.padEnd(targetLength [, padString]) 用一个字符串填充当前字符串（如果需要的话则重复填充），返回填充后达到指定长度的字符串。从当前字符串的末尾（右侧）开始填充。[Browser：polyfill]
+  #### 参数
+* targetLength 当前字符串需要填充到的目标长度。如果这个数值小于当前字符串的长度，则返回当前字符串本身。
+* padString 填充字符串。如果字符串太长，使填充后的字符串长度超过了目标长度，则只保留最左侧的部分，其他部分会被截断。此参数的缺省值为 " "（U+0020）。
+```js
+'abc'.padEnd(10);          // "abc       "
+'abc'.padEnd(10, "foo");   // "abcfoofoof"
+'abc'.padEnd(6, "123456"); // "abc123"
+'abc'.padEnd(1);           // "abc"
+```
+
+> str.padStart(targetLength [, padString]) 用另一个字符串填充当前字符串(重复，如果需要的话)，以便产生的字符串达到给定的长度。填充从当前字符串的开始(左侧)应用的。同`str.padEnd` [Browser：polyfill]
+```js
+'abc'.padStart(10);         // "       abc"
+'abc'.padStart(10, "foo");  // "foofoofabc"
+'abc'.padStart(6,"123465"); // "123abc"
+'abc'.padStart(8, "0");     // "00000abc"
+'abc'.padStart(1);          // "abc"
+```
+
+> str.repeat(count); 返回一个新字符串，该字符串包含被连接在一起的指定数量的字符串的副本。[Browser：polyfill]
+```js
+"abc".repeat(-1)     // RangeError: repeat count must be positive and less than inifinity
+"abc".repeat(0)      // ""
+"abc".repeat(1)      // "abc"
+"abc".repeat(2)      // "abcabc"
+"abc".repeat(3.5)    // "abcabcabc" 参数count将会被自动转换成整数.
+"abc".repeat(1/0)    // RangeError: repeat count must be positive and less than inifinity
+```
+
+> str.replace(regexp|substr, newSubStr|function) 返回一个由替换值替换一些或所有匹配的模式后的新字符串。模式可以是一个字符串或者一个正则表达式, 替换值可以是一个字符串或者一个每次匹配都要调用的函数。
+* 使用字符串作为参数  
+替换字符串可以插入下面的特殊变量名：
+    * $$ 插入一个 "$"
+    * $& 插入匹配的子串
+    * $` 插入当前匹配的子串左边的内容
+    * $' 插入当前匹配的子串右边的内容
+    * $n 假如第一个参数是 RegExp对象，并且 n 是个小于100的非负整数，那么插入第 n 个括号匹配的字符串。
+
+* 指定一个函数作为参数 function(){match,[p1,p2, ...],offset,string}
+    * match 匹配的子串。
+    * [p1,p2, ...] 对应于$1，$2等
+    * offset 匹配到的子字符串在原字符串中的偏移量。
+    * string 被匹配的原字符串
+
+
+```js
+var re = /(\w+)\s(\w+)/;
+var str = "@ John Smith $";
+// Smith, John
+console.log(str.replace(re, "$$, $1"));//@ $, John $
+console.log(str.replace(re, "$&, $1"));//@ John Smith, John $
+console.log(str.replace(re, "$`, $1"));//@ @ , John $
+console.log(str.replace(re, "$', $1"));//@  $, John $
+console.log(str.replace(re, "$2, $1"));//@ Smith, John $
+```
+
+```js
+//function(){match,[p1,p2, ...],offset,string}
+function replacer(match, p1, p2, p3, offset, string) {
+  // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+  console.log(arguments);
+  //["abc12345#$*%", "abc", "12345", "#$*%", 0, "abc12345#$*%"]
+  return [p1, p2, p3].join(' - ');
+}
+var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
+console.log(newString);  // abc - 12345 - #$*%
+```
+
+> str.search(regexp); 执行正则表达式和 String对象之间的一个搜索匹配
+
+> str.slice(beginSlice[, endSlice]);提取一个字符串的一部分，并返回一新的字符串。`包括beginSlice`但`不包括 endSlice`
+
+> str.substr(start[, length]); 返回一个字符串中从指定位置开始到指定字符数的字符
+
+> str.substring(indexStart[, indexEnd]);返回一个字符串在开始索引到结束索引之间的一个子集, 或从开始索引直到字符串的末尾的一个子集。`从 indexStart 到 indexEnd（不包括）之间的字符`
+
+> str.split([separator[, limit]]); 使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。
+#### 参数
+* separator 可以是一个字符串或正则表达式
+* limit 一个整数，限定返回的分割片段数量
+
+> str.startsWith(searchString [, position]); 判断当前字符串是否是以另外一个给定的子字符串“开头”的，根据判断结果返回 true 或 false。[Browser：polyfill]
+```js
+var str = "To be, or not to be, that is the question.";
+
+alert(str.startsWith("To be"));         // true
+alert(str.startsWith("not to be"));     // false
+alert(str.startsWith("not to be", 10)); // true
+```
+
+> str.toLocaleLowerCase();根据任何特定于语言环境的案例映射，返回调用字符串值转换为小写的值。toLowerCase的返回值是一致的。
+
+```js
+console.log('ALPHABET'.toLocaleLowerCase()); 
+// 'alphabet'
+
+console.log('中文简体 zh-CN || zh-Hans'.toLocaleLowerCase());
+// '中文简体 zh-cn || zh-hans'
+```
+
+> str.toLowerCase(); toLowerCase 会将调用该方法的字符串值转为小写形式，并返回。toLowerCase 不会影响字符串本身的值
+
+> str.toLocaleUpperCase(); 使用本地化（locale-specific）的大小写映射规则将输入的字符串转化成大写形式并返回结果字符串。toUpperCase的返回值是一致的。
+
+```js
+console.log('alphabet'.toLocaleUpperCase()); // 'ALPHABET'
+```
+
+> str.toUpperCase(); toUpperCase 将调用该方法的字符串值转换为大写形式，并返回。toUpperCase 方法不影响字符串本身的值。
+
+> str.trim();从一个字符串的两端删除空白字符。在这个上下文中的空白字符是所有的空白字符 (space, tab, no-break space 等) 以及所有行终止符字符（如 LF，CR）。[Browser：polyfill]
+
+```js
+var orig = '   foo  ';
+console.log(orig.trim()); // 'foo'
+
+// 另一个.trim()例子，只从一边删除
+
+var orig = 'foo    ';
+console.log(orig.trim()); // 'foo'
+```
+
+> string.trimLeft();从一个字符串的左端移除空白字符。[Browser：polyfill]
+> string.trimRight();从一个字符串的右端移除空白字符。[Browser：polyfill]
+
+
+### 模板字符串
+
+```js
+//传统的 JavaScript 语言，输出模板通常是这样写的
+$('#result').append(
+  'There are <b>' + basket.count + '</b> ' +
+  'items in your basket, ' +
+  '<em>' + basket.onSale +
+  '</em> are on sale!'
+);
+```
+```js
+//ES6 引入了模板字符串
+$('#result').append(`
+  There are <b>${basket.count}</b> items
+   in your basket, <em>${basket.onSale}</em>
+  are on sale!
+`);
+```
 
 ## Number
 
@@ -754,7 +1040,7 @@ var d=  eval('({"key":"abc"})');
 
 
 
-## JSON
+## JSON  [Browser：polyfill]
 * JSON.parse(text[, reviver]);  
   reviver函数 function (k, v) {}  
   `不允许用逗号作为结尾 JSON.parse("[1, 2, 3, 4, ]");  JSON.parse('{"foo" : 1, }');`
@@ -854,62 +1140,158 @@ JSON.stringify(foo, ['week', 'month']);
 
 
 
-Promise 
+## Promise 　　[Browser：polyfill]
 
-Promise几种状态:
-pending: 初始状态，既不是成功，也不是失败状态。
-fulfilled: 意味着操作成功完成。
-rejected: 意味着操作失败。
+### Promise几种状态:
+* pending: 初始状态，既不是成功，也不是失败状态。
+* fulfilled: 意味着操作成功完成。
+* rejected: 意味着操作失败。
 
 
-语法 Promise:new Promise(function(resolve, reject){});
+> 语法   
 
-####Methods
-Promise.all(iterable)
-两种情况
-1.iterable状态都变成fulfilled（成功），promise状态才会变成fulfilled,iterable返回值组成一个数组，传递给回调函数;
-2.iterable中有一个被rejected（失败）,promise状态才会变成rejected(失败)，这个rejected返回的值，传递给回调函数;
-注*可以参考jQuery.when
+Promise:new Promise(function(resolve, reject){});  
+[Result:Promise]
 
-Promise.race(iterable) 
-iterable实例率先改变状态，promise的状态就跟着改变。
+### Methods
+> Promise.all(iterable)   
+[Result:Promise]
+
+两种情况  
+1. iterable状态都变成`fulfilled（成功）`，promise状态才会变成fulfilled,`iterable返回值`组成一个数组，传递给回调函数;  
+
+2. iterable中有一个被`rejected（失败）`,promise状态才会变成rejected(失败)，`这个rejected返回的值`，传递给回调函数;
+
+***可以参考`jQuery.when`**
+
+> Promise.race(iterable)  
+[Result:Promise]
+
+
+  iterable实例率先改变状态，promise的状态就跟着改变。
 返回一个 Promise，它将与第一个传递的 promise 相同的完成方式被完成。它可以是完成（ resolves），也可以是失败（rejects）
 
-Promise.reject(reason)返回一个带有拒绝原因reason参数的Promise对象
+> Promise.reject(reason)  
+[Result:Promise]
+
+返回一个带有拒绝原因reason参数的Promise对象
 
 
-Promise.resolve(value|promise|thenable)
+> Promise.resolve(value|promise|thenable)  
+[Result:Promise]
+
 四种情况
-1.参数是一个 Promise 实例 如果参数是 Promise 实例，那么Promise.resolve将不做任何修改、原封不动地返回这个实例。
-2.参数是一个thenable对象 thenable对象指的是具有then方法的对象，Promise.resolve方法会将这个对象转为 Promise 对象，然后就立即执行thenable对象的then方法。
-3.参数不是具有then方法的对象，或根本就不是对象 如果参数是一个原始值，或者是一个不具有then方法的对象，则Promise.resolve方法返回一个新的 Promise 对象，状态为resolved。
-4.不带有任何参数 Promise.resolve方法允许调用时不带参数，直接返回一个resolved状态的 Promise 对象。
+* 1.参数是一个 Promise 实例 如果参数是 Promise 实例，那么Promise.resolve将不做任何修改、原封不动地返回这个实例。
+* 2.参数是一个thenable对象 thenable对象指的是具有then方法的对象，Promise.resolve方法会将这个对象转为 Promise 对象，然后就立即执行thenable对象的then方法。
 
-Promise 原型
+```js
+// thenableObj是一个thenable对象
+var thenableObj={ 
+  then: function(onFulfill, onReject) { onFulfill("fulfilled!"); }
+};
+var p1 = Promise.resolve(thenableObj);
+console.log(p1 instanceof Promise) // true, 这是一个Promise对象
 
-Promise.prototype.catch 返回一个Promise，并且处理拒绝的情况。它的行为与调用Promise.prototype.then(undefined, onRejected) 相同。
-Promise.prototype.then(onFulfilled, onRejected);返回一个  Promise 。它最多需要有两个参数：Promise 的成功和失败情况的回调函数。
-Promise.prototype.finally(onFinally);在执行then()和catch()后，都会执行finally指定的回调函数。避免同样的语句需要在then()和catch()中各写一次的情况。 (Babel 6 +core-js、ES 20166+、最高级浏览器)
+p1.then(function(v) {
+    console.log(v); // 输出"fulfilled!"
+  }, function(e) {
+    // 不会被调用
+});
+
+```
+* 3.参数不是具有then方法的对象，或根本就不是对象 如果参数是一个原始值，或者是一个不具有then方法的对象，则Promise.resolve方法返回一个新的 Promise 对象，状态为resolved。
+
+* 4.不带有任何参数 Promise.resolve方法允许调用时不带参数，直接返回一个resolved状态的 Promise 对象。
+
+### Promise 原型
+
+* Promise.prototype.catch 返回一个Promise，并且处理拒绝的情况。它的行为与调用Promise.prototype.then(undefined, onRejected) 相同。[Result:Promise]
+
+
+* Promise.prototype.then(onFulfilled, onRejected);返回一个  Promise 。它最多需要有两个参数：Promise 的成功和失败情况的回调函数。[Result:Promise]
+```js
+let p1 = new Promise(function(resolve, reject) {
+  resolve("Success!");
+  // or
+  // reject ("Error!");
+});
+
+p1.then(function(value) {
+  console.log(value); // Success!
+}, function(reason) {
+  console.log(reason); // Error!
+});
+```
+
+* Promise.prototype.finally(onFinally);在执行then()和catch()后，都会执行finally指定的回调函数。避免同样的语句需要在then()和catch()中各写一次的情况。[Result:Promise] `(Babel 6 + core-js、ES 2016+、高级浏览器)`
 
 
 
 
-Object
+## Object
 
-####Methods
-Object.assign(target, ...sources) 用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。target
+### Methods
+* Object.assign(target, ...sources) 用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。[Result:UpdateTarget]
 
-Object.create(proto, [propertiesObject])
+```js
+var o1 = { a: 1 };
+var o2 = { b: 2 };
+var o3 = { c: 3 };
+
+var obj = Object.assign(o1, o2, o3);
+console.log(obj); // { a: 1, b: 2, c: 3 }
+console.log(o1);  // { a: 1, b: 2, c: 3 }, 注意目标对象自身也会改变。
+console.log(o1===obj);//true
+```
+
+* Object.create(proto, [propertiesObject])
 一个新对象，带着指定的原型对象和属性。
 proto 新创建对象的原型对象
 propertiesObject default:undefined
+```js
+//所有版本JavaScript都支持的单继承
 
-Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
-参数
-obj 要在其上定义属性的对象
-prop 要定义或修改的属性的名称
-descriptor 将被定义或修改的属性描述符
-descriptor(数据描述符 and 存取描述符)
+// Shape - 父类(superclass)
+function Shape() {
+  this.x = 0;
+  this.y = 0;
+}
+
+// 父类的方法
+Shape.prototype.move = function(x, y) {
+  this.x += x;
+  this.y += y;
+  console.info('Shape moved.');
+};
+
+// Rectangle - 子类(subclass)
+function Rectangle() {
+  Shape.call(this); // call super constructor.
+}
+
+// 子类续承父类
+Rectangle.prototype = Object.create(Shape.prototype);
+Rectangle.prototype.constructor = Rectangle;
+
+var rect = new Rectangle();
+
+console.log('Is rect an instance of Rectangle?',
+  rect instanceof Rectangle); // true
+console.log('Is rect an instance of Shape?',
+  rect instanceof Shape); // true
+rect.move(1, 1); // Outputs, 'Shape moved.'
+console.log(rect);
+//Rectangle:{x: 1, y: 1,__proto__:{__proto__:move}}
+```
+
+* Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
+ > 参数
+
+
+    obj 要在其上定义属性的对象  
+prop 要定义或修改的属性的名称  
+descriptor 将被定义或修改的属性描述符  
+descriptor(数据描述符 and 存取描述符)  
 数据描述符:是一个具有值的属性，该值可能是可写的，也可能不是可写的。
 存取描述符:是由getter-setter函数对描述的属性。
 
@@ -926,7 +1308,7 @@ descriptor(数据描述符 and 存取描述符)
 存取描述符	Yes		        Yes		       No	      No	       Yes   	Yes
 
 
-Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+* Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
 props:{
 key:{
 ..descriptor//(参考Object.defineProperty参数descriptor)
@@ -937,22 +1319,22 @@ key:{
 }
 
 
-Object.entries(obj) 返回给定对象自身可枚举属性的[key, value]数组
+* Object.entries(obj) 返回给定对象自身可枚举属性的[key, value]数组
 例子：const obj = { foo: 'bar', baz: 42 };
       console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
 
-Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
+* Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
 
-Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
+* Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
 
-Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
+* Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
 
-Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
+* Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
 
-Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
+* Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
 注*Object.getPrototypeOf(Object) 不是  Object.prototype
 
-Object.is(value1, value2) 判断两个值是否是相同的值
+* Object.is(value1, value2) 判断两个值是否是相同的值
 注*Object.is
 1.两个值都是 undefined
 2.两个值都是 null
@@ -965,34 +1347,34 @@ Object.is(value1, value2) 判断两个值是否是相同的值
   6-3.都是 NaN
   6-4.都是除零和 NaN 外的其它同一个数字
 
-Object.isExtensible() 判断对象是否可扩展
+* Object.isExtensible() 判断对象是否可扩展
 
-Object.isFrozen()判断对象是否已经冻结
+* Object.isFrozen()判断对象是否已经冻结
 
-Object.isSealed() 判断对象是否已经密封
+* Object.isSealed() 判断对象是否已经密封
 
-Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
+* Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
 
-Object 实例
-属性
-Object.prototype.constructor 定的函数，用于创建一个对象的原型。
+### Object 实例
+#### 属性
+* Object.prototype.constructor 定的函数，用于创建一个对象的原型。
 
-Object.prototype.__proto__  指向当对象被实例化的时候，用作原型的对象
+* Object.prototype.__proto__  指向当对象被实例化的时候，用作原型的对象
 
-方法
-Object.prototype.__defineGetter__() 关联一个函数到一个属性。访问该函数时，执行该函数并返回其返回值
-Object.prototype.__defineSetter__()  关联一个函数到一个属性。设置该函数时，执行该修改属性的函数
-Object.prototype.__lookupGetter__() 返回使用 __defineGetter__ 定义的方法函数
-Object.prototype.__lookupSetter__()  返回使用 __defineSetter__ 定义的方法函数。
-Object.prototype.hasOwnProperty(prop) 返回一个布尔值 ，表示某个对象是否含有指定的属性，而且此属性非原型链继承的
-Object.prototype.isPrototypeOf() 返回一个布尔值，表示指定的对象是否在本对象的原型链中
-Object.prototype.propertyIsEnumerable() 判断指定属性是否可枚举，内部属性设置参见 ECMAScript [[Enumerable]] attribute 
-Object.prototype.toSource() 返回字符串表示此对象的源代码形式，可以使用此字符串生成一个新的相同的对象
-Object.prototype.toLocaleString()�?0�?1�?1�?7�?0�?3�?1�?7�?1�?7�?1�?7 toString()�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7
-Object.prototype.toString() 返回对象的字符串表示。
-Object.prototype.unwatch() 移除对象某个属性的监听
-Object.prototype.valueOf() 返回指定对象的原始值。
-Object.prototype.watch() 给对象的某个属性增加监听
+### 方法
+* Object.prototype.__defineGetter__() 关联一个函数到一个属性。访问该函数时，执行该函数并返回其返回值
+* Object.prototype.__defineSetter__()  关联一个函数到一个属性。设置该函数时，执行该修改属性的函数
+* Object.prototype.__lookupGetter__() 返回使用 __defineGetter__ 定义的方法函数
+* Object.prototype.__lookupSetter__()  返回使用 __defineSetter__ 定义的方法函数。
+* Object.prototype.hasOwnProperty(prop) 返回一个布尔值 ，表示某个对象是否含有指定的属性，而且此属性非原型链继承的
+* Object.prototype.isPrototypeOf() 返回一个布尔值，表示指定的对象是否在本对象的原型链中
+* Object.prototype.propertyIsEnumerable() 判断指定属性是否可枚举，内部属性设置参见 ECMAScript [[Enumerable]] attribute 
+* Object.prototype.toSource() 返回字符串表示此对象的源代码形式，可以使用此字符串生成一个新的相同的对象
+* Object.prototype.toLocaleString()�?0�?1�?1�?7�?0�?3�?1�?7�?1�?7�?1�?7 toString()�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7
+* Object.prototype.toString() 返回对象的字符串表示。
+* Object.prototype.unwatch() 移除对象某个属性的监听
+* Object.prototype.valueOf() 返回指定对象的原始值。
+* Object.prototype.watch() 给对象的某个属性增加监听
 
 
 with 扩展一个语句的作用域链
