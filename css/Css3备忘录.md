@@ -22,15 +22,12 @@
 （新）无
 
 
+
 > 子元素的对齐方式（左对齐|居中对齐|右对齐|两边对齐）
 
 （旧）box-pack：`start` | center | end | justify  
 （新）justify-content：`flex-start` | flex-end | center | space-between | space-around
 
-> 复合属性。设置或检索弹性盒模型对象的子元素排列方式。
-
-（旧）无  
-（新）flex-flow：<' flex-direction '> || <' flex-wrap '>
 
 ### 对应关系
 
@@ -126,6 +123,11 @@
 * single==nowrap 单行
 * multiple==wrap 多行
 * wrap-reverse `与 wrap相同且顺序倒序`
+
+> 复合属性。设置或检索弹性盒模型对象的子元素排列方式。
+
+（旧）无  
+（新）flex-flow：<' flex-direction '> || <' flex-wrap '>
 
 > 定义flex子项单独在侧轴（纵轴）方向上的对齐方式 `(在子元素上使用)`
 
