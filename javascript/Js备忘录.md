@@ -1231,7 +1231,7 @@ p1.then(function(value) {
 ## Object
 
 ### Methods
-* Object.assign(target, ...sources) 用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。[Result:UpdateTarget]
+ > Object.assign(target, ...sources) 用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。[Result:UpdateTarget]
 
 ```js
 var o1 = { a: 1 };
@@ -1244,7 +1244,7 @@ console.log(o1);  // { a: 1, b: 2, c: 3 }, 注意目标对象自身也会改变�
 console.log(o1===obj);//true
 ```
 
-* Object.create(proto, [propertiesObject])
+> Object.create(proto, [propertiesObject])
 一个新对象，带着指定的原型对象和属性。
 proto 新创建对象的原型对象
 propertiesObject default:undefined
@@ -1284,57 +1284,121 @@ console.log(rect);
 //Rectangle:{x: 1, y: 1,__proto__:{__proto__:move}}
 ```
 
-* Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
- > 参数
+> Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
 
 
-    obj 要在其上定义属性的对象  
-prop 要定义或修改的属性的名称  
-descriptor 将被定义或修改的属性描述符  
-descriptor(数据描述符 and 存取描述符)  
-数据描述符:是一个具有值的属性，该值可能是可写的，也可能不是可写的。
-存取描述符:是由getter-setter函数对描述的属性。
-
-【configurable 当且仅当该属性的 configurable 为 true 时，该属性描述符才能够被改变，同时该属性也能从对应的对象上被删除。默认为 false。
-【enumerable 当且仅当该属性的enumerable为true时，该属性才能够出现在对象的枚举属性中。默认为 false。
-【value 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。默认为 undefined。
-【writable 当且仅当该属性的writable为true时，value才能被赋值运算符改变。默认为 false。
-【get 一个给属性提供 getter 的方法，如果没有 getter 则为 undefined。该方法返回值被用作属性值。默认为 undefined。
-【set 一个给属性提供 setter 的方法，如果没有 setter 则为 undefined。该方法将接受唯一参数，并将该参数的新值分配给该属性。默认为 undefined。
-
-	         configurable	 enumerable  	value	   writable  	get	   set
-		
-数据描述符	Yes	          Yes	         Yes	    Yes		     No	    No
-存取描述符	Yes		        Yes		       No	      No	       Yes   	Yes
+### 参数
 
 
-* Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+* obj 要在其上定义属性的对象  
+* prop 要定义或修改的属性的名称  
+* descriptor 将被定义或修改的属性描述符  
+* descriptor(数据描述符 and 存取描述符)  
+  * 数据描述符:是一个具有值的属性，该值可能是可写的，也可能不是可写的。  
+  * 存取描述符:是由getter-setter函数对描述的属性。  
+
+ || `configurable` | `enumerable`| `value` | `writable` | `get` | `set`
+ |-| - | -| - |- | - | -
+ |`数据描述符`| Yes | Yes | Yes | Yes | No  | No
+ |`存取描述符`| Yes | Yes | No  | No  | Yes | Yes
+
+【`configurable` 当且仅当该属性的 configurable 为 `true` 时，该属性描述符才能够被`改变`，同时该属性也能从对应的对象上被`删除`。`默认为 false`。  
+
+【`enumerable` 当且仅当该属性的enumerable为true时，该属性才能够出现在对象的`枚举属性`中。默认为 false。  
+
+【`value` 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。默认为 undefined。  
+
+【`writable` 当且仅当该属性的writable为true时，value才能被赋值运算符改变。默认为 false。  
+
+【`get` 一个给属性提供 `getter` 的方法，如果没有 getter 则为 undefined。该方法返回值被用作属性值。默认为 undefined。  
+
+【`set` 一个给属性提供 `setter` 的方法，如果没有 setter 则为 undefined。该方法将接受唯一参数，并将该参数的新值分配给该属性。`默认为 undefined`。  
+
+```js
+// 使用 __proto__
+var obj = {};
+var descriptor = Object.create(null); // 没有继承的属性
+// 默认没有 enumerable，没有 configurable，没有 writable
+descriptor.value = 'static';
+Object.defineProperty(obj, 'key', descriptor);
+
+// 显式
+Object.defineProperty(obj, "key", {
+  enumerable: false,
+  configurable: false,
+  writable: false,
+  value: "static"
+});
+```
+
+> Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+```js
 props:{
-key:{
-..descriptor//(参考Object.defineProperty参数descriptor)
-},
-key:{
-..descriptor//(参考Object.defineProperty参数descriptor)
+  key:{
+   ..descriptor //(参考Object.defineProperty参数descriptor)
+  },
+  key:{
+   ..descriptor //(参考Object.defineProperty参数descriptor)
+  }
 }
-}
+```
+```js
+var obj = {};
+Object.defineProperties(obj, {
+  'property1': {
+    value: true,
+    writable: true
+  },
+  'property2': {
+    value: 'Hello',
+    writable: false
+  }
+  // etc. etc.
+});
+
+```
 
 
-* Object.entries(obj) 返回给定对象自身可枚举属性的[key, value]数组
-例子：const obj = { foo: 'bar', baz: 42 };
-      console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+> Object.entries(obj) 返回给定对象自身`可枚举`属性的[key, value]数组
 
-* Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
+```js
+const obj = { foo: 'bar', baz: 42 };
+console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+```
 
-* Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
+> Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
 
-* Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
+```js
+var o, d;
 
-* Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
+o = { get foo() { return 17; } };
+d = Object.getOwnPropertyDescriptor(o, "foo");
+// d {
+//   configurable: true,
+//   enumerable: true,
+//   get: /*the getter function*/,
+//   set: undefined
+// }
+```
 
-* Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
+> Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
+
+```js
+var arr = ["a", "b", "c"];
+console.log(Object.getOwnPropertyNames(arr).sort()); // ["0", "1", "2", "length"]
+
+// 类数组对象
+var obj = { 0: "a", 1: "b", 2: "c"};
+console.log(Object.getOwnPropertyNames(obj).sort()); // ["0", "1", "2"]
+
+```
+
+> Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
+
+> Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
 注*Object.getPrototypeOf(Object) 不是  Object.prototype
 
-* Object.is(value1, value2) 判断两个值是否是相同的值
+> Object.is(value1, value2) 判断两个值是否是相同的值
 注*Object.is
 1.两个值都是 undefined
 2.两个值都是 null
@@ -1347,13 +1411,68 @@ key:{
   6-3.都是 NaN
   6-4.都是除零和 NaN 外的其它同一个数字
 
-* Object.isExtensible() 判断对象是否可扩展
+  ```js
+  Object.is('foo', 'foo');     // true
+Object.is(window, window);   // true
 
-* Object.isFrozen()判断对象是否已经冻结
+Object.is('foo', 'bar');     // false
+Object.is([], []);           // false
 
-* Object.isSealed() 判断对象是否已经密封
+var test = { a: 1 };
+Object.is(test, test);       // true
 
-* Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
+Object.is(null, null);       // true
+
+// 特例
+Object.is(0, -0);            // false
+Object.is(-0, -0);           // true
+Object.is(NaN, 0/0);         // true
+  ```
+
+> Object.preventExtensions(obj) 防止对象的任何扩展。
+
+> Object.isExtensible(obj) 判断对象是否可扩展
+
+> Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
+
+> Object.isFrozen(obj)判断对象是否已经冻结
+
+> Object.seal(obj) 防止其他代码删除对象的属性。
+
+> Object.isSealed(obj) 判断对象是否已经密封
+
+
+> Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
+
+```js
+// simple array
+var arr = ['a', 'b', 'c'];
+console.log(Object.keys(arr)); // console: ['0', '1', '2']
+
+// array like object
+var obj = { 0: 'a', 1: 'b', 2: 'c' };
+console.log(Object.keys(obj)); // console: ['0', '1', '2']
+
+// array like object with random key ordering
+var anObj = { 100: 'a', 2: 'b', 7: 'c' };
+console.log(Object.keys(anObj)); // console: ['2', '7', '100']
+```
+
+> Object.values(obj) 返回一个给定对象自己的所有可枚举属性值的数组，值的顺序与使用for...in循环的顺序相同 ( 区别在于 for-in 循环枚举原型链中的属性 )。
+
+```js
+var obj = { foo: 'bar', baz: 42 };
+console.log(Object.values(obj)); // ['bar', 42]
+
+// array like object
+var obj = { 0: 'a', 1: 'b', 2: 'c' };
+console.log(Object.values(obj)); // ['a', 'b', 'c']
+
+// array like object with random key ordering
+// when we use numeric keys, the value returned in a numerical order according to the keys
+var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
+console.log(Object.values(an_obj)); // ['b', 'c', 'a']
+```
 
 ### Object 实例
 #### 属性
@@ -1370,14 +1489,63 @@ key:{
 * Object.prototype.isPrototypeOf() 返回一个布尔值，表示指定的对象是否在本对象的原型链中
 * Object.prototype.propertyIsEnumerable() 判断指定属性是否可枚举，内部属性设置参见 ECMAScript [[Enumerable]] attribute 
 * Object.prototype.toSource() 返回字符串表示此对象的源代码形式，可以使用此字符串生成一个新的相同的对象
-* Object.prototype.toLocaleString()�?0�?1�?1�?7�?0�?3�?1�?7�?1�?7�?1�?7 toString()�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7�?1�?7
+* Object.prototype.toLocaleString() 直接调用 toString()方法。
 * Object.prototype.toString() 返回对象的字符串表示。
+
+#### 自定义.toString()
+
+```js
+function Dog(name,breed,color,sex) {
+   this.name=name;
+   this.breed=breed;
+   this.color=color;
+   this.sex=sex;
+}
+
+var theDog = new Dog("Gabby","Lab","chocolate","female");
+theDog.toString(); // [object Object]
+
+Dog.prototype.toString = function dogToString() {
+  var ret = "Dog " + this.name + " is a " + this.sex + " " + this.color + " " + this.breed;
+  return ret;
+}
+theDog.toString(); // "Dog Gabby is a female chocolate Lab"
+
+```
+
+#### 使用toString()检测对象类型
+
+```js
+//Object.prototype.toString.call
+
+console.log('String:'+Object.prototype.toString.call('name'));
+console.log('Number:'+Object.prototype.toString.call(1));
+console.log('Boolean:'+Object.prototype.toString.call(false));
+console.log('Undefined:'+Object.prototype.toString.call(undefined));
+console.log('Null:'+Object.prototype.toString.call(null));
+console.log('Object:'+Object.prototype.toString.call({}));
+console.log('Array:'+Object.prototype.toString.call([]));
+console.log('Function:'+Object.prototype.toString.call(function(){}));
+
+//String:[object String]
+//Number:[object Number]
+//Boolean:[object Boolean]
+//Undefined:[object Undefined]
+//Null:[object Null]
+//Object:[object Object]
+//Array:[object Array]
+//Function:[object Function]
+```
+
 * Object.prototype.unwatch() 移除对象某个属性的监听
 * Object.prototype.valueOf() 返回指定对象的原始值。
 * Object.prototype.watch() 给对象的某个属性增加监听
 
 
-with 扩展一个语句的作用域链
+> with 扩展一个语句的作用域链
+
+下面的`with`语句指定Math对象作为默认对象。with语句里面的变量，分別`指向Math对象的PI 、cos和sin函数，不用在前面添加命名空间`。
+```js
 var a, x, y;
 var r = 10;
 
@@ -1386,26 +1554,29 @@ with (Math) {
   x = r * cos(PI);
   y = r * sin(PI / 2);
 }
-下面的with语句指定Math对象作为默认对象。with语句里面的变量，分別指向Math对象的PI 、cos和sin函数，不用在前面添加命名空间。
+```
 
 
-typeof
-语法
+> typeof
+
+#### 语法
+```js
 typeof operand
 or
 typeof (operand)
+```
 
-Undefined    "undefined"
-Null	     "object"
-Boolean	     "boolean"
-Number	     "number"
-String	     "string"
-Symbol ES 6  "symbol"
-宿主对象（由JS环境提供）	Implementation-dependent
-函数对象（[[Call]] 在ECMA-262条款中实现了）	"function"
+* Undefined    "undefined"
+* Null	     "object"
+* Boolean	     "boolean"
+* Number	     "number"
+* String	     "string"
+* Symbol ES 6  "symbol"
+* 宿主对象（由JS环境提供）	Implementation-dependent
+* 函数对象（[[Call]] 在ECMA-262条款中实现了）	"function"
 任何其他对象	"object"
 
-
+```js
 // Numbers
 typeof 37 === 'number';
 typeof 3.14 === 'number';
@@ -1456,19 +1627,29 @@ typeof Math.sin === 'function';
 typeof new Function() === 'function';
 
 typeof null === 'object'; // 从一开始出现JavaScript就是这样的
+```
 
 
-运算符: +x
+
+> 运算符: +x
+
+```js
 +3     // 3
 +"3"   // 3
 +true  // 1
 +false // 0
 +null  // 0
 +function(val){ return val;} //NaN
+```
 
 
-in 属性在指定的对象或其原型链中，则in 运算符返回true
-语法 prop in object
+> in 属性在指定的对象或其原型链中，则in 运算符返回true
+ ```js
+ //语法
+ prop in object
+ ```
+
+```js
 // 数组
 var trees = new Array("redwood", "bay", "cedar", "oak", "maple");
 0 in trees        // 返回true
@@ -1488,72 +1669,64 @@ Symbol.iterator in trees // 返回true (数组可迭代，只在ES2015+上有效
 var mycar = {make: "Honda", model: "Accord", year: 1998};
 "make" in mycar  // 返回true
 "model" in mycar // 返回true
+```
 
 
 
-instanceof 运算符判断一个对象是否是另一个对象的实例.
+> instanceof 运算符判断一个对象是否是另一个对象的实例.
 
 
-对它的每个操作数求值（从左到右），并返回最后一个操作数的值。
+> ','逗号 对它的每个操作数求值（从左到右）`，`并返回最后一个操作数的值。
 expr1, expr2, expr3...
 function myFunc () {
   var x = 0;
-
   return (x += 1, x); // the same of return ++x;
 }
 
 
-es5-shim.js 垫片
+> es5-shim.js 垫片
 es5-sham.js 补充防止旧浏览器报错 Object.* (ie8 Object.getPrototypeOf将抛出错误)
 
 
 
-Function
+> Function
 
 函数声明 (函数语句)
-1.function name([param[, param[, ... param]]]) { statements }
-2.function [name]([param] [, param] [..., param]) { statements }
+```js
+function name([param[, param[, ... param]]]) { statements }
+function [name]([param] [, param] [..., param]) { statements }
+```
 
-IIFE (Immediately Invokable Function Expressions （立即可调用函数表达式）//自动执行一次
+* IIFE (Immediately Invokable Function Expressions （立即可调用函数表达式）//自动执行一次
+```js
 (function() {statements})();
-!function(){}();
+!function(){statements}();
+```
 
-箭头函数表达式 ([param] [, param]) => { statements } param => expression
-param:参数名称. 零参数需要用()表示.  只有一个参数时不需要括号. (例如 foo => 1)
-statements or expression:多个声明statements需要用大括号括起来，而单个表达式时则不需要。表达式expression也是该函数的隐式返回值。
+* 箭头函数表达式 
+```js
+([param] [, param]) => { statements } 
+param => expression
+```
 
-Function构造函数
+参数：
+
+* param:参数名称. 零参数需要用()表示.  只有一个参数时不需要括号. (例如 foo => 1)
+* statements or expression:多个声明statements需要用大括号括起来，而单个表达式时则不需要。表达式expression也是该函数的隐式返回值。
+
+### Function构造函数
+```js
 new Function (arg1, arg2, ... argN, functionBody)
+```
 
-arguments对象
-arguments.callee 指向当前执行的函数。
-arguments.caller 指向调用当前函数的函数。(已删除)
-arguments.length 指向传递给当前函数的参数数量。
-arguments[@@iterator] 返回一个新的Array迭代器对象，该对象包含参数中每个索引的值。
+> arguments对象
+* arguments.callee 指向当前执行的函数。
+* arguments.caller 指向调用当前函数的函数。(已删除)
+* arguments.length 指向传递给当前函数的参数数量。
+* arguments[@@iterator] 返回一个新的Array迭代器对象，该对象包含参数中每个索引的值。
 
 
-Object.prototype.toString.call
 
-console.log('String:'+Object.prototype.toString.call('name'));
-console.log('Number:'+Object.prototype.toString.call(1));
-console.log('Boolean:'+Object.prototype.toString.call(false));
-console.log('Undefined:'+Object.prototype.toString.call(undefined));
-console.log('Null:'+Object.prototype.toString.call(null));
-console.log('Object:'+Object.prototype.toString.call({}));
-console.log('Array:'+Object.prototype.toString.call([]));
-console.log('Function:'+Object.prototype.toString.call(function(){}));
-
-String:[object String]
-Number:[object Number]
-
-Boolean:[object Boolean]
-
-Undefined:[object Undefined]
-Null:[object Null]
-Object:[object Object]
-
-Array:[object Array]
-Function:[object Function]
 
 
 
