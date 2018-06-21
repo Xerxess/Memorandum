@@ -337,10 +337,14 @@ single-animation-timing-function
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">  
 ```
 * width:以pixels（像素）为单位， 定义viewport（视口）的宽度。  
-* height:以pixels（像素）为单位， 定义viewport（视口）的高度。  
-* minimum-scale:定义缩放的最大值;它必须大于或等于最小规模或行为是不确定的。  
-* initial-scale:定义缩放的最小值;它必须小于或等于最大规模或行为是不确定的。  
-* user-scalable:如果设置为no，则用户无法放大网页。默认值是yes
+* height:以pixels（像素）为单位， 定义viewport（视口）的高度。 
+* initial-scale:定义设备宽度（device-width纵向模式或device-height横向模式）与视口大小之间的比率。 
+
+* maximum-scale 定义要放大的最大金额。它必须大于或等于minimum-scale或未定义行为。浏览器设置可以忽略这个规则，iOS10 +默认忽略它。
+
+* minimum-scale:定义最小缩放级别。它必须小于或等于maximum-scale行为未定义。浏览器设置可以忽略这个规则，iOS10 +默认忽略它。
+
+* user-scalable:	如果设置为no，用户无法放大网页。默认是yes。浏览器设置可以忽略这个规则，iOS10 +默认忽略它。
 
 
 
