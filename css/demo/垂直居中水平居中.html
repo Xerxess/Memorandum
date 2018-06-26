@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>CSS实现垂直居中的8种方法</title>
+  <meta charset="utf-8" />
+  <style>
+    /*方法一*/
+
+    .tab-wrapper {
+      display: table;
+      height: 200px;
+      width: 100%;
+    }
+
+    .tab-cell {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      background: #ccc;
+    }
+
+    /*方法二*/
+
+    .pos-wrapper {
+      position: relative;
+      height: 200px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+    }
+
+    .pos-cell {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      margin-left: -50px;
+      margin-top: -50px;
+      background: #ccc;
+    }
+
+    /*方法三*/
+
+    .flo-wrapper {
+      position: relative;
+      height: 200px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+    }
+
+    .floater {
+      height: 50%;
+      margin-bottom: -50px;
+    }
+
+    .flo-cell {
+      clear: both;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      position: relative;
+      background: #ccc;
+    }
+
+    /*方法四*/
+
+    .mar-wrapper {
+      position: relative;
+      height: 200px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+    }
+
+    .mar-cell {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 100px;
+      width: 100px;
+      background: #ccc;
+    }
+
+    /*方法五*/
+
+    .line-wrapper {
+      height: 200px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+    }
+
+    .line-text {
+      line-height: 200px;
+      text-align: center;
+    }
+
+    /*方法五变体*/
+
+    .line-wrapper {
+      text-align: center;
+    }
+
+    .line-wrapper:after {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    .line-cell {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      vertical-align: middle;
+    }
+
+    /*方法六*/
+
+    .pad-wrapper {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+      padding: 50px 50%;
+      box-sizing: border-box;
+    }
+
+    .pad-cell {
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      margin-left: -50px;
+    }
+
+    /*方法七*/
+
+    .box-wrapper {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+      height: 200px;
+    }
+
+    .box-cell {
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+    }
+
+
+    /*方法八*/
+
+    .transforms-wrapper {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+      height: 200px;
+      position: relative;
+    }
+
+    .transforms-cell {
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      position: absolute;  
+      top: 50%; left: 50%;  
+  -webkit-transform: translate(-50%,-50%);  
+          transform: translate(-50%,-50%);  
+    }
+  </style>
+  </style>
+
+  
+</head>
+
+<body>
+  <h1>方法一：display: table</h1>
+  <div class="tab-wrapper">
+    <div class="tab-cell">内容</div>
+  </div>
+
+  <h1>方法二：position:absolute</h1>
+  <div class="pos-wrapper">
+    <div class="pos-cell">内容</div>
+  </div>
+
+  <h1>方法三：margin-bottom:-n;</h1>
+  <div class="flo-wrapper">
+    <div class="floater">
+    </div>
+    <div class="flo-cell">内容</div>
+  </div>
+
+  <h1>方法四：position:absolute margin:auto</h1>
+  <div class="mar-wrapper">
+    <div class="mar-cell">内容</div>
+  </div>
+
+  <h1>方法五：line-height</h1>
+  <div class="line-wrapper">
+    <div class="line-text">内容</div>
+  </div>
+
+  <h1>方法五变体：line-height</h1>
+  <div class="line-wrapper">
+    <div class="line-cell">内容</div>
+  </div>
+
+
+  <h1>方法六：padding</h1>
+  <div class="pad-wrapper">
+    <div class="pad-cell">内容</div>
+  </div>
+
+  <h1>方法七：box</h1>
+  <div class="box-wrapper">
+    <div class="box-cell">内容</div>
+  </div>
+
+  <h1>方法八：Transforms</h1>
+  <div class="transforms-wrapper">
+    <div class="transforms-cell">内容</div>
+  </div>
+
+</body>
+
+</html>

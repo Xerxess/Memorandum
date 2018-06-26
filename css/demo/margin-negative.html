@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>margin负值应用</title>
+    <style>
+        .box {
+            border: 5px dashed #ddd;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .box>p {
+            padding: 0 20px;
+        }
+
+        .box>div {
+            border-top: 5px dashed #ddd;
+            padding: 30px;
+            float: left;
+            width: 50%;
+            box-sizing: border-box;
+            height: 500px;
+            position: relative;
+        }
+
+        .box>div:nth-of-type(2) {
+            border-left: 5px dashed #ddd;
+        }
+
+        .box>div:nth-of-type(1)::after {
+            content: '原始样式';
+            color: #ddd;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+
+        }
+
+        .box>div:nth-of-type(2)::after {
+            content: 'margin负值对应';
+            color: #ddd;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+
+        }
+
+        .original,
+        .current {
+            position: relative;
+
+        }
+
+
+
+        .original>div,
+        .current>div {
+            height: 100%;
+            text-align: center;
+            line-height: 60px;
+            color: #000;
+        }
+
+        .original>div:nth-of-type(1) {
+            background: red;
+        }
+
+        .original>div:nth-of-type(2) {
+            background: yellow;
+        }
+
+        .original>div:nth-of-type(3) {
+            background: green;
+        }
+
+        .original>div:nth-of-type(4) {
+            background: rgb(0, 183, 255);
+        }
+
+        .original>div:nth-of-type(5) {
+            background: rgb(230, 48, 190);
+        }
+
+        .original>div:nth-of-type(6) {
+            background: rgb(255, 123, 0);
+        }
+        .current>div:nth-of-type(2n) {
+            color: #fff;
+        }
+        .current>div:nth-of-type(n+1) {
+            color: #000;
+        }
+
+        .original>div:nth-of-type(n+1) {
+            background: red;
+        }
+
+        .original>div:nth-of-type(2n+2) {
+            background: yellow;
+        }
+
+        .original>div:nth-of-type(3n+3) {
+            background: green;
+        }
+
+        .original>div:nth-of-type(4n+4) {
+            background: rgb(0, 183, 255);
+        }
+
+        .original>div:nth-of-type(5n+5) {
+            background: rgb(230, 48, 190);
+        }
+
+        .original>div:nth-of-type(6n+6) {
+            background: rgb(255, 123, 0);
+        }
+
+
+
+
+        .current>div:nth-of-type(n+1) {
+            background: red;
+        }
+
+        .current>div:nth-of-type(2n+2) {
+            background: yellow;
+        }
+
+        .current>div:nth-of-type(3n+3) {
+            background: green;
+        }
+
+        .current>div:nth-of-type(4n+4) {
+            background: rgb(0, 183, 255);
+        }
+
+        .current>div:nth-of-type(5n+5) {
+            background: rgb(230, 48, 190);
+        }
+
+        .current>div:nth-of-type(6n+6) {
+            background: rgb(255, 123, 0);
+        }
+
+        .current>div:nth-of-type(1)::after {
+            background: rgba(100, 241, 5, 0.219);
+        }
+
+        .current>div:nth-of-type(2)::after {
+            background: rgba(100, 241, 5, 0.219);
+        }
+
+        .current>div:nth-of-type(3)::after {
+            background: rgba(241, 225, 5, 0.356);
+        }
+
+        .current>div:nth-of-type(4)::after {
+            background: rgba(241, 217, 5, 0.219);
+        }
+
+        .current>div:nth-of-type(5)::after {
+            background: rgba(33, 241, 5, 0.322);
+        }
+
+        .current>div:nth-of-type(6)::after {
+            background: rgba(241, 5, 76, 0.219);
+        }
+    </style>
+
+    <!-- 1 -->
+    <style>
+        .section1 {}
+
+        .section1 .current>div:nth-of-type(2) {margin-top: -30px;}
+        .section1 .current>div:nth-of-type(2):after {content: '(margin-top:-30px;)';}
+
+        .section1 .current>div:nth-of-type(3) {margin-right: -30px;}
+        .section1 .current>div:nth-of-type(3):after {content: 'margin-right: -30px;';}
+
+        .section1 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+        .section1 .current>div:nth-of-type(4):after {content: 'margin-bottom: -30px;';}
+
+        .section1 .current>div:nth-of-type(5) {margin-left: -30px;}
+        .section1 .current>div:nth-of-type(5):after {content: 'margin-left: -30px;';}    
+</style>
+    <!-- 2 -->
+    <style>
+        .section2 {}
+        .section2 .current >div{width: 120px;height: 60px;}
+        .section2 .original >div{width: 120px;height: 60px;}
+        
+        .section2 .current>div:nth-of-type(2) {margin-top: -30px;}
+        .section2 .current>div:nth-of-type(2):after {content: '(top:-30px;)';}
+
+        .section2 .current>div:nth-of-type(3) {margin-right: -30px;}
+        .section2 .current>div:nth-of-type(3):after {content: 'right: -30px;';}
+
+        .section2 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+        .section2 .current>div:nth-of-type(4):after {content: 'bottom: -30px;';}
+
+        .section2 .current>div:nth-of-type(5) {margin-left: -30px;}
+        .section2 .current>div:nth-of-type(5):after {content: 'left: -30px;';}
+    </style>
+    <!-- 3 -->
+<style>
+        .section3 {}
+        .section3 .current >div{display: inline;}
+        .section3 .original >div{display: inline;}
+        
+        .section3 .current:nth-of-type(1)>div:nth-of-type(2) {margin-top: -30px;}
+        /* .section3 .current>div:nth-of-type(2):after {content: '(top:-30px;)';} */
+
+        .section3 .current:nth-of-type(2)>div:nth-of-type(3) {margin-right: -30px;}
+        /* .section3 .current>div:nth-of-type(3):after {content: 'right: -30px;';} */
+
+        .section3 .current:nth-of-type(3)>div:nth-of-type(4) {margin-bottom: -30px;}
+        /* .section3 .current>div:nth-of-type(4):after {content: 'bottom: -30px;';} */
+
+        .section3 .current:nth-of-type(4)>div:nth-of-type(5) {margin-left: -30px;}
+        /* .section3 .current>div:nth-of-type(5):after {content: 'left: -30px;';} */
+    </style>
+
+    <!-- 4 -->
+    <style>
+            .section4 {}
+            .section4 .current >div{width: 60px;height: 60px;display: inline-block;}
+            .section4 .original >div{width: 60px;height: 60px;display: inline-block;}
+            
+            .section4 .current>div:nth-of-type(2) {margin-top: -30px;}
+            /* .section4 .current>div:nth-of-type(2):after {content: '(top:-30px;)';} */
+    
+            .section4 .current>div:nth-of-type(3) {margin-right: -30px;}
+            /* .section4 .current>div:nth-of-type(3):after {content: 'right: -30px;';} */
+    
+            .section4 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+            /* .section4 .current>div:nth-of-type(4):after {content: 'bottom: -30px;';} */
+    
+            .section4 .current>div:nth-of-type(5) {margin-left: -30px;}
+            /* .section4 .current>div:nth-of-type(5):after {content: 'left: -30px;';} */
+        </style>
+
+                <!-- 5 -->
+    <style>
+            .section5 {}
+            .section5 .current >div{width: 60px;height: 60px;float: left;}
+            .section5 .original >div{width: 60px;height: 60px;float: left;}
+            
+            .section5 .current>div:nth-of-type(2) {margin-top: -30px;}
+           
+    
+            .section5 .current>div:nth-of-type(3) {margin-right: -30px;}
+         
+    
+            .section5 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+          
+    
+            .section5 .current>div:nth-of-type(5) {margin-left: -30px;}
+          
+        </style>
+
+<style>
+        .section6 {}
+        .section6 .current >div{width: 60px;height: 60px;position: absolute;top:0;}
+        .section6 .original >div{width: 60px;height: 60px;position: absolute;top:0;}
+
+        .section6 .original>div:nth-of-type(1),.section6 .current>div:nth-of-type(1) {left: 0px;}
+        .section6 .original>div:nth-of-type(2),.section6 .current>div:nth-of-type(2) {left: 60px;}
+        .section6 .original>div:nth-of-type(3),.section6 .current>div:nth-of-type(3) {left: 120px;}
+        .section6 .original>div:nth-of-type(4),.section6 .current>div:nth-of-type(4) {left: 180px;}
+        .section6 .original>div:nth-of-type(5),.section6 .current>div:nth-of-type(5) {left: 240px;}  
+        .section6 .original>div:nth-of-type(6),.section6 .current>div:nth-of-type(6) {left: 300px;}
+        
+        .section6 .current>div:nth-of-type(2) {margin-top: -30px;}
+
+        .section6 .current>div:nth-of-type(3) {margin-right: -30px;}
+
+        .section6 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+      
+        .section6 .current>div:nth-of-type(5) {margin-left: -30px;}
+      
+    </style>
+
+    <!-- 7 -->
+    <style>
+            .section7 {}
+            .section7 .current >div{width: 60px;height: 60px;display: inline;line-height: 1.2;color: #000}
+            .section7 .original >div{width: 60px;height: 60px;display: inline;line-height: 1.2;color: #000}
+            
+            .section7 .current>div:nth-of-type(2) {margin-top: -30px;}
+    
+            .section7 .current>div:nth-of-type(3) {margin-left: -30px;}
+    
+            .section7 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+    
+            .section7 .current>div:nth-of-type(5) {margin-left: -30px;}
+            .section7 .current>div:nth-of-type(8) {margin-top: -80px;}
+        </style>
+
+            <!-- 8 -->
+    <style>
+            .section8 {}
+            .section8 .current >div{width: 60px;height: 60px;display: inline;line-height: 1.2;color: #000}
+            .section8 .original >div{width: 60px;height: 60px;display: inline;line-height: 1.2;color: #000}
+            
+            .section8 .current>div:nth-of-type(2) {margin-top: -30px;}
+    
+            .section8 .current>div:nth-of-type(3) {margin-left: -30px;display: inline-block;}
+    
+            .section8 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+    
+            .section8 .current>div:nth-of-type(5) {margin-left: -30px;display: inline-block;}
+            .section8 .current>div:nth-of-type(8) {margin-top: -80px;}
+
+             .section8 .current>div:nth-of-type(15) {margin-top: -30px;display: inline-block;}
+             .section8 .current>div:nth-of-type(18) {margin-left: -30px;display: inline-block;}
+        </style>
+
+                    <!-- 9 -->
+    <style>
+            .section9 {}
+            .section9 .current >div{width: 60px;height: 60px;display: inline-block;line-height: 1.2;color: #000;}
+            .section9 .original >div{width: 60px;height: 60px;display: inline-block;line-height: 1.2;color: #000}
+            
+            .section9 .current>div:nth-of-type(2) {margin-top: -30px;}
+    
+            .section9 .current>div:nth-of-type(3) {margin-left: -30px;display: inline-block;}
+    
+            .section9 .current>div:nth-of-type(4) {margin-bottom: -30px;}
+    
+            .section9 .current>div:nth-of-type(5) {margin-left: -30px;display: inline-block;}
+            .section9 .current>div:nth-of-type(8) {margin-top: -80px;}
+
+            .section9 .current>div:nth-of-type(15) {margin-top: -30px;display: inline-block;}
+            .section9 .current>div:nth-of-type(18) {margin-left: -30px;display: inline-block;}
+        </style>
+ <!-- 10 -->
+<style>
+        .section10 {}
+        .section10 .current >div{width: 60px;height:auto;line-height: 1.2}
+        .section10 .original >div{width: 60px;height:auto;line-height: 1.2}
+        
+        .section10 .current>div:nth-of-type(2) {margin-top: -30px;}
+        .section10 .current>div:nth-of-type(4) {margin-right: -30px;}
+        .section10 .current>div:nth-of-type(5) {margin-bottom: -30px;}
+        .section10 .current>div:nth-of-type(6) {margin-left: -30px;}
+    </style>
+</head>
+
+<body>
+    <!--1 dispaly:block; -->
+    <div class="box section1">
+        <p>dispaly:block;</p>
+        <div>
+            <div class="original">
+                <div>start</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>end</div>
+            </div>
+        </div>
+        <div>
+            <div class="current">
+                <div>start</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>end</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 dispaly:block(width、height);-->
+    <div class="box section2">
+        <p>dispaly:block;</p>
+        <div>
+            <div class="original">
+                <div>start</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>end</div>
+            </div>
+        </div>
+        <div>
+            <div class="current">
+                <div>start</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>end</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3 display:inline;-->
+    <div class="box section3">
+            <p>display:inline;</p>
+            <div>
+                <div class="original">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                    <span>margin-top: -30px;</span>
+                </div>
+                <div class="current">
+                        <div>start</div>
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>end</div>
+                        <span>margin-right: -30px;</span>
+                    </div>
+                    <div class="current">
+                            <div>start</div>
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>end</div>
+                            <span>margin-bottom: -30px;</span>
+                        </div>
+                        <div class="current">
+                                <div>start</div>
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>4</div>
+                                <div>end</div>
+                                <span>margin-left: -30px;</span>
+                            </div>
+            </div>
+    </div>
+
+    <!-- 4 dispaly:inline-block;-->
+    <div class="box section4">
+            <p>dispaly:inline-block;</p>
+            <div>
+                <div class="original">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 5 float:left-->
+    <div class="box section5">
+            <p>float: left;</p>
+            <div>
+                <div class="original">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 6 position: absolute;-->
+    <div class="box section6">
+            <p>position: absolute;</p>
+            <div>
+                <div class="original">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 特殊情况 -->
+    <!-- 7 inline && inline-->
+    <div class="box section7">
+            <p>inline && inline</p>
+            <div>
+                <div class="original">
+                        <div>start</div>
+                        <div><span>我是小明01</span></div>
+                        <div><span>我是小明02</span></div>
+                        <div><span>我是小明03</span></div>
+                        <div><span>我是小明04</span></div>
+                        <div><span>我是小明05</span></div>
+                        <div><span>我是小明06</span></div>
+                        <div><span>我是小明07</span></div>
+                        <div><span>我是小明08</span></div>
+                        <div><span>我是小明09</span></div>
+                        <div><span>我是小明10</span></div>
+                        <div><span>我是小明11</span></div>
+                        <div><span>我是小明12</span></div>
+                        <div><span>我是小明13</span></div>
+                        <div><span>我是小明14</span></div>
+                        <div><span>我是小明15</span></div>
+                        <div><span>我是小明16</span></div>
+                        <div><span>我是小明17</span></div>
+                        <div><span>我是小明18</span></div>
+                        <div><span>我是小明19</span></div>
+                        <div><span>我是小明20</span></div>
+                        <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div><sapn>我是小明01</sapn></div>
+                    <div><sapn>我是小明02</sapn></div>
+                    <div><sapn>我是小明03</sapn></div>
+                    <div><sapn>我是小明04</sapn></div>
+                    <div><sapn>我是小明05</sapn></div>
+                    <div><sapn>我是小明06</sapn></div>
+                    <div><sapn>我是小明07</sapn></div>
+                    <div><sapn>我是小明08</sapn></div>
+                    <div><sapn>我是小明09</sapn></div>
+                    <div><sapn>我是小明10</sapn></div>
+                    <div><sapn>我是小明11</sapn></div>
+                    <div><sapn>我是小明12</sapn></div>
+                    <div><sapn>我是小明13</sapn></div>
+                    <div><sapn>我是小明14</sapn></div>
+                    <div><sapn>我是小明15</sapn></div>
+                    <div><sapn>我是小明16</sapn></div>
+                    <div><sapn>我是小明17</sapn></div>
+                    <div><sapn>我是小明18</sapn></div>
+                    <div><sapn>我是小明19</sapn></div>
+                    <div><sapn>我是小明20</sapn></div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+        <!-- 8 inline && inline-block -->
+    <div class="box section8">
+            <p>inline && inline-block</p>
+            <div>
+                <div class="original">
+                        <div>start</div>
+                        <div><span>我是小明01</span></div>
+                        <div><span>我是小明02</span></div>
+                        <div><span>我是小明03</span></div>
+                        <div><span>我是小明04</span></div>
+                        <div><span>我是小明05</span></div>
+                        <div><span>我是小明06</span></div>
+                        <div><span>我是小明07</span></div>
+                        <div><span>我是小明08</span></div>
+                        <div><span>我是小明09</span></div>
+                        <div><span>我是小明10</span></div>
+                        <div><span>我是小明11</span></div>
+                        <div><span>我是小明12</span></div>
+                        <div><span>我是小明13</span></div>
+                        <div><span>我是小明14</span></div>
+                        <div><span>我是小明15</span></div>
+                        <div><span>我是小明16</span></div>
+                        <div><span>我是小明17</span></div>
+                        <div><span>我是小明18</span></div>
+                        <div><span>我是小明19</span></div>
+                        <div><span>我是小明20</span></div>
+                        <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div><sapn>我是小明01</sapn></div>
+                    <div><sapn>我是小明02</sapn></div>
+                    <div><sapn>我是小明03</sapn></div>
+                    <div><sapn>我是小明04</sapn></div>
+                    <div><sapn>我是小明05</sapn></div>
+                    <div><sapn>我是小明06</sapn></div>
+                    <div><sapn>我是小明07</sapn></div>
+                    <div><sapn>我是小明08</sapn></div>
+                    <div><sapn>我是小明09</sapn></div>
+                    <div><sapn>我是小明10</sapn></div>
+                    <div><sapn>我是小明11</sapn></div>
+                    <div><sapn>我是小明12</sapn></div>
+                    <div><sapn>我是小明13</sapn></div>
+                    <div><sapn>我是小明14</sapn></div>
+                    <div><sapn>我是小明15</sapn></div>
+                    <div><sapn>我是小明16</sapn></div>
+                    <div><sapn>我是小明17</sapn></div>
+                    <div><sapn>我是小明18</sapn></div>
+                    <div><sapn>我是小明19</sapn></div>
+                    <div><sapn>我是小明20</sapn></div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 9 inline-block && inline-block -->
+    <div class="box section9">
+            <p>inline-block && inline-block</p>
+            <div>
+                <div class="original">
+                        <div>start</div>
+                        <div><span>我是小明01</span></div>
+                        <div><span>我是小明02</span></div>
+                        <div><span>我是小明03</span></div>
+                        <div><span>我是小明04</span></div>
+                        <div><span>我是小明05</span></div>
+                        <div><span>我是小明06</span></div>
+                        <div><span>我是小明07</span></div>
+                        <div><span>我是小明08</span></div>
+                        <div><span>我是小明09</span></div>
+                        <div><span>我是小明10</span></div>
+                        <div><span>我是小明11</span></div>
+                        <div><span>我是小明12</span></div>
+                        <div><span>我是小明13</span></div>
+                        <div><span>我是小明14</span></div>
+                        <div><span>我是小明15</span></div>
+                        <div><span>我是小明16</span></div>
+                        <div><span>我是小明17</span></div>
+                        <div><span>我是小明18</span></div>
+                        <div><span>我是小明19</span></div>
+                        <div><span>我是小明20</span></div>
+                        <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div><sapn>我是小明01</sapn></div>
+                    <div><sapn>我是小明02</sapn></div>
+                    <div><sapn>我是小明03</sapn></div>
+                    <div><sapn>我是小明04</sapn></div>
+                    <div><sapn>我是小明05</sapn></div>
+                    <div><sapn>我是小明06</sapn></div>
+                    <div><sapn>我是小明07</sapn></div>
+                    <div><sapn>我是小明08</sapn></div>
+                    <div><sapn>我是小明09</sapn></div>
+                    <div><sapn>我是小明10</sapn></div>
+                    <div><sapn>我是小明11</sapn></div>
+                    <div><sapn>我是小明12</sapn></div>
+                    <div><sapn>我是小明13</sapn></div>
+                    <div><sapn>我是小明14</sapn></div>
+                    <div><sapn>我是小明15</sapn></div>
+                    <div><sapn>我是小明16</sapn></div>
+                    <div><sapn>我是小明17</sapn></div>
+                    <div><sapn>我是小明18</sapn></div>
+                    <div><sapn>我是小明19</sapn></div>
+                    <div><sapn>我是小明20</sapn></div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 10 block && block -->
+    <div class="box section10">
+            <p>block && block</p>
+            <div>
+                <div class="original">
+                        <div>start</div>
+                        <div><span>我是小明01</span></div>
+                        <div><span>我是小明02</span></div>
+                        <div><span>我是小明03</span></div>
+                        <div><span>我是小明04</span></div>
+                        <div><span>我是小明05</span></div>
+                        <div><span>我是小明06</span></div>
+                        <div><span>我是小明07</span></div>
+                        <div><span>我是小明08</span></div>
+                        <div><span>我是小明09</span></div>
+                        <div><span>我是小明10</span></div>
+                        <div><span>我是小明11</span></div>
+                        <div><span>我是小明12</span></div>
+                        <div><span>我是小明13</span></div>
+                        <div><span>我是小明14</span></div>
+                        <div><span>我是小明15</span></div>
+                        <div><span>我是小明16</span></div>
+                        <div><span>我是小明17</span></div>
+                        <div><span>我是小明18</span></div>
+                        <div><span>我是小明19</span></div>
+                        <div><span>我是小明20</span></div>
+                        <div>end</div>
+                </div>
+            </div>
+            <div>
+                <div class="current">
+                    <div>start</div>
+                    <div><sapn>我是小明01</sapn></div>
+                    <div><sapn>我是小明02</sapn></div>
+                    <div><sapn>我是小明03</sapn></div>
+                    <div><sapn>我是小明04</sapn></div>
+                    <div><sapn>我是小明05</sapn></div>
+                    <div><sapn>我是小明06</sapn></div>
+                    <div><sapn>我是小明07</sapn></div>
+                    <div><sapn>我是小明08</sapn></div>
+                    <div><sapn>我是小明09</sapn></div>
+                    <div><sapn>我是小明10</sapn></div>
+                    <div><sapn>我是小明11</sapn></div>
+                    <div><sapn>我是小明12</sapn></div>
+                    <div><sapn>我是小明13</sapn></div>
+                    <div><sapn>我是小明14</sapn></div>
+                    <div><sapn>我是小明15</sapn></div>
+                    <div><sapn>我是小明16</sapn></div>
+                    <div><sapn>我是小明17</sapn></div>
+                    <div><sapn>我是小明18</sapn></div>
+                    <div><sapn>我是小明19</sapn></div>
+                    <div><sapn>我是小明20</sapn></div>
+                    <div>end</div>
+                </div>
+            </div>
+    </div>
+
+    <!-- 11 inline && float -->
+    <div class="box section11" style="">
+            <p>inline && float</p>
+            <div>
+                <div class="original">
+                    <div class="content-1">
+                            <div><span>我是小明01</span></div>
+                            <div><span>我是小明02</span></div>
+                            <div><span>我是小明03</span></div>
+                            <div><span>我是小明04</span></div>
+                            <div><span>我是小明05</span></div>
+                    </div>
+                    <div class="content-2">
+                            <div><span>我是小明01</span></div>
+                            <div><span>我是小明02</span></div>
+                            <div><span>我是小明03</span></div>
+                            <div><span>我是小明04</span></div>
+                            <div><span>我是小明05</span></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>
