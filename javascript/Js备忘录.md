@@ -19,6 +19,21 @@
 * [JSON](#json)
 * [Promise](#promise)
 * [Object](#object)
+    * [Methods](#object1)
+        * [Object.assign](#object1-1)
+    * [Methods](#object2)
+    * [Methods](#object3)
+    * [Methods](#object4)
+    * [Methods](#object5)
+    * [Methods](#object6)
+    * [Methods](#object7)
+    * [Methods](#object8)
+    * [Methods](#object9)
+    * [Methods](#object10)
+    * [Methods](#object11)
+    * [Methods](#object12)
+    * [Methods](#object13)
+    * [Methods](#object14)
 * [with](#with)
 * [typeof](#typeof)
 * [运算符: +x](#yunsuan)
@@ -27,11 +42,16 @@
 * [','逗号](#douhao)
 * [es5-shim](#shim)
 * [Function](#function)
+    * [函数声明](#function1)
+    * [IIFE](#function2)
+    * [箭头函数](#function3)
+    * [构造函数](#function4)
+    * [arguments对象](#function5)
 
 
-> <span id="regexp">RegExp 构造函数</span> 
+> <i id=""></i><span id="regexp">RegExp 构造函数</span> 
 
-<span id="regexp1"></span>语法：
+<i id=""></i><span id="regexp1"></span>语法：
 ```
 1./pattern/flags
 2.new RegExp(pattern [, flags])
@@ -58,7 +78,7 @@ console.log(reg4.toString());
 // '/\\d\\D\\w\\W\\s/g'
 ```
 
-<span id="regexp2"></span>flags：
+<i id=""></i><span id="regexp2"></span>flags：
 ```
 g：全局匹配;找到所有匹配，而不是在第一个匹配后停止  
 i：忽略大小写  
@@ -67,7 +87,7 @@ u：Unicode; 将模式视为Unicode序列点的序列
 y：粘性匹配; 仅匹配目标字符串中此正则表达式的lastIndex  属性指示的索引(并且不尝试从任何后续的索引匹配)。
 ```
 
-<span id="regexp3"></span>RegExp 实例
+<i id=""></i><span id="regexp3"></span>RegExp 实例
 
 ```
 RegExp.prototype.constructor 创建该正则对象的构造函数。
@@ -111,7 +131,7 @@ source:'正则匹配的字符串'
 }
 ```
 
-> <span id="regexp4"></span>RegExp.prototype.exec()与String.match(regexp);  
+> <i id=""></i><span id="regexp4"></span>RegExp.prototype.exec()与String.match(regexp);  
 <span class="red">*注:regexp是不是全局模式时，返回结果相同</span>
 
 ``` javascript
@@ -157,13 +177,13 @@ console.log(str.match(reg));//["1a", "2b", "3c", "4d", "5e", "6f", "7g", "8f", "
 * RegExp.prototype.toSource()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toSource 方法.
 * RegExp.prototype.toString()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toString() 方法。
 
-><span id="string">String</span>
+><i id=""></i><span id="string">String</span>
 
  * string.substr(start, length) 一个字符串的副本，包括从string的start处(包括start所指的字符)开始的1ength个字符。如果没有指定length，返回的字符串包含从start到string结尾的字符，-1指字符串中的最后—个字符，-2指倒数第二个字符  
 * string.substring(from, to) 返回字符串string的子串，由from到to之间的字符构成， 包括位于from的字符，不包括位于to的字符。
 string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)的所有字符。(-1指字符串中的最后一个字符，-2指倒数第二个字符)
 
-> Global 全局属性
+> <i id=""></i>Global 全局属性
 
 * Infinity 表示正无穷大的数值。  
 * NaN 非数字值  
@@ -172,7 +192,7 @@ string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)�
 > for...in 顺序遍历一个对象的可枚举属性  
 > for...of 语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
 
-> <span id="array"/>Array
+> <i id=""></i><span id="array"/>Array
 
 ## Array.prototype
 
@@ -571,10 +591,10 @@ console.log(result); //[1,2,3,4,5]
 
 
 
-# <sapn id="domevent"/>DOM Event
+# <i id=""></i><sapn id="domevent"/>DOM Event
 
 
-## <sapn id="location"/>Location
+## <i id=""></i><sapn id="location"/>Location
 
 #### Properties
 
@@ -610,7 +630,7 @@ console.log(url.hash);      // #search-results-close-container
 console.log(url.origin);    // https://developer.mozilla.org
 ```
 
-## <sapn id="string2"/>String
+## <i id=""></i><sapn id="string2"/>String
 
 转义字符
 column0 | column1
@@ -899,7 +919,7 @@ $('#result').append(`
 `);
 ```
 
-## <sapn id="number"/>Number
+## <i id=""></i><sapn id="number"/>Number
 
 #### Methods
 * Number.parseFloat(string) 和全局对象 parseFloat() 一样。 需要被解析成为浮点数的字符串.  
@@ -948,7 +968,7 @@ Number.isNaN(" ");
 
 
 
-#### <sapn id="math"/>Math
+#### <i id=""></i><sapn id="math"/>Math
 * Math.abs()绝对值
 * sin(), cos(), tan() 正三角
 * asin(), acos(), atan(), atan2()反三角
@@ -972,7 +992,7 @@ function getRandomIntInclusive(min, max) {
 
 
 
-## <sapn id="date"/>Date
+## <i id=""></i><sapn id="date"/>Date
 UTC **世界协调时间** GMT **格林威治标准时间**(UTC==GMT 北京时间=UTC+8时差)
 ```js
 new Date();
@@ -1003,7 +1023,7 @@ console.log(today.getDay());//一周的第几天，(星期天是0)
 ```
 
 
-## <sapn id="usestrict"/>严格模式
+## <i id=""></i><sapn id="usestrict"/>严格模式
 
 * 为某个单独的脚本文件开启严格模式
 ```js
@@ -1056,7 +1076,7 @@ var args = Array.prototype.slice.call(arguments) 总是通过形参的名字获�
 
 
 
-## <sapn id="eval"/>EVAL
+## <i id=""></i><sapn id="eval"/>EVAL
 eval(string); 执行指定代码之后的返回值。如果返回值为空，返回undefined 函数会将传入的字符串当做 JavaScript 代码进行执行  
 eval 中函数作为字符串被定义需要`“（”和“）”`作为前缀和后缀
 ```js
@@ -1069,7 +1089,7 @@ var d=  eval('({"key":"abc"})');
 
 
 
-## <sapn id="json"/>JSON  [Browser：polyfill]
+## <i id=""></i><sapn id="json"/>JSON  [Browser：polyfill]
 * JSON.parse(text[, reviver]);  
   reviver函数 function (k, v) {}  
   `不允许用逗号作为结尾 JSON.parse("[1, 2, 3, 4, ]");  JSON.parse('{"foo" : 1, }');`
@@ -1169,7 +1189,7 @@ JSON.stringify(foo, ['week', 'month']);
 
 
 
-## <sapn id="promise"/>Promise 　　[Browser：polyfill]
+## <i id=""></i><sapn id="promise"/>Promise 　　[Browser：polyfill]
 
 ### Promise几种状态:
 * pending: 初始状态，既不是成功，也不是失败状态。
@@ -1257,9 +1277,9 @@ p1.then(function(value) {
 
 
 
-## <sapn id="object"/>Object
+## <i id="object"></i>Object
 
-### Methods
+### <i id="object1"></i>Methods
  > Object.assign(target, ...sources) 用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。[Result:UpdateTarget]
 
 ```js
@@ -1273,7 +1293,7 @@ console.log(o1);  // { a: 1, b: 2, c: 3 }, 注意目标对象自身也会改变�
 console.log(o1===obj);//true
 ```
 
-> Object.create(proto, [propertiesObject])
+> <i id="object1-1"></i>Object.create(proto, [propertiesObject])
 一个新对象，带着指定的原型对象和属性。
 proto 新创建对象的原型对象
 propertiesObject default:undefined
@@ -1571,7 +1591,7 @@ console.log('Function:'+Object.prototype.toString.call(function(){}));
 * Object.prototype.watch() 给对象的某个属性增加监听
 
 
-> <sapn id="with"/> with 扩展一个语句的作用域链
+> <i id="with"></i>with 扩展一个语句的作用域链
 
 下面的`with`语句指定Math对象作为默认对象。with语句里面的变量，分別`指向Math对象的PI 、cos和sin函数，不用在前面添加命名空间`。
 ```js
@@ -1586,7 +1606,7 @@ with (Math) {
 ```
 
 
-> <sapn id="typeof"/>typeof
+> <i id="typeof"></i>typeof
 
 #### 语法
 ```js
@@ -1660,7 +1680,7 @@ typeof null === 'object'; // 从一开始出现JavaScript就是这样的
 
 
 
-> <sapn id="yunsuan"/>运算符: +x
+> <i id="yunsuan"></i>运算符: +x
 
 ```js
 +3     // 3
@@ -1672,7 +1692,7 @@ typeof null === 'object'; // 从一开始出现JavaScript就是这样的
 ```
 
 
-><sapn id="in"/> in 属性在指定的对象或其原型链中，则in 运算符返回true
+> <i id="in"></i> in 属性在指定的对象或其原型链中，则in 运算符返回true
  ```js
  //语法
  prop in object
@@ -1702,10 +1722,10 @@ var mycar = {make: "Honda", model: "Accord", year: 1998};
 
 
 
-> <sapn id="instanceof"/>instanceof 运算符判断一个对象是否是另一个对象的实例.
+> <i id="instanceof"></i>instanceof 运算符判断一个对象是否是另一个对象的实例.
 
 
-> <sapn id="douhao"/>','逗号 对它的每个操作数求值（从左到右）`，`并返回最后一个操作数的值。
+> <i id="douhao"></i>','逗号 对它的每个操作数求值（从左到右）`，`并返回最后一个操作数的值。
 expr1, expr2, expr3...
 function myFunc () {
   var x = 0;
@@ -1713,26 +1733,26 @@ function myFunc () {
 }
 
 
-><sapn id="shim"/> es5-shim.js 垫片
+> <i id="shim"></i> es5-shim.js 垫片
 es5-sham.js 补充防止旧浏览器报错 Object.* (ie8 Object.getPrototypeOf将抛出错误)
 
 
 
-> <sapn id="function"/>Function
+> <i id="function"></i>Function
 
-函数声明 (函数语句)
+<i id="function1"></i>函数声明 (函数语句)
 ```js
 function name([param[, param[, ... param]]]) { statements }
 function [name]([param] [, param] [..., param]) { statements }
 ```
 
-* IIFE (Immediately Invokable Function Expressions （立即可调用函数表达式）//自动执行一次
+* <i id="function2"></i>IIFE (Immediately Invokable Function Expressions （立即可调用函数表达式）//自动执行一次
 ```js
 (function() {statements})();
 !function(){statements}();
 ```
 
-* 箭头函数表达式 
+* <i id="function3"></i>箭头函数表达式 
 ```js
 ([param] [, param]) => { statements } 
 param => expression
@@ -1743,12 +1763,12 @@ param => expression
 * param:参数名称. 零参数需要用()表示.  只有一个参数时不需要括号. (例如 foo => 1)
 * statements or expression:多个声明statements需要用大括号括起来，而单个表达式时则不需要。表达式expression也是该函数的隐式返回值。
 
-### Function构造函数
+### <i id="function4"></i>Function构造函数
 ```js
 new Function (arg1, arg2, ... argN, functionBody)
 ```
 
-> arguments对象
+> <i id="function5"></i>arguments对象
 * arguments.callee 指向当前执行的函数。
 * arguments.caller 指向调用当前函数的函数。(已删除)
 * arguments.length 指向传递给当前函数的参数数量。
