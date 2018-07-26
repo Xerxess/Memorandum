@@ -43,12 +43,15 @@ This is an H2
 
 
 
-
 > 列表
 ```
 *   Red
 *   Green
 *   Blue
+
+-   Red
+-   Green
+-   Blue
 
 1.   Red
 2.   Green
@@ -83,6 +86,7 @@ This is an H2
 
 > 强调
 
+```
 *斜体*
 
 _斜体_
@@ -94,20 +98,25 @@ __粗体__
 ***加粗斜体***
 
 ~~删除线~~
+```
 
 ***
 
 > 图片
 
+```
 ![Alt text](/path/to/img.jpg)
 
 ![Alt text](/path/to/img.jpg "Optional title")  
+```
 
 
 >其他  
+```
 <http://example.com/>  
 <address@example.com>  
 \*literal asterisks\*
+```
 
 
 
@@ -118,6 +127,11 @@ A2 | B2 | C2
 A3 | B3 | C3
 
 
-## 0. 目录 {#index}
+## 锚点
+
+[锚点](#url-more "anchor alt text")     
+
+## 0. 目录 (#index)
 
 跳转到[目录](#index)
+
