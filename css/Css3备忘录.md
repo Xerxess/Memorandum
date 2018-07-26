@@ -1,8 +1,47 @@
+# CSS3 备忘录
 
+* [弹性盒子模型](#box)
+    * [box-orient && flex-direction](#box-1)
+    * [box-direction && null](#box-2)
+    * [box-pack && justify-content](#box-3)
+    * [null && align-content](#box-14)
+    * [box-align && align-items](#box-4)
+    * [box-flex && flex](#box-5)
+    * [box-flex && flex-grow](#box-6)
+    * [null && flex-shrink](#box-7)
+    * [null && flex-basis](#box-8)
+    * [box-flex-group && null](#box-9)
+    * [box-ordinal-group &&　order](#box-10)
+    * [box-lines　&& flex-wrap](#box-11)
+    * [null && flex-flow](#box-12)
+    * [null && align-self](#box-13)
+* [css3-速度曲线](#cubic)
+* [css3-transform](#transform)
+    * [transform-origin](#transform-1)
+    * [transform-style](#transform-2)
+    * [perspective](#transform-3)
+    * [perspective-origin](#transform-4)
+    * [backface-visibility](#transform-5)
+* [css3-transition](#transition)
+* [css3-animation](#animation)
+    * [animation-name](#animation1)
+    * [animation-duration](#animation2)
+    * [animation-timing-function](#animation3)
+    * [animation-delay](#animation4)
+    * [animation-iteration-count](#animation5)
+    * [animation-direction](#animation6)
+    * [animation-play-state](#animation7)
+* [html-meta](#meta)
+* [css-选择器](#select)
+    * [关系选择符](#select1)
+    * [属性选择符](#select2)
+    * [伪类选择符](#select3)
+    * [伪对象选择符](#select4)
+* [css-@font-face](#font)
 
-# 弹性盒子模型
+# <i id="box"></i>弹性盒子模型
 
-> 子元素的排列方式（水平或者垂直） ` [适用于：flex容器]`
+> <i id="box-1"></i>子元素的排列方式（水平或者垂直） ` [适用于：flex容器]`
 
 （旧）box-orient：`horizontal` | vertical | inline-axis | block-axis  
 （新）flex-direction：`row` | row-reverse | column | column-reverse
@@ -16,14 +55,14 @@
 * `box-orient:horizontal + box-direction:reverse==column-reverse`
 
 
-> 子元素的排列顺序是否反转 ` [适用于：flex容器]`
+> <i id="box-2"></i>子元素的排列顺序是否反转 ` [适用于：flex容器]`
 
 （旧）box-direction：normal | reverse  
 （新）无
 
 
 
-> 子元素的对齐方式（左对齐|居中对齐|右对齐|两边对齐） ` [适用于：flex容器]`
+> <i id="box-3"></i>子元素的对齐方式（左对齐|居中对齐|右对齐|两边对齐） ` [适用于：flex容器]`
 
 （旧）box-pack：`start` | center | end | justify  
 （新）justify-content：`flex-start` | flex-end | center | space-between | space-around
@@ -37,7 +76,7 @@
  * justify==space-between 设置或伸缩盒对象的子元素两端对齐
  * `space-around 弹性盒子元素会平均地分布在行里，两端保留子元素与子元素之间间距大小的一半。` 
 
-> 多行的弹性盒模型 类似justify-content对齐方式 本属性在`只有一行的伸缩容器上没有效果`。 ` [适用于：flex容器]`
+> <i id="box-14"></i>多行的弹性盒模型 类似justify-content对齐方式 本属性在`只有一行的伸缩容器上没有效果`。 ` [适用于：flex容器]`
 
 （旧）`无`  
 （新）align-content：`flex-start` | flex-end | center | space-between | space-around | stretch
@@ -52,7 +91,7 @@
 * stretch 各行将会伸展以占用剩余的空间
 
 
-> 子元素的对齐方式 box-pack的效果正好（相反）互补 ` [适用于：flex容器]`
+> <i id="box-4"></i>子元素的对齐方式 box-pack的效果正好（相反）互补 ` [适用于：flex容器]`
 
 （旧）box-align：`start` | end | center | baseline | stretch  
 （新）align-items：`flex-start` | flex-end | center | baseline | stretch  
@@ -65,7 +104,7 @@
 * baseline 如弹性盒子元素的行内轴与侧轴为同一条，则该值与'flex-start'等效。其它情况下，该值将参与基线对齐。`子元素从结束位置对齐`
 * stretch==stretch 如果指定侧轴大小的属性值为'auto'，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照'min/max-width/height'属性的限制。`项目的内容随侧轴（纵轴）自动铺满盒子`
 
-> 子元素如何分配其剩余空间 `(在子元素上使用)` ` [适用于：flex子项]`
+> <i id="box-5"></i>子元素如何分配其剩余空间 `(在子元素上使用)` ` [适用于：flex子项]`
 
 （旧）box-flex：`0` | number   
 （新）flex：none | <' flex-grow '> <' flex-shrink >'? || <' flex-basis '>
@@ -83,37 +122,37 @@
 * 如果「flex: 0 auto」或者「flex: initial」, 则其计算值为「0 1 auto」，即「flex」初始值  
 ```
 
-> 弹性盒的扩展比率 `如何分配其剩余空间` `(不允许负值)` `(在子元素上使用)` ` [适用于：flex子项]`
+> <i id="box-6"></i>弹性盒的扩展比率 `如何分配其剩余空间` `(不允许负值)` `(在子元素上使用)` ` [适用于：flex子项]`
 
 （旧）box-flex：`0` | number   
 （新）flex-grow：`0` | number
 
 
-> 弹性盒的收缩比率 `(不允许负值)` `(在子元素上使用)`  ` [适用于：flex子项]`
+> <i id="box-7"></i>弹性盒的收缩比率 `(不允许负值)` `(在子元素上使用)`  ` [适用于：flex子项]`
 
 （旧）无  
 （新）flex-shrink：`1` | number 
 
 
-> 弹性盒伸缩基准值 `如果所有子元素的基准值之和大于剩余空间，则会根据每项设置的基准值，按比率伸缩剩余空间` `(不允许负值)` `(在子元素上使用)` ` [适用于：flex子项]`
+> <i id="box-8"></i>弹性盒伸缩基准值 `如果所有子元素的基准值之和大于剩余空间，则会根据每项设置的基准值，按比率伸缩剩余空间` `(不允许负值)` `(在子元素上使用)` ` [适用于：flex子项]`
 
 （旧）无  
 （新）flex-basis：`0%` |  length | percentage | auto | content
 
 
-> 子元素的所属组 `(在子元素上使用)` ` [适用于：flex子项]`
+> <i id="box-9"></i>子元素的所属组 `(在子元素上使用)` ` [适用于：flex子项]`
 
 （旧）box-flex-group：`1` | integer  
 （新）无
 
 
-> 子元素的显示顺序 `(在子元素上使用)` ` [适用于：flex子项]`
+> <i id="box-10"></i>子元素的显示顺序 `(在子元素上使用)` ` [适用于：flex子项]`
 
 （旧）box-ordinal-group：`1` | integer 
 （新）order：`0` | integer
 
 
-> 子元素是否可以换行显示   ` [适用于：flex容器]`
+> <i id="box-11"></i>子元素是否可以换行显示   ` [适用于：flex容器]`
 
 （旧）box-lines：`single` | multiple  
 （新）flex-wrap：`nowrap` | wrap | wrap-reverse
@@ -124,12 +163,12 @@
 * multiple==wrap 多行
 * wrap-reverse `与 wrap相同且顺序倒序`
 
-> 复合属性。设置或检索弹性盒模型对象的子元素排列方式。` [适用于：flex容器]`
+> <i id="box-12"></i>复合属性。设置或检索弹性盒模型对象的子元素排列方式。` [适用于：flex容器]`
 
 （旧）无  
 （新）flex-flow：<' flex-direction '> || <' flex-wrap '>
 
-> 定义flex子项单独在侧轴（纵轴）方向上的对齐方式 `(在子元素上使用)`
+> <i id="box-13"></i>定义flex子项单独在侧轴（纵轴）方向上的对齐方式 `(在子元素上使用)`
 
 （旧）无  
 （新）align-self：`auto` | flex-start | flex-end | center | baseline | stretch
@@ -144,7 +183,7 @@
 
 
 
-# 速度曲线
+# <i id="cubic"></i>速度曲线
 
 * linear 规定以`相同速度`开始至结束的过渡效果（等于 cubic-bezier(0,0,1,1)）。
 * ease 规定`慢速开始，然后变快，然后慢速结束`的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）。**`* 注 transition|animation 等默值`**
@@ -154,7 +193,7 @@
 * cubic-bezier(n,n,n,n) 在 cubic-bezier 函数中`定义自己`的值。可能的值是 0 至 1 之间的数值。
 
 
-# transform
+# <i id="transform"></i>transform
 
 * transform：none | <transform-function>+
    * none：无转换  
@@ -182,26 +221,26 @@
    * scalez 指定对象的z
    * perspective 指定透
 
-* transform-origin：[ <percentage> | <length> | left | center① | right ] [ <percentage> | <length> | top | center② | bottom ]?对象以某个原点进行转换。 `默认值：50% 50%，效果等同于center center`
+* <i id="transform-1"></i>transform-origin：[ <percentage> | <length> | left | center① | right ] [ <percentage> | <length> | top | center② | bottom ]?对象以某个原点进行转换。 `默认值：50% 50%，效果等同于center center`
 
-* transform-style：`flat` | preserve-3d 某元素的子元素是（看起来）位于三维空间内，还是在该元素所在的平面内被扁平化。
-
-
-* perspective：`none` | <length> 指定观察者与「z=0」平面的距离，使具有三维位置变换的元素产生透视效果。「z>0」的三维元素比正常大，而「z<0」时则比正常小，大小程度由该属性的值决定。 ``
+* <i id="transform-2"></i>transform-style：`flat` | preserve-3d 某元素的子元素是（看起来）位于三维空间内，还是在该元素所在的平面内被扁平化。
 
 
-* perspective-origin：[ <percentage> | <length> | left | center① | right ] [ <percentage> | <length> | top | center② | bottom ]? 指定透视点的位置。 `默认值：50% 50%，效果等同于center center`
+* <i id="transform-3"></i>perspective：`none` | <length> 指定观察者与「z=0」平面的距离，使具有三维位置变换的元素产生透视效果。「z>0」的三维元素比正常大，而「z<0」时则比正常小，大小程度由该属性的值决定。 ``
 
 
-* backface-visibility：`visible` | hidden 指定元素背面面向用户时是否可见。
+* <i id="transform-4"></i>perspective-origin：[ <percentage> | <length> | left | center① | right ] [ <percentage> | <length> | top | center② | bottom ]? 指定透视点的位置。 `默认值：50% 50%，效果等同于center center`
 
 
+* <i id="transform-5"></i>backface-visibility：`visible` | hidden 指定元素背面面向用户时是否可见。
 
 
 
 
 
-> transition
+
+
+> <i id="transition"></i>transition
 
 * transition
 
@@ -234,7 +273,7 @@ transition-timing-function：<single-transition-timing-function>[,<single-transi
 
 
 
-> animation
+> <i id="animation"></i>animation
 
 * animation
 ```css
@@ -245,12 +284,13 @@ single-animation
 <single-animation> = <single-animation-name> || <time> || <single-animation-timing-function> || <time> || <single-animation-iteration-count> || <single-animation-direction> || <single-animation-fill-mode> || <single-animation-play-state>
 ```
 
-* animation-name 对象所应用的动画名称，必须与规则@keyframes配合使用，因为动画名称由@keyframes定义 `默认值：none`
+> animation
+* <i id="animation-1"></i>animation-name 对象所应用的动画名称，必须与规则@keyframes配合使用，因为动画名称由@keyframes定义 `默认值：none`
 
 
-* animation-duration：<time>[,<time>]* 动画的持续时间 `默认值：0s`
+* <i id="animation-2"></i>animation-duration：<time>[,<time>]* 动画的持续时间 `默认值：0s`
 
-* animation-timing-function 动画的过渡类型 `默认值：ease`
+* <i id="animation-3"></i>animation-timing-function 动画的过渡类型 `默认值：ease`
 ```css
 animation-timing-function：<single-animation-timing-function>[,<single-animation-timing-function>]*
 ```
@@ -259,14 +299,14 @@ single-animation-timing-function
 <single-animation-timing-function> = ease | linear | ease-in | ease-out | ease-in-out | step-start | step-end | steps(<integer>[, [ start | end ] ]?) | cubic-bezier(<number>, <number>, <number>, <number>)
 ```
 
-* animation-delay：<time>[,<time>]* 动画的延迟时间 `默认值：0s`
+* <i id="animation-4"></i>animation-delay：<time>[,<time>]* 动画的延迟时间 `默认值：0s`
 
 
-* animation-iteration-count：\<single-animation-iteration-count\>[,<single-animation-iteration-count>]*动画的循环次数 `默认值：1`
+* <i id="animation-5"></i>animation-iteration-count：\<single-animation-iteration-count\>[,<single-animation-iteration-count>]*动画的循环次数 `默认值：1`
 
     \<single-animation-iteration-count\> = `infinite(无限)` | \<number\> 
 
-* animation-direction：\<single-animation-direction\>[,\<single-animation-direction\>]* 动画在循环中是否反向运动  `默认值：normal`
+* <i id="animation-6"></i>animation-direction：\<single-animation-direction\>[,\<single-animation-direction\>]* 动画在循环中是否反向运动  `默认值：normal`
 
 ```css
 <single-animation-direction> = normal | reverse | alternate | alternate-reverse
@@ -280,7 +320,7 @@ single-animation-timing-function
 <single-animation-direction> = normal | reverse | alternate | alternate-reverse
 
 6. 对象动画的状态
-* animation-play-state：\<single-animation-play-state\>[,\<single-animation-play-state\>]*` 默认值：running`
+* <i id="animation-7"></i>animation-play-state：\<single-animation-play-state\>[,\<single-animation-play-state\>]*` 默认值：running`
 
 ```css
 <single-animation-play-state> = running | paused
@@ -330,7 +370,7 @@ single-animation-timing-function
 ```
 
 
-> meta
+> <i id="meta"></i>meta
 
 
 ```
@@ -352,14 +392,14 @@ single-animation-timing-function
 
 
 
-> 选择器
+> <i id="select"></i>选择器
 
-* 关系选择符
+* <i id="select1"></i>关系选择符
     * E F { sRules } 选择所有被E元素包含的F元素。
     * E>F { sRules } 选择所有作为E元素的子元素F。`[ie 7+] (只能命中子元素，而不能命中孙辈)`
     * E+F { sRules } 选择紧贴在E元素之后F元素。` [ie 7+] `
     * E~F { sRules } 选择E元素后面的所有兄弟元素F。` [ie 7+] `
-* 属性选择符
+* <i id="select2"></i>属性选择符
     * E[att] { sRules } 选择具有att属性的E元素 ` [ie 7+] `
     * E[att="val"] 选择具有att属性且属性值等于val的E元素。` [ie 7+] `
     * E[att~="val"] 选择具有att多个属性中存在一个的E元素 `<div class="a b">3</div>` ` [ie 7+] `。
@@ -378,7 +418,7 @@ div[class|="a"] {
 <div class="c-test">3</div>
 ```
 
-* 伪类选择符
+* <i id="select3"></i>伪类选择符
     * E:link  设置超链接a在未被访问前的样式 `[ie 6+]`
     * E:visited { sRules } 设置超链接a在其链接地址已被访问过时的样式 `[ie 6+]`
     * E:hover { sRules } 设置元素在其鼠标悬停时的样式 `[ie 6+]`
@@ -402,7 +442,7 @@ div[class|="a"] {
     * E:disabled { sRules } 匹配用户界面上处于禁用状态的元素E。`[ie 9+]`
     * E:target { sRules } 匹配相关URL指向的E元素。`解释：URL后面跟锚点#，指向文档内某个具体的元素。这个被链接的元素就是目标元素(target element)，:target选择器用于选取当前活动的目标元素。` `[ie 9+]`
 
-* 伪对象选择符
+* <i id="select4"></i>伪对象选择符
     * E:first-letter/E::first-letter { sRules } 设置对象内的第一个字符的样式。`[ie 9+]`
     * E:first-line/E::first-line { sRules } 设置对象内的第一行的样式。`[ie 9+]`
     * E:before/E::before { sRules } 设置在对象前（依据对象树的逻辑结构）发生的内容。用来和content属性一起使用，并且`必须定义content属性` `[ie 8部分支持]` `[ie 9+]`
@@ -421,7 +461,7 @@ div[class|="a"] {
 
 
 
-> @font-face
+> <i id="font"></i>@font-face
 
 ```css
 @font-face {

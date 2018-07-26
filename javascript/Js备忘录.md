@@ -3,37 +3,133 @@
 * [RegExp 构造函数](#regexp)
     * [语法](#regexp1)
     * [flags](#regexp2)
-    * [RegExp 实例](#regexp3)
-    * [RegExp.prototype.exec()与String.match(regexp)](#regexp4)
-* [String 简单方法](#string)
+    * [RegExp.prototype](#regexp3)
+        * [RegExp.prototype.exec](#regexp4-1)
+        * [RegExp.prototype.test](#regexp4-2)
+        * [RegExp.prototype.toSource](#regexp4-3)
+        * [RegExp.prototype.toString](#regexp4-4)
+    * [RegExp.prototype.exec()与String.match(regexp)](#regexp5)
+* [String 简单方法](#string-other)
 * [Global](#global)
+* [for...in](#forin)
+* [for...of](#forof)
 * [Array](#array)
+    * [Array.prototype](#array1)
+        * [arr.fill](#array1-1)
+        * [arr.pop](#array1-2)
+        * [arr.push](#array1-3)
+        * [arr.reverse](#array1-4)
+        * [arr.shift](#array1-5)
+        * [arr.sort](#array1-6)
+        * [arr.splice](#array1-7)
+        * [arr.unshift](#array1-8)
+        * [arr.concat](#array1-9)
+        * [arr.includes](#array1-10)
+        * [arr.join](#array1-11)
+        * [arr.slice](#array1-12)
+        * [arr.toString](#array1-13)
+        * [arr.indexOf](#array1-14)
+        * [arr.lastIndexOf](#array1-15)
+    * [Array.prototype 迭代方法](#array2)
+        * [arr.forEach](#array1-16)
+        * [arr.every](#array1-17)
+        * [arr.some](#array1-18)
+        * [arr.filter](#array1-19)
+        * [arr.find](#array1-20)
+        * [arr.findIndex](#array1-21)
+        * [arr.map](#array1-22)
+        * [arr.reduce](#array1-23)
+        * [arr.reduceRight](#array1-24)
 * [DOM Event](#domevent)
 * [Location](#location)
-* [String](#string2)
+* [String](#string)
+    * [方法](#string1)
+        * [String.fromCharCode](#string1-1)
+    * [实例](#string2)
+        * [str.charAt](#string2-1)
+        * [str.charCodeAt](#string2-2)
+        * [str.codePointAt](#string2-3)
+        * [str.concat](#string2-4)
+        * [str.includes](#string2-5)
+        * [str.endsWith](#string2-6)
+        * [str.indexOf](#string2-7)
+        * [str.lastIndexOf](#string2-8)
+        * [str.localeCompare](#string2-9)
+        * [str.match](#string2-10)
+        * [str.normalize](#string2-11)
+        * [str.padEnd](#string2-12)
+        * [str.padStart](#string2-13)
+        * [str.repeat](#string2-14)
+        * [str.replace](#string2-15)
+        * [str.search](#string2-16)
+        * [str.slice](#string2-17)
+        * [str.substr](#string2-18)
+        * [str.substring](#string2-19)
+        * [str.split](#string2-20)
+        * [str.startsWith](#string2-21)
+        * [str.toLocaleLowerCase](#string2-22)
+        * [str.toLowerCase](#string2-23)
+        * [str.toLocaleUpperCase](#string2-24)
+        * [str.toUpperCase](#string2-25)
+        * [str.trim](#string2-26)
+        * [str.trimLeft](#string2-27)
+        * [str.trimRight](#string2-28)
+    * [String](#string)
 * [Number](#number)
+    * [Methods](#number1)
+        * [Number.parseFloat](#number1-1)
+        * [Number.parseInt](#number1-2)
+        * [Number.isFinite](#number1-3)
+        * [Number.isInteger](#number1-4)
+        * [Number.isNaN](#number1-5)
+        * [Number.isSafeInteger](#number1-6)
+        * [Number.toFixed](#number1-7)
 * [Math](#math)
 * [Date](#date)
+    * [UTC &&　GMT](#date1)
+    * [几种获得时间毫秒](#date2)
 * [严格模式](#usestrict)
+    * [开启严格模式](#usestrict1)
+    * [非严格模式到严格模式的区别](#usestrict2)
+    * [语义差异](#usestrict3)
 * [EVAL](#eval)
 * [JSON](#json)
+    * [JSON.parse](#json1)
+    * [JSON.stringify](#json2)
 * [Promise](#promise)
+    * [Promise几种状态](#promise1)
+    * [语法](#promise2)
+    * [Methods](#promise3)
+        * [Promise.all](#promise3-1)
+        * [Promise.race](#promise3-2)
+        * [Promise.reject](#promise3-3)
+        * [Promise.resolve](#promise3-4)
+    * [Promise 原型](#promise4)
+        * [Promise.prototype.catch](#promise4-1)
+        * [Promise.prototype.then](#promise4-2)
+        * [Promise.prototype.finally](#promise4-3)
 * [Object](#object)
     * [Methods](#object1)
         * [Object.assign](#object1-1)
-    * [Methods](#object2)
-    * [Methods](#object3)
-    * [Methods](#object4)
-    * [Methods](#object5)
-    * [Methods](#object6)
-    * [Methods](#object7)
-    * [Methods](#object8)
-    * [Methods](#object9)
-    * [Methods](#object10)
-    * [Methods](#object11)
-    * [Methods](#object12)
-    * [Methods](#object13)
-    * [Methods](#object14)
+        * [Object.defineProperty](#object1-2)
+        * [Object.defineProperties](#object1-3)
+        * [Object.entries](#object1-4)
+        * [Object.getOwnPropertyDescriptor](#object1-5)
+        * [Object.getOwnPropertyNames](#object1-6)
+        * [Object.getOwnPropertySymbols](#object1-7)
+        * [Object.getPrototypeOf](#object1-8)
+        * [Object.is](#object1-9)
+        * [Object.preventExtensions](#object1-10)
+        * [Object.isExtensible](#object1-11)
+        * [Object.freeze](#object1-12)
+        * [Object.isFrozen](#object1-13)
+        * [Object.seal](#object1-14)
+        * [Object.isSealed](#object1-15)
+        * [Object.keys](#object1-16)
+        * [Object.values](#object1-17)
+    * [实例](#object2)
+        * [自定义.toString()](#object2-1)
+        * [toString()检测对象类型](#object2-2)
 * [with](#with)
 * [typeof](#typeof)
 * [运算符: +x](#yunsuan)
@@ -49,9 +145,9 @@
     * [arguments对象](#function5)
 
 
-> <i id=""></i><span id="regexp">RegExp 构造函数</span> 
+> <i id="regexp"></i>RegExp 构造函数</span> 
 
-<i id=""></i><span id="regexp1"></span>语法：
+<i id="regexp1"></i>语法：
 ```
 1./pattern/flags
 2.new RegExp(pattern [, flags])
@@ -78,7 +174,7 @@ console.log(reg4.toString());
 // '/\\d\\D\\w\\W\\s/g'
 ```
 
-<i id=""></i><span id="regexp2"></span>flags：
+<i id="regexp2"></i>flags：
 ```
 g：全局匹配;找到所有匹配，而不是在第一个匹配后停止  
 i：忽略大小写  
@@ -87,7 +183,7 @@ u：Unicode; 将模式视为Unicode序列点的序列
 y：粘性匹配; 仅匹配目标字符串中此正则表达式的lastIndex  属性指示的索引(并且不尝试从任何后续的索引匹配)。
 ```
 
-<i id=""></i><span id="regexp3"></span>RegExp 实例
+<i id="regexp3"></i>RegExp 实例
 
 ```
 RegExp.prototype.constructor 创建该正则对象的构造函数。
@@ -105,9 +201,9 @@ RegExp.prototype.source 正则对象的源模式文本。
 RegExp.prototype.sticky 是否开启粘滞匹配。
 ```
 
-> 方法
+> <i id="regexp4"></i>方法
 
-* RegExp.prototype.exec()在目标字符串中执行一次正则匹配操作。
+* <i id="regexp4-1"></i>RegExp.prototype.exec()在目标字符串中执行一次正则匹配操作。
 
 ``` javascript
 var regexObj=/s/;
@@ -131,7 +227,7 @@ source:'正则匹配的字符串'
 }
 ```
 
-> <i id=""></i><span id="regexp4"></span>RegExp.prototype.exec()与String.match(regexp);  
+> <i id="regexp5"></i>RegExp.prototype.exec()与String.match(regexp);  
 <span class="red">*注:regexp是不是全局模式时，返回结果相同</span>
 
 ``` javascript
@@ -173,30 +269,30 @@ console.log(str.match(reg));//["1a", "2b", "3c", "4d", "5e", "6f", "7g", "8f", "
 //str.match(reg)则是返回所匹配的结果数组;
 ```
 
-* RegExp.prototype.test()测试当前正则是否能匹配目标字符串。
-* RegExp.prototype.toSource()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toSource 方法.
-* RegExp.prototype.toString()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toString() 方法。
+* <i id="regexp4-2"></i>RegExp.prototype.test()测试当前正则是否能匹配目标字符串。
+* <i id="regexp4-3"></i>RegExp.prototype.toSource()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toSource 方法.
+* <i id="regexp4-4"></i>RegExp.prototype.toString()返回一个字符串，其值为该正则对象的字面量形式。覆盖了Object.prototype.toString() 方法。
 
-><i id=""></i><span id="string">String</span>
+> <i id="string-other"></i>String</span>
 
  * string.substr(start, length) 一个字符串的副本，包括从string的start处(包括start所指的字符)开始的1ength个字符。如果没有指定length，返回的字符串包含从start到string结尾的字符，-1指字符串中的最后—个字符，-2指倒数第二个字符  
 * string.substring(from, to) 返回字符串string的子串，由from到to之间的字符构成， 包括位于from的字符，不包括位于to的字符。
 string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)的所有字符。(-1指字符串中的最后一个字符，-2指倒数第二个字符)
 
-> <i id=""></i>Global 全局属性
+> <i id="global"></i>Global 全局属性
 
 * Infinity 表示正无穷大的数值。  
 * NaN 非数字值  
 * undefined 未定义的值  
 
-> for...in 顺序遍历一个对象的可枚举属性  
-> for...of 语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+> <i id="forin"></i>for...in 顺序遍历一个对象的可枚举属性  
+> <i id="forof"></i>for...of 语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
 
-> <i id=""></i><span id="array"/>Array
+> <i id="array"></i>Array
 
-## Array.prototype
+## <i id="array1"></i>Array.prototype
 
-* arr.fill(value[, start[, end]])用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。[Result:Array] [Browser：polyfill]
+* <i id="array1-1"></i>arr.fill(value[, start[, end]])用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。[Result:Array] [Browser：polyfill]
 
 
 ```javascript
@@ -211,7 +307,7 @@ string.slice(start, end) 从start开始(包括start)到end为止(不包 括end)�
 Array(3).fill(4);                // [4, 4, 4]
 ```
 
-* arr.pop()删除数组的最后一个元素，并返回这个元素。[Result:ArrayItem]
+* <i id="array1-2"></i>arr.pop()删除数组的最后一个元素，并返回这个元素。[Result:ArrayItem]
 
 ```js
 let myFish = ["angel", "clown", "mandarin", "surgeon"];
@@ -225,7 +321,7 @@ console.log(popped);
 // surgeon
 ```
 
-* arr.push(element1, ..., elementN)在数组的末尾增加一个或多个元素，并返回数组的新长度。[Result:length] 
+* <i id="array1-3"></i>arr.push(element1, ..., elementN)在数组的末尾增加一个或多个元素，并返回数组的新长度。[Result:length] 
 
 ```js
 var sports = ["soccer", "baseball"];
@@ -238,7 +334,7 @@ console.log(total);
 // 4
 ```
 
-* arr.reverse()颠倒数组中元素的排列顺序，即原先的第一个变为最后一个，原先的最后一个变为第一个。[Result:Array]
+* <i id="array1-4"></i>arr.reverse()颠倒数组中元素的排列顺序，即原先的第一个变为最后一个，原先的最后一个变为第一个。[Result:Array]
 
 ```js
 var myArray = ['one', 'two', 'three'];
@@ -247,7 +343,7 @@ myArray.reverse();
 console.log(myArray) // ['three', 'two', 'one']
 ```
 
-* arr.shift()删除数组的第一个元素，并返回这个元素。[Result:arrayItem]
+* <i id="array1-5"></i>arr.shift()删除数组的第一个元素，并返回这个元素。[Result:arrayItem]
 
 ```js
 let myFish = ['angel', 'clown', 'mandarin', 'surgeon'];
@@ -264,7 +360,7 @@ console.log('被删除的元素: ' + shifted);
 // "被删除的元素: angel"
 ```
 
-* arr.sort([compareFunction])排序 compareFunction可选。用来指定按某种顺序进行排列的函数。如果省略，元素按照转换为的字符串的各个字符的Unicode位点进行排序。[Result:Array]  
+* <i id="array1-6"></i>arr.sort([compareFunction])排序 compareFunction可选。用来指定按某种顺序进行排列的函数。如果省略，元素按照转换为的字符串的各个字符的Unicode位点进行排序。[Result:Array]  
 1.没有指明 compareFunction 元素会按照转换为的字符串的诸个字符的Unicode位点进行排序;  
 2.指明了 compareFunction：  
     * 如果 compareFunction(a, b) 小于 0 ，那么 a 会被排列到 b 之前；  
@@ -281,7 +377,7 @@ console.log(numbers);//[1, 2, 3, 4, 5]
 console.log(numbers2);// [1, 2, 3, 4, 5]
 ```
 
-* array.splice(start[, deleteCount[, item1[, item2[, ...]]]])删除现有元素和/或添加新元素来更改一个数组的内容。[Result:RemoveArrayItems]
+* <i id="array1-7"></i>array.splice(start[, deleteCount[, item1[, item2[, ...]]]])删除现有元素和/或添加新元素来更改一个数组的内容。[Result:RemoveArrayItems]
 
   * 注：splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。
 
@@ -301,7 +397,7 @@ var removed = myFish.splice(3, 1);
 //被删除元素数组：["mandarin"]
 ```
 
-* arr.unshift(element1, ..., elementN)将一个或多个元素添加到数组的开头，并返回新数组的长度。[Result:length] 
+* <i id="array1-8"></i>arr.unshift(element1, ..., elementN)将一个或多个元素添加到数组的开头，并返回新数组的长度。[Result:length] 
 
 ```js
 var arr = [1, 2];
@@ -313,7 +409,7 @@ arr.unshift(-2, -1); // = 5
 //arr is [-2, -1, 0, 1, 2]
 ```
 
-* arr.concat(value1[, value2[, ...[, valueN]]])用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。[Result:newArray]
+* <i id="array1-9"></i>arr.concat(value1[, value2[, ...[, valueN]]])用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。[Result:newArray]
 
     `concat`方法不会改变this或任何作为参数提供的数组，而是返回一个浅拷贝，它包含与原始数组相结合的相同元素的副本。
     * `对象引用` 对象内容随对象修改
@@ -327,7 +423,7 @@ alpha.concat(numeric);
 // result in ['a', 'b', 'c', 1, 2, 3]
 ```
 
-* arr.includes(searchElement)||arr.includes(searchElement, fromIndex)判断当前数组是否包含某指定的值，如果是返回 true，否则返回 false。[Result:Boolean] [Browser：polyfill]
+* <i id="array1-10"></i>arr.includes(searchElement)||arr.includes(searchElement, fromIndex)判断当前数组是否包含某指定的值，如果是返回 true，否则返回 false。[Result:Boolean] [Browser：polyfill]
 
 ```js
 [1, 2, 3].includes(2);     // true
@@ -337,7 +433,7 @@ alpha.concat(numeric);
 [1, 2, NaN].includes(NaN); // true
 ```
 
-* arr.join(separator) 连接所有数组元素组成一个字符串。默认是','隔开[Result:string]
+* <i id="array1-11"></i>arr.join(separator) 连接所有数组元素组成一个字符串。默认是','隔开[Result:string]
 
 ```js
 var a = ['Wind', 'Rain', 'Fire'];
@@ -347,7 +443,7 @@ var myVar3 = a.join(' + '); // myVar3的值变为"Wind + Rain + Fire"
 var myVar4 = a.join('');    // myVar4的值变为"WindRainFire"
 ```
 
-* arr.slice(begin, end)抽取当前数组中的一段元素组合成一个新数组。[Result:newArray]
+* <i id="array1-12"></i>arr.slice(begin, end)抽取当前数组中的一段元素组合成一个新数组。[Result:newArray]
 
     抽取规则（包含begin，但不包含end）  
     slice 不修改原数组，只会返回一个浅复制了原数组中的元素的一个新数组。原数组的元素会按照下述规则拷贝：
@@ -362,14 +458,14 @@ var citrus = fruits.slice(1, 3);
 // citrus contains ['Orange','Lemon']
 ```
 
-* arr.toString()返回一个由所有数组元素组合而成的字符串 该字符串由数组中的每个元素的 toString() 返回值经调用 join() 方法连接（由逗号隔开）组成[Result:string] 
+* <i id="array1-13"></i>arr.toString()返回一个由所有数组元素组合而成的字符串 该字符串由数组中的每个元素的 toString() 返回值经调用 join() 方法连接（由逗号隔开）组成[Result:string] 
 
 ```js
 var monthNames = ['Jan', 'Feb', 'Mar', 'Apr'];
 var myVar = monthNames.toString(); // assigns "Jan,Feb,Mar,Apr" to myVar.
 ```
 
-* arr.indexOf()返回数组中第一个与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:index] [Browser：polyfill]
+* <i id="array1-14"></i>arr.indexOf()返回数组中第一个与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:index] [Browser：polyfill]
 
 ```js
 var array = [2, 5, 9];
@@ -379,12 +475,12 @@ array.indexOf(9, 2);  // 2
 array.indexOf(2, -1); // -1
 array.indexOf(2, -3); // 0
 ```
-* arr.lastIndexOf()返回数组中最后一个（从右边数第一个）与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:Array] [Browser：polyfill]
+* <i id="array1-15"></i>arr.lastIndexOf()返回数组中最后一个（从右边数第一个）与指定值相等的元素的索引，如果找不到这样的元素，则返回 -1。[Result:Array] [Browser：polyfill]
 
-## 迭代方法
+## <i id="array2"></i>迭代方法
 
 
-* array.forEach(callback, this) 对数组的每个元素执行一次提供的函数
+* <i id="array1-16"></i>array.forEach(callback, this) 对数组的每个元素执行一次提供的函数
 [Result:Array] [Browser：polyfill] 
 
         callback:function(currentValue, index, array){}  
@@ -408,7 +504,7 @@ function logArrayElements(element, index, array) {
 ```
 
 
-* arr.every(callback[, thisArg])测试数组的所有元素是否都通过了指定函数的测试
+* <i id="array1-17"></i>arr.every(callback[, thisArg])测试数组的所有元素是否都通过了指定函数的测试
 [Result:Boolean] [Browser：polyfill]
 
        callback:function(currentValue, index, array){}  
@@ -432,7 +528,7 @@ passed = [12, 54, 18, 130, 44].every(isBigEnough);
 // passed is true
   ```
 
-* arr.some(callback[, thisArg])测试数组中的某些元素是否通过由提供的函数实现的测试。[Result:Boolean] [Browser：polyfill]
+* <i id="array1-18"></i>arr.some(callback[, thisArg])测试数组中的某些元素是否通过由提供的函数实现的测试。[Result:Boolean] [Browser：polyfill]
 
        callback:function(currentValue, index, array){}  
   * currentValue:数组当前项的值。  
@@ -454,7 +550,7 @@ function isBiggerThan10(element, index, array) {
   ```
 
 
-* arr.filter(callback[, thisArg])创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 [Result:newArray] [Browser：polyfill]
+* <i id="array1-19"></i>arr.filter(callback[, thisArg])创建一个新数组, 其包含通过所提供函数实现的测试的所有元素。 [Result:newArray] [Browser：polyfill]
 
       callback:function(currentValue, index, array){}  
   * currentValue:数组当前项的值。  
@@ -474,7 +570,7 @@ var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
 ```
 
 
-* arr.find(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。
+* <i id="array1-20"></i>arr.find(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。
 [Result:ArrayItem] [Browser：polyfill]
 
       callback:function(currentValue, index, array){}  
@@ -503,7 +599,7 @@ console.log(inventory.find(findCherries));
 
 
 
-* arr.findIndex(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1。
+* <i id="array1-21"></i>arr.findIndex(callback[, thisArg])返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1。
 [Result:index] [Browser：polyfill]
 
       callback:function(currentValue, index, array){}  
@@ -532,7 +628,7 @@ console.log([4, 6, 7, 12].findIndex(isPrime)); // 2
 
 
 
-* arr.map(function callback(currentValue, index, array) { }[, thisArg])创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。[Result:newArray] [Browser：polyfill]
+* <i id="array1-22"></i>arr.map(function callback(currentValue, index, array) { }[, thisArg])创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。[Result:newArray] [Browser：polyfill]
 
       callback:function(currentValue, index, array){}  
   * currentValue:数组当前项的值。  
@@ -555,7 +651,7 @@ console.log(doubles);
 
 
 
-* arr.reduce(callback[, initialValue])对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值。[Result:result] [Browser：polyfill]
+* <i id="array1-23"></i>arr.reduce(callback[, initialValue])对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值。[Result:result] [Browser：polyfill]
 
       callback:function(accumulator,currentValue, index, array){}  
   * accumulator:累加器累加回调的返回值; 它是上一次调用回调时返回的累积值，或initialValue（如下所示）。
@@ -585,16 +681,16 @@ console.log(result); //[1,2,3,4,5]
 ```
 
 
-* arr.reduceRight(callback[, initialValue])
+* <i id="array1-24"></i>arr.reduceRight(callback[, initialValue])
 [Result:result] [Browser：polyfill]
 相对与arr.reduce（）向右开始
 
 
 
-# <i id=""></i><sapn id="domevent"/>DOM Event
+# <i id="domevent"></i>DOM Event
 
 
-## <i id=""></i><sapn id="location"/>Location
+## <i id="location"></i>Location
 
 #### Properties
 
@@ -630,7 +726,7 @@ console.log(url.hash);      // #search-results-close-container
 console.log(url.origin);    // https://developer.mozilla.org
 ```
 
-## <i id=""></i><sapn id="string2"/>String
+## <i id="string"></i>String
 
 转义字符
 column0 | column1
@@ -650,9 +746,9 @@ Code | Output
 \u{X} ... \u{XXXXXX} | unicode codepoint 
 \xXX | Latin-1 字符(x小写)
 
-### 方法
+### <i id="string1"></i>方法
 
-> String.fromCharCode()   
+> <i id="string1-1"></i>String.fromCharCode()   
 通过一串 Unicode 创建字符串
 
 ```js
@@ -662,16 +758,16 @@ console.log(String.fromCharCode(0o47055));//吧进制 '中'
 console.log(String.fromCharCode(0x4e2d));//十六进制 '中'
 console.log(String.fromCharCode(65,66,67));//'ABC'
 ```
- ### 实例
+ ### <i id="string2"></i>实例
 
- > str.charAt(index) 从左向右索引，第一个字符的索引值为 0，最后一个字符（假设该字符位于字符串 stringName 中）的索引值为 stringName.length - 1。
+ > <i id="string2-1"></i>str.charAt(index) 从左向右索引，第一个字符的索引值为 0，最后一个字符（假设该字符位于字符串 stringName 中）的索引值为 stringName.length - 1。
 
 ```js 
 var anyString = "Brave new world";
 console.log(anyString.charAt(0)); //'B'
 ```
 
-> str.charCodeAt(index) 返回给定索引处（String中index索引处）字符的 UTF-16 代码单元值的数字；
+> <i id="string2-2"></i>str.charCodeAt(index) 返回给定索引处（String中index索引处）字符的 UTF-16 代码单元值的数字；
 
 ```js
 "ABC".charCodeAt(0) // returns 65:"A"
@@ -683,7 +779,7 @@ console.log(anyString.charAt(0)); //'B'
 "ABC".charCodeAt(3) // returns NaN
 ```
 
-> str.codePointAt(pos)  [Browser：polyfill]
+> <i id="string2-3"></i>str.codePointAt(pos)  [Browser：polyfill]
 
 * JavaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。
 ```js
@@ -701,13 +797,13 @@ s.codePointAt(1) // 57271
 s.codePointAt(2) // 97
 ```
 
-> str.concat(string2, string3[, ..., stringN])
+> <i id="string2-4"></i>str.concat(string2, string3[, ..., stringN])
 ```js
 var hello = "Hello, ";
 console.log(hello.concat("Kevin", " have a nice day.")); /* Hello, Kevin have a nice day. */
 ```
 
-> str.includes(searchString[, position]) 如果当前字符串包含被搜寻的字符串，就返回true；否则，返回false。[Browser：polyfill]
+> <i id="string2-5"></i>str.includes(searchString[, position]) 如果当前字符串包含被搜寻的字符串，就返回true；否则，返回false。[Browser：polyfill]
 
 ```js
 var str = 'To be, or not to be, that is the question.';
@@ -719,7 +815,7 @@ console.log(str.includes('To be', 1));    // false
 console.log(str.includes('TO BE'));       // false
 ```
 
-> str.endsWith(searchString [, position]);判断当前字符串是否是以另外一个给定的子字符串“结尾”的，根据判断结果返回 true 或 false。[Browser：polyfill]
+> <i id="string2-6"></i>str.endsWith(searchString [, position]);判断当前字符串是否是以另外一个给定的子字符串“结尾”的，根据判断结果返回 true 或 false。[Browser：polyfill]
 
 #### 参数
  * searchString 要搜索的子字符串。
@@ -734,7 +830,7 @@ alert( str.endsWith("to be", 19) );  // true
 alert( str.endsWith("To be", 5) );   // true
  ```
 
- > str.indexOf(searchValue[, fromIndex])
+ > <i id="string2-7"></i>str.indexOf(searchValue[, fromIndex])
  ```js
  "Blue Whale".indexOf("Blue");     // returns  0
 "Blue Whale".indexOf("Blute");    // returns -1
@@ -745,7 +841,7 @@ alert( str.endsWith("To be", 5) );   // true
 "Blue Whale".indexOf("", 11);     // returns 10
  ```
 
- > str.lastIndexOf(searchValue[, fromIndex]) 从该字符串的`后面向前`查找，从 fromIndex 处开始[Browser：polyfill]
+ > <i id="string2-8"></i>str.lastIndexOf(searchValue[, fromIndex]) 从该字符串的`后面向前`查找，从 fromIndex 处开始[Browser：polyfill]
 ```js
 "canal".lastIndexOf("a")   // returns 3
 "canal".lastIndexOf("a",2) // returns 1
@@ -753,7 +849,7 @@ alert( str.endsWith("To be", 5) );   // true
 "canal".lastIndexOf("x")   // returns -1
 ```
 
-> referenceStr.localeCompare(compareString[, locales[, options]]) 返回一个数字来指示一个参考字符串是否在排序顺序前面或之后或与给定字符串相同。[Browser：polyfill]
+> <i id="string2-9"></i>referenceStr.localeCompare(compareString[, locales[, options]]) 返回一个数字来指示一个参考字符串是否在排序顺序前面或之后或与给定字符串相同。[Browser：polyfill]
 ```js
 // The letter "a" is before "c" yielding a negative value
 'a'.localeCompare('c'); 
@@ -767,12 +863,12 @@ alert( str.endsWith("To be", 5) );   // true
 'a'.localeCompare('a'); 
 // 0
 ```
-> str.match(regexp); 与一个正则表达式匹配时， match()方法检索匹配项
+> <i id="string2-10"></i>str.match(regexp); 与一个正则表达式匹配时， match()方法检索匹配项
 
-> str.normalize([form]);按照指定的一种 Unicode 正规形式将当前字符串正规化.[Browser：polyfill]
+> <i id="string2-11"></i>str.normalize([form]);按照指定的一种 Unicode 正规形式将当前字符串正规化.[Browser：polyfill]
 * form:四种 Unicode 正规形式 "NFC", "NFD", "NFKC", 以及 "NFKD" 其中的一个, 默认值为 "NFC".
 
-> str.padEnd(targetLength [, padString]) 用一个字符串填充当前字符串（如果需要的话则重复填充），返回填充后达到指定长度的字符串。从当前字符串的末尾（右侧）开始填充。[Browser：polyfill]
+> <i id="string2-12"></i>str.padEnd(targetLength [, padString]) 用一个字符串填充当前字符串（如果需要的话则重复填充），返回填充后达到指定长度的字符串。从当前字符串的末尾（右侧）开始填充。[Browser：polyfill]
   #### 参数
 * targetLength 当前字符串需要填充到的目标长度。如果这个数值小于当前字符串的长度，则返回当前字符串本身。
 * padString 填充字符串。如果字符串太长，使填充后的字符串长度超过了目标长度，则只保留最左侧的部分，其他部分会被截断。此参数的缺省值为 " "（U+0020）。
@@ -783,7 +879,7 @@ alert( str.endsWith("To be", 5) );   // true
 'abc'.padEnd(1);           // "abc"
 ```
 
-> str.padStart(targetLength [, padString]) 用另一个字符串填充当前字符串(重复，如果需要的话)，以便产生的字符串达到给定的长度。填充从当前字符串的开始(左侧)应用的。同`str.padEnd` [Browser：polyfill]
+> <i id="string2-13"></i>str.padStart(targetLength [, padString]) 用另一个字符串填充当前字符串(重复，如果需要的话)，以便产生的字符串达到给定的长度。填充从当前字符串的开始(左侧)应用的。同`str.padEnd` [Browser：polyfill]
 ```js
 'abc'.padStart(10);         // "       abc"
 'abc'.padStart(10, "foo");  // "foofoofabc"
@@ -792,7 +888,7 @@ alert( str.endsWith("To be", 5) );   // true
 'abc'.padStart(1);          // "abc"
 ```
 
-> str.repeat(count); 返回一个新字符串，该字符串包含被连接在一起的指定数量的字符串的副本。[Browser：polyfill]
+> <i id="string2-14"></i>str.repeat(count); 返回一个新字符串，该字符串包含被连接在一起的指定数量的字符串的副本。[Browser：polyfill]
 ```js
 "abc".repeat(-1)     // RangeError: repeat count must be positive and less than inifinity
 "abc".repeat(0)      // ""
@@ -802,7 +898,7 @@ alert( str.endsWith("To be", 5) );   // true
 "abc".repeat(1/0)    // RangeError: repeat count must be positive and less than inifinity
 ```
 
-> str.replace(regexp|substr, newSubStr|function) 返回一个由替换值替换一些或所有匹配的模式后的新字符串。模式可以是一个字符串或者一个正则表达式, 替换值可以是一个字符串或者一个每次匹配都要调用的函数。
+> <i id="string2-15"></i>str.replace(regexp|substr, newSubStr|function) 返回一个由替换值替换一些或所有匹配的模式后的新字符串。模式可以是一个字符串或者一个正则表达式, 替换值可以是一个字符串或者一个每次匹配都要调用的函数。
 * 使用字符串作为参数  
 替换字符串可以插入下面的特殊变量名：
     * $$ 插入一个 "$"
@@ -841,20 +937,20 @@ var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
 console.log(newString);  // abc - 12345 - #$*%
 ```
 
-> str.search(regexp); 执行正则表达式和 String对象之间的一个搜索匹配
+> <i id="string2-16"></i>str.search(regexp); 执行正则表达式和 String对象之间的一个搜索匹配
 
-> str.slice(beginSlice[, endSlice]);提取一个字符串的一部分，并返回一新的字符串。`包括beginSlice`但`不包括 endSlice`
+> <i id="string2-17"></i>str.slice(beginSlice[, endSlice]);提取一个字符串的一部分，并返回一新的字符串。`包括beginSlice`但`不包括 endSlice`
 
-> str.substr(start[, length]); 返回一个字符串中从指定位置开始到指定字符数的字符
+> <i id="string2-18"></i>str.substr(start[, length]); 返回一个字符串中从指定位置开始到指定字符数的字符
 
-> str.substring(indexStart[, indexEnd]);返回一个字符串在开始索引到结束索引之间的一个子集, 或从开始索引直到字符串的末尾的一个子集。`从 indexStart 到 indexEnd（不包括）之间的字符`
+> <i id="string2-19"></i>str.substring(indexStart[, indexEnd]);返回一个字符串在开始索引到结束索引之间的一个子集, 或从开始索引直到字符串的末尾的一个子集。`从 indexStart 到 indexEnd（不包括）之间的字符`
 
-> str.split([separator[, limit]]); 使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。
+> <i id="string2-20"></i>str.split([separator[, limit]]); 使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。
 #### 参数
 * separator 可以是一个字符串或正则表达式
 * limit 一个整数，限定返回的分割片段数量
 
-> str.startsWith(searchString [, position]); 判断当前字符串是否是以另外一个给定的子字符串“开头”的，根据判断结果返回 true 或 false。[Browser：polyfill]
+> <i id="string2-21"></i>str.startsWith(searchString [, position]); 判断当前字符串是否是以另外一个给定的子字符串“开头”的，根据判断结果返回 true 或 false。[Browser：polyfill]
 ```js
 var str = "To be, or not to be, that is the question.";
 
@@ -863,7 +959,7 @@ alert(str.startsWith("not to be"));     // false
 alert(str.startsWith("not to be", 10)); // true
 ```
 
-> str.toLocaleLowerCase();根据任何特定于语言环境的案例映射，返回调用字符串值转换为小写的值。toLowerCase的返回值是一致的。
+> <i id="string2-22"></i>str.toLocaleLowerCase();根据任何特定于语言环境的案例映射，返回调用字符串值转换为小写的值。toLowerCase的返回值是一致的。
 
 ```js
 console.log('ALPHABET'.toLocaleLowerCase()); 
@@ -873,17 +969,17 @@ console.log('中文简体 zh-CN || zh-Hans'.toLocaleLowerCase());
 // '中文简体 zh-cn || zh-hans'
 ```
 
-> str.toLowerCase(); toLowerCase 会将调用该方法的字符串值转为小写形式，并返回。toLowerCase 不会影响字符串本身的值
+> <i id="string2-23"></i>str.toLowerCase(); toLowerCase 会将调用该方法的字符串值转为小写形式，并返回。toLowerCase 不会影响字符串本身的值
 
-> str.toLocaleUpperCase(); 使用本地化（locale-specific）的大小写映射规则将输入的字符串转化成大写形式并返回结果字符串。toUpperCase的返回值是一致的。
+> <i id="string2-24"></i>str.toLocaleUpperCase(); 使用本地化（locale-specific）的大小写映射规则将输入的字符串转化成大写形式并返回结果字符串。toUpperCase的返回值是一致的。
 
 ```js
 console.log('alphabet'.toLocaleUpperCase()); // 'ALPHABET'
 ```
 
-> str.toUpperCase(); toUpperCase 将调用该方法的字符串值转换为大写形式，并返回。toUpperCase 方法不影响字符串本身的值。
+> <i id="string2-25"></i>str.toUpperCase(); toUpperCase 将调用该方法的字符串值转换为大写形式，并返回。toUpperCase 方法不影响字符串本身的值。
 
-> str.trim();从一个字符串的两端删除空白字符。在这个上下文中的空白字符是所有的空白字符 (space, tab, no-break space 等) 以及所有行终止符字符（如 LF，CR）。[Browser：polyfill]
+> <i id="string2-26"></i>str.trim();从一个字符串的两端删除空白字符。在这个上下文中的空白字符是所有的空白字符 (space, tab, no-break space 等) 以及所有行终止符字符（如 LF，CR）。[Browser：polyfill]
 
 ```js
 var orig = '   foo  ';
@@ -895,8 +991,8 @@ var orig = 'foo    ';
 console.log(orig.trim()); // 'foo'
 ```
 
-> string.trimLeft();从一个字符串的左端移除空白字符。[Browser：polyfill]
-> string.trimRight();从一个字符串的右端移除空白字符。[Browser：polyfill]
+> <i id="string2-27"></i>string.trimLeft();从一个字符串的左端移除空白字符。[Browser：polyfill]
+> <i id="string2-28"></i>string.trimRight();从一个字符串的右端移除空白字符。[Browser：polyfill]
 
 
 ### 模板字符串
@@ -919,11 +1015,11 @@ $('#result').append(`
 `);
 ```
 
-## <i id=""></i><sapn id="number"/>Number
+## <i id="number"></i>Number
 
-#### Methods
-* Number.parseFloat(string) 和全局对象 parseFloat() 一样。 需要被解析成为浮点数的字符串.  
-* Number.parseInt(string[, radix])和全局对象 parseInt() 一样。返回解析后的整数值。 如果被解析参数的第一个字符无法被转化成数值类型，则返回 NaN。radix基数 比如参数"10"表示使用我们通常使用的十进制数值系统。  
+#### <i id="number1"></i>Methods
+*  <i id="number1-1"></i>Number.parseFloat(string) 和全局对象 parseFloat() 一样。 需要被解析成为浮点数的字符串.  
+* <i id="number1-2"></i>Number.parseInt(string[, radix])和全局对象 parseInt() 一样。返回解析后的整数值。 如果被解析参数的第一个字符无法被转化成数值类型，则返回 NaN。radix基数 比如参数"10"表示使用我们通常使用的十进制数值系统。  
 
 ```js
 // radix为指定基数，说明字符串为多少进制的数字表示。
@@ -937,9 +1033,9 @@ console.log(Number.parseInt(strObj, 10)); // 101101
 console.log(Number.parseInt(strObj, 16)); // 1052929
 ```
 
-* Number.isFinite()确定传递的值类型及本身是否是有限数。  
-* Number.isInteger()确定传递的值类型是“number”，且是整数。  
-* Number.isNaN(value)确定传递的值是否是 NaN。   和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。  
+* <i id="number1-3"></i>Number.isFinite()确定传递的值类型及本身是否是有限数。  
+* <i id="number1-4"></i>Number.isInteger()确定传递的值类型是“number”，且是整数。  
+* <i id="number1-5"></i>Number.isNaN(value)确定传递的值是否是 NaN。   和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。  
 
 ```js
 //和全局函数 isNaN() 相比，该方法不会强制将参数转换成数字，只有在参数是真正的数字类型，且值为 NaN 的时候才会返回 true。
@@ -963,12 +1059,12 @@ Number.isNaN("");
 Number.isNaN(" ");
 ```
 
-* Number.isSafeInteger()
-* Number.toFixed(digits)使用定点表示法来格式化一个数 digits(0-20 default:0);
+* <i id="number1-6"></i>Number.isSafeInteger()
+* <i id="number1-7"></i>Number.toFixed(digits)使用定点表示法来格式化一个数 digits(0-20 default:0);
 
 
 
-#### <i id=""></i><sapn id="math"/>Math
+#### <i id="math"></i>Math
 * Math.abs()绝对值
 * sin(), cos(), tan() 正三角
 * asin(), acos(), atan(), atan2()反三角
@@ -992,14 +1088,16 @@ function getRandomIntInclusive(min, max) {
 
 
 
-## <i id=""></i><sapn id="date"/>Date
-UTC **世界协调时间** GMT **格林威治标准时间**(UTC==GMT 北京时间=UTC+8时差)
+## <i id="date"></i>Date
+<i id="date1"></i>UTC **世界协调时间** GMT **格林威治标准时间**(UTC==GMT 北京时间=UTC+8时差)
 ```js
 new Date();
 new Date(value);
 new Date(dateString);
 new Date(year, month[, day[, hour[, minutes[, seconds[, milliseconds]]]]]);
 ```
+<i id="date2"></i>
+
 ```js
 //获得时间毫秒
 console.log(Date.now());
@@ -1023,9 +1121,9 @@ console.log(today.getDay());//一周的第几天，(星期天是0)
 ```
 
 
-## <i id=""></i><sapn id="usestrict"/>严格模式
+## <i id="usestrict"></i>严格模式
 
-* 为某个单独的脚本文件开启严格模式
+* <i id="usestrict1"></i>为某个单独的脚本文件开启严格模式
 ```js
 <script>
 'use strict';
@@ -1042,7 +1140,7 @@ function strict(){
 ```
 
 
-> 非严格模式到严格模式的区别
+> <i id="usestrict2"></i>非严格模式到严格模式的区别
 
 * 语法错误
 1.八进制语法:var n = 023和var s = "\047"  
@@ -1069,14 +1167,14 @@ b = 17; //Uncaught ReferenceError: b is not defined
 var args = Array.prototype.slice.call(arguments) 总是通过形参的名字获取函数参数，或者在函数的第一行拷贝
 
 
-> 语义差异
+> <i id="usestrict3"></i>语义差异
 * 在普通的函数调用f()中,this的值会指向全局对象.在严格模式中,this的值会指向undefined.当函数通过call和apply调用时,如果传入的thisvalue参数是一个null和undefined除外的原始值(字符串,数字,布尔值),则this的值会成为那个原始值对应的包装对象,如果thisvalue参数的值是undefined或null,则this的值会指向全局对象.在严格模式中,this的值就是thisvalue参数的值,没有任何类型转换.  
 * arguments 对象属性不与对应的形参变量同步更新  
 * eval 在严格模式中,eval不会在当前的作用域内创建新的变量.另外,传入eval的字符串参数也会按照严格模式来解析.你需要全面测试来确保没有代码收到影响。另外，如果你并不是为了解决一个非常实际的解决方案中，尽量不要使用eval。
 
 
 
-## <i id=""></i><sapn id="eval"/>EVAL
+## <i id="eval"></i>EVAL
 eval(string); 执行指定代码之后的返回值。如果返回值为空，返回undefined 函数会将传入的字符串当做 JavaScript 代码进行执行  
 eval 中函数作为字符串被定义需要`“（”和“）”`作为前缀和后缀
 ```js
@@ -1089,8 +1187,8 @@ var d=  eval('({"key":"abc"})');
 
 
 
-## <i id=""></i><sapn id="json"/>JSON  [Browser：polyfill]
-* JSON.parse(text[, reviver]);  
+## <i id="json"></i>JSON  [Browser：polyfill]
+* <i id="json1"></i>JSON.parse(text[, reviver]);  
   reviver函数 function (k, v) {}  
   `不允许用逗号作为结尾 JSON.parse("[1, 2, 3, 4, ]");  JSON.parse('{"foo" : 1, }');`
 
@@ -1121,7 +1219,7 @@ var d = JSON.parse('{"1": 1, "2": 2,"3": {"4": 4, "5": {"6": 6}}}', function (k,
 ```
 
 
-* JSON.stringify(value[, replacer [, space]])
+* <i id="json2"></i>JSON.stringify(value[, replacer [, space]])
 
 ```js
 JSON.stringify({});                        // '{}'
@@ -1189,21 +1287,21 @@ JSON.stringify(foo, ['week', 'month']);
 
 
 
-## <i id=""></i><sapn id="promise"/>Promise 　　[Browser：polyfill]
+## <i id="promise"></i>Promise 　　[Browser：polyfill]
 
-### Promise几种状态:
+### <i id="promise1"></i>Promise几种状态:
 * pending: 初始状态，既不是成功，也不是失败状态。
 * fulfilled: 意味着操作成功完成。
 * rejected: 意味着操作失败。
 
 
-> 语法   
+> <i id="promise2"></i>语法   
 
 Promise:new Promise(function(resolve, reject){});  
 [Result:Promise]
 
-### Methods
-> Promise.all(iterable)   
+### <i id="promise3"></i>Methods
+> <i id="promise3-1"></i>Promise.all(iterable)   
 [Result:Promise]
 
 两种情况  
@@ -1213,20 +1311,20 @@ Promise:new Promise(function(resolve, reject){});
 
 ***可以参考`jQuery.when`**
 
-> Promise.race(iterable)  
+> <i id="promise3-2"></i>Promise.race(iterable)  
 [Result:Promise]
 
 
   iterable实例率先改变状态，promise的状态就跟着改变。
 返回一个 Promise，它将与第一个传递的 promise 相同的完成方式被完成。它可以是完成（ resolves），也可以是失败（rejects）
 
-> Promise.reject(reason)  
+> <i id="promise3-3"></i>Promise.reject(reason)  
 [Result:Promise]
 
 返回一个带有拒绝原因reason参数的Promise对象
 
 
-> Promise.resolve(value|promise|thenable)  
+> <i id="promise3-4"></i>Promise.resolve(value|promise|thenable)  
 [Result:Promise]
 
 四种情况
@@ -1252,12 +1350,12 @@ p1.then(function(v) {
 
 * 4.不带有任何参数 Promise.resolve方法允许调用时不带参数，直接返回一个resolved状态的 Promise 对象。
 
-### Promise 原型
+### <i id="promise4"></i>Promise 原型
 
-* Promise.prototype.catch 返回一个Promise，并且处理拒绝的情况。它的行为与调用Promise.prototype.then(undefined, onRejected) 相同。[Result:Promise]
+* <i id="promise4-1"></i>Promise.prototype.catch 返回一个Promise，并且处理拒绝的情况。它的行为与调用Promise.prototype.then(undefined, onRejected) 相同。[Result:Promise]
 
 
-* Promise.prototype.then(onFulfilled, onRejected);返回一个  Promise 。它最多需要有两个参数：Promise 的成功和失败情况的回调函数。[Result:Promise]
+* <i id="promise4-2"></i>Promise.prototype.then(onFulfilled, onRejected);返回一个  Promise 。它最多需要有两个参数：Promise 的成功和失败情况的回调函数。[Result:Promise]
 ```js
 let p1 = new Promise(function(resolve, reject) {
   resolve("Success!");
@@ -1272,7 +1370,7 @@ p1.then(function(value) {
 });
 ```
 
-* Promise.prototype.finally(onFinally);在执行then()和catch()后，都会执行finally指定的回调函数。避免同样的语句需要在then()和catch()中各写一次的情况。[Result:Promise] `(Babel 6 + core-js、ES 2016+、高级浏览器)`
+* <i id="promise4-3"></i>Promise.prototype.finally(onFinally);在执行then()和catch()后，都会执行finally指定的回调函数。避免同样的语句需要在then()和catch()中各写一次的情况。[Result:Promise] `(Babel 6 + core-js、ES 2016+、高级浏览器)`
 
 
 
@@ -1333,7 +1431,7 @@ console.log(rect);
 //Rectangle:{x: 1, y: 1,__proto__:{__proto__:move}}
 ```
 
-> Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
+> <i id="object1-2"></i>Object.defineProperty(obj, prop, descriptor) 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。
 
 
 ### 参数
@@ -1380,7 +1478,7 @@ Object.defineProperty(obj, "key", {
 });
 ```
 
-> Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+> <i id="object1-3"></i>Object.defineProperties(obj, props);直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
 ```js
 props:{
   key:{
@@ -1408,14 +1506,14 @@ Object.defineProperties(obj, {
 ```
 
 
-> Object.entries(obj) 返回给定对象自身`可枚举`属性的[key, value]数组
+> <i id="object1-4"></i>Object.entries(obj) 返回给定对象自身`可枚举`属性的[key, value]数组
 
 ```js
 const obj = { foo: 'bar', baz: 42 };
 console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
 ```
 
-> Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
+> <i id="object1-5"></i>Object.getOwnPropertyDescriptor(obj, prop) 返回对象指定的属性配置。(参考Object.defineProperty参数descriptor)
 
 ```js
 var o, d;
@@ -1430,7 +1528,7 @@ d = Object.getOwnPropertyDescriptor(o, "foo");
 // }
 ```
 
-> Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
+> <i id="object1-6"></i>Object.getOwnPropertyNames() 返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。
 
 ```js
 var arr = ["a", "b", "c"];
@@ -1442,12 +1540,12 @@ console.log(Object.getOwnPropertyNames(obj).sort()); // ["0", "1", "2"]
 
 ```
 
-> Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
+> <i id="object1-7"></i>Object.getOwnPropertySymbols(obj) 返回一个给定对象自身的所有 Symbol 属性的数组
 
-> Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
+> <i id="object1-8"></i>Object.getPrototypeOf(object) 返回指定对象的原型（内部[[Prototype]]属性的值）
 注*Object.getPrototypeOf(Object) 不是  Object.prototype
 
-> Object.is(value1, value2) 判断两个值是否是相同的值
+> <i id="object1-9"></i>Object.is(value1, value2) 判断两个值是否是相同的值
 注*Object.is
 1.两个值都是 undefined
 2.两个值都是 null
@@ -1461,7 +1559,7 @@ console.log(Object.getOwnPropertyNames(obj).sort()); // ["0", "1", "2"]
   6-4.都是除零和 NaN 外的其它同一个数字
 
   ```js
-  Object.is('foo', 'foo');     // true
+Object.is('foo', 'foo');     // true
 Object.is(window, window);   // true
 
 Object.is('foo', 'bar');     // false
@@ -1478,20 +1576,20 @@ Object.is(-0, -0);           // true
 Object.is(NaN, 0/0);         // true
   ```
 
-> Object.preventExtensions(obj) 防止对象的任何扩展。
+> <i id="object1-10"></i>Object.preventExtensions(obj) 防止对象的任何扩展。
 
-> Object.isExtensible(obj) 判断对象是否可扩展
+> <i id="object1-11"></i>Object.isExtensible(obj) 判断对象是否可扩展
 
-> Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
+> <i id="object1-12"></i>Object.freeze(obj) 冻结对象：其他代码不能删除或更改任何属性。
 
-> Object.isFrozen(obj)判断对象是否已经冻结
+> <i id="object1-13"></i>Object.isFrozen(obj)判断对象是否已经冻结
 
-> Object.seal(obj) 防止其他代码删除对象的属性。
+> <i id="object1-14"></i>Object.seal(obj) 防止其他代码删除对象的属性。
 
-> Object.isSealed(obj) 判断对象是否已经密封
+> <i id="object1-15"></i>Object.isSealed(obj) 判断对象是否已经密封
 
 
-> Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
+> <i id="object1-16"></i>Object.keys(obj) 返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
 
 ```js
 // simple array
@@ -1507,7 +1605,7 @@ var anObj = { 100: 'a', 2: 'b', 7: 'c' };
 console.log(Object.keys(anObj)); // console: ['2', '7', '100']
 ```
 
-> Object.values(obj) 返回一个给定对象自己的所有可枚举属性值的数组，值的顺序与使用for...in循环的顺序相同 ( 区别在于 for-in 循环枚举原型链中的属性 )。
+> <i id="object1-17"></i>Object.values(obj) 返回一个给定对象自己的所有可枚举属性值的数组，值的顺序与使用for...in循环的顺序相同 ( 区别在于 for-in 循环枚举原型链中的属性 )。
 
 ```js
 var obj = { foo: 'bar', baz: 42 };
@@ -1523,7 +1621,7 @@ var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
 console.log(Object.values(an_obj)); // ['b', 'c', 'a']
 ```
 
-### Object 实例
+### <i id="object2"></i>Object 实例
 #### 属性
 * Object.prototype.constructor 定的函数，用于创建一个对象的原型。
 
@@ -1541,7 +1639,7 @@ console.log(Object.values(an_obj)); // ['b', 'c', 'a']
 * Object.prototype.toLocaleString() 直接调用 toString()方法。
 * Object.prototype.toString() 返回对象的字符串表示。
 
-#### 自定义.toString()
+#### <i id="object2-1"></i>自定义.toString()
 
 ```js
 function Dog(name,breed,color,sex) {
@@ -1562,7 +1660,7 @@ theDog.toString(); // "Dog Gabby is a female chocolate Lab"
 
 ```
 
-#### 使用toString()检测对象类型
+#### <i id="object2-2"></i>使用toString()检测对象类型
 
 ```js
 //Object.prototype.toString.call
