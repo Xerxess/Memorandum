@@ -1,0 +1,3 @@
+# Selenium IDE
+
+Selenium-IDE（集成开发环境）是您用于开发Selenium测试用例的工具。它是一个易于使用的Chrome和Firefox扩展，通常是开发测试用例的最有效方式。它使用现有的Selenium命令为您在浏览器中记录用户操作，并使用该元素的上下文定义参数。这不仅节省了时间，而且是学习Selenium脚本语法的绝佳方式。
