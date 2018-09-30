@@ -376,7 +376,7 @@ description - 描述
 control - 控件
 ```
 
-1.
+#  组件规范(bem)
 
 
 # Block
@@ -454,6 +454,7 @@ control - 控件
 ```
 
 # 文件结构
+
 * 单个块对应于单个目录。
 
 * 块和目录具有相同的名称。例如，header块位于header/目录中，menu块位于menu/目录中。
@@ -468,45 +469,8 @@ control - 控件
 
 * 元素和修饰符的实现分为单独的技术文件。例如，header__input.js和header_theme_islands.css。
 
-```
-search-form /＃搜索表单的目录
-
-    __input /＃search-form__input的子目录
-        search-form__input.css＃CSS的实现
-                                       #search-form__input元素
-        search-form__input.js #JavaScript的实现
-                                       #search-form__input元素
-
-    __button /＃search-form__button的子目录
-                                       #lement
-        搜索form__button.css
-        搜索form__button.js
-
-    _theme /＃search-form_theme的子目录
-                                       #modifier
-        search-form_theme_islands.css＃搜索表单块的CSS实现
-                                       ＃具有值的主题修饰符
-                                       ＃islands
-        search-form_theme_lite.css＃搜索表单块的CSS实现
-                                       ＃具有值的主题修饰符
-                                       #lite
-
-    search-form.css＃搜索表单块的CSS实现
-    search-form.js #JavaScript的实现
-                                       #search-form块
-```
 
 # 命名规则
-
-## block-name__elem-name_mod-name_mod-val
-
-* 名称以小写拉丁字母书写。
-* 单词用连字符（-）分隔。
-* 块名称定义其元素和修饰符的名称空间。
-* 元素名称通过双下划线（__）与块名称分隔。
-* 修饰符名称通过单个下划线（_）与块或元素名称分隔。
-* 修饰符值通过单个下划线（_）与修饰符名称分隔。
-* 对于布尔修饰符，该值不包含在名称中。
 
 ## block-name__elem-name--mod-name--mod-val
 
@@ -515,3 +479,67 @@ search-form /＃搜索表单的目录
 * 元素名称通过双下划线（__）与块名称分隔。
 * 布尔修饰符通过双连字符（--）与块或元素的名称分隔开。
 * 修饰符的值通过双连字符（--）与其名称分隔。
+
+自己的规范
+* 全小写单词之间用'-'连接
+* 适度使用标签选择器 .block span{},增强语义和降低对特定HTML结构的依赖
+* 深度不得超过3级
+* 状态状态修改以is开头 如.is-active .is-hover
+* 慎用!important
+* 组件的block 不得定义width、height、margin、padding、border等外观样式，应尽量使用混合类,调整外观
+* 老项目中使用bem是可将bem作为命名空间，防止样式冲突如：.bem-block{}、bem-block__elem...
+* 新项目中使用bem,可加入自己的组件命名空间;
+* 不得使用'J-'或'J_'以开头的类，这个用于js专用类。
+* 不得使用ID选择器;
+* 不得使用标签选择器，标签样式对标签依赖性强;
+* 组合选择器不得使用在除状态以外的地方,如.btn.isactive;
+* 组件单一责任,单一责任选择器为代码提供了更大的灵活性。;
+* 开放/闭合原则,通过修饰符打开以进行扩展，但是对于更改是不允许的;
+* 减少代码中的重复;
+
+
+## 通用原则
+ * 在任何代码库中，无论有多少人参与及贡献，所有代码都应该如同一个人编写的一样。
+ * 严格执行一致认可的风格。
+## 空格
+## 注释
+## 格式  
+
+1. Box （display, float, position, left, top, height）
+2. Border （border，border-radius）
+3. Background (background)
+4. Text (font-family，font-size，text-transform，letter-spacing)
+5. Other （transform,animation）
+
+```css
+.block{
+    display:none;
+    float:left;
+    
+    position:absolute;
+    left:auto;
+    right:auto;
+
+    width:400px;
+    height:400px;
+
+    border:1px solid #ddd;
+    border-radius:4px;
+
+    background:#ccc;
+
+    font-family：'宋体';
+    font-size:14px;
+    color:#ccc;
+
+    transform: all .3s;
+    animation: myanimation .3s;
+}
+```
+## 命名
+
+* 尽量带有语义的单词
+
+## 实例
+## 代码组织
+## 构建及部署
