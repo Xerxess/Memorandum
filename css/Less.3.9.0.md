@@ -43,6 +43,26 @@
 * [@import At-Rules](#less8)
 * [@plugin At-Rules](#less9)
 * [Maps(v3.5.0)）](#less10)
+* [Less支持的内置功能 Function](#less11)
+    * [逻辑函数](#less11-1)
+        * [if](#less11-1-1)
+        * [boolean()](#less11-1-2)
+    * [字符串函数](#less11-2)
+        * [escape() url编码](#less11-2-1)
+        * [e() 转义](#less11-2-2)
+        * [replace(string,pattern,replacement,flags) 替换string](#less11-2-3)
+    * [列表功能](#less11-3)
+        * [length(list) 获得列表长度](#less11-3-1)
+        * [extract(list,index) 获得列表item](#less11-3-2)
+        * [range(start,end,step) 生成一个间隔step的列表](#less11-3-3)
+        * [each(list,rules)](#less11-3-4)
+    * [数学函数](#less11-4)
+    * [类型功能](#less11-5)
+    * [杂项功能](#less11-6)
+    * [颜色定义功能](#less11-7)
+    * [颜色通道功能](#less11-8)
+    * [颜色操作功能](#less11-9)
+    * [颜色混合功能](#less11-10)
 
 
 ##  <i id="less1"></i> 变量
@@ -851,3 +871,243 @@ header {
   }
 }
 ```
+
+
+## <i id="less11"></i> Less支持的内置功能 Function
+
+> <i id="less11-1"></i>逻辑函数
+
+* <i id="less11-1-1"></i>if
+
+```css
+@some: foo;
+
+div {
+    margin: if((2 > 1), 0, 3px);
+    color:  if((iscolor(@some)), darken(@some, 10%), black);
+}
+
+/*输出*/
+
+div {
+    margin: 0;
+    color:  black;
+}
+```
+
+* <i id="less11-1-2"></i>boolean
+
+```css
+@bg: black;
+@bg-light: boolean(luma(@bg) > 50%);
+
+div {
+  background: @bg; 
+  color: if(@bg-light, black, white);
+}
+
+/*输出*/
+
+div {
+  background: black;
+  color: white;
+}
+```
+
+> <i id="less11-2"></i>字符串函数
+
+* <i id="less11-2-1"></i>escape 编码
+
+这些字符不编码：,，/，?，@，&，+，'，~，!和$。  
+最常见的编码的字符：\<space\>，#，^，(，)，{，}，|，:，>，<，;，]，[和=。
+
+```css
+escape('a=1') 
+
+a%3D1
+```
+
+* <i id="less11-2-2"></i>e 字符串转义
+
+```css 
+@mscode: "ms:alwaysHasItsOwnSyntax.For.Stuff()" 
+filter: e(@mscode);
+
+filter: ms:alwaysHasItsOwnSyntax.For.Stuff();
+```
+
+* <i id="less11-2-3"></i>replace(string,pattern,replacement,flags) 替换字符串中的文本。
+    * string：要搜索和替换的字符串。
+    * pattern：要搜索的字符串或正则表达式模式。
+    * replacement：用于替换匹配模式的字符串。
+    * flags:(可选）正则表达式标志。
+
+```css
+replace("Hello, Mars?", "Mars\?", "Earth!");
+replace("One + one = 4", "one", "2", "gi");
+replace('This is a string.', "(string)\.$", "new $1.");
+replace(~"bar-1", '1', '2');
+
+"Hello, Earth!";
+"2 + 2 = 4";
+'This is a new string.';
+bar-2;
+```
+
+> 列表功能
+
+* <i id="less11-3-1"></i>length(list) 
+    * list - 逗号或空格分隔的值列表。
+* <i id="less11-3-2"></i>extract(list,index)
+    * list - 逗号或空格分隔的值列表。
+    * index - 一个整数，指定要返回的列表元素的位置。
+* <i id="less11-3-3"></i>range(start,end,step)
+    * start- （可选）起始值，例如1或1px
+    * end- 结束值，例如5px
+    * step - （可选）增量的数量
+* <i id="less11-3-4"></i>each(list,rules)
+    * list - 逗号或空格分隔的值列表。
+    * rules - 匿名规则集/ mixin
+
+```css
+@list: "banana", "tomato", "potato", "peach";
+n: length(@list);
+
+n: 4;
+```
+
+```css
+@list: apple, pear, coconut, orange;
+value: extract(@list, 3);
+
+value: coconut;
+```
+
+```css
+value: range(10px, 30px, 10);
+
+value: 10px 20px 30px;
+```
+
+```css
+@selectors: blue, green, red;
+
+each(@selectors, {
+  .sel-@{value} {
+    a: b;
+  }
+});
+
+.sel-blue {
+  a: b;
+}
+.sel-green {
+  a: b;
+}
+.sel-red {
+  a: b;
+}
+```
+
+默认情况下，每一个规则集的约束，每个列表构件，一个@value，@key和@index可变的。对于大多数列表，@key并且@index将被分配相同的值（数字位置，基于1）。
+
+```css
+@set: {
+  one: blue;
+  two: green;
+  three: red;
+}
+.set {
+  each(@set, {
+    @{key}-@{index}: @value;
+  });
+}
+
+.set {
+  one-1: blue;
+  two-2: green;
+  three-3: red;
+}
+```
+
+> <i id="less11-4"></i>数学函数
+
+* ceil(number) 上收
+* floor(number)下舍
+* percentage(number) 百分比字符串
+* round(number) 四舍五入
+* sqrt(number) 开平方
+* abs(number) 绝对值
+
+> <i id="less11-5"></i>类型功能
+
+* isnumber(value) 是否是数字
+* isstring(value) 是否是字符串
+* iscolor(value) 是否是颜色值
+* iskeyword(value) 是否是关键字
+* isurl(value) 是否是url
+* ispixel(value)是否是px值
+* isem(value) 是否是em值
+* ispercentage(value) 是否带有%
+* isunit(value,unit) 是否是带有指定单位
+    * value - 值或变量
+    * unit - 单位标识符(px,rem,%,em,pt,mm)
+* isruleset(value) 是否是规则集则
+    * value - 评估的变量
+
+> <i id="less11-6"></i>杂项功能
+
+* color(string);
+* image-size(string);
+* image-width("file.png");
+* image-height("file.png");
+* convert 将数字从一个单位转换为另一个单位。
+    * number：带单位的浮点数。
+    * identifier，string或escaped value：单位
+* data-uri()
+    * mimetype:(可选）MIME类型字符串。
+    * url：要内联的文件的URL。
+* default()
+* unit(dimension,unit) 删除或更改维度的单位
+    * dimension：一个数字，有或没有维度。
+    * unit:(可选）要更改的单位，或者如果省略则删除单位。
+* get-unit(number) 返回数字的单位
+```css
+color("#aaa");
+
+#aaa
+```
+
+> <i id="less11-7"></i>颜色定义功能
+
+> <i id="less11-8"></i>颜色通道功能
+
+> <i id="less11-9"></i>颜色操作功能
+
+* saturate(color,amount,method) +饱和度
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* desaturate(color,amount,method) -饱和度
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* lighten(color,amount,method) +亮度
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* darken(color,amount,method) -亮度
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* fadein(color,amount,method) +透明度，更不透明
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* fadeout(color,amount,method) -透明度，更透明
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
+    * method：可选，设置relative为使调整相对于当前值。
+* fade(color, amount) 设置透明度
+    * color：一个颜色对象。
+    * amount：百分比0-100％。
