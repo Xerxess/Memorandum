@@ -117,7 +117,7 @@
 
 * 如果缩写「flex: auto」, 则其计算值为「1 1 auto」
 
-* 如果「flex: none」, 则其计算值为「0 0 auto」
+* 如果「flex: none」, 则其计算值为「0 0 auto」 // 常用于固定尺寸 不伸缩
 
 * 如果「flex: 0 auto」或者「flex: initial」, 则其计算值为「0 1 auto」，即「flex」初始值  
 ```
