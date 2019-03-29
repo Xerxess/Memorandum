@@ -91,4 +91,21 @@ item1-width=400-400*400/900 =222.222
 
 ## flex-grow:0 放大比例
 
-参考 flex-shrink
+```html
+<div style="width:500px;display:flex;">
+    <div style="width:200px;flex-grow:1">item1</div>
+    <div style="width:100px;flex-grow:2">item2</div>
+</div>
+```
+
+容器剩余宽度：500-200-100=200px
+分成每份：200px / (1+2) = 66.666px
+元素1放大为：200px + 1 * 66.666 = 266.66px
+元素2放大为：100px + 2 * 66.666 = 233.32px
+
+## flex-basis 初始因子，跟width 效果一样，但权重大于widht
+
+注意，如果内部子元素width大于flex-basis,则此时flex-basis==子元素的width
+
+
+## white-space:nowrap 不换行 导致窗器宽度大于100% 可能会触发flex-shrink 缩放因子
