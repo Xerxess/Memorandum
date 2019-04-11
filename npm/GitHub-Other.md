@@ -5,3 +5,4 @@ ShadowsocksX-NG | macOS | https://github.com/shadowsocks/ShadowsocksX-NG
 shadowsocksr-csharp | Windows的ShadowsocksR | https://github.com/shadowsocksr-backup/shadowsocksr-csharp
 shadowsocksr-csharp | |https://github.com/shadowsocksrr/shadowsocksr-csharp
 shadowsocks-rss | https://github.com/shadowsocksrr/shadowsocks-rss
+shadowsocks-android | |https://github.com/shadowsocks/shadowsocks-android

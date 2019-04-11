@@ -20,4 +20,12 @@
  Hover | 悬停效果 | https://github.com/IanLunn/Hover
  translate-smacss-zh | SMACSS中文翻译 | https://github.com/jeffwcx/translate-smacss-zh
  GlitchSlideshow | 幻灯片显示使用CSS毛刺效果进行幻灯片切换 | https://github.com/codrops/GlitchSlideshow
+ rscss | 样式表可维护性教程 | https://github.com/rstacruz/rscss
+ normalize.css | CSS的现代替代品重置 | https://github.com/necolas/normalize.css
+ sanitize.css | 实践CSS基础 | https://github.com/csstools/sanitize.css
+ magic | css 动画 | https://github.com/miniMAC/magic
+ animate.css | css 动画 | https://github.com/daneden/animate.css
+ Font-Awesome | SVG，字体和CSS工具包 | https://github.com/FortAwesome/Font-Awesome
+ Buttons | 使用Sass和Compass构建的CSS按钮库 | https://github.com/alexwolfe/Buttons
+ csshake | css3抖动效果 | https://github.com/elrumordelaluz/csshake
 
