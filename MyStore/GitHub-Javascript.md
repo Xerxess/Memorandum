@@ -76,6 +76,9 @@ clipboard.js | 复制到剪贴板。没有Flash | https://github.com/zenorocha/c
 zeroclipboard| 复制到剪贴板 支持Flash | https://github.com/zeroclipboard/zeroclipboard
 icheck | 定制的复选框和单选按钮（jQuery和Zepto） | https://github.com/fronteed/icheck
 swfobject | 检测Adobe Flash Player插件 | https://github.com/swfobject/swfobject
+get-size | 获取元素的大小 | https://github.com/desandro/get-size
+getStyleProperty | getStyleProperty | https://github.com/desandro/get-style-property
+transitn | CSS转换的JS实用程序类 | https://github.com/desandro/transitn
 
 
 ## <i id="j-3"></i>UI助手
@@ -92,11 +95,12 @@ resize-detector | 元素调整大小检测 | https://github.com/Justineo/resize-
 pjax | 在任何网站上轻松启用快速Ajax导航（使用pushState + xhr） | https://github.com/MoOx/pjax
 emergence | 检测元素可见性 | https://github.com/xtianmiller/emergence.js
 popper.js | 定位工具提示，弹出窗口或任何内容！ | https://github.com/FezVrasta/popper.js
-imagesloaded | 图片加载完成 | https://github.com/desandro/imagesloaded
+
 js-cookie | cookie管理 | https://github.com/js-cookie/js-cookie
 virtual-dom | 虚拟DOM和差异算法 | https://github.com/Matt-Esch/virtual-dom
 Modernizr | ​​浏览器中检测HTML5和CSS3功能 | https://github.com/Modernizr/Modernizr
 feature.js | 快速，简单，轻量级的浏览器功能检测库 | https://github.com/viljamis/feature.js
+FastActive |　touchstart＼touchmove　实现 active　| https://github.com/jonathanstark/FastActive/blob/master/FastActive.js
 
 
 ## <i id="j-4"></i>Scroll
@@ -140,9 +144,11 @@ noUiSlider | 轻量级JavaScript范围滑块库 | https://github.com/leongersen/
 typed.js | 顺序打字效果 | https://github.com/mattboldt/typed.js
 barba |网站页面流畅和平滑过渡 | https://github.com/barbajs/barba
 lightbox2 |灯箱脚本查看大图 | https://github.com/lokesh/lightbox2
+lightgallery.js | 功能齐全的javascript灯箱库 | https://github.com/sachinchoolur/lightgallery.js
 slick | slide | https://github.com/kenwheeler/slick
 swiper | slide | https://github.com/nolimits4web/swiper
 slick | slide | https://github.com/kenwheeler/slick
+slider | slider | https://github.com/jssor/slider
 SpinKit | loading | https://github.com/tobiasahlin/SpinKit
 css-loaders | loading | https://github.com/lukehaas/css-loaders
 loaders.css | loading | https://github.com/ConnorAtherton/loaders.css
@@ -196,6 +202,7 @@ loadCSS | 延迟加载css | https://github.com/filamentgroup/loadCSS
 PreloadJS | 预加载资产和获取聚合进度事件 | https://github.com/CreateJS/PreloadJS
 lozad.js | 延迟加载器 | https://github.com/ApoorvSaxena/lozad.js
 lazyestload.js | 延迟加载图像 | https://github.com/Paul-Browne/lazyestload.js
+imagesloaded | 图片加载完成 预加载器 | https://github.com/desandro/imagesloaded
 
 ## <i id="j-11"></i>Keyboard 键盘
 
@@ -414,6 +421,7 @@ velocity | JavaScript动画 | https://github.com/julianshapiro/velocity
 anime | javascript动画(支持css3) | https://github.com/juliangarnier/anime
 web-animations-js | Web Animations API | https://github.com/web-animations/web-animations-js
 flipjs | FLIP动画的辅助库 | https://github.com/googlearchive/flipjs
+transitn | CSS转换的JS实用程序类 | https://github.com/desandro/transitn
 
 
 ## <i id="j-28"></i>Date 组件
