@@ -273,6 +273,7 @@ crypto-js | 加密标准的JavaScript库 | https://github.com/brix/crypto-js
 openpgpjs | JavaScript的OpenPGP实现 | https://github.com/openpgpjs/openpgpjs
 lodash | 一个现代JavaScript实用程序库，提供模块化，性能和附加功能 | https://github.com/lodash/lodash
 less.js | 动态样式表语言 | https://github.com/less/less.js
+immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/immutable-js
 
 
 ## <i id="j-16"></i>规范Guide
