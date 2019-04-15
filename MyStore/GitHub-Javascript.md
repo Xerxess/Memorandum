@@ -2,6 +2,7 @@
 * [UI功能组件](#j-2)
 * [UI助手](#j-3)
 * [Scroll](#j-4)
+* [webapp 移动相关](#jj-4)
 * [滑动](#j-5)
 * [特效](#j-6)
 * [Touch && 拖放](#j-7)
@@ -79,6 +80,10 @@ swfobject | 检测Adobe Flash Player插件 | https://github.com/swfobject/swfobj
 get-size | 获取元素的大小 | https://github.com/desandro/get-size
 getStyleProperty | getStyleProperty | https://github.com/desandro/get-style-property
 transitn | CSS转换的JS实用程序类 | https://github.com/desandro/transitn
+AlloyImage | html5图像处理开源引擎 | https://github.com/AlloyTeam/AlloyImage
+qrcodejs | 跨浏览器QRCode二维码生成器 | https://github.com/davidshimjs/qrcodejs
+jsqrcode | RCode二维码扫描仪 | https://github.com/LazarSoft/jsqrcode
+baiduShare | 百度分享不支持Https的解决方案 | https://github.com/hrwhisper/baiduShare
 
 
 ## <i id="j-3"></i>UI助手
@@ -95,11 +100,12 @@ resize-detector | 元素调整大小检测 | https://github.com/Justineo/resize-
 pjax | 在任何网站上轻松启用快速Ajax导航（使用pushState + xhr） | https://github.com/MoOx/pjax
 emergence | 检测元素可见性 | https://github.com/xtianmiller/emergence.js
 popper.js | 定位工具提示，弹出窗口或任何内容！ | https://github.com/FezVrasta/popper.js
-
 js-cookie | cookie管理 | https://github.com/js-cookie/js-cookie
 virtual-dom | 虚拟DOM和差异算法 | https://github.com/Matt-Esch/virtual-dom
 Modernizr | ​​浏览器中检测HTML5和CSS3功能 | https://github.com/Modernizr/Modernizr
 feature.js | 快速，简单，轻量级的浏览器功能检测库 | https://github.com/viljamis/feature.js
+compat-table | ECMAScript 5/6/7兼容性表  | https://github.com/kangax/compat-table
+caniuse | 浏览器功能兼容性 | https://github.com/fyrd/caniuse
 FastActive |　touchstart＼touchmove　实现 active　| https://github.com/jonathanstark/FastActive/blob/master/FastActive.js
 
 
@@ -127,6 +133,11 @@ better-scroll | 滚动性能 | https://github.com/ustbhuangyi/better-scroll
 normalize-wheel | 跨多个浏览器的鼠标滚轮标准化 | https://github.com/basilfx/normalize-wheel
 SlimScroller.js | 平滑地滚动到您的网站上的位置和锚点 | https://github.com/ameesme/SlimScroller.js
 smooth-scroll | 动画滚动以锚点链接的轻量级脚本 | https://github.com/cferdinandi/smooth-scroll
+
+## <i id="jj-4"></i>webapp 移动相关
+名称 | 简介 | github
+---------|----------|---------
+Mars | 腾讯移动 Web 前端知识库 | https://github.com/AlloyTeam/Mars
 
 ## <i id="j-5"></i>滑动
 
@@ -232,6 +243,7 @@ chimee | 视频播放器 | https://github.com/Chimeejs/chimee
 flv.js | HTML5 FLV Player | https://github.com/bilibili/flv.js
 DPlayer | HTML5 danmaku视频播放器 | https://github.com/MoePlayer/DPlayer
 howler.js | 音频库 | https://github.com/goldfire/howler.js
+video.js | 开源HTML5和Flash视频播放器 | https://github.com/videojs/video.js
 
 ## <i id="j-14"></i>Polyfill
 
@@ -283,6 +295,7 @@ immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/imm
 javascript | JavaScript Style Guide | https://github.com/airbnb/javascript
 standard | JavaScript样式指南 | https://github.com/standard/standard
 styleguide | Google源自开源项目的样式指南 | https://github.com/google/styleguide
+spec | 编码规范 |https://github.com/ecomfe/spec
 
 
 ## <i id="j-17"></i>缓存 &&存储 && Session && LocalStorage && IndexedDB
@@ -335,6 +348,7 @@ mpvue | Vue.js 的小程序开发框架 | https://github.com/Meituan-Dianping/mp
 
 名称 | 简介 | github
 ---------|----------|--------- 
+nvm-windows | Windows的node.js版本管理实用程序 | https://github.com/coreybutler/nvm-windows
 node | | https://github.com/nodejs/node
 node-http-proxy | http代理 | https://github.com/nodejitsu/node-http-proxy
 sharp | 高性能Node.js图像处理 | https://github.com/lovell/sharp
@@ -423,6 +437,7 @@ anime | javascript动画(支持css3) | https://github.com/juliangarnier/anime
 web-animations-js | Web Animations API | https://github.com/web-animations/web-animations-js
 flipjs | FLIP动画的辅助库 | https://github.com/googlearchive/flipjs
 transitn | CSS转换的JS实用程序类 | https://github.com/desandro/transitn
+Hilo | 跨端HTML5游戏开发解决方案 | https://github.com/hiloteam/Hilo
 
 
 ## <i id="j-28"></i>Date 组件
@@ -488,3 +503,4 @@ nativescript-vue | nativescript | https://github.com/nativescript-vue/nativescri
 名称 | 简介 | github
 ---------|----------|--------- 
 art-template | 高性能JavaScript模板引擎 | https://github.com/aui/art-template
+sodajs| 轻量级模板引擎 | https://github.com/AlloyTeam/sodajs

@@ -5,6 +5,7 @@
 ---------|----------|---------
 lumen | Lumen PHP Framework | https://github.com/laravel/lumen
 laravel | PHP Framework | https://github.com/laravel/laravel
+php-the-right-way | PHP 最佳实践、编码规范和权威学习指南 | https://github.com/laravel-china/php-the-right-way
 A3 | B3 | C3
 
 ## 服务器
