@@ -84,6 +84,19 @@ AlloyImage | html5图像处理开源引擎 | https://github.com/AlloyTeam/AlloyI
 qrcodejs | 跨浏览器QRCode二维码生成器 | https://github.com/davidshimjs/qrcodejs
 jsqrcode | RCode二维码扫描仪 | https://github.com/LazarSoft/jsqrcode
 baiduShare | 百度分享不支持Https的解决方案 | https://github.com/hrwhisper/baiduShare
+cleave.js | 格式化输入文本 | https://github.com/nosir/cleave.js
+typeahead.js | 自动完成库 | https://github.com/twitter/typeahead.js
+screenfull.js | Fullscreen API 全屏 | https://github.com/sindresorhus/screenfull.js
+fullPage.js | 全屏页面 　｜ ttps://github.com/alvarotrigo/fullPage.js
+pagePiling.js |  滚动的部分 | https://github.com/alvarotrigo/pagePiling.js
+colorPicker | color选择器 | https://github.com/PitPik/colorPicker
+smartcrop.js | 内容感知图像裁剪 | https://github.com/jwagner/smartcrop.js
+tracking.js | 颜色跟踪，人脸检测 | https://github.com/eduardolundgren/tracking.js
+Jcrop | 图片裁剪 | https://github.com/tapmodo/Jcrop
+Croppie | 固定式裁剪（可用于头像裁剪） | https://github.com/Foliotek/Croppie
+detector | 客户端环境识别 | https://github.com/hotoo/detector
+bowser | 浏览器检测器 | https://github.com/lancedikson/bowser
+
 
 
 ## <i id="j-3"></i>UI助手
@@ -91,6 +104,9 @@ baiduShare | 百度分享不支持Https的解决方案 | https://github.com/hrwh
 名称 | 简介 | github
 ---------|----------|---------
 retina.js |  用于渲染高分辨率图像变体的JavaScript，Sass，Less和Stylus助手 | https://github.com/strues/retinajs
+vConsole | 用于移动网页的轻量级，可扩展的前端开发人员工具 | https://github.com/Tencent/vConsole
+AlloyLever | 用于移动网页的轻量级，可扩展的前端开发人员工具 | https://github.com/AlloyTeam/AlloyLever
+analyze-css | CSS选择器复杂性和性能分析器 | https://github.com/macbre/analyze-css
 dom-walk | 迭代地遍历任何DOM节点 | https://github.com/npm-dom/dom-walk
 emitter | 简单的发射器实现 | https://github.com/facebook/emitter
 tiny-emitter | 发射器实现 | https://github.com/scottcorgan/tiny-emitter
@@ -107,6 +123,8 @@ feature.js | 快速，简单，轻量级的浏览器功能检测库 | https://gi
 compat-table | ECMAScript 5/6/7兼容性表  | https://github.com/kangax/compat-table
 caniuse | 浏览器功能兼容性 | https://github.com/fyrd/caniuse
 FastActive |　touchstart＼touchmove　实现 active　| https://github.com/jonathanstark/FastActive/blob/master/FastActive.js
+parseUri | URI拆分 | https://github.com/franzenzenhofer/parseUri
+way.js | 简单，轻便，持久的双向数据绑定 | https://github.com/gwendall/way.js
 
 
 ## <i id="j-4"></i>Scroll
@@ -133,6 +151,9 @@ better-scroll | 滚动性能 | https://github.com/ustbhuangyi/better-scroll
 normalize-wheel | 跨多个浏览器的鼠标滚轮标准化 | https://github.com/basilfx/normalize-wheel
 SlimScroller.js | 平滑地滚动到您的网站上的位置和锚点 | https://github.com/ameesme/SlimScroller.js
 smooth-scroll | 动画滚动以锚点链接的轻量级脚本 | https://github.com/cferdinandi/smooth-scroll
+ScrollMagic | 滚动交互的javascript库 | https://github.com/janpaepke/ScrollMagic
+elevator.js |　回到顶部 | https://github.com/tholman/elevator.js
+scrollup | 　回到顶部 | https://github.com/markgoodyear/scrollup
 
 ## <i id="jj-4"></i>webapp 移动相关
 名称 | 简介 | github
@@ -177,9 +198,10 @@ interact.js | 拖动-多点触控旋转（缩放）| https://github.com/taye/int
 hammer.js | 多点触控手势 | https://github.com/hammerjs/hammer.js
 touchjs | Touchjs | https://github.com/Clouda-team/touchjs
 draggable | 拖放库 | https://github.com/Shopify/draggable
+draggabilly | 拖放库 | https://github.com/desandro/draggabilly
+dragula | 拖放 | https://github.com/bevacqua/dragula
 fastclick | 消除物理点击和click在移动浏览器上触发事件之间300毫秒的延迟 | https://github.com/ftlabs/fastclick
 dropzone | 易于使用的拖放库上传 | https://github.com/enyo/dropzone
-dragula | 拖放 | https://github.com/bevacqua/dragula
 AlloyTouch | 平滑滚动，旋转，拉动刷新，页面过渡以及网络的任何动作 - 丝般顺滑的触摸运动 | https://github.com/AlloyTeam/AlloyTouch
 flickity | | https://github.com/metafizzy/flickity
 
@@ -450,6 +472,7 @@ fecha | 轻量级Javascript日期格式和解析 | https://github.com/taylorhake
 moment | 解析，验证，操作和显示日期 | https://github.com/moment/moment
 dayjs | 替代Moment.js | https://github.com/iamkun/dayjs
 daterangepicker | 日期范围，日期和时间选择器组件 | https://github.com/dangrossman/daterangepicker
+Pikaday | JavaScript Datepicker | https://github.com/Pikaday/Pikaday
 
 ## <i id="j-29"></i>Socket
 
