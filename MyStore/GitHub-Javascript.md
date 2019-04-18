@@ -125,7 +125,8 @@ caniuse | 浏览器功能兼容性 | https://github.com/fyrd/caniuse
 FastActive |　touchstart＼touchmove　实现 active　| https://github.com/jonathanstark/FastActive/blob/master/FastActive.js
 parseUri | URI拆分 | https://github.com/franzenzenhofer/parseUri
 way.js | 简单，轻便，持久的双向数据绑定 | https://github.com/gwendall/way.js
-
+pinyinjs | 汉字转拼音 | https://github.com/sxei/pinyinjs/
+pinyin | 汉字转拼音 | https://github.com/hotoo/pinyin
 
 ## <i id="j-4"></i>Scroll
 
@@ -252,6 +253,7 @@ hotkeys | 捕获键盘输入 | https://github.com/jaywcjlove/hotkeys
 ---------|----------|---------  
 systemjs| 浏览器可用 |https://github.com/systemjs/systemjs
 browser-es-module-loader | Browser ES Module Loader | https://github.com/ModuleLoader/browser-es-module-loader
+rollup | 下一代ES模块捆绑器 | https://github.com/rollup/rollup
 
 ## <i id="j-13"></i>Audio & Video
 
@@ -308,6 +310,7 @@ openpgpjs | JavaScript的OpenPGP实现 | https://github.com/openpgpjs/openpgpjs
 lodash | 一个现代JavaScript实用程序库，提供模块化，性能和附加功能 | https://github.com/lodash/lodash
 less.js | 动态样式表语言 | https://github.com/less/less.js
 immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/immutable-js
+prettier | 代码格式化程序 | https://github.com/prettier/prettier
 
 
 ## <i id="j-16"></i>规范Guide
@@ -381,6 +384,7 @@ parse-server | 用于Node / Express | https://github.com/parse-community/parse-s
 supertest | 使用流畅的API测试 | https://github.com/visionmedia/supertest
 koa | node.js的下一代Web框架 | https://github.com/koajs/koa
 rimraf | nodejs的`rm -rf`工具 | https://github.com/isaacs/rimraf
+cross-env | 环境脚本的跨平台设置 | https://github.com/kentcdodds/cross-env
 
 ## <i id="j-23"></i>Editors
 
@@ -500,10 +504,14 @@ async-validator | 验证表单异步 | https://github.com/yiminghe/async-validat
 
 名称 | 简介 | github
 ---------|----------|--------- 
-jest | JavaScript测试 | https://github.com/facebook/jest
 chai | BDD / TDD断言框架 | https://github.com/chaijs/chai
-mocha | javascript测试框架 | https://github.com/mochajs/mocha
-karma | 提供高效的测试环境 | https://github.com/karma-runner/karma
+chai-http | HTTP响应断言 | https://github.com/chaijs/chai-http
+should.js | BDD样式断言断言 | https://github.com/shouldjs/should.js
+jest | javascript测试框架(测试 React 应用) | https://github.com/facebook/jest
+mocha | javascript测试框架(常用) | https://github.com/mochajs/mocha
+jasmine | 适用于浏览器和node.js的简单JavaScript测试框架 | https://github.com/jasmine/jasmine
+ava | Node.js的测试 | https://github.com/avajs/ava
+karma | 提供高效的测试环境(一个简单的工具，允许您在多个真实浏览器中执行JavaScript代码) | https://github.com/karma-runner/karma
 shields |　git徽章 |　https://github.com/badges/shields
 istanbul | JS代码覆盖工具 | https://github.com/gotwarlost/istanbul
 phantomjs | 脚本的无头浏览器 | https://github.com/ariya/phantomjs

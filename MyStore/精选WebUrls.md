@@ -10,6 +10,8 @@
 * [PHP](#u-6)
 * [Web安全](#u-7)
 * [精选连接](#u-8)
+* [国际](#u-9)
+
 
 
 ## <i id="u-1"></i> WebApp
@@ -78,6 +80,7 @@ http://zeroclipboard.org/
 名称 | 介绍| link
 ---------|----------|---------
 koala  | less|sass编译客户端 | http://koala-app.com/index-zh.html
+yeoman.io | 用于现代WEBAPPS的WEB脚手架工具 | https://yeoman.io
 
 
 ## <i id="u-4"></i> 工具
@@ -172,6 +175,16 @@ php官方文档 | | https://www.php.net/manual/zh/funcref.php
 名称 | 介绍| link
 ---------|----------|---------
 前端 TOP 100  |  | https://www.awesomes.cn/rank
+
+## <i id="u-9"></i>国际
+名称 | 介绍| link
+---------|----------|---------
+proxifier  | Proxifier允许不支持通过代理服务器工作的网络应用程序通过SOCKS或HTTPS代理和链进行操作。  | http://proxifier.com
+v2rayu | V2rayU,基于v2ray核心的mac版客户端 | https://github.com/yanue/v2rayu
+v2rayN | | https://github.com/2dust/v2rayN
+electron-ssr |  （支持Windows MacOS Linux系统）的ShadowsocksR客户端桌面应用 | https://github.com/erguotou520/electron-ssr
+shadowsocks-windows | | https://github.com/shadowsocks/shadowsocks-windows
+
 
 
 
