@@ -385,6 +385,7 @@ supertest | 使用流畅的API测试 | https://github.com/visionmedia/supertest
 koa | node.js的下一代Web框架 | https://github.com/koajs/koa
 rimraf | nodejs的`rm -rf`工具 | https://github.com/isaacs/rimraf
 cross-env | 环境脚本的跨平台设置 | https://github.com/kentcdodds/cross-env
+watchman | 监视文件和记录，或触发操作 | https://github.com/facebook/watchman
 
 ## <i id="j-23"></i>Editors
 
@@ -413,6 +414,8 @@ NativeScript | NativeScript是一个开源框架 | https://github.com/NativeScri
 ionic | 移动应用程序开发框架 | https://github.com/ionic-team/ionic
 gatsby | 使用React构建应用程序和网站 | https://github.com/gatsbyjs/gatsby
 react-native | 使用React构建App | https://github.com/facebook/react-native
+react-native-guide | React Native指南汇集了各类react-native学习资源、开源App和组件 | https://github.com/reactnativecn/react-native-guide
+react-navigation | React Native应用程序的路由和导航 | https://github.com/react-navigation/react-navigation
 electron | JavaScript，HTML和CSS构建跨平台桌面应用程序（vscode基于他）  | https://github.com/electron/electron
 
 ## <i id="j-25"></i>Svg && Canvas && 画布 && 图表 && WebGL
