@@ -32,6 +32,7 @@
 * [测试 Test && 无头浏览器](#j-32)
 * [项目启动模板](#j-33)
 * [模板引擎](#j-34)
+* [编码](#j-35)
 
 ## <i id="j-1"></i>UI库
 
@@ -310,7 +311,6 @@ openpgpjs | JavaScript的OpenPGP实现 | https://github.com/openpgpjs/openpgpjs
 lodash | 一个现代JavaScript实用程序库，提供模块化，性能和附加功能 | https://github.com/lodash/lodash
 less.js | 动态样式表语言 | https://github.com/less/less.js
 immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/immutable-js
-prettier | 代码格式化程序 | https://github.com/prettier/prettier
 
 
 ## <i id="j-16"></i>规范Guide
@@ -538,3 +538,13 @@ nativescript-vue | nativescript | https://github.com/nativescript-vue/nativescri
 ---------|----------|--------- 
 art-template | 高性能JavaScript模板引擎 | https://github.com/aui/art-template
 sodajs| 轻量级模板引擎 | https://github.com/AlloyTeam/sodajs
+
+## <i id="j-35"></i>编码
+
+名称 | 简介 | github
+---------|----------|--------- 
+editorconfig | 统一编码样式 | https://github.com/editorconfig/editorconfig
+prettier | 代码格式化程序(很好用) | https://github.com/prettier/prettier
+eslint | js检测 | https://github.com/eslint/eslint
+tslint | ts检测 | https://github.com/palantir/tslint
+stylelint | css检测 | https://github.com/stylelint/stylelint
