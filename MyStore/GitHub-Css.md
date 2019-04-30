@@ -7,6 +7,7 @@
  minireset.css | 微小的现代CSS重置 | https://github.com/jgthms/minireset.css
  lib-flexible | 可伸缩布局方案 | https://github.com/amfe/lib-flexible
  postcss-bem | PostCSS插件实现BEM作为规则 | https://github.com/kezzbracey/postcss-bem
+ saladcss-bem | postcss-bem(优化版) | https://github.com/SpringLIAO/saladcss-bem
  sass-rem | Sass函数和mixin使用带有可选像素回退的rem单位 | https://github.com/pierreburel/sass-rem
  sass-flex-mixin | Flexbox mixins | https://github.com/mastastealth/sass-flex-mixin
  flex.css | flex.css是声明式布局，与微信，UC，webview和其他主流移动浏览器兼容 | https://github.com/lzxb/flex.css
@@ -29,4 +30,3 @@
  Buttons | 使用Sass和Compass构建的CSS按钮库 | https://github.com/alexwolfe/Buttons
  csshake | css3抖动效果 | https://github.com/elrumordelaluz/csshake
  3dtransforms | CSS 3D转换简介 | https://github.com/desandro/3dtransforms
-

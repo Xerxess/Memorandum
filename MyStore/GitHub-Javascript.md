@@ -156,6 +156,7 @@ smooth-scroll | 动画滚动以锚点链接的轻量级脚本 | https://github.c
 ScrollMagic | 滚动交互的javascript库 | https://github.com/janpaepke/ScrollMagic
 elevator.js |　回到顶部 | https://github.com/tholman/elevator.js
 scrollup | 　回到顶部 | https://github.com/markgoodyear/scrollup
+autosize | 自动调整textarea高度以适合文本 | https://github.com/jackmoore/autosize
 
 ## <i id="jj-4"></i>webapp 移动相关
 名称 | 简介 | github
@@ -522,6 +523,8 @@ slimerjs | 像PhantomJs Web开发人员的脚本式浏览器 | https://github.co
 nightwatch | 自动化测试和持续集成框架 |https://github.com/nightwatchjs/nightwatch
 strider | 开源持续集成和部署服务器  | https://github.com/Strider-CD/strider
 selenium | 浏览器自动化框架和生态系统 | https://github.com/SeleniumHQ/selenium
+circleci | 持续集成 | https://github.com/circleci
+flow | JavaScript的静态类型检查器 | https://github.com/facebook/flow
 
 
 
