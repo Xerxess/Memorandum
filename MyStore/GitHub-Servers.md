@@ -5,8 +5,15 @@
 ---------|----------|---------
 lumen | Lumen PHP Framework | https://github.com/laravel/lumen
 laravel | PHP Framework | https://github.com/laravel/laravel
+awesome-laravel | 来自Laravel生态系统的书签，包，教程，视频和其他很酷的资源的精选列表 | https://github.com/chiraggude/awesome-laravel
+awesome-php | 精选的PHP库，资源和闪亮的东西的精选列表。 | https://github.com/ziadoz/awesome-php
+laravel5-api-boilerplate | Laravel 5 API Boilerplate(laravel 开发的模板) | https://github.com/specialtactics/laravel5-api-boilerplate
+laravel-cors | 在Laravel应用程序中添加CORS（跨源资源共享）标头支持 | https://github.com/barryvdh/laravel-cors
+ApiServer | 基于Laravel的API服务端架构代码 | https://github.com/flc1125/ApiServer
 php-the-right-way | PHP 最佳实践、编码规范和权威学习指南 | https://github.com/laravel-china/php-the-right-way
-A3 | B3 | C3
+laradock | Docker PHP开发环境 | https://github.com/LaraDock/laradock
+laravel-socialite | 第三方登录 | https://github.com/overtrue/laravel-socialite
+socialite | Laravel 第三方登录，支持微信、QQ。 | https://github.com/weann/socialite
 
 ## 服务器
 

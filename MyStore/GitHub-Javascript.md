@@ -33,6 +33,7 @@
 * [项目启动模板](#j-33)
 * [模板引擎](#j-34)
 * [编码](#j-35)
+* [Github](#j-36)
 
 ## <i id="j-1"></i>UI库
 
@@ -551,3 +552,9 @@ prettier | 代码格式化程序(很好用) | https://github.com/prettier/pretti
 eslint | js检测 | https://github.com/eslint/eslint
 tslint | ts检测 | https://github.com/palantir/tslint
 stylelint | css检测 | https://github.com/stylelint/stylelint
+
+## <i id="j-36"></i>Github
+
+名称 | 简介 | github
+---------|----------|--------- 
+emoji-cheat-sheet | 表情符号备忘单 | https://github.com/ikatyang/emoji-cheat-sheet
