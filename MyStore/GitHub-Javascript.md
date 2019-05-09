@@ -18,6 +18,7 @@
 * [缓存 &&存储 && Session && LocalStorage && IndexedDB](#j-17)
 * [History&&Route](#j-18)
 * [VUE组件](#j-20)
+* [React](#jj-20)
 * [Framework](#j-21)
 * [Node](#j-22)
 * [Editors](#j-23)
@@ -67,6 +68,7 @@ cropperjs | JavaScript图像裁剪器 | https://github.com/fengyuanchen/cropperj
 fine-uploader | 多文件上传插件，带有图像预览，拖放，进度条。S3和Azure支持，图像缩放，表单支持，分块，恢复，暂停和大量其他功能。 | https://github.com/FineUploader/fine-uploader
 dropload | 移动端下拉刷新、上拉加载更多插件 | https://github.com/ximan/dropload
 webuploader | 文件上传 | https://github.com/fex-team/webuploader
+uppy | 模块化JavaScript文件上传器 | https://github.com/transloadit/uppy
 sweetalert2 | 替代JavaScript的弹出框 | https://github.com/sweetalert2/sweetalert2
 scrollreveal | 元素在滚动到视图时动画效果 | https://github.com/scrollreveal/scrollreveal
 viewerjs | 图片查看 | https://github.com/fengyuanchen/viewerjs
@@ -357,6 +359,11 @@ vue-scroll-lock| 子元素 scroll 父元素容器不跟随滚动 | https://githu
 vue-infinite-loading | 无限滚动插件 | https://github.com/PeachScript/vue-infinite-loading
 tinymce-vue | 富文本-vue | https://github.com/tinymce/tinymce-vue
 vue-lazyload | 延迟加载 | https://github.com/hilongjw/vue-lazyload
+
+## <i id="jj-20"></i>React
+名称 | 简介 | github
+---------|----------|--------- 
+preact | 使用相同的现代API快速3kB React替代品 | https://github.com/developit/preact
 
 ## <i id="j-21"></i>Framework
 
