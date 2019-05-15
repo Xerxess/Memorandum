@@ -258,7 +258,7 @@ hotkeys | 捕获键盘输入 | https://github.com/jaywcjlove/hotkeys
 ---------|----------|---------  
 systemjs| 浏览器可用 |https://github.com/systemjs/systemjs
 browser-es-module-loader | Browser ES Module Loader | https://github.com/ModuleLoader/browser-es-module-loader
-rollup | 下一代ES模块捆绑器 | https://github.com/rollup/rollup
+
 
 ## <i id="j-13"></i>Audio & Video
 
@@ -458,6 +458,8 @@ cooking | 前端构建工具 | https://github.com/ElemeFE/cooking
 webpack | 前端构建工具 | https://github.com/webpack/webpack
 semantic-release | 版本管理和包发布 | https://github.com/semantic-release/semantic-release
 browserslist | 前端构建目标浏览器(Autoprefixer，Stylelint和babel-preset-env) | https://github.com/browserslist/browserslist
+rollup | 下一代ES模块捆绑器(JavaScript 模块打包器) | https://github.com/rollup/rollup
+parcel | Web应用打包工具 | https://github.com/parcel-bundler/parcel
 
 ## <i id="j-27"></i>Animation 动画库
 

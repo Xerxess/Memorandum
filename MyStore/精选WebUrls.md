@@ -135,6 +135,7 @@ koala  | less|sass编译客户端 | http://koala-app.com/index-zh.html
 katalon | 自动化测试 | https://www.katalon.com/
 scootersoftware | 代码比较|目录比较 | http://www.scootersoftware.com/
 charlesproxy | 抓包工具 | https://www.charlesproxy.com
+pdman | 跨平台的数据建模 | http://www.pdman.cn
 
 
 ## <i id="u-5"></i> API文档
@@ -166,6 +167,7 @@ docker | docker仓库 | https://hub.docker.com/
 docker | docker学习 |http://www.docker.org.cn/book/docker/what-is-docker-16.html
 PHP 最佳实践、编码规范和权威学习指南| |https://github.com/laravel-china/php-the-right-way
 php官方文档 | | https://www.php.net/manual/zh/funcref.php
+  ~| laravel框架容器管理的一些要点 | https://www.cnblogs.com/lyzg/p/6181055.html
 
 ## <i id="u-7"></i> Web安全
 名称 | 介绍| link
@@ -185,8 +187,3 @@ v2rayu | V2rayU,基于v2ray核心的mac版客户端 | https://github.com/yanue/v
 v2rayN | | https://github.com/2dust/v2rayN
 electron-ssr |  （支持Windows MacOS Linux系统）的ShadowsocksR客户端桌面应用 | https://github.com/erguotou520/electron-ssr
 shadowsocks-windows | | https://github.com/shadowsocks/shadowsocks-windows
-
-
-
-
-
