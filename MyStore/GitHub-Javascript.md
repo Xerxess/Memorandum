@@ -538,6 +538,8 @@ strider | 开源持续集成和部署服务器  | https://github.com/Strider-CD/
 selenium | 浏览器自动化框架和生态系统 | https://github.com/SeleniumHQ/selenium
 circleci | 持续集成 | https://github.com/circleci
 flow | JavaScript的静态类型检查器 | https://github.com/facebook/flow
+sinon | Sinon主要是一个测试辅助工具，通过伪装和拦截，来模拟与其他系统或函数的操作，可以解耦测试的依赖。 | https://github.com/sinonjs/sinon
+jsdom | 测试和抓取现实世界的Web应用程序 | https://github.com/jsdom/jsdom
 
 
 
@@ -554,6 +556,7 @@ nativescript-vue | nativescript | https://github.com/nativescript-vue/nativescri
 ---------|----------|--------- 
 art-template | 高性能JavaScript模板引擎 | https://github.com/aui/art-template
 sodajs| 轻量级模板引擎 | https://github.com/AlloyTeam/sodajs
+mustache | JavaScript中{{mustaches}}的最小模板 | https://github.com/janl/mustache.js
 
 ## <i id="j-35"></i>编码
 
