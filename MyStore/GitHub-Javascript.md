@@ -315,6 +315,7 @@ openpgpjs | JavaScript的OpenPGP实现 | https://github.com/openpgpjs/openpgpjs
 lodash | 一个现代JavaScript实用程序库，提供模块化，性能和附加功能 | https://github.com/lodash/lodash
 less.js | 动态样式表语言 | https://github.com/less/less.js
 immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/immutable-js
+emotion | 使用JavaScript编写CSS样式 | https://github.com/emotion-js/emotion
 
 
 ## <i id="j-16"></i>规范Guide
@@ -364,6 +365,7 @@ vue-lazyload | 延迟加载 | https://github.com/hilongjw/vue-lazyload
 名称 | 简介 | github
 ---------|----------|--------- 
 preact | 使用相同的现代API快速3kB React替代品 | https://github.com/developit/preact
+next.js | The React Framework | https://github.com/zeit/next.js
 
 ## <i id="j-21"></i>Framework
 
@@ -529,12 +531,15 @@ karma | 提供高效的测试环境(一个简单的工具，允许您在多个�
 shields |　git徽章 |　https://github.com/badges/shields
 istanbul | JS代码覆盖工具 | https://github.com/gotwarlost/istanbul
 phantomjs | 脚本的无头浏览器 | https://github.com/ariya/phantomjs
+webdriverio | Node.js的下一代WebDriver测试自动化框架 | https://github.com/webdriverio/webdriverio
 slimerjs | 像PhantomJs Web开发人员的脚本式浏览器 | https://github.com/laurentj/slimerjs
 nightwatch | 自动化测试和持续集成框架 |https://github.com/nightwatchjs/nightwatch
 strider | 开源持续集成和部署服务器  | https://github.com/Strider-CD/strider
 selenium | 浏览器自动化框架和生态系统 | https://github.com/SeleniumHQ/selenium
 circleci | 持续集成 | https://github.com/circleci
 flow | JavaScript的静态类型检查器 | https://github.com/facebook/flow
+sinon | Sinon主要是一个测试辅助工具，通过伪装和拦截，来模拟与其他系统或函数的操作，可以解耦测试的依赖。 | https://github.com/sinonjs/sinon
+jsdom | 测试和抓取现实世界的Web应用程序 | https://github.com/jsdom/jsdom
 
 
 
@@ -551,6 +556,7 @@ nativescript-vue | nativescript | https://github.com/nativescript-vue/nativescri
 ---------|----------|--------- 
 art-template | 高性能JavaScript模板引擎 | https://github.com/aui/art-template
 sodajs| 轻量级模板引擎 | https://github.com/AlloyTeam/sodajs
+mustache | JavaScript中{{mustaches}}的最小模板 | https://github.com/janl/mustache.js
 
 ## <i id="j-35"></i>编码
 
