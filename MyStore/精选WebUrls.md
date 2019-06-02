@@ -187,3 +187,4 @@ v2rayu | V2rayU,基于v2ray核心的mac版客户端 | https://github.com/yanue/v
 v2rayN | | https://github.com/2dust/v2rayN
 electron-ssr |  （支持Windows MacOS Linux系统）的ShadowsocksR客户端桌面应用 | https://github.com/erguotou520/electron-ssr
 shadowsocks-windows | | https://github.com/shadowsocks/shadowsocks-windows
+url | | https://stc-server.com
