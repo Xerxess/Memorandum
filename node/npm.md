@@ -3,6 +3,7 @@
 * [更新npm](#更新npm)
 * [终端登录到npm](#终端登录到npm)
 * [package.json](#package.json)
+* [npm-install](#npm-install)
 
 ## 什么是npm？
 
@@ -59,3 +60,25 @@ npm publish //发布
 
 npm version <update_type> //更新版本
 ```
+
+## npm-install
+
+```js
+npm install (with no args, in package dir)
+npm install [<@scope>/]<name>
+npm install [<@scope>/]<name>@<tag>
+npm install [<@scope>/]<name>@<version>
+npm install [<@scope>/]<name>@<version range>
+npm install <git-host>:<git-user>/<repo-name>
+npm install <git repo url>
+npm install <tarball file>
+npm install <tarball url>
+npm install <folder>
+
+aliases: npm i, npm add
+common options: [-P|--save-prod|-D|--save-dev|-O|--save-optional] [-E|--save-exact] [-B|--save-bundle] [--no-save] [--dry-run]
+```
+
+* 全局模式下 -g或--global
+* -P, --save-prod：套餐将出现在您的dependencies。除非-D或-O存在，否则这是默认值。
+* -D, --save-dev：套餐将出现在您的devDependencies。
