@@ -30,3 +30,4 @@ fetool | 大前端工具集 | https://github.com/nieweidong/fetool
 Front-End-Checklist | 前端清单 | https://github.com/thedaviddias/Front-End-Checklist
 jstutorial | Javascript教程书 | https://github.com/ruanyf/jstutorial
 json-api-zh_CN | JSON 构建 API 的标准指南 | https://github.com/justjavac/json-api-zh_CN
+You-Dont-Need-jQuery | 原生方法替换jquery | https://github.com/nefe/You-Dont-Need-jQuery/blob/master/README.zh-CN.md

@@ -316,6 +316,9 @@ lodash | 一个现代JavaScript实用程序库，提供模块化，性能和附�
 less.js | 动态样式表语言 | https://github.com/less/less.js
 immutable-js | 不可变持久数据集合 | https://github.com/immutable-js/immutable-js
 emotion | 使用JavaScript编写CSS样式 | https://github.com/emotion-js/emotion
+lint-staged | 在git 缓存文件进行验证处理 | https://github.com/okonet/lint-staged
+husky | Git钩子很容易 |https://github.com/typicode/husky
+pre-commit | 自动在git存储库中安装git预提交脚本，该存储库在预提交时运行你的\`npm test\` | https://github.com/observing/pre-commit
 
 
 ## <i id="j-16"></i>规范Guide
