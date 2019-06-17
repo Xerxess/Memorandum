@@ -54,6 +54,8 @@ canvas动画—圆形扩散、运动轨迹 | | https://segmentfault.com/a/119000
 egghead\.io | 不错的在线视频学习网 | https://egghead.io/browse/libraries
 cordova | 带有HTML，CSS和JS的移动应用程序 | https://cordova.apache.org/
 Web Reference | 完整的HTML，CSS和JavaScript语言和语法参考 浏览器支持信息 每个语言元素的示例 针对浏览器特定语言元素的跨浏览器解决方案| http://help.dottoro.com/
+Web Reference | 视觉隐藏技术 | https://a11yproject.com/posts/how-to-hide-content/
+Web Reference | 前端技术解析 https://davidwalsh.name/
 
 
 ## <i id="u-2"></i> 框架
