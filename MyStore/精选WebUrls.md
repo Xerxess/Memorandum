@@ -178,6 +178,7 @@ php官方文档 | | https://www.php.net/manual/zh/funcref.php
 名称 | 介绍| link
 ---------|----------|---------
 前端 TOP 100  |  | https://www.awesomes.cn/rank
+loading生成器  |  | https://icons8.com/preloaders/
 
 ## <i id="u-9"></i>国际
 名称 | 介绍| link
