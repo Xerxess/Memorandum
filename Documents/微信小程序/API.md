@@ -1,4 +1,6 @@
 
+# 基本
+
 * wx.canIUse 判断小程序的API，回调，参数，组件等是否在当前版本可用
 * wx.base64ToArrayBuffer 将 Base64 字符串转成 ArrayBuffer 对象
 * wx.arrayBufferToBase64 将 Base64 字符串转成 ArrayBuffer 对象
