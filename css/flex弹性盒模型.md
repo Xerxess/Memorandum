@@ -75,16 +75,16 @@ flex-basis：auto
     <div style="width:400px;flex-shrink:1">item3</div>
 </div>
 ```
-sum=200*flex-shrink+300*flex-shrink+400*flex-shrink=900
-_d=sum-500=400  
-各子项的宽度比率：
-item1=200/900  
-item2=300/900
+sum=200\*flex-shrink+300\*flex-shrink+400\*flex-shrink=900
+_d=sum-500=400   
+各子项的宽度比率：   
+item1=200/900    
+item2=300/900  
 item3=400/900
 
-item1-width=200-400*200/900 =111.111
-item1-width=300-400*300/900 =166.666
-item1-width=400-400*400/900 =222.222
+item1-width=200-400\*200/900 =111.111  
+item1-width=300-400\*300/900 =166.666  
+item1-width=400-400\*400/900 =222.222  
 
 ![Alt text](images/flex/demo.gif) 
 
@@ -98,10 +98,10 @@ item1-width=400-400*400/900 =222.222
 </div>
 ```
 
-容器剩余宽度：500-200-100=200px
-分成每份：200px / (1+2) = 66.666px
-元素1放大为：200px + 1 * 66.666 = 266.66px
-元素2放大为：100px + 2 * 66.666 = 233.32px
+容器剩余宽度：500-200-100=200px  
+分成每份：200px / (1+2) = 66.666px  
+元素1放大为：200px + 1 * 66.666 = 266.66px  
+元素2放大为：100px + 2 * 66.666 = 233.32px  
 
 ## flex-basis 初始因子，跟width 效果一样，但权重大于widht
 
