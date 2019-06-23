@@ -2,6 +2,11 @@
 
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。
 
+* Getter 是 State 的计算属性 属性访问时缓存在响应式系统
+* Mutation - 唯一个性 State
+* Action - 异步
+* Module - store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块
+
 注意下面使用方法`store`
 ```js
 Vue.use(Vuex);
@@ -37,21 +42,48 @@ Vuex 使用单一状态树——是的，用一个对象就包含了全部的应
 
 * mapState 辅助函数
 
-使用该函数比使用属性方便很多，在属性中需要使用`this.$store.state`来获得`state`很麻烦重复
+生成计算属性，方便获取全局状态
 
 ```js
-mapState({
-    key0:state=>{
-    },
-    key1:"key1",
-    key2:function(state){
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    count: state => state.count,
+
+    // 传字符串参数 'count' 等同于 `state => state.count`
+    countAlias: 'count',
+
+    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    countPlusLocalState (state) {
+      return state.count + this.localCount
     }
-})
+  })
+}
+
+// 计算属性的名称与 state 的子节点名称相同时
+computed: mapState([
+  // 映射 this.count 为 store.state.count
+  'count'
+])
+
+// 与局部状态混合
+computed: {
+  localComputed () { /* ... */ },
+  // 使用对象展开运算符将此对象混入到外部对象中
+  ...mapState({
+    // ...
+  })
+}
 ```
 
 # Getter
 
+计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。  
 可以理解为给store设置属性，可以参考vue的`computed`,
+
 ```js
 const store = new Vuex.Store({
   state: {
@@ -94,6 +126,8 @@ export default {
 }
 ```
 # Mutation
+
+* Mutation 必须是同步函数
 
 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation,属于`同步提交`
 ```js
@@ -166,6 +200,8 @@ Action 类似于 mutation，不同在于：
 1. Action 提交的是 mutation，而不是直接变更状态。
 2. Action 可以包含任意异步操作。
 
+* 接受一个与 store 实例具有相同方法和属性的 context 对象，因此你可以调用 context.commit 提交一个 mutation，或者通过 context.state 和 context.getters 来获取 state 和 getters。
+
 ```js
 const store = new Vuex.Store({
   state: {
@@ -221,9 +257,15 @@ actions: {
 ```
 # Module
 
-将 store 分割成模块（module）
+将 store 分割成模块（module）,每个模块state相互独立
+
+* 模块的局部状态
+* 命名空间
 
 每个模块拥有自己的 `state`、`mutation`、`action`、`getter`、`甚至是嵌套子模块`
+
+* action|getter 局部状态通过 context.state 暴露出来，
+* action|getter  根节点状态则为 context.rootState
 
 ```js
 const moduleA = {
@@ -248,6 +290,81 @@ const store = new Vuex.Store({
 
 store.state.a // -> moduleA 的状态
 store.state.b // -> moduleB 的状态
+```
+
+```js
+// action
+const moduleA = {
+  // ...
+  actions: {
+    incrementIfOddOnRootSum ({ state, commit, rootState }) {
+      if ((state.count + rootState.count) % 2 === 1) {
+        commit('increment')
+      }
+    }
+  }
+}
+
+// getter
+const moduleA = {
+  // ...
+  getters: {
+    sumWithRootCount (state, getters, rootState) {
+      return state.count + rootState.count
+    }
+  }
+}
+```
+
+> 模块动态注册
+
+```js
+// 注册模块 `myModule`
+store.registerModule('myModule', {
+  // ...
+})
+// 注册嵌套模块 `nested/myModule`
+store.registerModule(['nested', 'myModule'], {
+  // ...
+})
+```
+
+> 带命名空间的绑定函数
+
+* 使用 mapState, mapGetters, mapActions 和 mapMutations
+
+```js
+computed: {
+  ...mapState('some/nested/module', {
+    a: state => state.a,
+    b: state => state.b
+  })
+},
+methods: {
+  ...mapActions('some/nested/module', [
+    'foo', // -> this.foo()
+    'bar' // -> this.bar()
+  ])
+}
+```
+
+> createNamespacedHelpers
+
+* 通过createNamespacedHelpers 取出命名空间中 module  mapState, mapActions 
+
+```js
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapActions } = createNamespacedHelpers('some/nested/module')
+```
+
+
+> 保留 state
+
+* state 不会重写
+
+```
+store.registerModule('a', module, { preserveState: true })
 ```
 
 # 插件
