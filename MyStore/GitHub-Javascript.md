@@ -16,6 +16,7 @@
 * [工具](#j-15)
 * [规范Guide](#j-16)
 * [缓存 &&存储 && Session && LocalStorage && IndexedDB](#j-17)
+* [状态管理库](#j-17-1)
 * [History&&Route](#j-18)
 * [VUE组件](#j-20)
 * [React](#jj-20)
@@ -342,6 +343,14 @@ session.js | Get user session information | https://github.com/codejoust/session
 localForage-cn | 离线存储，改进。使用简单但功能强大的API包装IndexedDB，WebSQL或localStorage | https://github.com/xmoyKing/localForage-cn
 localForage | API包装IndexedDB，WebSQL或localStorage | https://github.com/localForage/localForage
 pouchdb | 本地数据库 | https://github.com/pouchdb/pouchdb
+
+## <i id="j-17-1"></i>状态管理库
+
+名称 | 简介 | github
+---------|----------|--------- 
+mobx|简单，可扩展的状态管理|https://github.com/mobxjs/mobx
+redux|应用程序的可预测状态容器|https://github.com/reduxjs/redux
+vuex| vue 专用 |https://github.com/vuejs/vuex
 
 
 ## <i id="j-18"></i>History&&Route

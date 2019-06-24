@@ -65,6 +65,11 @@
 ```
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
+$ git config --list
+
+$ git config user.name “gitlab’s Name”
+$ git config user.email "gitlab@xx.com"
+$ git config --list
 
 你在该系统上做任何事情， Git 都会使用那些信息。
 ```
