@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="mycanvas"
+      width="1000"
+      height="1000"
+      style="width: 500px;height: 500px;"
+    ></canvas>
+    <script>
+      !(function() {
+        var mycanvas = document.querySelector('#mycanvas')
+
+        // 刻度
+        var kd = function(ctx, data) {
+          data.forEach(function(item, index) {
+            ctc.fillText(item, 20, 500 - (500 / data.length) * index - 50)
+            ctx.beginPath()
+            ctx.moveTo(50, 500 - (500 / data.length) * index - 50)
+            ctx.lineTo(50 - 5, 500 - (500 / data.length) * index - 50)
+            ctx.stroke()
+          })
+        }
+
+        var ctc = (ctx = c = mycanvas.getContext('2d'))
+        ctc.scale(2, 2)
+        ctc.fillStyle = 'gray'
+        ctc.fillRect(0, 0, 500, 500)
+
+        ctc.font = '36px Georgia' //一倍屏下18px字体
+        ctc.fillStyle = '#fff'
+        ctc.fillText('杨川', 0, 100)
+
+        ctc.fillStyle = 'blue'
+        ;[40, 60, 70].forEach(function(item, index) {
+          {
+            let j = 0.01
+            var clears2 = setInterval(function() {
+              if (j >= item) {
+                clearInterval(clears2)
+                j = item
+              }
+              j+=(item-j)/10;
+              ctc.fillRect(20 + 50 + 50 * index, 500 - j - 50-1, 30, j)
+            }, 1000 / 60)
+          }
+        })
+
+        // x y 轴
+        c.fillStyle = 'black'
+        c.lineWidth = 2.0
+        c.beginPath()
+        c.moveTo(50, 10)
+        c.lineTo(50, 450)
+        c.lineTo(450, 450)
+        c.stroke()
+        kd(c, [1, 2, 3])
+
+        var i = 0.01
+        var clears = setInterval(function() {
+          if (i >= 0.3) {
+            clearInterval(clears)
+            i = 0.3
+          }
+          i += 0.02
+          c.beginPath()
+          c.moveTo(250, 250)
+          c.arc(250, 250, 100, 0, i * Math.PI, false)
+          c.lineTo(250, 250)
+          c.fillStyle = '#fddd'
+          c.fill()
+        }, 1000 / 60)
+        {
+          let j = 0.01
+          var clears1 = setInterval(function() {
+            if (j >= 0.5) {
+              clearInterval(clears1)
+              j = 0.5
+            }
+            j += 0.02
+            c.beginPath()
+            c.moveTo(250, 250)
+            c.arc(
+              250,
+              250,
+              100,
+              0.3 * Math.PI,
+              0.3 * Math.PI + j * Math.PI,
+              false
+            )
+            c.lineTo(250, 250)
+            c.fillStyle = '#fddd'
+            c.fill()
+          }, 1000 / 60)
+        }
+        {
+          let j = 0.01
+          var clears2 = setInterval(function() {
+            if (j >= 1.3) {
+              clearInterval(clears2)
+              j = 1.3
+            }
+            j += 0.02
+            c.beginPath()
+            c.moveTo(250, 250)
+            c.arc(
+              250,
+              250,
+              100,
+              0.7 * Math.PI,
+              0.7 * Math.PI + j * Math.PI,
+              false
+            )
+            c.lineTo(250, 250)
+            c.fillStyle = '#fddd'
+            c.fill()
+          }, 1000 / 60)
+        }
+      })()
+    </script>
+  </body>
+</html>
