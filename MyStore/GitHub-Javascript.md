@@ -217,6 +217,9 @@ flickity | | https://github.com/metafizzy/flickity
 名称 | 简介 | github
 ---------|----------|---------
 zepto | JavaScript库 | https://github.com/madrobby/zepto
+FileSaver | HTML5 saveAs（）FileSaver实现 |https://github.com/eligrey/FileSaver.js
+js-xlsx | SheetJS社区版 - 电子表格分析器和编写器 | https://github.com/SheetJS/js-xlsx
+Sortable | 可排序 - 是一个JavaScript库，用于在现代浏览器和触摸设备上重新排序拖放列表。 | https://github.com/SortableJS/Sortable
 
 ## <i id="j-9"></i>jquery
 
