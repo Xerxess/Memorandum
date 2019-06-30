@@ -59,6 +59,9 @@
 
 <!-- /TOC -->
 
+参考：  
+http://jvectormap.com/maps/countries/china/
+https://www.naturalearthdata.com/
 
 SVG是XML语言的一种形式，有点类似XHTML，它可以用来绘制矢量图形
 
