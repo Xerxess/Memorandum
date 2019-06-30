@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      var canvas = document.querySelector('canvas')
+      var ctx = canvas.getContext('2d')
+      let angle = 0
+      let range = 10
+      let centerX=200;
+      let centerY = canvas.height / 2
+      let xspeed = 1
+      let yspeed = 0.05
+      let xpos = 0
+      let ypos = centerY
+      ctx.lineWidth = 1
+      let spring=.03;
+
+      var drawFrame = function() {
+        window.requestAnimationFrame(drawFrame)
+        ctx.beginPath();
+        ctx.moveTo(xpos,ypos);
+        xpos+=xspeed;
+        angle+=yspeed;
+        console.log(Math.sin(angle));
+        ypos=centerY+Math.sin(angle)*range;
+        ctx.lineTo(xpos,ypos);
+        ctx.stroke();
+
+      }
+      window.requestAnimationFrame(drawFrame)
+
+      window.addEventListener('mousmove',function(e){
+
+      });
+    </script>
+  </body>
+</html>
