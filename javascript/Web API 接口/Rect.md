@@ -11,6 +11,8 @@
 - [HTMLHtmlElement](#htmlhtmlelement)
 - [HTMLBodyElement](#htmlbodyelement)
 - [DOMRect](#domrect)
+- [UIEvent](#uievent)
+- [MouseEvent](#mouseevent)
 
 <!-- /TOC -->
 
@@ -91,11 +93,67 @@ left = element.offsetTop;
 
 # DOMRect
 
+* ie8+
+
 ```js
 //DOMRect 对象包含了一组用于描述边框的只读属性——left、top、right和bottom，单位为像素。除了 width 和 height 外的属性都是相对于视口的左上角位置而言的。
 domRect = element.getBoundingClientRect;
 ```
 
-注意：
-domRect.left 可能等于 element.offsetLeft
+注意：  
+domRect.left 可能等于 element.offsetLeft  
 domRect.top 可能等于 element.offsetTop
+
+# UIEvent
+
+```js
+// 鼠标指针的x,y坐标的整数值（以像素为单位）
+// window|doc|body 始终包含滚动条的高宽
+// 块元素中不包含滚动条，始终为视口的xy
+// 内联元素与window一至
+// ie9+
+var xpos = event.layerX
+var ypos = event.layerY
+```
+
+```js
+// 鼠标指针所在的X坐标。无论文档的当前水平滚动偏移如何，该值都相对于整个文档的左边缘。
+// window|doc|body  event.layerX==event.pageX
+// 块元素与上一至
+// ie9+
+var pos = event.pageX
+var pos = event.pageY
+```
+
+# MouseEvent
+
+```js
+// 提供应用程序客户区域内发生事件的水平坐标（与页面内的坐标相对）。
+// 所有元素均相对用户可视区域相对坐标
+// ie6+
+var x = instanceOfMouseEvent.clientX （MouseEvent.x 别名）
+var y = instanceOfMouseEvent.clientY （MouseEvent.y 别名）
+
+```
+
+```js
+var xShift = instanceOfMouseEvent.movementX;
+```
+
+```js
+// 与目标节点的填充边缘之间的X坐标中的偏移量。
+// ie6+
+var xOffset = instanceOfMouseEvent.offsetX;
+```
+
+```js
+// 对于整个文档的左边缘单击鼠标的X（水平）坐标（以像素为单位）。这包括当前不可见的文档的任何部分。
+// ie9+
+var pageX = MouseEvent.pageX;
+```
+
+```js
+// 全局（屏幕）坐标中的垂直坐标（偏移）。
+// ie6+
+var y = instanceOfMouseEvent.screenX
+```
