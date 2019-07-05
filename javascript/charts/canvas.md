@@ -126,7 +126,7 @@ if (canvas.getContext) {
 
 ## 合成
 * ctx.globalAlpha = value; 绘制到画布上之前应用于形状和图像的alpha（透明度）值
-* ctx.globalCompositeOperation = type; 设置绘制新形状时要应用的合成操作的类型。 即多个图片相交时怎样处理相交区域
+* ctx.globalCompositeOperation = type; 设置绘制新形状时要应用的合成操作的类型。 即多个图片相交时怎样处理相交区域 (可以用来切图效果，比如光碟封面)
 
 ## 绘制图像
 * ctx.drawImage(image, dx, dy);
