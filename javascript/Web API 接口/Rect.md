@@ -13,6 +13,7 @@
 - [DOMRect](#domrect)
 - [UIEvent](#uievent)
 - [MouseEvent](#mouseevent)
+- [Touch](#touch)
 
 <!-- /TOC -->
 
@@ -26,6 +27,7 @@
 ```js
 var intViewportHeight = window.innerHeight;
 ```
+![](./images/rect1.png)
 
 ## window.outerHeight window.outerWidth
 
@@ -33,11 +35,14 @@ var intViewportHeight = window.innerHeight;
 
 获取整个浏览器窗口的高度(宽度)（单位：像素），包括侧边栏（如果存在）、窗口镶边（window chrome）和窗口调正边框（window resizing borders/handles）。
 
+![](./images/rect2.png)
+
 ## window.pageXOffset===window.scrollX window.pageYOffset===window.scrollY
 
 * ie9+
 
 返回文档/页面水平(垂直)方向滚动的像素值。
+![](./images/rect3.png)
 
 ## window.screen
 
@@ -45,7 +50,7 @@ var intViewportHeight = window.innerHeight;
 
 * window.screenX 浏览器左边到系统桌面左边的像素值
 * window.screenY 浏览器上边到系统桌面上边的像素值
-
+![](./images/rect4.png)
 # Element
 
 ```js
@@ -62,7 +67,7 @@ var left = element.clientLeft;
 var top = element.clientTop;
 
 ```
-
+![](./images/rect6.png)
 ```js
 
 // 一个元素的内容高度的测量，包括由于溢出的内容在屏幕上不可见。
@@ -73,7 +78,7 @@ var intElemScrollHeight = element.scrollWidth;
 var sLeft = element.scrollLeft;
 var sLeft = element.scrollTop;
 ```
-
+![](./images/rect7.png)
 # HTMLElement
 
 ```js
@@ -87,7 +92,8 @@ var intElemOffsetHeight = element.offsetWidth;
 left = element.offsetLeft;  
 left = element.offsetTop;
 ```
-
+![](./images/rect8.png)
+![](./images/rect9.png)
 # HTMLHtmlElement
 # HTMLBodyElement
 
@@ -103,19 +109,20 @@ domRect = element.getBoundingClientRect;
 注意：  
 domRect.left 可能等于 element.offsetLeft  
 domRect.top 可能等于 element.offsetTop
-
+![](./images/rect10.png)
 # UIEvent
 
 ```js
-// 鼠标指针的x,y坐标的整数值（以像素为单位）
-// window|doc|body 始终包含滚动条的高宽
-// 块元素中不包含滚动条，始终为视口的xy
-// 内联元素与window一至
+// 此属性将页面滚动到帐户并返回相对于整个文档的值，除非事件发生在定位元素内，其中返回值相对于定位元素的左上角。
 // ie9+
 var xpos = event.layerX
 var ypos = event.layerY
 ```
+当前父元素样式为(position:relative;或overflow: scroll;)
+![](./images/rect11.png)
 
+当前父元素样式为position:static;
+![](./images/rect12.png)
 ```js
 // 鼠标指针所在的X坐标。无论文档的当前水平滚动偏移如何，该值都相对于整个文档的左边缘。
 // window|doc|body  event.layerX==event.pageX
@@ -124,7 +131,7 @@ var ypos = event.layerY
 var pos = event.pageX
 var pos = event.pageY
 ```
-
+![](./images/rect13.png)
 # MouseEvent
 
 ```js
@@ -135,25 +142,58 @@ var x = instanceOfMouseEvent.clientX （MouseEvent.x 别名）
 var y = instanceOfMouseEvent.clientY （MouseEvent.y 别名）
 
 ```
-
+![](./images/rect14.png)
 ```js
 var xShift = instanceOfMouseEvent.movementX;
 ```
 
 ```js
 // 与目标节点的填充边缘之间的X坐标中的偏移量。
+// 不包含border 和 margin 
 // ie6+
 var xOffset = instanceOfMouseEvent.offsetX;
+var yOffset = instanceOfMouseEvent.offsetY;
 ```
-
+![](./images/rect15.png)
 ```js
 // 对于整个文档的左边缘单击鼠标的X（水平）坐标（以像素为单位）。这包括当前不可见的文档的任何部分。
 // ie9+
 var pageX = MouseEvent.pageX;
 ```
-
+![](./images/rect13.png)
 ```js
 // 全局（屏幕）坐标中的垂直坐标（偏移）。
 // ie6+
-var y = instanceOfMouseEvent.screenX
+var x = instanceOfMouseEvent.screenX
+var y = instanceOfMouseEvent.screenY
+```
+![](./images/rect16.png)
+# Touch
+
+```js
+// 返回触摸点相对于屏幕的X坐标，不包括任何滚动偏移。
+var x = touchItem.screenX;
+var y = touchItem.screenY;
+```
+
+```js
+// 返回相对于触摸点的X坐标到视，不包括任何滚动偏移量。
+touchItem.clientX;
+touchItem.clientY;
+```
+
+```js
+// 返回相对于触摸点的X坐标到视，包括任何滚动偏移量。
+touchItem.pageX;
+touchItem.pageY;
+```
+```js
+// 椭圆的X半径，该半径最接近地限定与触摸表面的接触区域。
+var xRadius = touchItem.radiusX;
+var yRadius = touchItem.radiusY;
+```
+
+```js
+// 应用于所描述的椭圆以与用户和触摸表面之间的接触区域对准的旋转度数。
+var angle = touchItem.rotationAngle;
 ```
