@@ -423,6 +423,7 @@ CodeMirror | 在线编辑器 | https://github.com/codemirror/CodeMirror
 highlight.js Javascript语法高亮 | https://github.com/highlightjs/highlight.js
 monaco-editor | 浏览器的代码编辑器 | https://github.com/Microsoft/monaco-editor
 tinymce | 富文本编辑 | https://github.com/tinymce/tinymce
+wangEditor | 富文本编辑 | https://github.com/wangfupeng1988/wangEditor
 
 ## <i id="j-24"></i>Weex&&React Native&&Mobile App&&WebApp&&APP
 
