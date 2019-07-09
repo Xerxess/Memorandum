@@ -13,6 +13,7 @@
 - [\@while](#\while)
 - [\@extend](#\extend)
 - [\@at-root](#\at-root)
+- [@import](#import)
 - [\@mixin \@include](#\mixin-\include)
 - [\@content 向混合样式中导入内容 (Passing Content Blocks to a Mixin)](#\content-向混合样式中导入内容-passing-content-blocks-to-a-mixin)
 - [函数指令 (Function Directives)](#函数指令-function-directives)
@@ -200,6 +201,35 @@ border-width: 3px; }
 
 .parent { ... }
 .child { ... }
+```
+
+# @import
+
+* 如果多次导入相同的样式表，则每次都会再次对其进行评估。
+* 正斜杠而不是反斜杠。
+* partials - 仅用于导入而不是自己编译的Sass文件以_（如在_code.scss）开头。这些被称为partials，它们告诉Sass工具不要试图自己编译这些文件。您可以_在导入部分时停止。
+
+* 嵌套
+
+```scss
+// _theme.scss
+pre, code {
+  font-family: 'Source Code Pro', Helvetica, Arial;
+  border-radius: 4px;
+}
+
+// style.scss
+.theme-sample {
+  @import "theme";
+}
+
+// -------------------------------------------
+
+// 编译
+.theme-sample pre, .theme-sample code {
+  font-family: 'Source Code Pro', Helvetica, Arial;
+  border-radius: 4px;
+}
 ```
 
 # \@mixin \@include
