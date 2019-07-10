@@ -21,6 +21,7 @@
 - [maps](#maps)
 - [lists](#lists)
 - [functions 回调](#functions-回调)
+- [内至功能](#内至功能)
 
 <!-- /TOC -->
 
@@ -512,4 +513,11 @@ content {
   }
   font-family: remove-where($fonts, get-function("contains-helvetica"));
 }
+```
+
+# 内至功能
+
+* if($condition, $if-true, $if-false) 
+```sass
+@debug if(true, 10px, 15px); // 10px
 ```
