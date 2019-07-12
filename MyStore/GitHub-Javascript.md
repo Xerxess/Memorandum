@@ -394,6 +394,7 @@ most | 响应式(反应式)编程的工具包 | https://github.com/cujojs/most
 cyclejs | 响应式框架 | https://github.com/cyclejs/cyclejs
 uikit | 轻量级模块化前端框架 | https://github.com/uikit/uikit
 mpvue | Vue.js 的小程序开发框架 | https://github.com/Meituan-Dianping/mpvue
+wepy | 小程序组件化开发框架 | https://github.com/Tencent/wepy
 
 ## <i id="j-22"></i>Node
 

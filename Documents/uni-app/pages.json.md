@@ -1,3 +1,11 @@
+<!-- TOC -->
+
+- [全局](#全局)
+- [tabbar常见问题](#tabbar常见问题)
+- [manifest.json](#manifestjson)
+
+<!-- /TOC -->
+
 # 全局
 
 * globalStyle 窗口表现
