@@ -435,6 +435,20 @@ div[class|="a"] {
     * E:last-of-type { sRules }同E:first-of-type 反向！  `[ie 9+]`
     * E:only-of-type { sRules }E必须是父级元素的子元素且只能在所有子元素中出现一次  `[ie 9+]`
     * E:nth-of-type(n) { sRules }同E:nth-child，不同之处是位子的n（先根据E选择器过滤掉其他子元素的位置，再取在n位置的元素）  `[ie 9+]`
+      * 注意这个选择器对于class的理解上不要混淆，对于.class选择器，先通过标签分类再匹配个自的.class元素
+      ```html
+        	<p>p1</p>
+          <iem>item</iem>
+          <iem>item</iem>
+          <iem class='a'>我变红了</iem>
+          <p  class='a'>p2</p>
+          <p  class='a'>我变红了</p>
+          <p  class='a'>p4</p>
+
+        .a:nth-of-type(3){
+          color:red;
+        }
+      ```
     * E:nth-last-of-type(n) { sRules }E:nth-of-type 反向！  `[ie 9+]`
     * E:empty { sRules } 匹配没有任何子元素（包括text节点）的元素E。`[ie 9+]`
     * E:checked { sRules } 匹配用户界面上处于选中状态的元素E。(用于input type为radio与checkbox时) `[ie 9+]`
