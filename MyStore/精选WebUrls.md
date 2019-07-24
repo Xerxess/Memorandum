@@ -10,6 +10,7 @@
 * [PHP](#u-6)
 * [Web安全](#u-7)
 * [精选连接](#u-8)
+* [技巧|经验](#u-8-1)
 * [国际](#u-9)
 
 
@@ -122,6 +123,7 @@ cloudconvert | 视频转换器 | https://cloudconvert.com/
 regex | 站长工具 正则测试 |http://tool.chinaz.com/regex/
 browserhacks | Browserhacks | http://browserhacks.com/
 idea激活 | |http://idea.lanyus.com/
+convertio 转换(图片\|视频) | | https://convertio.co/zh/gif-png/
 
 
 ## <i id="uu-4"></i> 客户端工具
@@ -181,6 +183,12 @@ php官方文档 | | https://www.php.net/manual/zh/funcref.php
 ---------|----------|---------
 前端 TOP 100  |  | https://www.awesomes.cn/rank
 loading生成器  |  | https://icons8.com/preloaders/
+tianqiapi 天气API | | https://www.tianqiapi.com/
+
+ ## <i id="u-8-1"></i> 技巧|经验
+ 名称 | 介绍| link
+---------|----------|---------
+css-tricks| css-tricks| https://css-tricks.com/
 
 ## <i id="u-9"></i>国际
 名称 | 介绍| link
