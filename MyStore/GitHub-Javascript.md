@@ -211,6 +211,8 @@ fastclick | 消除物理点击和click在移动浏览器上触发事件之间300
 dropzone | 易于使用的拖放库上传 | https://github.com/enyo/dropzone
 AlloyTouch | 平滑滚动，旋转，拉动刷新，页面过渡以及网络的任何动作 - 丝般顺滑的触摸运动 | https://github.com/AlloyTeam/AlloyTouch
 flickity | | https://github.com/metafizzy/flickity
+jsplumb| 可视连接 可实现流程图效果 |https://github.com/jsplumb/jsplumb
+katavorio|  轻量级拖放处理程序，支持包含，多元素拖动，自定义css类，拖放过滤器，拖动过滤器。 | https://github.com/jsplumb/katavorio
 
 ## <i id="j-8"></i>Js库
 
@@ -325,6 +327,7 @@ lint-staged | 在git 缓存文件进行验证处理 | https://github.com/okonet/
 husky | Git钩子很容易 |https://github.com/typicode/husky
 pre-commit | 自动在git存储库中安装git预提交脚本，该存储库在预提交时运行你的\`npm test\` | https://github.com/observing/pre-commit
 yorkie | husky分支 | https://github.com/yyx990803/yorkie
+jsBezier | Bezier曲线辅助函数 | https://github.com/jsplumb/jsBezier
 
 
 ## <i id="j-16"></i>规范Guide
@@ -559,6 +562,7 @@ circleci | 持续集成 | https://github.com/circleci
 flow | JavaScript的静态类型检查器 | https://github.com/facebook/flow
 sinon | Sinon主要是一个测试辅助工具，通过伪装和拦截，来模拟与其他系统或函数的操作，可以解耦测试的依赖。 | https://github.com/sinonjs/sinon
 jsdom | 测试和抓取现实世界的Web应用程序 | https://github.com/jsdom/jsdom
+cypress | 端到端测试 | https://github.com/cypress-io/cypress
 
 
 
