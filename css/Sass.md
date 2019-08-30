@@ -6,6 +6,8 @@
 - [注释 /* */ 与 // (Comments: /* */ and //)](#注释---与--comments---and-)
 - [变量 $ (Variables: $)](#变量--variables-)
 - [!default](#default)
+- [全局变量&局部变量](#全局变量局部变量)
+- [!global](#global)
 - [插值语句 #{}](#插值语句-)
 - [\@if bool {...} @else if bool{...} @else {}](#\if-bool--else-if-bool-else-)
 - [@for](#for)
@@ -60,6 +62,84 @@ $width: 5em;
 ```
 
 # !default
+
+* 这一个值分配给变量仅当该变量没有被定义，或者其值null。否则，将使用现有值。这样，用户可以在导入库之前设置变量以自定义其行为。
+
+```scss
+// _library.scss
+$black: #000 !default;
+$border-radius: 0.25rem !default;
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
+
+code {
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+// style.scss
+$black: #222;
+$border-radius: 0.1rem;
+
+@import 'library';
+
+// bulid
+code {
+  border-radius: 0.1rem;
+  box-shadow: 0 0.5rem 1rem rgba(#222, 0.15);
+}
+```
+
+# 全局变量&局部变量
+
+* 全局变量相同的名称声明局部变量，两个具有相同名称的不同变量：一个是本地的，一个是全局的。这有助于确保编写局部变量的作者不会意外地更改他们甚至不知道的全局变量的值。
+
+```scss
+$variable: global value;
+
+.content {
+  $variable: local value;
+  value: $variable;
+}
+
+.sidebar {
+  value: $variable;
+}
+
+// bulid
+.content {
+  value: local value;
+}
+
+.sidebar {
+  value: global value;
+}
+```
+
+# !global
+
+* 本地范围内（例如在mixin中）设置全局变量的值，则可以使用该!global标志。标记为的变量声明!global将始终分配给全局范围。
+
+```scss
+$variable: first global value;
+
+.content {
+  $variable: second global value !global;
+  value: $variable;
+}
+
+.sidebar {
+  value: $variable;
+}
+
+// bulid
+.content {
+  value: second global value;
+}
+
+.sidebar {
+  value: second global value;
+}
+```
 
 # 插值语句 #{}
 
