@@ -9,6 +9,11 @@
 - [插件 optimization.splitChunks 代码切割](#插件-optimizationsplitchunks-代码切割)
 
 <!-- /TOC -->
+https://webpack.js.org/
+ 
+https://github.com/webpack/webpack/tree/master/examples  
+
+https://github.com/webpack/webpack
 
 ## resolve
 
