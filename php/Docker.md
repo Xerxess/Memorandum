@@ -68,3 +68,11 @@ $ docker attach id //进入运行的容器
 $ docker rm id //删除容器-f 强行 -l 删除窗口连接，保留窗口 -v 删除容器挂载的数据卷
 ```
 
+# 注意
+
+> macos
+
+https://docs.docker.com/docker-for-mac/networking/
+
+* host.docker.internal 解析为主机使用的内部IP地址
+* gateway.docker.internal 网关
