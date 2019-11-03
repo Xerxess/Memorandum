@@ -472,6 +472,7 @@ paper.js | HTML5 Canvas | https://github.com/paperjs/paper.js
 svg.js | 操作和动画SVG的轻量级库 | https://github.com/svgdotjs/svg.js
 GraphicsJS | 基于SVG / VML技术的轻量级JavaScript图形库 | https://github.com/AnyChart/GraphicsJS
 zrender | 轻量级的画布库，ECharts 2D | https://github.com/ecomfe/zrender
+localResizeIMG | 前端本地客户端压缩图片，兼容IOS，Android，PC | https://github.com/Xerxess/localResizeIMG
 
 ## <i id="j-26"></i>构建
 
