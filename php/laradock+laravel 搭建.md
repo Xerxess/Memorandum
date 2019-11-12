@@ -6,7 +6,7 @@
     * Docker >= 17.12
     * Macbook
     * Laradock
-    * laravel 5.8
+    * laravel 6
 
 ## Docker
 
@@ -34,7 +34,16 @@ images:
 
 Workspace 这个镜像是开发环境，所需要的一些工具，可以不污染本机的系统环境.
 
-## laravel 5.8
+### 使用
+
+* docker-compose build workspace nginx mysql
+* docker-compose up -d {container-name} 运行容器
+----------------------
+* docker-compose build --no-cache {container-name} 
+* docker-compose exec workspace bash 进入容器
+* docker-compose exec --user=laradock workspace bash 添加用户
+
+## laravel 6
 
 php开源开发框架
 
@@ -119,4 +128,78 @@ c）PHP_FPM_INSTALL_XDEBUG=true
 
 ## 远程调试
 
- docker-compose up -d nginx mysql
+* ./laradock/.env 配置
+```
+PHP_FPM_INSTALL_XDEBUG=true
+WORKSPACE_INSTALL_XDEBUG=true
+WORKSPACE_INSTALL_WORKSPACE_SSH=true
+```
+* docker-compose.yml 配置
+
+ \-
+
+ * ./php-fpm/xdebug.ini  
+  注意 remote_connect_back=1 可能无效，推荐开发不要使用  
+  host.docker.internal docker获取本机ip，很重要注意  
+```
+xdebug.remote_host=host.docker.internal
+xdebug.remote_connect_back=0
+xdebug.remote_autostart=1
+xdebug.remote_enable=1
+xdebug.cli_color=1
+```
+
+* 在php-fpm上启用xDebug
+
+位于laradock文件夹中的主机终端中 运行：./php-fpm/xdebug status | start | stop
+查看状态
+```
+./php-fpm/xdebug status
+```
+
+docker-compose build workspace php-fpm
+
+* PHPStorm设置
+![Alt text](./img/2.png)
+
+这个配制没什么用
+
+![Alt text](./img/3.png)
+
+![Alt text](./img/4.png)
+
+* Xdebug helper
+
+谷歌浏览器安装此插件，开启调试模式
+
+* 开始调试（完）
+
+
+ ## docker-compose -help
+
+  build              - 生成或重建服务  
+  bundle             - 从合成文件生成docker包  
+  config             - 验证并查看撰写文件    
+  create             - 创建服务    
+  down               - 停止并删除容器、网络、图像和卷    
+  events             - 从容器接收实时事件  
+  exec               - 在正在运行的容器中执行命令    
+  help               - Get help on a command  
+  images             - List images  
+  kill               - Kill containers  
+  logs               - View output from containers  
+  pause              - 暂停服务   
+  port               - 打印端口绑定的公共端口    
+  ps                 - 列出容器    
+  pull               - 拉取服务映像    
+  push               - 推送服务映像    
+  restart            - Restart services  
+  rm                 - Remove stopped containers  
+  run                - 运行一次性命令    
+  scale              - 设置服务的容器数    
+  start              - Start services  
+  stop               - Stop services  
+  top                - Display the running processes  
+  unpause            - 取消暂停服务    
+  up                 - 创建和启动容器   
+  version            - Show the Docker-Compose version information  

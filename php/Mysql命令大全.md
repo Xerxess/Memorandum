@@ -55,7 +55,9 @@
 
 ②GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 数据库名@localhost IDENTIFIED BY '密码';
 
-③SET PASSWORD FOR '数据库名'@'localhost' = OLD_PASSWORD('密码');
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON test.* TO test@localhost IDENTIFIED BY '123456';
+
+③SET PASSWORD FOR 'admin'@'localhost' = OLD_PASSWORD('123456');
 
 依次执行3个命令完成数据库创建。注意：中文 “密码”和“数据库”是户自己需要设置的。
 
