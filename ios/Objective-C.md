@@ -9,6 +9,17 @@
 - [定义方法](#定义方法)
 - [预处理器](#预处理器)
 - [预定义的宏](#预定义的宏)
+- [类型定义（typedef）](#类型定义typedef)
+- [Objective-C类和对象](#objective-c类和对象)
+    - [Objective-C特征](#objective-c特征)
+    - [关键字](#关键字)
+    - [. 运算符访问属性](#-运算符访问属性)
+    - [不带参数名方法](#不带参数名方法)
+    - [局部变量](#局部变量)
+    - [继承](#继承)
+- [Foundation 框架简介](#foundation-框架简介)
+- [Application Kit框架包](#application-kit框架包)
+- [内存管理和自动引用计数](#内存管理和自动引用计数)
 
 <!-- /TOC -->
 
@@ -100,3 +111,78 @@ NSLog(@"ANSI :%d\n", __STDC__ );
 // Line :7
 // ANSI :1
 ```
+
+# 类型定义（typedef）
+
+```c
+typedef unsigned char BYTE;
+
+// 标识符BYTE可以用作unsigned char类型的缩写(或别名)，例如：
+
+typedef unsigned char BYTE;
+BYTE  b1, b2;
+```
+
+
+# Objective-C类和对象
+
+## Objective-C特征
+
+* 类定义在两个不同的部分，即@interface和@implementation。
+* 几乎所有东西都是对象的形式。
+* 对象接收消息，对象通常称为接收者。
+* 对象包含实例变量。
+* 对象和实例变量具有范围。
+* 类隐藏对象的实现。
+* 属性用于提供用于其他类对此类实例变量的访问。
+
+
+## 关键字
+
+* @interface和@implementation - 基本框架
+* @property/@synthesize - 标识属性(自动生成get/set)
+* static - 静态变量
+* slef - 当前实例
+
+## . 运算符访问属性
+
+```c
+instance.property
+instance.property=value === [instance setProperty:value]
+```
+
+## 不带参数名方法
+
+```c
+-(int) set:(int) i name:(int) j // 带name参数名
+-(int) set:(int) i:(int) j // 不带参数名
+```
+
+## 局部变量
+
+## 继承
+
+
+```c
+@interface Fraction:NSObject // 继承NSObject
+{
+   
+}
+```
+
+
+# Foundation 框架简介
+
+* 为所有的程序开发奠定基础的框架称为Foundation框架。该框架允许使用一些基本对象，如数字和字符串，以及一些对象集合，如数组、字典和集合。其他功能包括处理日期和时间、自动化的内存管理、处理基础文件系统、存储（或归档）对象、处理几何数据结构（如点和长方形）。
+
+# Application Kit框架包
+
+* 框架包含广泛的类和方法，它们用来开发交互式图形应用程序，使得开发文本、菜单、工具栏、表、文档、剪贴板和窗口之类的过程变得十分简便。在OSX系统中，术语Cocoa总的来说指的是Foundation框架、Application Kit框架和名为Core Data的第三方框架。术语 Cocoa Touch是指Foundation、Core Data和UIKit框架。
+
+# 内存管理和自动引用计数
+
+基本内存管理模型有
+
+* 自动垃圾收集。 ios 不支持
+* 手工引用计数和自动释放池。
+* 自动引用计数（ARC）。
