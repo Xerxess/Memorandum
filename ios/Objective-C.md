@@ -184,5 +184,5 @@ instance.property=value === [instance setProperty:value]
 基本内存管理模型有
 
 * 自动垃圾收集。 ios 不支持
-* 手工引用计数和自动释放池。
+* 手工引用计数和自动释放池。 (手动保留或释放) 或MRR
 * 自动引用计数（ARC）。
