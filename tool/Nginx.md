@@ -40,6 +40,17 @@ server
     add_header Access-Control-Allow-Headers X-Requested-With;
     add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
 
+    location / { 
+    // 非简单请求
+    if ($request_method = 'OPTIONS') {
+        return 200;
+    }
+
+    proxy_pass http://********;
+    # root   html;
+    # index  index.html index.htm;
+    }
+
     location /resource {
         rewrite  ^/resource/?(.*)$ /$1 break;
         proxy_set_header Host $host;
