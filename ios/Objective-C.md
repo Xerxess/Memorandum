@@ -23,6 +23,7 @@
 - [内存管理和自动引用计数](#内存管理和自动引用计数)
 - [IMP和SEL（方法和类的反射）](#imp和sel方法和类的反射)
 - [@selector && NSSelectorFromString && performSelector](#selector--nsselectorfromstring--performselector)
+- [OC == &&  isEqual && isEqualToString](#oc----isequal--isequaltostring)
 
 <!-- /TOC -->
 
@@ -261,3 +262,8 @@ SEL sel = @selector(lowercaseString);
 SEL sel = @selector(lowercaseString:);
 SEL sel=@selector(lowercseString:withSomething:)
 ```
+
+# OC == &&  isEqual && isEqualToString
+
+* == 比较两个对象，是比较两个对象的地址
+* isEqual 比较两个对象的值是否相等
