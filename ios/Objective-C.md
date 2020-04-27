@@ -6,23 +6,24 @@
 - [Objective-C程序基本组成](#objective-c程序基本组成)
 - [数据类型](#数据类型)
 - [常量](#常量)
-    - [定义常量](#定义常量)
+  - [定义常量](#定义常量)
 - [定义方法](#定义方法)
 - [预处理器](#预处理器)
 - [预定义的宏](#预定义的宏)
 - [类型定义（typedef）](#类型定义typedef)
 - [Objective-C类和对象](#objective-c类和对象)
-    - [Objective-C特征](#objective-c特征)
-    - [关键字](#关键字)
-    - [. 运算符访问属性](#-运算符访问属性)
-    - [不带参数名方法](#不带参数名方法)
-    - [局部变量](#局部变量)
-    - [继承](#继承)
+  - [Objective-C特征](#objective-c特征)
+  - [关键字](#关键字)
+  - [. 运算符访问属性](#-运算符访问属性)
+  - [不带参数名方法](#不带参数名方法)
+  - [局部变量](#局部变量)
+  - [继承](#继承)
 - [Foundation 框架简介](#foundation-框架简介)
 - [Application Kit框架包](#application-kit框架包)
 - [内存管理和自动引用计数](#内存管理和自动引用计数)
 - [IMP和SEL（方法和类的反射）](#imp和sel方法和类的反射)
 - [@selector && NSSelectorFromString && performSelector](#selector--nsselectorfromstring--performselector)
+- [OC == &&  isEqual && isEqualToString](#oc----isequal--isequaltostring)
 
 <!-- /TOC -->
 
@@ -261,3 +262,8 @@ SEL sel = @selector(lowercaseString);
 SEL sel = @selector(lowercaseString:);
 SEL sel=@selector(lowercseString:withSomething:)
 ```
+
+# OC == &&  isEqual && isEqualToString
+
+* == 比较两个对象，是比较两个对象的地址
+* isEqual 比较两个对象的值是否相等

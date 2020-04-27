@@ -11,6 +11,8 @@ https://github.com/texturegroup/texture
 
 译文
 https://juejin.im/post/5a16acf56fb9a04509092ce5
+布局篇
+https://bawn.github.io/2017/12/Texture-Layout/
 
 # ComponentKit
 

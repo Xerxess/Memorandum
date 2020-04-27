@@ -5,8 +5,8 @@
 - [UIApplication 对象运行应用程序的主事件循环并管理应用程序的整个生命周期。](#uiapplication-对象运行应用程序的主事件循环并管理应用程序的整个生命周期)
 - [应用与环境](#应用与环境)
 - [APP 生命周期](#app-生命周期)
-  - [ios 13以下生命周期](#ios-13以下生命周期)
-  - [ios 13生命周期](#ios-13生命周期)
+  - [ios 13 以下生命周期](#ios-13-以下生命周期)
+  - [ios 13 生命周期](#ios-13-生命周期)
 - [< IOS 13](#-ios-13)
   - [坐标系](#坐标系)
   - [frame & bounds & center](#frame--bounds--center)
@@ -31,7 +31,7 @@
     - [UIKit](#uikit)
     - [Core Animation](#core-animation)
     - [在视图中动画化属性更改](#在视图中动画化属性更改)
-    - [使用Begin / Commit方法开始动画](#使用begin--commit方法开始动画)
+    - [使用 Begin / Commit 方法开始动画](#使用-begin--commit-方法开始动画)
     - [配置动画委托](#配置动画委托)
     - [嵌套动画块](#嵌套动画块)
     - [在视图之间创建动画过渡](#在视图之间创建动画过渡)
@@ -47,10 +47,11 @@
     - [根视图控制器](#根视图控制器)
     - [容器视图控制器](#容器视图控制器)
     - [容器视图控制器通常作为根视图控制器安装在窗口中](#容器视图控制器通常作为根视图控制器安装在窗口中)
-    - [独立View Controller](#独立view-controller)
+    - [独立 View Controller](#独立-view-controller)
     - [保存和恢复状态](#保存和恢复状态)
       - [标记视图控制器以进行保存](#标记视图控制器以进行保存)
       - [选择有效的还原标识符](#选择有效的还原标识符)
+  - [UINavigationController](#uinavigationcontroller)
   - [Interface Builder](#interface-builder)
   - [Using Segues](#using-segues)
   - [iOS 滚动视图](#ios-滚动视图)
@@ -80,8 +81,9 @@
 
 # APP 生命周期
 
-## ios 13以下生命周期
-## ios 13生命周期
+## ios 13 以下生命周期
+
+## ios 13 生命周期
 
 # < IOS 13
 
@@ -362,11 +364,11 @@ UIKit 中，动画是使用 UIView 对象执行的
 
 ### 在视图中动画化属性更改
 
-对UIView类的属性进行动画处理，必须将这些更改包装在动画块中。
+对 UIView 类的属性进行动画处理，必须将这些更改包装在动画块中。
 
-* animateWithDuration:animations:
-* animateWithDuration:animations:completion:
-* animateWithDuration:delay:options:animations:completion:
+- animateWithDuration:animations:
+- animateWithDuration:animations:completion:
+- animateWithDuration:delay:options:animations:completion:
 
 ```c++
 [UIView animateWithDuration:1.0 animations:^{
@@ -399,15 +401,15 @@ UIKit 中，动画是使用 UIView 对象执行的
 }
 ```
 
-### 使用Begin / Commit方法开始动画
+### 使用 Begin / Commit 方法开始动画
 
-* <ios3 可不做了解
+- <ios3 可不做了解
 
 ### 配置动画委托
 
 要在动画之前或之后立即执行代码，则必须将一个委托对象和一个开始或停止选择器与您的开始/提交动画块关联。
 
-* setAnimationDelegate:
+- setAnimationDelegate:
 
 ```c++
 // UIView并使用setAnimationWillStartSelector:和setAnimationDidStopSelector:类方法设置开始和停止选择器。在动画期间，动画系统会在适当的时间调用您的委托方法，以使您有机会执行代码。
@@ -421,8 +423,8 @@ UIKit 中，动画是使用 UIView 对象执行的
 
 ### 在视图之间创建动画过渡
 
-* 更改现有视图的可见子视图。
-* 将视图层次结构中的一个视图替换为另一视图。
+- 更改现有视图的可见子视图。
+- 将视图层次结构中的一个视图替换为另一视图。
 
 ### 更改视图的子视图
 
@@ -434,9 +436,9 @@ UIKit 中，动画是使用 UIView 对象执行的
 
 ### 将多个动画链接在一起
 
-UIView动画接口提供用于连接单独的动画块，使得它们在同一时间进行的，而不是顺序地支持。
+UIView 动画接口提供用于连接单独的动画块，使得它们在同一时间进行的，而不是顺序地支持。
 
-* 对于基于块的动画，请使用animateWithDuration:animations:completion:和animateWithDuration:delay:options:animations:completion:方法支持的完成处理程序来执行所有后续动画。
+- 对于基于块的动画，请使用 animateWithDuration:animations:completion:和 animateWithDuration:delay:options:animations:completion:方法支持的完成处理程序来执行所有后续动画。
 
 ## Layout 图层
 
@@ -458,12 +460,13 @@ https://developer.apple.com/documentation/uikit/uiviewcontroller?language=objc
 
 视图控制器是应用程序内部结构的基础。每个应用程序至少都有一个视图控制器，大多数应用程序都有多个。每个视图控制器管理应用程序用户界面的一部分，以及该界面与基础数据之间的交互。视图控制器还有助于在用户界面的不同部分之间进行转换。
 
-* 内容视图控制器管理应用程序内容的离散部分，并且是您创建的视图控制器的主要类型。
-* 容器视图控制器从其他视图控制器（称为子视图控制器）收集信息，并以有助于导航或以不同方式呈现这些视图控制器的内容的方式来呈现信息。
+- 内容视图控制器管理应用程序内容的离散部分，并且是您创建的视图控制器的主要类型。
+- 容器视图控制器从其他视图控制器（称为子视图控制器）收集信息，并以有助于导航或以不同方式呈现这些视图控制器的内容的方式来呈现信息。
 
 视图控制器始终对其根视图具有引用，并且每个视图对其子视图均具有强引用。
 
 ### UIViewController 生命周期
+
 ![Alt text](images/5.png)
 
 ```c++
@@ -555,18 +558,18 @@ https://developer.apple.com/documentation/uikit/uiviewcontroller?language=objc
 
 ### 方法详解
 
-* loadView 每次访问view时，就会调用self.view的get方法，在get方法中判断self.view==nil，不为nil就直接返回view，等于nil就去调用loadView方法。loadView方法会去判断有无指定storyBord/Xib文件，如果有就去加载storyBord/Xib描述的控制器view，如果没有则系统默认创建一个空的view，赋给self.view。loadView方法有可能被多次调用（每当访问self.view并且为nil时就会调用一次）；
-* viewDidLoad view加载完成时调用（在loadView方法执行后被调用），也有可能执行多次（self.view==nil且被访问时）；
-* awakeFromNib
-* viewWillAppear view即将可见时调用
-* viewWillLayoutSubviews:view 即将布局子视图时调用
-* viewDidLayoutSubviews:view 完成子视图布局后调用
-* viewDidAppear:view 已经显示后调用
-* viewWillDisappear:view 即将消失、被覆盖或者隐藏时调用此方法
-* viewDidDisappear:view  已经消失、被覆盖或者隐藏时调用此方法
-* didReceiveMemoryWarning 当收到内存警告时调用此方法
-* viewWillUnload 当内存过低时，需要释放一些不需要使用的视图时，即将释放时调用（iOS6以后被废弃）
-* viewDidUnload 当内存过低，释放了一些不需要的视图时调用（iOS6以后被废弃）
+- loadView 每次访问 view 时，就会调用 self.view 的 get 方法，在 get 方法中判断 self.view==nil，不为 nil 就直接返回 view，等于 nil 就去调用 loadView 方法。loadView 方法会去判断有无指定 storyBord/Xib 文件，如果有就去加载 storyBord/Xib 描述的控制器 view，如果没有则系统默认创建一个空的 view，赋给 self.view。loadView 方法有可能被多次调用（每当访问 self.view 并且为 nil 时就会调用一次）；
+- viewDidLoad view 加载完成时调用（在 loadView 方法执行后被调用），也有可能执行多次（self.view==nil 且被访问时）；
+- awakeFromNib
+- viewWillAppear view 即将可见时调用
+- viewWillLayoutSubviews:view 即将布局子视图时调用
+- viewDidLayoutSubviews:view 完成子视图布局后调用
+- viewDidAppear:view 已经显示后调用
+- viewWillDisappear:view 即将消失、被覆盖或者隐藏时调用此方法
+- viewDidDisappear:view 已经消失、被覆盖或者隐藏时调用此方法
+- didReceiveMemoryWarning 当收到内存警告时调用此方法
+- viewWillUnload 当内存过低时，需要释放一些不需要使用的视图时，即将释放时调用（iOS6 以后被废弃）
+- viewDidUnload 当内存过低，释放了一些不需要的视图时调用（iOS6 以后被废弃）
 
 ### 根视图控制器
 
@@ -577,42 +580,45 @@ https://developer.apple.com/documentation/uikit/uiviewcontroller?language=objc
 ### 容器视图控制器
 
 容器视图控制器使您可以从更易管理和可重用的组件中组装复杂的界面。
-* UINavigationController
-* UISplitViewController
-* UIPageViewController  
+
+- UINavigationController
+- UISplitViewController
+- UIPageViewController
 
 容器视图控制器通常作为根视图控制器安装在窗口中
 
 ### 容器视图控制器通常作为根视图控制器安装在窗口中
 
-* UIKit框架提供了用于显示警报，拍摄照片和视频以及管理iCloud上的文件的视图控制器。UIKit还定义了许多标准容器视图控制器，可用于组织内容。
-* GameKit框架提供了视图控制器，用于匹配玩家并管理排行榜，成就和其他游戏功能。
-* 通讯簿UI框架提供了用于显示和选择联系人信息的视图控制器。
-* MediaPlayer框架提供了用于播放和管理视频以及从用户库中选择媒体资产的视图控制器。
-* EventKit UI框架提供了用于显示和编辑用户日历数据的视图控制器。
-* GLKit框架提供了一个用于管理OpenGL渲染图面的视图控制器。
+- UIKit 框架提供了用于显示警报，拍摄照片和视频以及管理 iCloud 上的文件的视图控制器。UIKit 还定义了许多标准容器视图控制器，可用于组织内容。
+- GameKit 框架提供了视图控制器，用于匹配玩家并管理排行榜，成就和其他游戏功能。
+- 通讯簿 UI 框架提供了用于显示和选择联系人信息的视图控制器。
+- MediaPlayer 框架提供了用于播放和管理视频以及从用户库中选择媒体资产的视图控制器。
+- EventKit UI 框架提供了用于显示和编辑用户日历数据的视图控制器。
+- GLKit 框架提供了一个用于管理 OpenGL 渲染图面的视图控制器。
 
-### 独立View Controller
+### 独立 View Controller
 
-* 视图控制器应始终是独立的对象。任何视图控制器都不应该了解其他视图控制器的内部工作原理或视图层次结构。如果两个视图控制器需要来回通信或来回传递数据，则应始终使用显式定义的公共接口进行通信。
+- 视图控制器应始终是独立的对象。任何视图控制器都不应该了解其他视图控制器的内部工作原理或视图层次结构。如果两个视图控制器需要来回通信或来回传递数据，则应始终使用显式定义的公共接口进行通信。
 
 ### 保存和恢复状态
 
 状态保留会在挂起应用程序之前记录其配置，以便可以在随后的应用程序启动时恢复该配置。将应用恢复为以前的配置可以为用户节省时间，并提供更好的用户体验。
 
-保留和恢复过程大部分是自动的，但是您需要告诉iOS应保留应用程序的哪些部分。
+保留和恢复过程大部分是自动的，但是您需要告诉 iOS 应保留应用程序的哪些部分。
 
-* （必需）将还原标识符分配给要保留其配置的视图控制器。
-* （必需）告诉iOS如何在启动时创建或定位新的视图控制器对象；
-* （可选）对于每个视图控制器，存储使该视图控制器恢复其原始配置所需的任何特定配置数据；
+- （必需）将还原标识符分配给要保留其配置的视图控制器。
+- （必需）告诉 iOS 如何在启动时创建或定位新的视图控制器对象；
+- （可选）对于每个视图控制器，存储使该视图控制器恢复其原始配置所需的任何特定配置数据；
 
 #### 标记视图控制器以进行保存
 
-* restorationIdentifier属性
-* 分配恢复标识符时，请记住，视图控制器层次结构中的所有父视图控制器也必须也具有恢复标识符。
+- restorationIdentifier 属性
+- 分配恢复标识符时，请记住，视图控制器层次结构中的所有父视图控制器也必须也具有恢复标识符。
 
 #### 选择有效的还原标识符
 
+
+## UINavigationController
 
 
 ## Interface Builder
