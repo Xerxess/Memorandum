@@ -58,6 +58,9 @@
   - [iOS 文本](#ios-文本)
   - [UIDocument](#uidocument)
   - [UIApplication](#uiapplication)
+  - [rand() random() arc4random() arc4random_uniform(i)](#rand-random-arc4random-arc4random_uniformi)
+  - [定时器](#定时器)
+    - [NSTimer](#nstimer)
 
 <!-- /TOC -->
 
@@ -617,9 +620,7 @@ https://developer.apple.com/documentation/uikit/uiviewcontroller?language=objc
 
 #### 选择有效的还原标识符
 
-
 ## UINavigationController
-
 
 ## Interface Builder
 
@@ -638,3 +639,52 @@ https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conce
 ## UIDocument
 
 ## UIApplication
+
+## rand() random() arc4random() arc4random_uniform(i)
+
+- srand((unsigned)time(0));  //不加这句每次产生的随机数不变
+  ```
+  int i = rand() % 100;
+  ```
+- srandom(time(0));
+
+```
+int i = random() % 100;
+```
+
+- int i = arc4random() % 100;
+- int i = arc4random_uniform(100)
+
+
+精确度比较：arc4random_uniform(u_int32_t) = arc4random()  >  random()  >  rand()。
+
+## 定时器
+
+* NSTimer
+* GCD定时器
+* dispatch_after
+* (void)performSelector:(SEL)aSelector withObject:(nullable id)anArgument afterDelay:(NSTimeInterval)delay;
+
+### NSTimer
+
+```c++
++ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti invocation:(NSInvocation *)invocation repeats:(BOOL)yesOrNo;
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)ti invocation:(NSInvocation *)invocation repeats:(BOOL)yesOrNo;
+
++ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(nullable id)userInfo repeats:(BOOL)yesOrNo;
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(nullable id)userInfo repeats:(BOOL)yesOrNo;
+
+```
+
+```c++
+// selector方式：
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(Timered:) userInfo:nil repeats:YES];
+}
+
+- (void)Timered:(NSTimer*)timer {
+    NSLog(@"timer called");
+}
+```

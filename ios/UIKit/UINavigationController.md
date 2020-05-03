@@ -16,3 +16,10 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
   }
 ```
+
+* leftBarButtonItem 图片渲染成蓝色
+
+```c++
+
+id selectedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+```
