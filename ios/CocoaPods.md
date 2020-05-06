@@ -33,7 +33,16 @@ sudo gem install -n /usr/local/bin cocoapods
 
 ```
 
+# 
+
+
+```
+git clone git://cocoapodscn.com/Specs.git master
+```
+
 # 国里源
+
+gem sources -l
 
 gem sources --add https://gems.ruby-china.com/
 

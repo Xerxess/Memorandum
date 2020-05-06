@@ -14,6 +14,9 @@
 - [Objective-C类和对象](#objective-c类和对象)
   - [Objective-C特征](#objective-c特征)
   - [关键字](#关键字)
+  - [@property](#property)
+    - [assign与weak](#assign与weak)
+    - [retain和strong](#retain和strong)
   - [. 运算符访问属性](#-运算符访问属性)
   - [不带参数名方法](#不带参数名方法)
   - [局部变量](#局部变量)
@@ -24,6 +27,7 @@
 - [IMP和SEL（方法和类的反射）](#imp和sel方法和类的反射)
 - [@selector && NSSelectorFromString && performSelector](#selector--nsselectorfromstring--performselector)
 - [OC == &&  isEqual && isEqualToString](#oc----isequal--isequaltostring)
+- [Block  __block修饰符](#block--__block修饰符)
 
 <!-- /TOC -->
 
@@ -162,6 +166,30 @@ BYTE  b1, b2;
 * static - 静态变量
 * slef - 当前实例
 
+## @property
+
+* assign 简单赋值，不更改索引计数 适用简单数据类型(例如NSInteger，CGFloat）和C数据类型（int, float, double, char)
+* weak 与assign 相对应 用于IBOutlets,如，UIViewController的子类，即一般的控件。
+* strong: //ARC中默认属性，等于非ARC中的retain
+* retain strong相对应，使用了引用计数，retain+1,release -1;当引用 计数为0时，dealloc会被调用，内存被释放
+* copy 非共享内存时，每个指针有自己的内存空间
+* atomic //默认属性 该变量为线程安全型，但是会影响访问速度
+* nonatomic 非线程安全型，访问速度快
+* readonly 只有get方法，没有set方法
+* readwrite //默认属性
+
+### assign与weak
+两者都是弱引用，assign通常用于普通类型属性（如int,NSInteger），还有代理属性的修饰，基本上来说两者是可以通用的。  
+只是后者比前者多了一个功能，后者会在引用的对象被释放的时候将该属性置为nil，而前者依然会指向原来的位置，这样就会变成野指针。在oc中你给你一个nil对象发送消息不会crash，但是给一个对象发送他不能解析的消息是会crash的，所以总的来说weak要比assign安全一些。
+像delegate属性建议用weak修饰而不是assign。
+
+### retain和strong
+他俩都是强引用，除了某些情况下不一样，其他的时候也是可以通用的。
+在修饰block属性的时候，相信大家都知道要用copy吧，因为如果不copy的话，block是存放在栈连里面的，他的生命周期会随着函数的结束而出栈的，copy之后会放在堆里面。  
+strong在修饰block的时候就相当于copy，而retain修饰block的时候就相当于assign，这样block会出现提前被释放掉的危险。
+
+
+
 ## . 运算符访问属性
 
 ```c
@@ -267,3 +295,17 @@ SEL sel=@selector(lowercseString:withSomething:)
 
 * == 比较两个对象，是比较两个对象的地址
 * isEqual 比较两个对象的值是否相等
+
+# Block  __block修饰符
+
+__block可以解决block内部无法修改外部auto变量的问题。
+
+```c++
+__block int age = 10;
+void (^myblock)(void) =  ^{
+  NSLog(@"%d",age);
+};
+age  = 20;
+myblock();
+// 修改age为20的时候，打印也是20。
+```
