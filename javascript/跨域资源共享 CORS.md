@@ -1,5 +1,7 @@
 # 跨域资源共享 CORS
 
+https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS
+
 CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持该功能，`IE浏览器不能低于IE10`。
 
 整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。
