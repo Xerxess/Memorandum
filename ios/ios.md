@@ -64,6 +64,8 @@
 
 <!-- /TOC -->
 
+https://iphonedevwiki.net/index.php/Special:AllPages
+
 # 窗户和屏幕
 
 - 一个 UIWindow 对象提供其自己并没有什么明显的内容。
