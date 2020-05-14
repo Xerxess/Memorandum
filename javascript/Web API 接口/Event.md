@@ -1,5 +1,7 @@
 # Event
 
+https://developer.mozilla.org/zh-CN/docs/Web/Events
+
 * [构造函数](#constructor)
 * [属性](#p)
     * [Event.bubbles](#event-bubbles)
