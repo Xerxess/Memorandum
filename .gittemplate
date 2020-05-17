@@ -1,1 +1,7 @@
+<Insert> (Title) #Describe
+
+<Refresh> (Title) #Describe
+
+<Append> (Title) #Describe
+
 <Insert|Refresh|Append|Delete|DeleteAll> (Title) #Describe
