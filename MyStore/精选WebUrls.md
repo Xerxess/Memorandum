@@ -124,6 +124,7 @@ regex | 站长工具 正则测试 |http://tool.chinaz.com/regex/
 browserhacks | Browserhacks | http://browserhacks.com/
 idea激活 | |http://idea.lanyus.com/
 convertio 转换(图片\|视频) | | https://convertio.co/zh/gif-png/
+pe | http://ushendu.njshengyuanli.com.cn/
 
 
 ## <i id="uu-4"></i> 客户端工具
