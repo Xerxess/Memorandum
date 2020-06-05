@@ -1,0 +1,1 @@
+https://www.teamviewer.com/en/support/commercial-use-suspected/
