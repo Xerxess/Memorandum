@@ -4,11 +4,13 @@
 
 - [xcode](#xcode)
 - [工具介绍](#工具介绍)
-    - [Instrument工具介绍与使用](#instrument工具介绍与使用)
-    - [Accessibility Inspector](#accessibility-inspector)
-    - [FileMerge](#filemerge)
-    - [Application Loader(应用程序加载器)](#application-loader应用程序加载器)
+  - [Instrument工具介绍与使用](#instrument工具介绍与使用)
+  - [Accessibility Inspector](#accessibility-inspector)
+  - [FileMerge](#filemerge)
+  - [Application Loader(应用程序加载器)](#application-loader应用程序加载器)
 - [Debug、Release、Archive、Profile、Analyze概念解释](#debugreleasearchiveprofileanalyze概念解释)
+- [Interface Builder](#interface-builder)
+- [Xcode11: 删除默认Main.storyBoard、自定义根控制器](#xcode11-删除默认mainstoryboard自定义根控制器)
 
 <!-- /TOC -->
 
@@ -65,3 +67,39 @@ Interface Builder（IB）是Mac OS X平台下用于设计和测试用户界面�
 * xib：是一个可视化文件，可通过拖拽文件进行界面创作和布局。xib实际是个xml文件，xib = XML nib。
 * nib：xib编译之后就得到nib文件，nib= NeXT Interface Builder
 * storyboard：大家可以理解为是升级版的xib，可以同时管理多个xib文件并处理场景与场景之间的跳转。
+
+# Xcode11: 删除默认Main.storyBoard、自定义根控制器
+
+* 直接移除Storyboard
+* info.plist移除 Main storyboard file base name
+* info.plist移除Application Scene Manifest选项
+* 在APPdelegate.h里面添加window属性
+
+```c++
+@property (strong, nonatomic) UIWindow * window;
+```
+
+* 在APPdelegate.m
+
+```c++
+#import "AppDelegate.h"
+#import "ViewController.h"
+
+@interface AppDelegate ()
+
+@end
+
+@implementation AppDelegate
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    // ViewController 是你的 rootViewController
+    self.window.rootViewController = [[ViewController alloc]init];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+@end
+```
