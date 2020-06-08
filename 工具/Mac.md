@@ -55,3 +55,7 @@ https://www.cockos.com/licecap/
 # shadowsocks
 
 http://shadowsocks.org/en/download/clients.html
+
+# tuxera-ntfs-for-mac
+
+https://www.tuxera.com/products/tuxera-ntfs-for-mac/

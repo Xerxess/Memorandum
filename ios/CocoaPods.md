@@ -1,4 +1,5 @@
 https://guides.cocoapods.org/
+https://cocoapods.org/
 
 # 条件
 

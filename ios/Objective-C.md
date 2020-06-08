@@ -28,6 +28,8 @@
 - [@selector && NSSelectorFromString && performSelector](#selector--nsselectorfromstring--performselector)
 - [OC == &&  isEqual && isEqualToString](#oc----isequal--isequaltostring)
 - [Block  __block修饰符](#block--__block修饰符)
+- [__kindof](#__kindof)
+  - [泛型数组](#泛型数组)
 
 <!-- /TOC -->
 
@@ -311,4 +313,36 @@ void (^myblock)(void) =  ^{
 age  = 20;
 myblock();
 // 修改age为20的时候，打印也是20。
+```
+
+# __kindof
+
+一般用在方法返回值的前面修饰，表示返回值可以是当前类或者它子类
+
+```c++
+@interface Person : NSObject
+
+/*
+  id表示返回值可以是任意类型,它的坏处: 
+  1. 不能在编译的时候检查真实类型
+  2. 返回值,没有提示
+*/
+//+ (id)person;
+
+// instancetype:会自动识别当前对象的类，但是和__kindof相比它没有提示
+//+ (instancetype)person;
+
+// __kindof Person *:表示可以是Person类或者它的子类,和instancetype相比,在调用的时候,很清楚的知道返回类型
++ (__kindof Person *)person;
+
+// 仅仅表示只能是Person类
++ (Person *)person1;
+
+@end
+```
+
+## 泛型数组
+
+```c++
+@property (nonatomic,strong) NSArray<__kindof UIView *>       *viewArray;
 ```
