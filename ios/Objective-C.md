@@ -45,6 +45,9 @@
 
 * Object Oriented Programming and the Objective-C Programming Language 1.0（Objective-C编程语言1.0简介） https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/OOPandObjC1/Introduction/introObjectiveC.html#//apple_ref/doc/uid/TP40005191
 
+Objective-C-CheatSheet (基础知识)
+* https://github.com/iwasrobbed/Objective-C-CheatSheet
+
 # Objective-C程序基本组成
 
 * 预处理程序命令
