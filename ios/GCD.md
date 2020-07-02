@@ -26,6 +26,7 @@
 - [dispatch_once](#dispatch_once)
 - [dispatch_source_t GCD定时器](#dispatch_source_t-gcd定时器)
 - [NSOperation](#nsoperation)
+- [@synchronized](#synchronized)
 
 <!-- /TOC -->
 
@@ -307,3 +308,8 @@ dispatch_once函数是保证在应用程序执行中只执行一次指定处理�
 # NSOperation
 
 NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象!
+
+# @synchronized 
+
+锁防止多个进程修改同一个资源  
+@synchronized 的作用是创建一个互斥锁，保证此时没有其它线程对self对象进行修改。这个是objective-c的一个锁定令牌，防止self对象在同一时间内被其它线程访问，起到线程的保护作用。
