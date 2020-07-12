@@ -30,6 +30,8 @@
 - [Block  __block修饰符](#block--__block修饰符)
 - [__kindof](#__kindof)
   - [泛型数组](#泛型数组)
+- [__weak和__strong](#__weak和__strong)
+  - [__weak、__strong的实现原理](#__weak__strong的实现原理)
 
 <!-- /TOC -->
 
@@ -345,4 +347,18 @@ myblock();
 
 ```c++
 @property (nonatomic,strong) NSArray<__kindof UIView *>       *viewArray;
+```
+
+# __weak和__strong
+
+## __weak、__strong的实现原理
+
+* __strong修饰符(默认)
+* __weak修饰符
+* __unsafe_unretained修饰符
+* __autoreleasing修饰符
+
+```c++
+__weak typeof(self) weakSelf = self;
+__strong typeof(self) strongSelf = self;
 ```
