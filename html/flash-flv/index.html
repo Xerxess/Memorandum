@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flash-flv</title>
+  </head>
+  <body>
+    <div
+      style="width: 680px;height: 480px;overflow: hidden;position: relative;"
+    >
+      <object
+        type="application/x-shockwave-flash"
+        data="player_flv.swf"
+        width="680"
+        height="480"
+      >
+        <!-- wmode 让flash 变换了bolck块 -->
+        <param name="wmode" value="opaque" />
+        <param name="movie" value="player_flv.swf" />
+        <param
+          name="FlashVars"
+          value="flv=demo.flv&width=680&height=480&autoplay=1&showstop&loop=1&showvolume&showtime=1"
+        />
+      </object>
+      <div
+        style="background-color: #fff;opacity: 0;filter:alpha(opacity=0);position: absolute;width: 100%;height: 100%;z-index: 999;top:0;left:0;"
+      ></div>
+    </div>
+  </body>
+</html>
