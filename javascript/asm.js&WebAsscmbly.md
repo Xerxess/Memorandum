@@ -19,6 +19,8 @@ http://asmjs.org/
 
 https://developer.mozilla.org/en-US/docs/Games/Tools
 
+http://www.ruanyifeng.com/blog/2017/09/asmjs_emscripten.html
+
 # WebAssembly
 
 WebAssembly是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。它设计的目的不是为了手写代码而是为诸如C、C++和Rust等低级源语言提供一个高效的编译目标。
