@@ -82,3 +82,51 @@ common options: [-P|--save-prod|-D|--save-dev|-O|--save-optional] [-E|--save-exa
 * 全局模式下 -g或--global
 * -P, --save-prod：套餐将出现在您的dependencies。除非-D或-O存在，否则这是默认值。
 * -D, --save-dev：套餐将出现在您的devDependencies。
+
+# verdaccio 搭建私服
+
+https://verdaccio.org/docs/en/server-configuration
+
+## 安装
+
+```
+npm install -g verdaccio
+
+verdaccio
+```
+
+## 设置注册
+
+```
+
+// set-registry
+npm set registry http://localhost:4873/
+
+// install
+npm install --registry http://localhost:4873
+
+//.npmrc
+registry=http://localhost:4873
+
+// package.json
+{
+  "publishConfig": {
+    "registry": "http://localhost:4873"
+  }
+}
+
+```
+
+## 配置
+
+```
+listen: 0.0.0.0:4873
+```
+
+## verdaccio永远运行
+
+```
+npm install -g forever
+// window 好像无效
+forever start `which verdaccio`
+```
