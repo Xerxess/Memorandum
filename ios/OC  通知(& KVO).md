@@ -22,6 +22,10 @@
 
 # 通知 NSNotification
 
+https://developer.apple.com/documentation/foundation/nsnotificationcenter?language=occ
+
+https://developer.apple.com/documentation/foundation/nsnotificationname?language=occ
+
 ##  解决的问题
 
 * 可以实现跨层的传递，例如A页面跳转到B页面，B页面再跳转到C页面，这时候如果我们通过委托回调的模式让A知道C的一些修改，那么实现起来就会很麻烦。
