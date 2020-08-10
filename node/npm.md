@@ -1,3 +1,21 @@
+<!-- TOC -->
+
+- [NPM](#npm)
+    - [什么是npm？](#什么是npm)
+    - [npm三个组件](#npm三个组件)
+    - [更新npm](#更新npm)
+    - [终端登录到npm](#终端登录到npm)
+    - [package.json](#packagejson)
+    - [发布包](#发布包)
+    - [npm-install](#npm-install)
+- [verdaccio 搭建私服](#verdaccio-搭建私服)
+    - [安装](#安装)
+    - [设置注册](#设置注册)
+    - [配置](#配置)
+    - [verdaccio永远运行](#verdaccio永远运行)
+
+<!-- /TOC -->
+
 # NPM
 * [什么是npm？](#什么是npm？)
 * [更新npm](#更新npm)
