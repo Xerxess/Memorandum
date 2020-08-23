@@ -1,9 +1,20 @@
+<!-- TOC -->
+
+- [mochajs](#mochajs)
+
+<!-- /TOC -->
+
+https://mochajs.org/
+
 # mochajs
+
+JavaScript测试框架
+
+从v8.0.0开始，Mocha需要Node.js v10.12.0或更高版本
 
 ```node
 npm install --save-dev mocha
 ```
-
 
 ```js
 // demo
