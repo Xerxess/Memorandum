@@ -1,6 +1,44 @@
+<!-- TOC -->
+
+- [chaijs](#chaijs)
+- [ADD](#add)
+- [`BDD`](#bdd)
+    - [expect风格](#expect风格)
+    - [should风格](#should风格)
+    - [Chains 语义连接 getter 没有实至意义](#chains-语义连接-getter-没有实至意义)
+    - [断言链](#断言链)
+
+<!-- /TOC -->
+
+https://www.chaijs.com/
+
 # chaijs
 
+BDD / TDD断言库
+
+# ADD
+
+通过assert接口公开,经典的assert-dot表示法
+
+```js
+var assert = require('chai').assert
+  , foo = 'bar'
+  , beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
+
+assert.typeOf(foo, 'string'); // without optional message
+assert.typeOf(foo, 'string', 'foo is a string'); // with optional message
+assert.equal(foo, 'bar', 'foo equal `bar`');
+assert.lengthOf(foo, 3, 'foo`s value has a length of 3');
+assert.lengthOf(beverages.tea, 3, 'beverages has 3 types of tea');
+```
+
 # `BDD`
+
+* BDD样式有两种风格：expect和should
+* 两者都使用相同的可链接语言来构造断言，但是它们在初始构造断言的方式上有所不同
+* 对于should，还有一些警告和克服警告的其他工具
+
+## expect风格
 
 ```js
 var expect = require('chai').expect
@@ -12,6 +50,21 @@ expect(foo).to.be.a('string');
 expect(foo).to.equal('bar');
 expect(foo).to.have.lengthOf(3);
 expect(beverages).to.have.property('tea').with.lengthOf(3);
+```
+
+## should风格
+
+它扩展了每个对象should ，开始您的链
+
+```js
+var should = require('chai').should()
+  , foo = 'bar'
+  , beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
+
+foo.should.be.a('string');
+foo.should.equal('bar');
+foo.should.have.lengthOf(3);
+beverages.should.have.property('tea').with.lengthOf(3);
 ```
 
 ## Chains 语义连接 getter 没有实至意义
@@ -35,6 +88,8 @@ does 做、工作
 still 还是、任然
 
 ```
+
+## 断言链
 
 * .not 否定链中的所有断言
 * .deep （使.equal, .include, .members, .keys，.property不使用=== 严格相等）

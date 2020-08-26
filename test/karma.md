@@ -1,6 +1,18 @@
-# karma
+<!-- TOC -->
+
+- [karma](#karma)
+    - [安装](#安装)
+    - [生成配置文件](#生成配置文件)
+    - [开始Karma](#开始karma)
+
+<!-- /TOC -->
 
 http://karma-runner.github.io/latest/index.html
+
+# karma
+
+* 一个测试运行器
+* 通过它调用浏览器来运行这些测试用例，然后再汇集测试结果，生成测试报告
 
 ## 安装
 
@@ -26,4 +38,3 @@ $ karma init my.conf.js
 ```node 
 $ karma start my.conf.js
 ```
-
