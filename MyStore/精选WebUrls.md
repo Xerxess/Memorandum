@@ -141,6 +141,7 @@ katalon | 自动化测试 | https://www.katalon.com/
 scootersoftware | 代码比较|目录比较 | http://www.scootersoftware.com/
 charlesproxy | 抓包工具 | https://www.charlesproxy.com
 pdman | 跨平台的数据建模 | http://www.pdman.cn
+bandicam | window Bandicam（班迪录屏）高清视频录制工具（免费 带水印）| https://www.bandicam.cn/
 
 
 ## <i id="u-5"></i> API文档
