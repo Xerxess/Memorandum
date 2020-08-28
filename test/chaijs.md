@@ -101,8 +101,8 @@ expect({a: {b: ['x', 'y']}}).to.nested.include({'a.b[1]': 'y'});
 ```
 * .own (导致链中跟随的所有.property和.include断言忽略继承的属性。)
 * .ordered (导致链中的所有.members断言要求成员处于相同的顺序。)
-* .any
-* .all
+* .any 至少一个
+* .all 全部
 * .a(type[, msg]) 断言目标的类型等于给定的字符串类型
   .an是.a的别名
 ```js
@@ -124,6 +124,10 @@ expect(Symbol()).to.be.a('symbol');
 * .NaN 断言目标正好是NaN
 * .exist 断言目标不严格（===）等于null或undefined
 * .empty 断言目标的长度属性严格（===）等于0
+```js
+expect([]).to.be.empty;
+expect('').to.be.empty;
+```
 * .arguments 断言目标是参数对象
 * .equal(val[, msg]) 断言目标严格（===）等于给定的val
 * .eql(obj[, msg]) 断言目标与给定的obj非常相等

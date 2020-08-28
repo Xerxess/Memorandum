@@ -1,6 +1,10 @@
 <!-- TOC -->
 
 - [mochajs](#mochajs)
+- [BDD钩子](#bdd钩子)
+- [接口](#接口)
+    - [BDD](#bdd)
+    - [TDD](#tdd)
 
 <!-- /TOC -->
 
@@ -102,3 +106,49 @@ describe('hooks', function() {
   // test cases
 });
 ```
+
+# BDD钩子
+
+```js
+describe('hooks', function () {
+  before(function () {
+    // 在此块中的第一个测试之前运行一次
+  });
+
+  after(function () {
+    // 在该块中的最后一个测试之后运行一次
+  });
+
+  beforeEach(function () {
+    // 在此块中的每个测试之前运行
+  });
+
+  afterEach(function () {
+    // 在此块中的每个测试之后运行
+  });
+
+  // test cases
+});
+```
+
+# 接口
+
+## BDD
+
+* describe() === context()
+* context()
+* it() === specify()
+* specify()
+* before()
+* after()
+* beforeEach()
+* afterEach()
+
+## TDD
+
+* suite()
+* test()
+* suiteSetup()
+* suiteTeardown()
+* setup()
+* teardown()
