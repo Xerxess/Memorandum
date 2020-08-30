@@ -34,6 +34,10 @@
     - [路由](#路由)
     - [数据模拟](#数据模拟)
     - [强制等待相应](#强制等待相应)
+- [Events](#events)
+- [断言](#断言-1)
+    - [编写断言](#编写断言)
+- [浏览器常用的命令](#浏览器常用的命令)
 
 <!-- /TOC -->
 
@@ -108,6 +112,10 @@ video:true
 chromeWebSecurity:true
 // 
 userAgent:''
+
+// 视口
+viewportHeight:600
+viewportWidth:1000
 
 
 ```
@@ -340,4 +348,272 @@ cy.wait('@getSearch')
 
 // 在上面的wait命令解析之前，这些命令不会运行
 cy.get('h1').should('contain', 'Dashboard')
+```
+
+# Events
+
+```js
+// window:confirm
+
+// window:alert
+
+// window:before:load
+
+// window:load
+
+// window:before:unload
+
+// window:unload
+
+// url:changed
+
+// viewport:changed
+
+on
+once
+removeListener
+removeAllListeners
+```
+
+# 断言
+
+https://github.com/chaijs/chai-jquery
+
+## 编写断言
+
+* 隐式操作对象: 使用 .should() 或者 .and()
+* 显示操作对象: 使用 expect
+
+```js
+// 隐式操作对象
+cy.get('tbody tr:first').should('have.class', 'active')
+// 显示操作对象
+cy.get('tbody tr:first').should(($tr) => {
+  expect($tr).to.have.class('active')
+  expect($tr).to.have.attr('href', '/users')
+})
+
+// 显示操作对象
+expect(true).to.be.true
+```
+
+# 浏览器常用的命令
+
+```js
+///// 控制应用程序的屏幕尺寸和方向
+cy.viewport(width, height)
+
+// 重新载入页面
+cy.reload()
+
+// 访问远程URL
+cy.visit('http://localhost:3000')
+
+// 等待数毫秒或等待别名资源解析，然后再继续执行下一个命令
+cy.wait(500)
+
+_________________________________________
+
+
+///// 滚动交互
+
+// 滚动到视图中
+cy.get('footer').scrollIntoView()
+cy.scrollTo(0, 500)
+// https://docs.cypress.io/api/commands/scrollto.html#Arguments
+cy.get('.sidebar').scrollTo('bottom')
+
+
+——————————————————————————————————————————
+
+///// 网络
+
+// 发出HTTP请求
+cy.request('http://dev.local/seed')
+
+// 管理网络请求的行为
+// https://docs.cypress.io/api/commands/route.html#Arguments
+cy.route('/users/**')
+
+// 启动服务器以开始将响应路由到cy.route（）并更改网络请求的行为
+cy.server()
+
+__________________________________________
+
+///// 浏览器原生组件操作
+
+// 选中复选框或单选
+cy.get('[type="checkbox"]').check()
+cy.get('.checkbox').check({ force: true })
+cy.get('[type="checkbox"]').uncheck()
+
+// 焦点
+cy.get('input').first().focus()
+cy.get('[type="email"]').type('me@email.com').blur()
+
+// 清除输入或文本区域的值。
+cy.get('[type="text"]').clear() 
+
+// 获取一组DOM元素中每个DOM元素的子元素
+cy.get('nav').children()
+
+// 点击一个DOM元素
+cy.get('.btn').click() 
+cy.get('.hidden').click({ force: true })
+cy.contains('Today').rightclick() 
+
+// 双击
+cy.get('button').dblclick()
+
+// hover
+cy.get('.menu-item').trigger('mouseover')
+
+// 对先前产生的主题调用功能
+cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
+cy.get('.modal').invoke('show')            // Invoke the jQuery 'show' function
+
+// 提交表单
+cy.get('form').submit()
+
+// 触发DOM元素上的事件
+cy.get('a').trigger('mousedown')
+
+// 输入
+cy.get('input').type('Hello, World') 
+
+// select
+cy.get('select').select('user-1')
+
+__________________________________________
+
+
+///获取dom元素
+
+cy.root() 
+
+cy.get('.list > li')
+
+// 获取当前活动页面的window.document
+cy.document() 
+
+// 获取与选择器匹配的第一个DOM元素（无论是它本身还是它的祖先之一）。
+cy.get('td').closest('.filled')
+
+// 获取包含文本的DOM元素。
+cy.get('.nav').contains('About')
+
+// 特定索引处获取DOM元素
+cy.get('tbody>tr').eq(0)
+
+// 获取与特定选择器匹配的DOM元素
+cy.get('td').filter('.users')
+cy.get('input').not('.required')
+
+// 获取特定选择器的后代DOM元素
+cy.get('.article').find('footer')
+cy.get('nav a').first()  
+cy.get('nav a').last()
+cy.get('nav a:first').next()
+cy.get('.active').nextAll()
+cy.get('tr.highlight').prev()
+cy.get('.active').prevAll()
+cy.get('li').siblings('.active')
+
+// 获取当前关注的DOM元素
+cy.focused()
+
+// 父级
+cy.get('header').parent()
+cy.get('aside').parents()
+cy.get('p').parentsUntil('.article') // Yield parents of 'p' until '.article'
+
+// 遍历类似结构的数组（具有length属性的数组或对象）
+cy.get('ul>li').each(() => {...}) 
+
+__________________________________________
+
+/// 属性值
+
+// 获取先前产生的主题的属性值
+cy.wrap({ width: '50' }).its('width') // Get the 'width' property
+
+cy.title() 
+cy.url()  
+
+__________________________________________
+
+/// 本地全局功能
+
+// 获取当前活动页面的全局window.location对象
+cy.location('host') // Get the host of the location object
+cy.location('port') // Get the port of the location object
+
+cy.window()
+
+// 获取当前活动页面的当前URL hash
+cy.hash()
+
+// 向后或向前浏览浏览器历史记录中的上一个或下一个URL
+cy.go('back')
+
+// 读取文件并产生其内容
+cy.readFile('menu.json')
+// 写入具有指定内容的文件
+cy.writeFile('menu.json')
+
+// 加载位于文件中的一组固定数据
+cy.fixture('users').as('usersJson')  // load data from users.json
+
+// colkie
+cy.getCookie('auth_key')
+cy.getCookies() 
+cy.setCookie('auth_key', '123key')
+cy.clearCookie('authId') // 清除特定的浏览器cookie
+cy.clearCookies() //清除当前域和子域的所有浏览器cookie。
+cy.clearLocalStorage()  // clear all local storage
+
+// setTimeout clearTimeout setInterval clearInterval Date
+cy.clock() // 创建一个时钟
+cy.tick(500) // 使用cy.clock()覆盖本地时间函数后的移动时间
+
+//设置调试器并记录上一命令产生的结果
+cy.debug().getCookie('app')
+
+// 执行系统命令
+cy.exec('npm run build')
+cy.log('created new user')
+__________________________________________
+
+///// 延长&叠加&附加 测试
+
+// 创建一个断言。断言将自动重试，直到它们通过或超时。
+cy.get('.err').should('be.empty').and('be.hidden')
+// 创建一个断言。断言将自动重试，直到它们通过或超时。
+cy.get('.error').should('be.empty')
+
+// 结束命令链
+cy.contains('ul').end()
+
+// 暂停
+cy.pause().getCookie('app')
+
+// 屏幕快照
+cy.get('.post').screenshot()
+
+// 分配别名以供以后使用。
+
+
+/////其他
+
+// 将方法包装在间谍程序中，以记录对函数的调用和参数。
+cy.spy(user, 'addFriend')
+
+// 替换功能，记录其用法并控制其行为
+cy.stub(user, 'addFriend')
+
+// 通过任务插件事件在Node中执行代码
+cy.task('log', 'This will be output to the terminal')
+
+// 使您可以处理上一条命令产生的主题
+cy.get('.nav').then(($nav) => {})
 ```
