@@ -6,8 +6,15 @@
 - [navigator.mediaDevices.getUserMedia](#navigatormediadevicesgetusermedia)
 - [MediaDevices.enumerateDevices()](#mediadevicesenumeratedevices)
 - [MediaStream](#mediastream)
+    - [MediaStreamConstraints](#mediastreamconstraints)
+    - [MediaTrackConstraints](#mediatrackconstraints)
+        - [ConstrainDOMString](#constraindomstring)
+        - [MediaTrackConstraints.facingMode](#mediatrackconstraintsfacingmode)
 
 <!-- /TOC -->
+
+https://developer.mozilla.org/en-US/docs/Web/API/Media_Streams_API
+
 https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator/getUserMedia
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia
@@ -126,3 +133,48 @@ navigator.mediaDevices.enumerateDevices()
 https://developer.mozilla.org/en-US/docs/Web/API/MediaStream
 
 该MediaStream界面表示媒体内容流。流由几个轨道组成，例如视频或音频轨道。每个轨道都指定为的实例MediaStreamTrack。您可以使用构造函数或调用来获取MediaStream对象MediaDevices.getUserMedia()
+
+## MediaStreamConstraints
+
+指定什么样的轨道应包含在返回MediaStream和可选，以建立这些曲目设置的限制
+
+## MediaTrackConstraints
+
+用于描述一组功能以及每个功能可以采用的值
+```js
+{
+    // 可接受和/或必需的设备ID或设备ID的数组
+    deviceId,
+
+    // 视频轨道的属性
+    aspectRatio, // 视频宽高比或纵横比
+    facingMode,
+    frameRate, // 帧速率
+    height,
+    width
+
+}
+```
+
+### ConstrainDOMString
+
+https://developer.mozilla.org/en-US/docs/Web/API/ConstrainDOMString
+
+用于指定其值是一个字符串的属性的约束
+
+* exact DOMString对象数组，其中之一必须是属性值
+
+### MediaTrackConstraints.facingMode
+
+https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints/facingMode
+
+```js
+// 语法
+var constraintsObject = { facingMode: constraint };
+
+// "user" 包括智能手机上的前置摄像头
+// "environment" 智能手机上的后置摄像头
+var constraints = {
+  facingMode: { exact: ["user","environment"] }
+};
+```
