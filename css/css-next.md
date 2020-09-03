@@ -1,3 +1,15 @@
+<!-- TOC -->
+
+- [css-next](#css-next)
+- [功能符号](#功能符号)
+- [自定义属性（ - *）：CSS变量](#自定义属性---css变量)
+- [cubic-bezier(x1, y1, x2, y2) 立方贝塞尔曲线 自己定义一个加速度曲线](#cubic-bezierx1-y1-x2-y2-立方贝塞尔曲线-自己定义一个加速度曲线)
+- [steps(number_of_steps, direction) 阶梯函数 逐针函数](#stepsnumber_of_steps-direction-阶梯函数-逐针函数)
+- [Keywords for common timing-functions](#keywords-for-common-timing-functions)
+- [backdrop-filter](#backdrop-filter)
+
+<!-- /TOC -->
+
 # css-next
 
 @supports 指定依赖于浏览器中的一个或多个特定的CSS功能的支持声明。这称为特征查询。规则可以放在代码的顶层，也可以嵌套在任何其他条件组中。
@@ -93,3 +105,23 @@ https://developer.mozilla.org/zh-CN/docs/Web/CSS/timing-function
 * ease-out 动画快速启动，然后在接近最终状态时逐渐减速。
 * step-start === steps(1, start)
 * step-end === steps(1, end)
+
+
+# backdrop-filter
+
+为一个元素后面区域添加图形效果（如模糊或颜色偏移）
+
+https://developer.mozilla.org/en-US/docs/Web/CSS/filter#Interpolation
+
+```css
+backdrop-filter: blur(2px); // 高斯模糊
+backdrop-filter: brightness(60%); // 亮度
+backdrop-filter: contrast(40%); // 对比度
+backdrop-filter: drop-shadow(4px 4px 10px blue); // 阴影效果应用于输入图像
+backdrop-filter: grayscale(30%); // 灰度
+backdrop-filter: hue-rotate(120deg); // 色相旋转
+backdrop-filter: invert(70%); // 反转输入图像
+backdrop-filter: opacity(20%); // 透明度
+backdrop-filter: sepia(90%); // 棕褐色
+backdrop-filter: saturate(80%); // 图像饱和
+```
