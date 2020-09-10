@@ -4,13 +4,14 @@
 
 - [xcode](#xcode)
 - [工具介绍](#工具介绍)
-  - [Instrument工具介绍与使用](#instrument工具介绍与使用)
-  - [Accessibility Inspector](#accessibility-inspector)
-  - [FileMerge](#filemerge)
-  - [Application Loader(应用程序加载器)](#application-loader应用程序加载器)
+    - [Instrument工具介绍与使用](#instrument工具介绍与使用)
+    - [Accessibility Inspector](#accessibility-inspector)
+    - [FileMerge](#filemerge)
+    - [Application Loader(应用程序加载器)](#application-loader应用程序加载器)
 - [Debug、Release、Archive、Profile、Analyze概念解释](#debugreleasearchiveprofileanalyze概念解释)
 - [Interface Builder](#interface-builder)
 - [Xcode11: 删除默认Main.storyBoard、自定义根控制器](#xcode11-删除默认mainstoryboard自定义根控制器)
+- [构建的环境变量](#构建的环境变量)
 
 <!-- /TOC -->
 
@@ -102,4 +103,22 @@ Interface Builder（IB）是Mac OS X平台下用于设计和测试用户界面�
 }
 
 @end
+```
+
+# 构建的环境变量
+
+https://help.apple.com/xcode/mac/11.4/#/itcaec37c2a6
+
+```c++
+// 产品的基本名称
+$(PRODUCT_NAME)
+
+// 唯一标识捆绑商品的字符串
+$(PRODUCT_BUNDLE_IDENTIFIER)
+
+// 目标源文件的目录
+$(SRCROOT)
+
+// 当前target的名称
+$(TARGET_NAME)
 ```
