@@ -2,41 +2,53 @@
 <!-- TOC -->
 
 - [Laravel 6](#laravel-6)
-  - [检索环境配置](#检索环境配置)
-  - [请求周期](#请求周期)
-    - [服务提供者](#服务提供者)
-    - [请求调度](#请求调度)
-  - [服务容器](#服务容器)
-  - [服务提供者](#服务提供者-1)
-  - [Facades](#facades)
-    - [Facade 类参考](#facade-类参考)
-  - [契约](#契约)
-  - [辅助函数](#辅助函数)
-  - [Collections（集合）](#collections集合)
-    - [方法列表](#方法列表)
+    - [检索环境配置](#检索环境配置)
+    - [请求周期](#请求周期)
+        - [服务提供者](#服务提供者)
+        - [请求调度](#请求调度)
+    - [服务容器](#服务容器)
+        - [简单绑定](#简单绑定)
+        - [when](#when)
+        - [extend](#extend)
+    - [服务提供者](#服务提供者-1)
+        - [编写服务提供者](#编写服务提供者)
+        - [bindings 和 singletons](#bindings-和-singletons)
+        - [boot](#boot)
+        - [启动方法的依赖注入](#启动方法的依赖注入)
+        - [注册服务提供者](#注册服务提供者)
+        - [延迟提供者](#延迟提供者)
+    - [Facades](#facades)
+        - [Facade 类参考](#facade-类参考)
+    - [契约](#契约)
+        - [实现契约](#实现契约)
+    - [辅助函数](#辅助函数)
+    - [Collections（集合）](#collections集合)
+        - [方法列表](#方法列表)
 - [错误 异常处理](#错误-异常处理)
-  - [配置](#配置)
-  - [异常处理](#异常处理)
+    - [配置](#配置)
+    - [异常处理](#异常处理)
+    - [HTTP 异常](#http-异常)
+    - [自定义 HTTP 错误页面](#自定义-http-错误页面)
 - [Eloquent](#eloquent)
-  - [模型定义](#模型定义)
-  - [Eloquent 模型约定](#eloquent-模型约定)
-  - [保护属性](#保护属性)
-  - [软删除](#软删除)
+    - [模型定义](#模型定义)
+    - [Eloquent 模型约定](#eloquent-模型约定)
+    - [保护属性](#保护属性)
+    - [软删除](#软删除)
 - [Eloquent: API 资源](#eloquent-api-资源)
-  - [生成资源](#生成资源)
-  - [例](#例)
-  - [关联](#关联)
-  - [资源集合](#资源集合)
-  - [数据包裹](#数据包裹)
-  - [数据包裹和分页](#数据包裹和分页)
-  - [分页](#分页)
-  - [条件属性](#条件属性)
-  - [有条件的合并数据](#有条件的合并数据)
-  - [条件关联](#条件关联)
-  - [条件中间表信息](#条件中间表信息)
-  - [添加元数据](#添加元数据)
-  - [顶层元数据](#顶层元数据)
-  - [响应资源](#响应资源)
+    - [生成资源](#生成资源)
+    - [例](#例)
+    - [关联](#关联)
+    - [资源集合](#资源集合)
+    - [数据包裹](#数据包裹)
+    - [数据包裹和分页](#数据包裹和分页)
+    - [分页](#分页)
+    - [条件属性](#条件属性)
+    - [有条件的合并数据](#有条件的合并数据)
+    - [条件关联](#条件关联)
+    - [条件中间表信息](#条件中间表信息)
+    - [添加元数据](#添加元数据)
+    - [顶层元数据](#顶层元数据)
+    - [响应资源](#响应资源)
 
 <!-- /TOC -->
 ## 检索环境配置
@@ -69,6 +81,82 @@
 
 Laravel 服务容器是一个用于管理类的依赖和执行依赖注入的强大工具。依赖注入这个花哨名词实质上是指：类的依赖通过构造函数，或者某些情况下通过 「setter」 方法 「注入」到类中。
 
+* 可简单理解是一个提供服务的仓库，把服务提供者注册到仓库中，在使用时就可以动态取服务，即按需加载。
+* $app 属性来访问服务容器
+
+### 简单绑定
+
+* 通过 $this->app 属性访问容器
+* $this->app->bind 方法注册绑定
+* bind(a,b)第一个参数a:为要绑定的类/接口名，第二个b:参数是一个返回类实例的闭包函数
+
+```php 
+// 服务提供者
+$this->app->bind('HelpSpot\API', function ($app) {
+    return new \HelpSpot\API($app->make('HttpClient'));
+});
+
+// 绑定一个单例
+$this->app->singleton('HelpSpot\API', function ($app) {
+    return new \HelpSpot\API($app->make('HttpClient'));
+});
+
+// 绑定实例
+$api = new \HelpSpot\API(new HttpClient);
+$this->app->instance('HelpSpot\API', $api);
+
+// 绑定接口到实现
+// 当一个类需要实现 EventPusher 时，应该注入 RedisEventPusher
+$this->app->bind(
+    'App\Contracts\EventPusher',
+    'App\Services\RedisEventPusher'
+);
+```
+
+### when
+
+```php
+// 注入不同的实现
+$this->app->when(PhotoController::class)
+          ->needs(Filesystem::class)
+          ->give(function () {
+              return Storage::disk('local');
+          });
+
+$this->app->when([VideoController::class, UploadController::class])
+          ->needs(Filesystem::class)
+          ->give(function () {
+              return Storage::disk('s3');
+          });
+
+// 绑定基本值
+$this->app->when('App\Http\Controllers\UserController')
+          ->needs('$variableName')
+          ->give($value);
+```
+
+### extend
+
+ 可以添加额外的代码来修饰或者配置
+
+ ```php
+$this->app->extend(Service::class, function ($service, $app) {
+    return new DecoratedService($service);
+});
+ ```
+
+ ### make
+
+ 使用 make 方法从容器中解析出类实例
+
+ ```php
+$api = $this->app->make('HelpSpot\API');
+ ```
+
+ ### 自动注入
+
+ 构造函数中注入那些需要容器解析的依赖项
+
 ## 服务提供者
 
 服务提供者是所有 Laravel 应用程序的引导中心。你的应用程序，以及 通过服务器引导的 Laravel 核心服务都是通过服务提供器引导。
@@ -78,9 +166,101 @@ Laravel 服务容器是一个用于管理类的依赖和执行依赖注入的强
 * 注册服务提供者 所有服务提供者都是通过配置文件 config/app.php 进行注册。
 * 延迟提供者 provides
 
+### 编写服务提供者
+
+* 服务提供者都会继承 Illuminate\Support\ServiceProvider
+* 包含一个 register 方法 将服务绑定到 服务容器
+* 包含一个 boot 方法
+
+```php
+// Artisan 命令行 创建
+php artisan make:provider RiakServiceProvider
+```
+
+```php
+<?php
+
+namespace App\Providers;
+use Illuminate\Support\ServiceProvider;
+use Riak\Connection;
+
+class RiakServiceProvider extends ServiceProvider
+{
+    /**
+     * 注册应用程序服务
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton(Connection::class, function ($app) {
+            return new Connection(config('riak'));
+        });
+    }
+}
+```
+
+### bindings 和 singletons
+
+* bindings 应该注册的所有容器绑定
+* singletons 所有应该注册的容器单例
+
+### boot
+
+该方法在所有服务提供者被注册以后才会被调用， 这就是说我们可以在其中访问框架已注册的所有其它服务
+
+### 启动方法的依赖注入
+
+### 注册服务提供者
+
+* 通过配置文件 config/app.php 进行注册
+* providers 数组
+
+### 延迟提供者
+
+* 需要实现 \Illuminate\Contracts\Support\DeferrableProvider
+* 添加 provides 方法
+
+```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
+use Riak\Connection;
+
+class RiakServiceProvider extends ServiceProvider implements DeferrableProvider
+{
+    /**
+     * 注册服务提供者。
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton(Connection::class, function ($app) {
+            return new Connection($app['config']['riak']);
+        });
+    }
+
+    /**
+     * 获取由提供者提供的服务。
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [Connection::class];
+    }
+}
+```
+
 ## Facades
 
 Facades 为应用的 服务容器 提供了一个「静态」 接口。Laravel 自带了很多 Facades，可以访问绝大部分功能。Laravel Facades 实际是服务容器中底层类的 「静态代理」 ，相对于传统静态方法，在使用时能够提供更加灵活、更加易于测试、更加优雅的语法。
+
+简单的理解就是相当于类提供的类方法（静态方法）
 
 * Facades 相较于依赖注入
 * Facades 相较于辅助函数 - Facade 和辅助函数之间没有实际的区别,许多辅助函数都有与之对应的 Facades
@@ -138,6 +318,52 @@ View (Instance)	|Illuminate\View\View
 ## 契约
 
 Laravel 的契约是一组接口，它们由框架提供并定义了核心服务。
+
+简单理解就是接口，方便编写不同实现的方式达到解耦的目的,比缓存可以采用本地文件或数据库，但可以通过契约达到相同的使用方式.
+
+### 实现契约
+
+* 通过 服务容器 来注册实现
+
+```php
+<?php
+
+namespace App\Listeners;
+
+use App\Events\OrderWasPlaced;
+use App\Models\User;
+use Illuminate\Contracts\Redis\Factory;
+
+class CacheOrderInformation
+{
+    /**
+     * Redis 工厂实现
+     */
+    protected $redis;
+
+    /**
+     * 创建一个事件处理实例
+     *
+     * @param  Factory  $redis
+     * @return void
+     */
+    public function __construct(Factory $redis)
+    {
+        $this->redis = $redis;
+    }
+
+    /**
+     * 处理事件
+     *
+     * @param  OrderWasPlaced  $event
+     * @return void
+     */
+    public function handle(OrderWasPlaced $event)
+    {
+        //
+    }
+}
+```
 
 ## 辅助函数
 

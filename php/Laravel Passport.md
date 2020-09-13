@@ -1,3 +1,21 @@
+<!-- TOC -->
+
+- [Laravel Passport](#laravel-passport)
+    - [OAuth](#oauth)
+        - [客户端的授权模式](#客户端的授权模式)
+    - [部署 Passport](#部署-passport)
+    - [配置](#配置)
+    - [JSON API](#json-api)
+    - [请求令牌 ( 第三方 )](#请求令牌--第三方-)
+    - [密码授权令牌(自己的客户端)](#密码授权令牌自己的客户端)
+    - [隐式授权令牌](#隐式授权令牌)
+    - [个人访问令牌](#个人访问令牌)
+    - [客户端凭证授予令牌](#客户端凭证授予令牌)
+    - [使用 JavaScript 接入 API](#使用-javascript-接入-api)
+- [中间件](#中间件)
+
+<!-- /TOC -->
+
 # Laravel Passport
 
 使用 Passport 可以轻而易举地实现 API 授权认证
@@ -81,6 +99,30 @@ config/auth.php
 ],
 ```
 
+## OAuth
+
+* 客户端要求用户给予授权
+* 用户同意给予授权 (重定向到认证服务器)
+* 根据上一步获得的授权，向认证服务器请求令牌（token）
+* 认证服务器对授权进行认证，确认无误后发放令牌
+* 客户端使用令牌向资源服务器请求资源
+* 资源服务器使用令牌向认证服务器确认令牌的正确性，确认无误后提供资源
+
+> 整个流程
+* （A）用户打开客户端以后，客户端要求用户给予授权。
+* （A Back）用户同意给予客户端授权。
+* （B）客户端使用上一步获得的授权，向认证服务器申请令牌。
+* （B Back）认证服务器对客户端进行认证以后，确认无误，同意发放令牌。
+* （C）客户端使用令牌，向资源服务器申请获取资源。
+* （C Back）资源服务器确认令牌无误，同意向客户端开放资源。
+
+### 客户端的授权模式
+
+* 授权码模式（authorization code）
+* 简化模式（implicit）
+* 密码模式（resource owner password credentials）
+* 客户端模式（client credentials）
+
 ## 部署 Passport
 
 ```
@@ -151,3 +193,13 @@ public function boot()
 
 * 手动向应用程序发送访问令牌，并将其传递给应用程序。
 * Passport::CreateFreshApiToken 中间件将在你所有的对外请求中添加一个 laravel_token cookie 。该 cookie 将包含一个加密后的 JWT ， Passport 将用来验证来自 JavaScript 应用程序的 API 请求。至此，您可以在不明确传递访问令牌的情况下向应用程序的 API 
+
+# 中间件
+
+通过中间件即可获取用户信息
+
+```php
+Route::get('/user', function () {
+    //
+})->middleware('auth:api');
+```
