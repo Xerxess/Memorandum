@@ -42,9 +42,30 @@
     - [异常处理](#异常处理)
     - [HTTP 异常](#http-异常)
     - [自定义 HTTP 错误页面](#自定义-http-错误页面)
+- [数据库](#数据库)
+    - [原生 SQL 查询](#原生-sql-查询)
+    - [查询构造器](#查询构造器)
+    - [分页](#分页)
+        - [手动创建分页](#手动创建分页)
+- [数据库迁移](#数据库迁移)
+    - [迁移表结构](#迁移表结构)
+    - [Schema](#schema)
+- [写测试数据](#写测试数据)
+- [Redis](#redis)
 - [Eloquent](#eloquent)
     - [模型定义](#模型定义)
     - [Eloquent 模型约定](#eloquent-模型约定)
+    - [属性配制](#属性配制)
+        - [事件](#事件)
+    - [检索](#检索)
+    - [关联查询](#关联查询)
+    - [Eloquent: 修改器](#eloquent-修改器)
+        - [访问器 & 修改器](#访问器--修改器)
+        - [日期转换器](#日期转换器)
+        - [属性类型转换](#属性类型转换)
+    - [Eloquent: API Resources](#eloquent-api-resources)
+        - [toArray()](#toarray)
+    - [序列化](#序列化)
     - [保护属性](#保护属性)
     - [软删除](#软删除)
 - [Eloquent: API 资源](#eloquent-api-资源)
@@ -54,7 +75,7 @@
     - [资源集合](#资源集合)
     - [数据包裹](#数据包裹)
     - [数据包裹和分页](#数据包裹和分页)
-    - [分页](#分页)
+    - [分页](#分页-1)
     - [条件属性](#条件属性)
     - [有条件的合并数据](#有条件的合并数据)
     - [条件关联](#条件关联)
@@ -617,6 +638,8 @@ public function store(Request $request)
 
 # HTTP 请求 (HTTP Requests)
 
+https://laravel.com/api/8.x/Illuminate/Http/Request.html
+
 ```php
 <?php
 namespace App\Http\Controllers;
@@ -1028,6 +1051,308 @@ abort(403, 'Unauthorized action.');
 
 ## 自定义 HTTP 错误页面
 
+
+# 数据库
+
+## 原生 SQL 查询
+
+```php
+// 执行简单语句
+DB::statement('drop table users');
+
+// select
+$users = DB::select('select * from users where active = ?', [1]);
+$results = DB::select('select * from users where id = :id', ['id' => 1]);
+
+// insert
+DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+
+// update
+$affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+
+// delete
+$deleted = DB::delete('delete from users');
+
+// 数据库事务
+DB::transaction(function () {
+    DB::table('users')->update(['votes' => 1]);
+    DB::table('posts')->delete();
+});
+
+// 手动事务
+DB::beginTransaction();
+DB::rollBack();
+DB::commit();
+```
+
+##  查询构造器
+
+```php
+// 获取所有行
+$users = DB::table('users')->get();
+
+// 获取第一条数据
+$user = DB::table('users')->where('name', 'John')->first();
+
+// 获取单个值
+$email = DB::table('users')->where('name', 'John')->value('email');
+
+// id
+$user = DB::table('users')->find(3);
+
+// 分片
+DB::table('users')->orderBy('id')->chunk(100, function ($users) {
+    foreach ($users as $user) {
+        //
+    }
+    // return false; // 返回 false 来终止继续获取分块
+});
+
+// count， max， min， avg，还有 sum
+$users = DB::table('users')->count();
+$price = DB::table('orders')->max('price');
+$price = DB::table('orders')->where('finalized', 1)->avg('price');
+
+// Select 语句
+$users = DB::table('users')->select('name', 'email as user_email')->get();
+
+// 不重复
+$users = DB::table('users')->distinct()->get();
+
+// 原生表达式 DB::raw
+$users = DB::table('users')
+                     ->select(DB::raw('count(*) as user_count, status'))
+                     ->where('status', '<>', 1)
+                     ->groupBy('status')
+                     ->get();
+// 或 selectRaw
+$orders = DB::table('orders')
+                ->selectRaw('price * ? as price_with_tax', [1.0825])
+                ->get();
+
+// 排序
+$orders = DB::table('orders')
+                ->orderByRaw('updated_at - created_at DESC')
+                ->get();
+
+// join
+$users = DB::table('users')
+            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.*', 'contacts.phone', 'orders.price')
+            ->get();
+$users = DB::table('users')
+            ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+            ->get();
+
+// where
+$users = DB::table('users')->where('votes', '=', 100)->get();
+
+// orWhere
+$users = DB::table('users')
+                    ->where('votes', '>', 100)
+                    ->orWhere('name', 'John')
+                    ->get();
+
+// whereIn / whereNotIn / orWhereIn / orWhereNotIn
+$users = DB::table('users')
+                    ->whereIn('id', [1, 2, 3])
+                    ->get();
+
+// whereDate / whereMonth / whereDay / whereYear / whereTime
+$users = DB::table('users')
+                ->whereDate('created_at', '2016-12-31')
+                ->get();
+
+// between
+$users = DB::table('users')
+           ->whereBetween('votes', [1, 100])
+           ->get();
+
+// orderBy
+$users = DB::table('users')
+                ->orderBy('name', 'desc')
+                ->get();
+
+// groupBy
+$users = DB::table('users')
+                ->groupBy('account_id')
+                ->having('account_id', '>', 100)
+                ->get();
+
+// skip:跳过 take:取
+$users = DB::table('users')->skip(10)->take(5)->get();
+// 或 offset/limit
+$users = DB::table('users')->offset(10)->limit(5)->get();
+
+//when
+
+// insert
+DB::table('users')->insert(
+    ['email' => 'john@example.com', 'votes' => 0]
+);
+// 
+DB::table('users')->insertOrIgnore([
+    ['id' => 1, 'email' => 'taylor@example.com'],
+    ['id' => 2, 'email' => 'dayle@example.com'],
+]);
+//  不回后获取-自动递增的ID
+$id = DB::table('users')->insertGetId(
+    ['email' => 'john@example.com', 'votes' => 0]
+);
+
+//  update
+$affected = DB::table('users')
+              ->where('id', 1)
+              ->update(['votes' => 1]);
+
+// delete
+DB::table('users')->delete();
+DB::table('users')->where('votes', '>', 100)->delete();
+// ID重置为零
+DB::table('users')->truncate();
+```
+
+## 分页
+
+```php
+// 分页
+$users = DB::table('users')->paginate(15);
+
+
+// 「下一页」和「上一页」
+$users = DB::table('users')->simplePaginate(15);
+
+
+// Eloquent 分页
+$users = App\Models\User::paginate(15);
+
+//将结果转换为 JSON
+App\Models\User::paginate()->toJson();
+```
+
+### 手动创建分页
+
+# 数据库迁移
+
+```php
+// 命令
+php artisan make:migration create_users_table
+// 是否迁移将创建一个新的表名
+php artisan make:migration create_users_table --create=users
+// 表预填充生成的迁移存根文件
+php artisan make:migration add_votes_to_users_table --table=users
+
+// 生成sql文件
+php artisan schema:dump
+
+// 执行迁移
+php artisan migrate
+php artisan migrate --force
+
+// 回滚
+php artisan migrate:rollback
+```
+
+## 迁移表结构
+
+* up 方法用于向数据库中添加新表
+* down 方法应逆转该up方法执行的操作
+
+```php
+
+```
+
+## Schema
+
+```php
+// 创建表
+Schema::create('users', function (Blueprint $table) {
+    $table->id();
+});
+
+// 创建列
+Schema::table('users', function (Blueprint $table) {
+    $table->id(); // id
+    $table->bigIncrements('id'); // 自增id
+    $table->bigInteger('votes'); // BIGINT
+    $table->softDeletes('deleted_at', 0); // 添加一个可为空的deleted_at
+    $table->timestamps(0); // 以精度（总位数）添加可为空created_at和updated_atTIMESTAMP等效的列。
+    $table->binary('data'); // BLOB
+    $table->boolean('confirmed'); // BOOL
+    $table->char('name', 100);
+    $table->year('birth_year');
+    $table->date('created_at'); // DATE
+    $table->dateTime('created_at', 0);
+    $table->dateTimeTz('created_at', 0);
+    $table->decimal('amount', 8, 2);
+    $table->double('amount', 8, 2);
+    $table->decimal('amount', 8, 2);
+    $table->longText('description');
+    $table->text('description');
+    $table->timestamp('added_on', 0);
+    $table->string('name', 100); // VARCHAR
+});
+
+// 列的列修饰符
+$table->string('email')->nullable();
+->nullable($value = true) // 允许（默认情况下）将NULL值插入到列中
+->autoIncrement() // 
+->default($value) // 默认值
+
+// 索引
+$table->string('email')->unique();
+
+// 外键
+$table->unsignedBigInteger('user_id');
+$table->foreign('user_id')->references('id')->on('users');
+
+// 重命名
+Schema::rename($from, $to);
+
+// 删表
+Schema::drop('users');
+Schema::dropIfExists('users');
+
+
+
+// 检测
+if (Schema::hasTable('users')) {
+}
+if (Schema::hasColumn('users', 'email')) {
+}
+
+// 其他数据库操作
+Schema::connection('foo')->create('users', function (Blueprint $table) {
+    $table->id();
+});
+
+$table->engine = 'InnoDB';
+$table->charset = 'utf8mb4';
+$table->collation = 'utf8mb4_unicode_ci';
+$table->temporary();
+```
+
+# 写测试数据
+
+https://laravel.com/docs/8.x/seeding
+
+# Redis
+
+https://laravel.com/docs/8.x/redis
+
+```cmd
+# 按装
+composer require predis/predis
+
+# config/database.php
+```
+
+```php
+$user = Redis::get('user:profile:'.$id);
+Redis::set('name', 'Taylor');
+```
+
 # Eloquent
 
 - Eloquent ORM 提供了一个漂亮、简洁的 ActiveRecord 实现来和数据库交互 每个数据库表都有一个对应的「模型」用来与该表交互。你可以通过模型查询数据表中的数据，以及在数据表中插入新记录。
@@ -1047,6 +1372,337 @@ php artisan make:model Flight -m 生成模型的时候生成 数据库迁移
 - 默认情况下，created_at 和 updated_at 预期你的数据表中存在 。如果你不想让 Eloquent 自动管理这两个列， 请将模型中的 \$timestamps 属性设置为 false
 - 指定一个不同的连接，设置 \$connection 属性
 - 要为模型的某些属性定义默认值，可以在模型上定义 \$attributes 属性
+
+## 属性配制
+
+```php
+// 指定表名
+protected $table = 'my_flights';
+
+// id
+protected $primaryKey = 'flight_id';
+
+// 是否自动管理created_at和updated_at
+public $timestamps = true;
+
+//  确定日期属性在数据库中的存储方式，以及将模型序列化为数组或JSON时的格式
+protected $dateFormat = 'U';
+
+const CREATED_AT = 'created_at';
+const UPDATED_AT = 'updated_at';
+
+// 连接的数据库
+protected $connection = 'connection-name';
+
+// 模型的某些属性定义默认值
+protected $attributes = [
+        'delayed' => false,
+    ];
+```
+
+### 事件
+
+retrieved，creating，created，updating，updated，saving，saved，deleting，deleted，restoring，restored
+
+
+
+## 检索
+
+```php
+$flights = App\Models\Flight::all();
+$flights = App\Models\Flight::where('active', 1)
+               ->orderBy('name', 'desc')
+               ->take(10)
+               ->get();
+// 刷新模型
+$freshFlight = $flight->fresh();
+
+// find one
+$flight = App\Models\Flight::find(1);
+$flight = App\Models\Flight::where('active', 1)->first();
+$flight = App\Models\Flight::firstWhere('active', 1);
+
+// find
+$flights = App\Models\Flight::find([1, 2, 3]);
+
+// findOrFail 反向查询
+$model = App\Models\Flight::findOrFail(1);
+
+// create
+$user = User::create([
+    'first_name' => 'Taylor',
+    'last_name' => 'Otwell',
+    'title' => 'Developer',
+]);
+
+// save
+$flight = new Flight;
+$flight->save();
+
+// 更新
+$flight = App\Models\Flight::find(1);
+$flight->save();
+
+// 批量更新
+App\Models\Flight::where('active', 1)
+          ->where('destination', 'San Diego')
+          ->update(['delayed' => 1]);
+
+// 删除
+$flight = App\Models\Flight::find(1);
+$flight->delete();
+
+App\Models\Flight::destroy(1);
+App\Models\Flight::destroy(1, 2, 3);
+$deletedRows = App\Models\Flight::where('active', 0)->delete();
+
+// 启用假删除
+// Illuminate\Database\Eloquent\SoftDeletes
+// class Flight extends Model
+// {
+//     use SoftDeletes;
+// }
+
+// 强制查询软删除的模型
+$flights = App\Models\Flight::withTrashed()
+                ->where('account_id', 1)
+                ->get();
+// 仅检索软删除的模型
+$flights = App\Models\Flight::onlyTrashed()
+                ->where('airline_id', 1)
+                ->get();
+// 恢复
+$flight->restore();
+
+// 永久移除
+$flight->forceDelete();
+$flight->history()->forceDelete();
+
+// 复制
+$billing = $shipping->replicate()->fill([
+    'type' => 'billing'
+]);
+$billing->save();
+
+// 比较模型
+if ($post->is($anotherPost)) {
+    //
+}
+```
+
+## 关联查询
+
+* 在模型中创建关联的方法进行关联
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Get the phone record associated with the user.
+     */
+    public function phone()
+    {
+        return $this->hasOne('App\Models\Phone');
+    }
+}
+```
+
+```php
+// 一对一 
+// User关联Phone
+// User模型上放置phone(){}
+public function phone()
+{
+
+    // 自动以user_id为外键
+    return $this->hasOne('App\Models\Phone');
+
+    // 指定外键foreign_key
+    // return $this->hasOne('App\Models\Phone', 'foreign_key');
+
+    // 指定父级id local_key
+    return $this->hasOne('App\Models\Phone', 'foreign_key', 'local_key');
+}
+
+
+// 一对多
+// Post关联Comment
+public function comments()
+{
+    // post_id外键
+    return $this->hasMany('App\Models\Comment');
+}
+$comments = App\Models\Post::find(1)->comments;
+$comment = App\Models\Post::find(1)->comments()->where('title', 'foo')->first();
+
+// 多对多
+// 需要三个数据库表(中间表)
+// users，roles，和role_user
+class User extends Model
+{
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+}
+```
+
+## Eloquent: 修改器
+
+### 访问器 & 修改器
+
+```php
+// getFooAttribute 方法格式： Foo 字段需使用「驼峰式」命名
+public function getFirstNameAttribute($value)
+{
+    return ucfirst($value);
+}
+// // setFooAttribute 方法格式： Foo 字段需使用「驼峰式」命名
+public function setFirstNameAttribute($value)
+{
+    $this->attributes['first_name'] = strtolower($value);
+}
+$user = App\Models\User::find(1);
+$firstName = $user->first_name;
+$user->first_name = 'Sally';
+```
+
+### 日期转换器
+
+```php
+protected $dates = [
+        'seen_at',
+    ];
+
+// 日期格式 'Y-m-d H:i:s'
+protected $dateFormat = 'U';
+```
+
+### 属性类型转换
+
+```php
+protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+```
+
+## Eloquent: API Resources
+
+```cmd
+# 生成一个数据Item的Resources
+php artisan make:resource User
+
+# 生成一个集合的Resources
+php artisan make:resource Users --collection
+```
+
+### toArray()
+
+```php
+public function toArray($request)
+{
+    return [
+        'id' => $this->id,
+        'name' => $this->name,
+        'email' => $this->email,
+        'created_at' => $this->created_at,
+        'updated_at' => $this->updated_at,
+    ];
+}
+```
+
+```php
+use App\Http\Resources\User as UserResource;
+use App\Models\User;
+
+// 单个模型
+Route::get('/user', function () {
+    return new UserResource(User::find(1));
+});
+
+// 模型集合
+Route::get('/user', function () {
+    return UserResource::collection(User::all());
+});
+
+
+// 分页
+Route::get('/users', function () {
+    return new UserCollection(User::paginate());
+});
+```
+
+```php
+// 自定义键代替
+public static $wrap = 'user';
+
+// 禁用最外面的资源的包装
+
+// 条件属性 when
+return [
+        'id' => $this->id,
+        'name' => $this->name,
+        'email' => $this->email,
+        'secret' => $this->when(Auth::user()->isAdmin(), 'secret-value'),
+        'created_at' => $this->created_at,
+        'updated_at' => $this->updated_at,
+    ];
+
+// 合并条件属性 mergeWhen
+```
+## 序列化
+
+```php
+// 转换为数组
+$user = App\Models\User::with('roles')->first();
+return $user->toArray();
+
+// JSON
+$user = App\Models\User::find(1);
+return $user->toJson();
+return $user->toJson(JSON_PRETTY_PRINT);
+
+// JSON隐藏属性
+// 模型中配制
+ protected $hidden = ['password'];
+ // 属性白名单将模型转换为数组或JSON时，所有其他属性将被隐藏
+ protected $visible = ['first_name', 'last_name'];
+ // 临时修改属性可见性
+ return $user->makeVisible('attribute')->toArray();
+ return $user->makeHidden('attribute')->toArray();
+
+ // 附加到JSON
+ // 使用访问器get
+ protected $appends = ['is_admin'];
+ public function getIsAdminAttribute()
+    {
+        return $this->attributes['admin'] === 'yes';
+    }
+
+// 运行时追加
+return $user->append('is_admin')->toArray();
+return $user->setAppends(['is_admin'])->toArray();
+
+
+// 日期序列化
+// 覆盖serializeDate
+protected function serializeDate(DateTimeInterface $date)
+{
+    return $date->format('Y-m-d');
+}
+
+// 自定义每个属性的日期格式
+protected $casts = [
+    'birthday' => 'date:Y-m-d',
+    'joined_at' => 'datetime:Y-m-d H:00',
+];
+```
 
 ## 保护属性
 
