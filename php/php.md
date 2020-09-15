@@ -1,55 +1,48 @@
-
 <!-- TOC -->
 
-- [判断变量](#判断变量)
-- [PHP判断{函数/类/方法/属性}是否存在](#php判断函数类方法属性是否存在)
-  - [php判断系统函数或自己写的函数是否存在](#php判断系统函数或自己写的函数是否存在)
-  - [php判断类是否存在](#php判断类是否存在)
-  - [php判断类里面的某个方法是否已经定义](#php判断类里面的某个方法是否已经定义)
-  - [判断类里面的某个属性是否已经定义](#判断类里面的某个属性是否已经定义)
+- [PHP](#php)
+- [函数](#函数)
+    - [返回值](#返回值)
 
 <!-- /TOC -->
 
-# 判断变量
+https://www.php.net/manual/zh/langref.php
 
-* isset函数判断变量是否存在
-* empty函数判断变量是否为空
-* is_null  仅把值为 "NULL" 的变量判断为TRUE
+# PHP
 
-# PHP判断{函数/类/方法/属性}是否存在
-
-## php判断系统函数或自己写的函数是否存在
+# 函数
 
 ```php
-if(function_exists('curl_init')){
-    curl_init();
-}else{
-    echo 'not function curl_init';
+function foo($arg_1, $arg_2 = "默认参数", /* ..., */ $arg_n)
+{
+    echo "Example function.\n";
+    return $retval;
+}
+
+// 通过引用传递参数
+// 参数的前面加上符号 &
+function add_some_extra(&$string)
+{
+    $string .= 'and something extra.';
+}
+
+// 支持...
+function sum(...$numbers) {
+    $acc = 0;
+    foreach ($numbers as $n) {
+        $acc += $n;
+    }
+    return $acc;
 }
 ```
 
-## php判断类是否存在
+## 返回值
+ 
+* 默认return null;
 
 ```php
-if(class_exists('MySQL')){
-    $myclass=new MySQL();
-}
-```
-
-## php判断类里面的某个方法是否已经定义
-
-```php
-$directory=new Directory;
-if(!method_exists($directory,'read')){
-    echo '未定义read方法！';
-}
-```
-
-## 判断类里面的某个属性是否已经定义
-
-```php
-$directory=new Directory;
-if(!property_exists($directory,'li')){
-    echo '未定义li属性！';
+// 
+function sum($a, $b): float {
+    return $a + $b;
 }
 ```
