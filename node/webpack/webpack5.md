@@ -21,6 +21,7 @@
     - [Condition](#condition)
     - [UseEntry 对象](#useentry-对象)
 - [resolve](#resolve)
+    - [resolve.mainFields](#resolvemainfields)
 - [optimization (优化)](#optimization-优化)
 - [开发服务器](#开发服务器)
 - [源映射](#源映射)
@@ -360,6 +361,22 @@ resolve.enforceExtension;
 resolve.extensions;
 ```
 
+## resolve.mainFields
+
+https://2ality.com/2017/04/setting-up-multi-platform-packages.html#support-by-bundlers
+
+* 如果target是"web"，"webworker"或者未指定，则默认为：mainFields: ["browser", "module", "main"]
+* 如果target具有其他任何值（包括"node"），则默认值为：mainFields: ["module", "main"]
+```js
+module.exports = {
+  //...
+  resolve: {
+    mainFields: ['browser', 'module', 'main']
+  }
+};
+```
+
+
 # optimization (优化)
 
 ```js
@@ -611,6 +628,8 @@ import(`./locale/${language}.json`).then(module => {
 // weak
 // webpackInclude
 // webpackExclude
+// webpackPrefetch <link rel="prefetch" href="login-modal-chunk.js"> 指示浏览器在空闲时间预取
+// webpackPreload
 import(
   /* webpackChunkName: "my-chunk-name" */
   /* webpackMode: "lazy" */

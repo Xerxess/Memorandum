@@ -6,7 +6,15 @@
     - [更新 npm](#更新-npm)
     - [终端登录到 npm](#终端登录到-npm)
     - [package.json](#packagejson)
-        - [非官方属性](#非官方属性)
+    - [非官方属性](#非官方属性)
+        - [unpkg](#unpkg)
+        - [types, typings](#types-typings)
+        - [browserslist](#browserslist)
+        - [module](#module)
+        - [browser](#browser)
+        - [react-native](#react-native)
+        - [umd:main](#umdmain)
+        - [style](#style)
     - [发布包](#发布包)
     - [npm-install](#npm-install)
 - [verdaccio 搭建私服](#verdaccio-搭建私服)
@@ -59,11 +67,6 @@ package.json 基本要求
 npm init //package.json创建命令
 ```
 
-### 非官方属性
-https://segmentfault.com/a/1190000016365409
-https://jaketrent.com/post/package-json-style-attribute/
-- style
-
 配置
 
 - name 包名称
@@ -79,6 +82,102 @@ https://jaketrent.com/post/package-json-style-attribute/
 
 Node.js 命令行程序  
 http://www.ruanyifeng.com/blog/2015/05/command-line-with-node.html
+
+## 非官方属性
+
+https://github.com/stereobooster/package.json
+
+### unpkg
+
+https://unpkg.com/
+
+- unpkg 是 npm 上所有内容的 cdn
+
+```json
+{
+  "unpkg": "dist/jquery.js"
+}
+```
+
+```js
+// 访问格式：unpkg.com/:package@:version/:file
+unpkg.com/react@16.7.0/umd/react.production.min.js
+unpkg.com/jquery
+```
+
+### types, typings
+
+- 同 main 定义一个 TypeScript 的入口
+
+```json
+{
+  "main": "./lib/main.js",
+  "types": "./lib/main.d.ts"
+}
+```
+
+### browserslist
+
+https://github.com/browserslist/browserslist
+
+```json
+{
+  "browserslist": ["> 1%", "last 2 versions"]
+}
+```
+
+### module
+
+- 定义 es6 的入口
+
+```json
+{
+  "main": "./lib/main.js",
+  "module": "./lib/main.m.js"
+}
+```
+
+### browser
+
+- 指定供浏览器使用的入口文件
+
+```json
+{
+  "main": "./lib/main.js",
+  "browser": "./lib/main.b.js"
+}
+```
+
+### react-native
+
+- 指定 react-native 入口
+
+```json
+{
+  "main": "./lib/main.js",
+  "react-native": "./lib/main.react-native.js"
+}
+```
+
+### umd:main
+
+```json
+{
+  "umd:main": "dist/main.umd.js"
+}
+```
+
+### style
+
+https://jaketrent.com/post/package-json-style-attribute/
+
+- 模块加载器从以下位置导入 CSS
+
+```json
+{
+  "style": "css/index.css"
+}
+```
 
 ## 发布包
 
