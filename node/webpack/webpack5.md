@@ -49,6 +49,11 @@ https://webpack.js.org/
 
 - 运行 webpack 的最低 Node.js 版本为 10.13.0（LTS）
 
+```cmd
+npm install --save-dev webpack
+npm install --save-dev webpack@<version>
+```
+
 # 命令行
 
 https://webpack.js.org/api/cli/
@@ -88,6 +93,11 @@ module.exports = {
 每当一个文件依赖另一个文件时，webpack 都会将此视为依赖项。
 
 入口点开始，webpack 递归地构建一个依赖关系图，其中包含您的应用程序需要的每个模块，然后将所有这些模块捆绑为少量的捆绑包
+
+```cmd
+// 生成依赖josn
+webpack --profile --json > stats.json
+```
 
 # 基础概念
 
