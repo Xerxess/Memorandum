@@ -8,6 +8,8 @@
 
 #　CentOS 镜像
 
+https://www.centos.org/download/
+
 https://developer.aliyun.com/mirror/centos
 
 

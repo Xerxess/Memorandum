@@ -15,8 +15,8 @@
 
 ## 牛人的个人博客
 
-| 名称     | 介绍 | link                          |
-| -------- | ---- | ----------------------------- |
+| 名称 | 介绍 | link                          |
+| ---- | ---- | ----------------------------- |
 | 博客 |      | https://2ality.com/index.html |
 
 ## <i id="u-1"></i> WebApp
@@ -201,9 +201,10 @@ http://zeroclipboard.org/
 
 ## <i id="u-8-1"></i> 技巧|经验
 
-| 名称       | 介绍       | link                    |
-| ---------- | ---------- | ----------------------- |
-| css-tricks | css-tricks | https://css-tricks.com/ |
+| 名称             | 介绍             | link                                 |
+| ---------------- | ---------------- | ------------------------------------ |
+| css-tricks       | css-tricks       | https://css-tricks.com/              |
+| 阿里云官方镜像站 | 阿里云官方镜像站 | https://developer.aliyun.com/mirror/ |
 
 ## <i id="u-9"></i>国际
 

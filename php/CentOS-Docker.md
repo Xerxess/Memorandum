@@ -90,6 +90,8 @@ rm -rf /var/lib/docker
 
 ## 配置镜像加速器
 
+https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
+
 ```
 vim  /etc/docker/daemon.json
 {

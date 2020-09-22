@@ -1,6 +1,9 @@
 <!-- TOC -->
 
 - [PHP](#php)
+- [PHP 里包/库的概念有几种形式](#php-里包库的概念有几种形式)
+- [源码构建](#源码构建)
+    - [选项列表](#选项列表)
 - [基础](#基础)
 - [Callback / Callable 类型](#callback--callable-类型)
 - [预定义变量](#预定义变量)
@@ -30,6 +33,26 @@
 https://www.php.net/manual/zh/langref.php
 
 # PHP
+
+# PHP 里包/库的概念有几种形式
+
+* composer，目前最流行的 php 包管理器，用于管理 php 代码之间的依赖。
+* pear，上古时代的产物，现在完全被 composer 取代。
+* pecl，这部分的扩展库是通过 C/C++ 编写的，跟 php 层面没太大关系。
+* zephir，相比较 pecl，zephir 写扩展包简单多了，目前除了 phalcon，没有其他流行的扩展库是用 zephir 编写的。
+
+
+# 源码构建
+
+```
+# 安装编译环境
+# yum install gcc make autoconf automake libtool libxml2-devel
+# ./configure --enable-mbstring  --enable-bcmath --with-openssl --enable-tokenizer
+```
+
+## 选项列表
+
+https://www.php.net/manual/zh/configure.about.php
 
 # 基础
 
