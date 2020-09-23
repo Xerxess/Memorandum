@@ -28,7 +28,7 @@
 ## 增加新用户
 注意：和上面不同，下面的因为是MYSQL环境中的命令，所以后面都带一个分号作为命令结束符
 
-格式：grant select on 数据库.* to 用户名@登录主机 identified by “密码”
+格式：grant select on 数据库.* to '用户名'@登'录主机' identified by '密码';
 
 1、增加一个用户test1密码为abc，让他可以在任何主机上登录，并对所有数据库有查询、插入、修改、删除的权限。首先用root用户连入MYSQL，然后键入以下命令：
     grant select,insert,update,delete on *.* to [email=test1@”%]test1@”%[/email]” Identified by “abc”;

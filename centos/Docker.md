@@ -1,21 +1,30 @@
 <!-- TOC -->
 
 - [Docker](#docker)
-  - [Docker CLI](#docker-cli)
-    - [绑定挂载卷 --volume , -v](#绑定挂载卷---volume---v)
-    - [为容器分配一个名称 --name](#为容器分配一个名称---name)
-    - [将文件系统挂载附加到容器 --mount](#将文件系统挂载附加到容器---mount)
-    - [环境变量](#环境变量)
-    - [将容器连接到网络（--network）](#将容器连接到网络--network)
-    - [添加到容器主机文件（--add-host）](#添加到容器主机文件--add-host)
+    - [常用](#常用)
+    - [Docker CLI](#docker-cli)
+        - [绑定挂载卷 --volume , -v](#绑定挂载卷---volume---v)
+        - [为容器分配一个名称 --name](#为容器分配一个名称---name)
+        - [将文件系统挂载附加到容器 --mount](#将文件系统挂载附加到容器---mount)
+        - [环境变量](#环境变量)
+        - [将容器连接到网络（--network）](#将容器连接到网络--network)
+        - [添加到容器主机文件（--add-host）](#添加到容器主机文件--add-host)
 - [注意](#注意)
-  - [Docker 参数 -i -t 的作用](#docker-参数--i--t-的作用)
+    - [Docker 参数 -i -t 的作用](#docker-参数--i--t-的作用)
 
 <!-- /TOC -->
 
 https://docs.docker.com/reference/
 
 # Docker
+
+## 常用
+
+```
+# docker images
+# docker ps
+# docker run -v /mysql:/myData  -it -d  -p 8101:80 -p 8102:3306 -p 8103:22 my-docker
+```
 
 ## Docker CLI
 
@@ -45,8 +54,9 @@ $ docker rmi -f [IMAGE TAG|ID]
 ```
 
 ```
+// 创建镜像
 $ docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]];
-//创建镜像
+# docker commit CONTAINER_ID  imageName
 ```
 
 ```

@@ -6,6 +6,9 @@
 - [php](#php)
     - [在原由的php上安装扩展(动态为php添加模块)](#在原由的php上安装扩展动态为php添加模块)
 - [Mysql](#mysql)
+    - [mysqld -MySQL服务器](#mysqld--mysql服务器)
+    - [mysqld_safe -MySQL服务器启动脚本](#mysqld_safe--mysql服务器启动脚本)
+    - [my.cnf](#mycnf)
 
 <!-- /TOC -->
 
@@ -229,13 +232,42 @@ https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 # mkdir mysql-files
 # chown mysql:mysql mysql-files
 # chmod 750 mysql-files
+
+# 查看配置
+# /usr/local/mysql/bin/mysqld --verbose --help
+
+# 如果需要指定datadir
+# 内容：
+[mysqld]
+datadir=/data
+# vim /etc/my.cnf
+
 # bin/mysqld --initialize --user=mysql
 # bin/mysql_ssl_rsa_setup
 # bin/mysqld_safe --user=mysql &
 
+# 创建启动命令
+# # service mysql start  服务启动
+# # service mysql stop   服务停止
+
 # cp support-files/mysql.server /etc/init.d/mysql.server
-# bin/mysql -uroot -p
-#  mysqladmin shutdown
+# chmod +x /etc/init.d/mysql
+# chkconfig --add mysql
+# chkconfig --level 345 mysql on
+
+# 查看
+# ps -ef|grep mysql
+
+# 登录
+# bin/mysql -u root -p
+# mysqladmin shutdown
+# ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+
+# 配制其他主机可访问
+# > mysql> grant select,insert,update,delete on 数据库.* to '用户名'@'主机' identified by '密码';
+> mysql> grant select,insert,update,delete on *.* to 'test'@'%' identified by '123456';
+# 查看当前配置
+> mysql> SHOW VARIABLES;
 ```
 
 注意事项 
@@ -244,7 +276,30 @@ https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 # 暴力解决
 # yum install libncurses*
 ```
-50f0ec81-fce9-11ea-bf6f-0242ac110002
-2KXAzXSPKs/
 
- Zegdh)kef2hd
+## mysqld -MySQL服务器
+
+* 安装时使用
+mysqld，也称为MySQL Server，是一个单线程程序，可以完成MySQL安装中的大部分工作。
+
+```
+# mysqld --verbose --help
+```
+
+## mysqld_safe -MySQL服务器启动脚本
+
+* 启动时使用
+https://dev.mysql.com/doc/refman/5.7/en/mysqld-safe.html
+
+mysqld_safe尝试启动一个名为 mysqld的可执行文件。要覆盖默认行为并明确指定要运行的服务器的名称，请为 mysqld_safe指定一个--mysqld 或--mysqld-version选项。
+
+```
+# bin/mysqld_safe --user=mysql --datadir=/data &
+```
+
+## my.cnf
+
+https://dev.mysql.com/doc/refman/5.7/en/option-files.html
+
+* 如果在命令行上为mysqld或mysqld_safe指定一个选项，则该选项仅对服务器的调用有效。
+* 要在服务器每次运行时使用该选件，请将其放在选件文件中。 /etc/my.cnf > /etc/mysql/my.cnf
