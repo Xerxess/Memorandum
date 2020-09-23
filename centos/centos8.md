@@ -19,9 +19,18 @@
 
 #　CentOS 镜像
 
+
 https://www.centos.org/download/
 
 https://developer.aliyun.com/mirror/centos
+
+* CentOS ISO：DVD是标准安装盘，包含大量的常用软件 体积为4G；
+* Minimal ISO：精简版本，包含核心组件，体积小；
+* Everything ISO：顾名思义，包含了所有软件组件，当然体积庞大，高达7G。对完整版安装盘的软件进行补充，集成所有软件；
+* NetInstall ISO：网络安装镜像；
+* LiveGNOME ISO：GNOME桌面版；
+* LiveKDE ISO：KDE桌面版；
+* LiveCD ISO：光盘上运行的系统，类拟于winpe
 
 
 ```

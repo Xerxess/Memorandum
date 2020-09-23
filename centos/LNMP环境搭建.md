@@ -224,6 +224,8 @@ https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 # tar -zxvf mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz
 # mv mysql-5.7.31-linux-glibc2.12-x86_64 /usr/local/mysql
 # cd mysql
+# groupadd mysql
+# useradd -r -g mysql -s /bin/false mysql
 # mkdir mysql-files
 # chown mysql:mysql mysql-files
 # chmod 750 mysql-files
@@ -235,5 +237,14 @@ https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 # bin/mysql -uroot -p
 #  mysqladmin shutdown
 ```
+
+注意事项 
+```
+# centos8 mysql登录报错：mysql: error while loading shared libraries: libncurses.so.5: cannot open shared object file: No such file or directory
+# 暴力解决
+# yum install libncurses*
+```
 50f0ec81-fce9-11ea-bf6f-0242ac110002
 2KXAzXSPKs/
+
+ Zegdh)kef2hd
