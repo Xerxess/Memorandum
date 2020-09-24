@@ -5,6 +5,10 @@
 - [nginx](#nginx)
 - [php](#php)
     - [在原由的php上安装扩展(动态为php添加模块)](#在原由的php上安装扩展动态为php添加模块)
+    - [PHP-FPM](#php-fpm)
+    - [PHP-FPM 与 nginx 整合](#php-fpm-与-nginx-整合)
+    - [composer 安装](#composer-安装)
+    - [扩展列表参考](#扩展列表参考)
 - [Mysql](#mysql)
     - [mysqld -MySQL服务器](#mysqld--mysql服务器)
     - [mysqld_safe -MySQL服务器启动脚本](#mysqld_safe--mysql服务器启动脚本)
@@ -166,10 +170,17 @@ vi /etc/rc.local
 
 # php
 
+几个概念：
+* mysqlnd 底层的数据库驱动
+* mysqli 专门针对mysql设计的上层接口
+* pdo 支持多种数据库的上层接口定义,需要接口实现驱动才能使用
+* pdo_mysql PDO_MYSQL是实现PHP数据对象（PDO）接口 以允许从PHP访问MySQL数据库的驱动程序。
+* php当编译PDO_MYSQL时，mysqlnd成为默认的MySQL库
+
 ```
 # wget https://www.php.net/distributions/php-7.3.22.tar.gz
 # tar -zxvf php-7.3.22.tar.gz
-# ./configure --enable-mbstring --enable-bcmath --with-openssl --enable-tokenizer --enable-fpm --with-mysql
+# ./configure --enable-mbstring --enable-bcmath --with-openssl --enable-tokenizer --enable-fpm  --enable-mysqlnd  --with-pdo-mysql 
 # make
 # make instll
 # make clear
@@ -178,6 +189,9 @@ vi /etc/rc.local
 ```
 cp php.ini-development /usr/local/php/php.ini
 cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
+cp php-fpm.conf.default php-fpm.conf
+# 如果打到文件可进行修改
+vim php-fpm.conf
 cp sapi/fpm/php-fpm /usr/local/bin
 
 # 查看进程
@@ -188,6 +202,281 @@ cp sapi/fpm/php-fpm /usr/local/bin
 
 # kill
 # killall php-fpm
+```
+
+```
+ine tuning of the installation directories:
+  --bindir=DIR            用户可执行文件[EPREFIX/bin]
+  --sbindir=DIR           system admin executables [EPREFIX/sbin]
+  --libexecdir=DIR        program executables [EPREFIX/libexec]
+  --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
+  --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
+  --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
+  --libdir=DIR            object code libraries [EPREFIX/lib]
+  --includedir=DIR        C header files [PREFIX/include]
+  --oldincludedir=DIR     C header files for non-gcc [/usr/include]
+  --datarootdir=DIR       read-only arch.-independent data root [PREFIX/share]
+  --datadir=DIR           read-only architecture-independent data [DATAROOTDIR]
+  --infodir=DIR           info documentation [DATAROOTDIR/info]
+  --localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
+  --mandir=DIR            man documentation [DATAROOTDIR/man]
+  --docdir=DIR            documentation root [DATAROOTDIR/doc/PACKAGE]
+  --htmldir=DIR           html documentation [DOCDIR]
+  --dvidir=DIR            dvi documentation [DOCDIR]
+  --pdfdir=DIR            pdf documentation [DOCDIR]
+  --psdir=DIR             ps documentation [DOCDIR]
+
+System types:
+  --build=BUILD     配置生成时生成[guessed]
+  --host=HOST       cross-compile to build programs to run on HOST [BUILD]
+  --target=TARGET   configure for building compilers for TARGET [HOST]
+
+Optional Features and Packages:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-libdir=NAME      Look for libraries in .../NAME rather than .../lib
+  --disable-rpath         Disable passing additional runtime librarysearch paths
+  --enable-re2c-cgoto     Enable -g flag to re2c to use computed goto gcc extension
+  --disable-gcc-global-regs  whether to enable GCC global register variables
+
+SAPI modules:
+
+  --with-apxs2=FILE       Build shared Apache 2.0 Handler module. FILE is the optional pathname to the Apache apxs tool apxs
+  --disable-cli           Disable building CLI version of PHP (this forces --without-pear)
+  --enable-embed=TYPE     EXPERIMENTAL: Enable building of embedded SAPI library TYPE is either 'shared' or 'static'. TYPE=shared
+  --enable-fpm            Enable building of the fpm SAPI executable
+  --with-fpm-user=USER    Set the user for php-fpm to run as. (default: nobody)
+  --with-fpm-group=GRP    Set the group for php-fpm to run as. For a system user, this should usually be set to match the fpm username (default: nobody)
+  --with-fpm-systemd      Activate systemd integration
+  --with-fpm-acl          Use POSIX Access Control Lists
+  --with-litespeed        Build PHP as litespeed module
+  --enable-phpdbg         Build phpdbg
+  --enable-phpdbg-webhelper Build phpdbg web SAPI support
+  --enable-phpdbg-debug   Build phpdbg in debug mode
+  --enable-phpdbg-readline   Enable readline support in phpdbg (depends on static ext/readline)
+  --disable-cgi           Disable building CGI version of PHP
+  --with-valgrind=DIR     Enable valgrind support
+
+General settings:
+
+  --enable-gcov           Enable GCOV code coverage (requires LTP) - FOR DEVELOPERS ONLY!!
+  --enable-debug          Compile with debugging symbols
+  --with-layout=TYPE      Set how installed files will be laid out.  Type can be either PHP or GNU [PHP]
+  --with-config-file-path=PATH Set the path in which to look for php.ini [PREFIX/lib]
+  --with-config-file-scan-dir=PATH Set the path where to scan for configuration files
+  --enable-sigchild       Enable PHP's own SIGCHLD handler
+  --enable-libgcc         Enable explicitly linking against libgcc
+  --disable-short-tags    Disable the short-form <? start tag by default
+  --enable-dmalloc        Enable dmalloc
+  --disable-ipv6          Disable IPv6 support
+  --enable-dtrace         Enable DTrace support
+  --enable-fd-setsize     Set size of descriptor sets
+
+Extensions:
+
+  --disable-all           Disable all extensions which are enabled by default
+
+  --disable-libxml        Disable LIBXML support
+  --with-libxml-dir=DIR   LIBXML: libxml2 install prefix
+  --with-openssl=DIR      Include OpenSSL support (requires OpenSSL >= 1.0.1)
+  --with-kerberos=DIR     OPENSSL: Include Kerberos support
+  --with-system-ciphers   OPENSSL: Use system default cipher list instead of hardcoded value
+  --with-pcre-regex=DIR   Include Perl Compatible Regular Expressions support. DIR is the PCRE install prefix BUNDLED
+  --with-pcre-jit         Enable PCRE JIT functionality (BUNDLED only)
+  --with-pcre-valgrind=DIR Enable PCRE valgrind support. Developers only!
+  --without-sqlite3=DIR   Do not include SQLite3 support. DIR is the prefix to SQLite3 installation directory.
+  --with-zlib=DIR         Include ZLIB support (requires zlib >= 1.2.0.4)
+  --with-zlib-dir=<DIR>   Define the location of zlib install directory
+  --enable-bcmath         Enable bc style precision math functions
+  --with-bz2=DIR          Include BZip2 support
+  --enable-calendar       Enable support for calendar conversion
+  --disable-ctype         Disable ctype functions
+  --with-curl=DIR         Include cURL support
+  --enable-dba            Build DBA with bundled modules. To build shared DBA extension use --enable-dba=shared
+  --with-qdbm=DIR         DBA: QDBM support
+  --with-gdbm=DIR         DBA: GDBM support
+  --with-ndbm=DIR         DBA: NDBM support
+  --with-db4=DIR          DBA: Oracle Berkeley DB 4.x or 5.x support
+  --with-db3=DIR          DBA: Oracle Berkeley DB 3.x support
+  --with-db2=DIR          DBA: Oracle Berkeley DB 2.x support
+  --with-db1=DIR          DBA: Oracle Berkeley DB 1.x support/emulation
+  --with-dbm=DIR          DBA: DBM support
+  --with-tcadb=DIR        DBA: Tokyo Cabinet abstract DB support
+  --with-lmdb=DIR         DBA: Lightning memory-mapped database support
+  --without-cdb=DIR       DBA: CDB support (bundled)
+  --disable-inifile       DBA: INI support (bundled)
+  --disable-flatfile      DBA: FlatFile support (bundled)
+  --disable-dom           Disable DOM support
+  --with-libxml-dir=DIR   DOM: libxml2 install prefix
+  --with-enchant=DIR      Include enchant support. GNU Aspell version 1.1.3 or higher required.
+  --enable-exif           Enable EXIF (metadata from images) support
+  --disable-fileinfo      Disable fileinfo support
+  --disable-filter        Disable input filter support
+  --with-pcre-dir         FILTER: pcre install prefix
+  --enable-ftp            Enable FTP support
+  --with-openssl-dir=DIR  FTP: openssl install prefix
+  --with-gd=DIR           Include GD support.  DIR is the GD library base install directory BUNDLED
+  --with-webp-dir=DIR     GD: Set the path to libwebp install prefix
+  --with-jpeg-dir=DIR     GD: Set the path to libjpeg install prefix
+  --with-png-dir=DIR      GD: Set the path to libpng install prefix
+  --with-zlib-dir=DIR     GD: Set the path to libz install prefix
+  --with-xpm-dir=DIR      GD: Set the path to libXpm install prefix
+  --with-freetype-dir=DIR GD: Set the path to FreeType 2 install prefix
+  --enable-gd-jis-conv    GD: Enable JIS-mapped Japanese font support
+  --with-gettext=DIR      Include GNU gettext support
+  --with-gmp=DIR          Include GNU MP support
+  --with-mhash=DIR        Include mhash support
+  --disable-hash          Disable hash support
+  --without-iconv=DIR     Exclude iconv support
+  --with-imap=DIR         Include IMAP support. DIR is the c-client install prefix
+  --with-kerberos=DIR     IMAP: Include Kerberos support. DIR is the Kerberos install prefix
+  --with-imap-ssl=DIR     IMAP: Include SSL support. DIR is the OpenSSL install prefix
+  --with-interbase=DIR    Include Firebird support.  DIR is the Firebird base install directory /opt/firebird
+  --enable-intl           Enable internationalization support
+  --with-icu-dir=DIR      Specify where ICU libraries and headers can be found
+  --disable-json          Disable JavaScript Object Serialization support
+  --with-ldap=DIR         Include LDAP support
+  --with-ldap-sasl=DIR    LDAP: Include Cyrus SASL support
+  --enable-mbstring       Enable multibyte string support
+  --disable-mbregex       MBSTRING: Disable multibyte regex support
+  --disable-mbregex-backtrack MBSTRING: Disable multibyte regex backtrack check
+  --with-onig=DIR         MBSTRING: Use external oniguruma. DIR is the oniguruma install prefix.
+                          If DIR is not set, the bundled oniguruma will be used
+  --with-mysqli=FILE      Include MySQLi support.  FILE is the path to mysql_config.  If no value or mysqlnd is passed as FILE, the MySQL native driver will be used
+  --enable-embedded-mysqli
+                          MYSQLi: Enable embedded support
+                          Note: Does not work with MySQL native driver!
+  --with-mysql-sock=SOCKPATH
+  --with-odbcver=HEX      Force support for the passed ODBC version. A hex number is expected, default 0x0350. Use the special value of 0 to prevent an explicit ODBCVER to be defined.
+  --with-adabas=DIR       Include Adabas D support /usr/local
+  --with-sapdb=DIR        Include SAP DB support /usr/local
+  --with-solid=DIR        Include Solid support /usr/local/solid
+  --with-ibm-db2=DIR      Include IBM DB2 support /home/db2inst1/sqllib
+  --with-empress=DIR      Include Empress support \$EMPRESSPATH
+                          (Empress Version >= 8.60 required)
+  --with-empress-bcs=DIR  Include Empress Local Access support \$EMPRESSPATH
+                          (Empress Version >= 8.60 required)
+  --with-custom-odbc=DIR  Include user defined ODBC support. DIR is ODBC install base
+                          directory /usr/local. Make sure to define CUSTOM_ODBC_LIBS and
+                          have some odbc.h in your include dirs. f.e. you should define
+                          following for Sybase SQL Anywhere 5.5.00 on QNX, prior to
+                          running this configure script:
+                            CPPFLAGS=\"-DODBC_QNX -DSQLANY_BUG\"
+                            LDFLAGS=-lunix
+                            CUSTOM_ODBC_LIBS=\"-ldblib -lodbc\"
+  --with-iodbc=DIR        Include iODBC support /usr/local
+  --with-esoob=DIR        Include Easysoft OOB support /usr/local/easysoft/oob/client
+  --with-unixODBC=DIR     Include unixODBC support /usr/local
+  --with-dbmaker=DIR      Include DBMaker support
+  --disable-opcache       Disable Zend OPcache support
+  --disable-opcache-file  Disable file based caching
+  --disable-huge-code-pages
+                          Disable copying PHP CODE pages into HUGE PAGES
+  --enable-pcntl          Enable pcntl support (CLI/CGI only)
+  --disable-pdo           Disable PHP Data Objects support
+  --with-pdo-dblib=DIR    PDO: DBLIB-DB support.  DIR is the FreeTDS home directory
+  --with-pdo-firebird=DIR PDO: Firebird support.  DIR is the Firebird base
+                          install directory /opt/firebird
+  --with-pdo-mysql=DIR    PDO: MySQL support. DIR is the MySQL base directory
+                          If no value or mysqlnd is passed as DIR, the
+                          MySQL native driver will be used
+  --with-zlib-dir=DIR     PDO_MySQL: Set the path to libz install prefix
+  --with-pdo-oci=DIR      PDO: Oracle OCI support. DIR defaults to $ORACLE_HOME.
+                          Use --with-pdo-oci=instantclient,/path/to/instant/client/lib
+                          for an Oracle Instant Client installation.
+ 
+  --with-pdo-pgsql=DIR    PDO: PostgreSQL support.  DIR is the PostgreSQL base
+                          install directory or the path to pg_config
+  --without-pdo-sqlite=DIR
+                          PDO: sqlite 3 support.  DIR is the sqlite base
+                          install directory BUNDLED
+  --with-pgsql=DIR        Include PostgreSQL support.  DIR is the PostgreSQL
+                          base install directory or the path to pg_config
+  --disable-phar          Disable phar support
+  --disable-posix         Disable POSIX-like functions
+  --with-pspell=DIR       Include PSPELL support.
+                          GNU Aspell version 0.50.0 or higher required
+  --with-libedit=DIR      Include libedit readline replacement (CLI/CGI only)
+  --with-readline=DIR     Include readline support (CLI/CGI only)
+  --with-recode=DIR       Include recode support
+  --disable-session       Disable session support
+  --with-mm=DIR           SESSION: Include mm support for session storage
+  --enable-shmop          Enable shmop support
+  --disable-simplexml     Disable SimpleXML support
+  --with-libxml-dir=DIR   SimpleXML: libxml2 install prefix
+  --with-snmp=DIR         Include SNMP support
+  --with-openssl-dir=DIR  SNMP: openssl install prefix
+  --enable-soap           Enable SOAP support
+  --with-libxml-dir=DIR   SOAP: libxml2 install prefix
+  --enable-sockets        Enable sockets support
+  --with-sodium=DIR       Include sodium support
+  --with-password-argon2=DIR
+                          Include Argon2 support in password_*. DIR is the Argon2 shared library path
+  --enable-sysvmsg        Enable sysvmsg support
+  --enable-sysvsem        Enable System V semaphore support
+  --enable-sysvshm        Enable the System V shared memory support
+  --with-tidy=DIR         Include TIDY support
+  --disable-tokenizer     Disable tokenizer support
+  --enable-wddx           Enable WDDX support
+  --with-libxml-dir=DIR   WDDX: libxml2 install prefix
+  --with-libexpat-dir=DIR WDDX: libexpat dir for XMLRPC-EPI (deprecated)
+  --disable-xml           Disable XML support
+  --with-libxml-dir=DIR   XML: libxml2 install prefix
+  --with-libexpat-dir=DIR XML: libexpat install prefix (deprecated)
+  --disable-xmlreader     Disable XMLReader support
+  --with-libxml-dir=DIR   XMLReader: libxml2 install prefix
+  --with-xmlrpc=DIR       Include XMLRPC-EPI support
+  --with-libxml-dir=DIR   XMLRPC-EPI: libxml2 install prefix
+  --with-libexpat-dir=DIR XMLRPC-EPI: libexpat dir for XMLRPC-EPI (deprecated)
+  --with-iconv-dir=DIR    XMLRPC-EPI: iconv dir for XMLRPC-EPI
+  --disable-xmlwriter     Disable XMLWriter support
+  --with-libxml-dir=DIR   XMLWriter: libxml2 install prefix
+  --with-xsl=DIR          Include XSL support.  DIR is the libxslt base
+                          install directory (libxslt >= 1.1.0 required)
+  --enable-zend-test      Enable zend-test extension
+  --enable-zip            Include Zip read/write support
+  --with-zlib-dir=DIR     ZIP: Set the path to libz install prefix
+  --with-pcre-dir         ZIP: pcre install prefix
+  --with-libzip=DIR       ZIP: use libzip
+  --enable-mysqlnd        Enable mysqlnd explicitly, will be done implicitly
+                          when required by other extensions
+  --disable-mysqlnd-compression-support
+                          Disable support for the MySQL compressed protocol in mysqlnd
+  --with-zlib-dir=DIR     mysqlnd: Set the path to libz install prefix
+
+PEAR:
+
+  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php]
+  --without-pear          Do not install PEAR
+
+Zend:
+
+  --enable-maintainer-zts Enable thread safety - for code maintainers only!!
+  --disable-inline-optimization
+                          If building zend_execute.lo fails, try this switch
+  --disable-zend-signals  whether to enable zend signal handling
+
+TSRM:
+
+  --with-tsrm-pth=pth-config
+                          Use GNU Pth
+  --with-tsrm-st          Use SGI's State Threads
+  --with-tsrm-pthreads    Use POSIX threads (default)
+
+Libtool:
+
+  --enable-shared=PKGS    Build shared libraries default=yes
+  --enable-static=PKGS    Build static libraries default=yes
+  --enable-fast-install=PKGS
+                          Optimize for fast installation default=yes
+  --with-gnu-ld           Assume the C compiler uses GNU ld default=no
+  --disable-libtool-lock  Avoid locking (might break parallel builds)
+  --with-pic              Try to use only PIC/non-PIC objects default=use both
+  --with-tags=TAGS        Include additional configurations automatic
 ```
 
 ## 在原由的php上安装扩展(动态为php添加模块)
@@ -211,6 +500,103 @@ cp sapi/fpm/php-fpm /usr/local/bin
 # 重启php服务 
 # /usr/local/php/sbin/php-fpm restart
 ```
+
+## PHP-FPM
+
+https://www.php.net/manual/zh/install.fpm.configuration.php
+
+PHP-FPM(PHP FastCGI Process Manager)：PHP FastCGI 进程管理器，用于管理PHP 进程池的软件，用于接受web服务器的请求。
+* PHP-FPM 的主配置文件是 /etc/php7/php-fpm.conf
+
+```
+# 启动
+# systemctl restart php-fpm.service
+```
+
+## PHP-FPM 与 nginx 整合
+
+* nginx
+```
+location / {
+    root   html;
+    index  index.php index.html index.htm;
+}
+
+location ~* \.php$ {
+    fastcgi_index   index.php;
+    fastcgi_pass    127.0.0.1:9000;
+    include         fastcgi_params;
+    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+}
+```
+
+```
+/usr/local/nginx/sbin/nginx -s stop
+/usr/local/nginx/sbin/nginx
+
+echo "<?php phpinfo(); ?>" >> /usr/local/nginx/html/index.php
+```
+
+##  composer 安装
+
+```
+# 载下 composer-setup.php
+wget https://getcomposer.org/installer
+cp installer composer-setup.php
+
+
+# 第一种项目目录（本地安装）
+php composer-setup.php --install-dir=项目目录 --filename=composer
+# 运行
+php 项目目录/composer
+
+# 全局安装
+# 下载 composer.phar
+php composer-setup.php --install-dir=bin --filename=composer
+
+mv composer /usr/local/bin/composer
+composer
+```
+
+* 阿里镜像
+
+https://developer.aliyun.com/composer?spm=a2c6h.13651102.0.0.3e221b11obQtu0
+
+```
+# 全局配置（推荐）
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+composer config -g --unset repos.packagist
+
+# 项目配置
+composer config repo.packagist composer https://mirrors.aliyun.com/composer/
+composer config --unset repos.packagist
+```
+
+* 另一个镜像
+
+```
+# 全局配置（推荐）
+composer config -g repo.packagist composer https://packagist.phpcomposer.com
+
+# 项目配置
+composer config repo.packagist composer https://packagist.phpcomposer.com
+
+# composer.json
+"repositories": {
+    "packagist": {
+        "type": "composer",
+        "url": "https://packagist.phpcomposer.com"
+    }
+}
+```
+
+
+## 扩展列表参考
+
+https://www.php.net/manual/zh/extensions.php
+https://www.php.net/manual/zh/langref.php
+https://www.php.net/manual/zh/ini.php
 
 # Mysql
 
