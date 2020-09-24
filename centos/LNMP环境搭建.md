@@ -31,7 +31,7 @@ http://nginx.org/download/nginx-1.18.0.tar.gz
 * Nginx
 
 ```
-yum install wget gcc make openssl openssl-devel autoconf automake libtool libxml2 libxml2-devel
+yum install wget gcc gcc-c++ make openssl openssl-devel autoconf automake libtool libxml2 libxml2-devel
 ```
 
 # nginx

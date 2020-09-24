@@ -1,6 +1,7 @@
 <!-- TOC -->
 
 - [Linux](#linux)
+- [一些手册](#一些手册)
 - [Linux 系统目录结构](#linux-系统目录结构)
     - [几个目录是比较重要](#几个目录是比较重要)
 - [常用命令](#常用命令)
@@ -12,7 +13,15 @@
 
 <!-- /TOC -->
 
+
+
 # Linux
+
+# 一些手册
+
+https://manned.org/
+
+https://helpmanual.io/
 
 # Linux 系统目录结构
 

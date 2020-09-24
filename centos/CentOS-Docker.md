@@ -77,6 +77,7 @@ yum list docker-ce --showduplicates | sort -r
 
 ```
 systemctl start docker
+systemctl stop docker
 ```
 
 3.通过运行hello-world 映像来验证是否正确安装了Docker Engine-Community 。
