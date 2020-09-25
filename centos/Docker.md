@@ -93,6 +93,8 @@ $ docker restart id
 
 $ docker attach id //进入运行的容器
 $ docker rm id //删除容器-f 强行 -l 删除窗口连接，保留窗口 -v 删除容器挂载的数据卷
+
+$ docker inspect // 返回有关Docker对象的低级信息
 ```
 
 ### 绑定挂载卷 --volume , -v
