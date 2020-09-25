@@ -299,6 +299,8 @@ resize-observer-polyfill | Resize Observer API的polyfill | https://github.com/q
 async | 节点和浏览器的异步实用程序 | https://github.com/caolan/async
 ecmascript-asyncawait | Async/await for ECMAScript  | https://github.com/tc39/ecmascript-asyncawait
 web-animations-js | Web Animations API | https://github.com/web-animations/web-animations-js
+polyfill||https://polyfill.io/v3/
+polyfill||https://github.com/financial-times/polyfill-service
 
 ## <i id="j-15"></i>工具
 
