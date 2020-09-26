@@ -10,6 +10,8 @@
     - [ps 命令](#ps-命令)
     - [mount](#mount)
 - [./configure、make、make install 命令](#configuremakemake-install-命令)
+- [Linux 用户和用户组管理](#linux-用户和用户组管理)
+- [chmod](#chmod)
 
 <!-- /TOC -->
 
@@ -128,3 +130,54 @@ yum install gcc make autoconf automake libtool libxml2-devel
 # 进行安装 需要 root 权限
 # make install
 ```
+
+# Linux 用户和用户组管理
+
+```
+# 查看用户列表
+# compgen -u
+```
+
+```
+# 增加一个新的用户组
+groupadd 选项 用户组
+groupdel 用户组
+
+# 添加新的用户账号
+-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。
+-g 用户组 指定用户所属的用户组。
+useradd 选项 用户名
+
+# 删除一个已有的用户账号
+userdel 选项 用户名
+
+# 修改用户账号
+usermod 选项 用户名
+```
+
+```
+# groupadd usergroup
+
+# -r:　　 用来建立系统账户
+# -s：　　指定用户的登录Shell
+# -g：　　指定所属的基本组（组名或GID）
+# useradd -r -g usergroup -s /bin/false user
+
+# mkdir mysql-files
+
+# 设置文件所有者和文件关联组的命令
+# chown user:usergroup mysql-files
+# chmod 750 mysql-files
+```
+
+
+# chmod
+
+7	读 + 写 + 执行	rwx	111   
+6	读 + 写	rw-	110  
+5	读 + 执行	r-x	101  
+4	只读	r--	100  
+3	写 + 执行	-wx	011  
+2	只写	-w-	010  
+1	只执行	--x	001  
+0	无	---	000  

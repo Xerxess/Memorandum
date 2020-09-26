@@ -83,6 +83,7 @@ $ docker run -d IMAGE //守护状态的容器，即后台运行
 $ docker run -p 80(本机):80(容器) //设置端口
 $ docker run -p 127.0.0.1:80(本机):80(容器) //设置端口
 $ docker run -p 127.0.0.1::(本机):80(容器) //设置端口
+$ docker run -t -i --privileged ubuntu // 获取完整的容器功能（特权） 比如systemctl \ mount
 $ docker port id 5000 //查看端口信息
 $ --link 连接容器
 $ docker ps //查看容器信息

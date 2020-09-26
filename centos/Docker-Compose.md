@@ -3,6 +3,7 @@
 - [Compose](#compose)
 - [安装](#安装)
 - [配制](#配制)
+- [命令](#命令)
 
 <!-- /TOC -->
 
@@ -129,4 +130,14 @@ configs: # 配置配置参考
 # https://docs.docker.com/compose/compose-file/#secrets-configuration-reference
 secrets: # 安全配置参考
        
+```
+
+# 命令
+
+```
+# 
+docker-compose up -d
+
+# 关闭容器并删除
+docker-compose down
 ```

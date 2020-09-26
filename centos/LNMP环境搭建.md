@@ -3,10 +3,13 @@
 - [LNMP环境搭建](#lnmp环境搭建)
 - [准备工作](#准备工作)
 - [nginx](#nginx)
+    - [docker 注意事项](#docker-注意事项)
+    - [nginx的configure参数](#nginx的configure参数)
 - [php](#php)
     - [在原由的php上安装扩展(动态为php添加模块)](#在原由的php上安装扩展动态为php添加模块)
     - [PHP-FPM](#php-fpm)
     - [PHP-FPM 与 nginx 整合](#php-fpm-与-nginx-整合)
+    - [docker 注意](#docker-注意)
     - [composer 安装](#composer-安装)
     - [扩展列表参考](#扩展列表参考)
 - [Mysql](#mysql)
@@ -35,7 +38,11 @@ http://nginx.org/download/nginx-1.18.0.tar.gz
 * Nginx
 
 ```
-yum install wget gcc gcc-c++ make openssl openssl-devel autoconf automake libtool libxml2 libxml2-devel
+yum install wget vim net-tools gcc gcc-c++ make openssl openssl-devel autoconf automake libtool libxml2 libxml2-devel zip unzip 
+
+apk add --no-cache --virtual .build-deps wget vim net-tools gcc  make openssl openssl-dev autoconf automake libtool libxml2  zip unzip 
+
+apk add --no-cache --virtual .build-deps wget vim net-tools gcc libc-dev make openssl-dev pcre-dev zlib-dev linux-headers curl gnupg libxslt-dev gd-dev geoip-dev zip unzip
 ```
 
 # nginx
@@ -44,8 +51,7 @@ yum install wget gcc gcc-c++ make openssl openssl-devel autoconf automake libtoo
 wget http://nginx.org/download/nginx-1.18.0.tar.gz  
 tar -zxvf nginx-1.18.0.tar.gz
 ./configure --prefix=/usr/local/nginx --with-http_ssl_module
-make
-make instll
+make && make instll && make distclean && apk del .build-deps
 make clear
 ```
 
@@ -68,7 +74,12 @@ vi /etc/rc.local
 /usr/local/nginx/sbin/nginx
 ```
 
-* nginx的configure参数
+## docker 注意事项
+
+* 防止闪退
+CMD ["nginx","-g","daemon off;"]
+
+##  nginx的configure参数
 ```
 --prefix= 指向安装目录。
 --sbin-path= 指定执行程序文件存放位置。
@@ -184,11 +195,13 @@ vi /etc/rc.local
 # make
 # make instll
 # make clear
+# make distclean
 ```
 
 ```
 cp php.ini-development /usr/local/php/php.ini
 cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
+cd /usr/local/etc/
 cp php-fpm.conf.default php-fpm.conf
 # 如果打到文件可进行修改
 vim php-fpm.conf
@@ -509,11 +522,17 @@ PHP-FPM(PHP FastCGI Process Manager)：PHP FastCGI 进程管理器，用于管�
 * PHP-FPM 的主配置文件是 /etc/php7/php-fpm.conf
 
 ```
+# cp /down/php-7.3.22/sapi/fpm/php-fpm.service /etc/init.d/php-fpm.service
+# chmod +x /etc/init.d/php-fpm.service
+# chkconfig --add php-fpm
+# chkconfig --level 345 php-fpm on
 # 启动
 # systemctl restart php-fpm.service
 ```
 
 ## PHP-FPM 与 nginx 整合
+
+* <span style="color:red">特别注意事项：由于nginx与php-fpm 分开部署即php的源文件应该放到php-fpm服务器，nginx服务器上应该部署静态资源</span>
 
 * nginx
 ```
@@ -537,6 +556,11 @@ location ~* \.php$ {
 
 echo "<?php phpinfo(); ?>" >> /usr/local/nginx/html/index.php
 ```
+
+## docker 注意
+
+php-fpm.conf 调试运行，解决闪退
+daemonize = no
 
 ##  composer 安装
 
@@ -609,6 +633,7 @@ https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 # yum install libnuma.so.1
 # yum install numactl
 
+# wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz
 # wget https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz
 # tar -zxvf mysql-5.7.31-linux-glibc2.12-x86_64.tar.gz
 # mv mysql-5.7.31-linux-glibc2.12-x86_64 /usr/local/mysql
@@ -636,8 +661,8 @@ datadir=/data
 # # service mysql start  服务启动
 # # service mysql stop   服务停止
 
-# cp support-files/mysql.server /etc/init.d/mysql.server
-# chmod +x /etc/init.d/mysql
+# cp support-files/mysql.server /etc/init.d/mysql
+# chmod +x /etc/init.d/mysql.server
 # chkconfig --add mysql
 # chkconfig --level 345 mysql on
 
