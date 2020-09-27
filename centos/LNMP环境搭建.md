@@ -16,6 +16,7 @@
     - [mysqld -MySQL服务器](#mysqld--mysql服务器)
     - [mysqld_safe -MySQL服务器启动脚本](#mysqld_safe--mysql服务器启动脚本)
     - [my.cnf](#mycnf)
+    - [管理工具](#管理工具)
 
 <!-- /TOC -->
 
@@ -624,6 +625,8 @@ https://www.php.net/manual/zh/ini.php
 
 # Mysql
 
+
+
 * 使用通用二进制文件在Unix / Linux上安装MySQL
 https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
 ```
@@ -714,3 +717,9 @@ https://dev.mysql.com/doc/refman/5.7/en/option-files.html
 
 * 如果在命令行上为mysqld或mysqld_safe指定一个选项，则该选项仅对服务器的调用有效。
 * 要在服务器每次运行时使用该选件，请将其放在选件文件中。 /etc/my.cnf > /etc/mysql/my.cnf
+
+
+## 管理工具
+
+* sqlyog
+https://www.webyog.com/product/sqlyog
