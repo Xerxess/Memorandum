@@ -15,8 +15,7 @@
 - [Mysql](#mysql)
     - [mysqld -MySQL服务器](#mysqld--mysql服务器)
     - [mysqld_safe -MySQL服务器启动脚本](#mysqld_safe--mysql服务器启动脚本)
-    - [my.cnf](#mycnf)
-    - [管理工具](#管理工具)
+    - [ubuntu.20 RPM软件包在Linux上安装MySQL](#ubuntu20-rpm软件包在linux上安装mysql)
 
 <!-- /TOC -->
 
@@ -680,6 +679,8 @@ datadir=/data
 # 配制其他主机可访问
 # > mysql> grant select,insert,update,delete on 数据库.* to '用户名'@'主机' identified by '密码';
 > mysql> grant select,insert,update,delete on *.* to 'test'@'%' identified by '123456';
+# 获取所有权限
+> mysql> grant select,insert,update,delete on *.* to 'mydata'@'%' identified by '123456';
 # 查看当前配置
 > mysql> SHOW VARIABLES;
 ```
@@ -709,6 +710,36 @@ mysqld_safe尝试启动一个名为 mysqld的可执行文件。要覆盖默认�
 
 ```
 # bin/mysqld_safe --user=mysql --datadir=/data &
+```
+
+## ubuntu.20 RPM软件包在Linux上安装MySQL
+
+安装目录
+
+* 所有配置文件（如 my.cnf）都在 /etc/mysql
+* 所有二进制文件，库，标头等都位于 /usr/bin和下 /usr/sbin
+* 数据目录是 /var/lib/mysql
+
+```
+# wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-server_5.7.31-1ubuntu18.04_amd64.deb-bundle.tar
+
+# tar -xvf mysql-server_MVER-DVER_CPU.deb-bundle.tar
+# apt-get install libaio1
+# dpkg-preconfigure mysql-community-server_*.deb
+# 失败后
+# apt install apt-utils
+
+# dpkg -i mysql-{common,community-client,client,community-server,server}_*.deb
+# 失败执行下面重试
+# apt-get -f install
+
+# 初化一个无密码的实例
+# /sbin/mysqld  --initialize-insecure --user=mysql
+# > mysql> grant select,insert,update,delete on *.* to 'mydata'@'%' identified by '123456';
+# /bin/mysql && create database mydata; exit;
+# /bin/mysqladmin -u root password '123456'
+```
+
 ```
 
 ## my.cnf
