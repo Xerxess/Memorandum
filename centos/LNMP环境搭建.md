@@ -680,7 +680,7 @@ datadir=/data
 # > mysql> grant select,insert,update,delete on 数据库.* to '用户名'@'主机' identified by '密码';
 > mysql> grant select,insert,update,delete on *.* to 'test'@'%' identified by '123456';
 # 获取所有权限
-> mysql> grant select,insert,update,delete on *.* to 'mydata'@'%' identified by '123456';
+> mysql> grant all on *.* to 'mydata'@'%' identified by '123456';
 # 查看当前配置
 > mysql> SHOW VARIABLES;
 ```
