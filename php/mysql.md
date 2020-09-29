@@ -1,6 +1,7 @@
 <!-- TOC -->
 
 - [mysql](#mysql)
+- [用户管理](#用户管理)
 - [数据类型](#数据类型)
     - [JSON类型](#json类型)
 - [知识点](#知识点)
@@ -15,6 +16,32 @@ https://dev.mysql.com/doc/refman/5.7/en/
 https://www.yiibai.com/mysql/basic-mysql.html
 
 # mysql
+
+# 用户管理
+
+https://dev.mysql.com/doc/refman/5.7/en/account-management-statements.html
+
+```
+# ALTER USER 修改用户
+# ALTER USER [IF EXISTS] USER() IDENTIFIED BY 'auth_string'
+
+# 更改帐户密码并使其过期
+# ALTER USER 'jeffrey'@'localhost' IDENTIFIED BY 'new_password' PASSWORD EXPIRE;
+
+# SET PASSWORD 为MySQL用户帐户分配密码
+# SET PASSWORD FOR 'jeffrey'@'localhost' = 'auth_string';
+
+# CREATE USER 创建用户
+# 帐户名的主机名部分（如果省略）默认为'%'。
+# CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'password';
+
+# DROP USER 删除一个或多个MySQL帐户
+# DROP USER 'jeffrey'@'localhost';
+
+# GRANT/REVOKE 将特权授予/撤销MySQL用户帐户
+# GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
+# REVOKE INSERT ON *.* FROM 'jeffrey'@'localhost';
+```
 
 # 数据类型
 
