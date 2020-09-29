@@ -12,6 +12,14 @@
 - [./configure、make、make install 命令](#configuremakemake-install-命令)
 - [Linux 用户和用户组管理](#linux-用户和用户组管理)
 - [chmod](#chmod)
+- [df -h](#df--h)
+- [du -sh](#du--sh)
+- [in  (快捷方式)](#in--快捷方式)
+- [系统设置](#系统设置)
+    - [reset](#reset)
+    - [alias](#alias)
+    - [crontab](#crontab)
+    - [chkconfig](#chkconfig)
 
 <!-- /TOC -->
 
@@ -181,3 +189,86 @@ usermod 选项 用户名
 2	只写	-w-	010  
 1	只执行	--x	001  
 0	无	---	000  
+
+# df -h
+
+查看各分区使用情况
+
+# du -sh
+
+查看指定目录的大小
+
+# in  (快捷方式)
+
+* 软链接：
+    * 1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式
+    * 2.软链接可以 跨文件系统 ，硬链接不可以
+    * 3.软链接可以对一个不存在的文件名进行链接
+    * 4.软链接可以对目录进行链接
+* 硬链接：
+    * 1.硬链接，以文件副本的形式存在。但不占用实际空间。
+    * 2.不允许给目录创建硬链接
+    * 3.硬链接只有在同一个文件系统中才能创建
+
+为某一个文件在另外一个位置建立一个同步的链接
+
+```
+ln [参数][源文件或目录][目标文件或目录]
+```
+
+```
+# 给文件创建软链接
+ln -s log2013.log link2013
+```
+
+#　系统设置
+
+## reset
+
+*  reset === tset
+
+```
+reset [-IQqrs] [-] [-e ch] [-i ch] [-k ch] [-m mapping] [terminal]
+tset  [-IQqrs] [-] [-e ch] [-i ch] [-k ch] [-m mapping] [terminal]
+```
+
+## alias
+
+用户可利用alias，自定指令的别名。  
+若仅输入alias，则可列出目前所有的别名设置。  
+alias的效力仅及于该次登入的操作。  
+若要每次登入是即自动设好别名，可在.profile或.cshrc中设定指令的别名。  
+
+```
+alias
+alias [别名]=[指令名称]
+```
+
+##  crontab
+
+用来定期执行程序的命令
+
+```
+crontab [ -u user ] file
+crontab [ -u user ] { -l | -r | -e }
+```
+
+```
+# 时程表 格式
+# f1 是表示分钟 (0 - 59)
+# f2 表示小时 (0 - 23)
+# f3 表示一个月份中的第几日  (1 - 31)
+# f4 表示月份  (1 - 12) 
+# f5 表示一个星期中的第几天 (0 - 7) (星期天 为0)
+# program 表示要执行的程序
+# f1 f2 f3 f4 f5 program
+```
+
+## chkconfig
+
+用于检查，设置系统的各种服务
+
+```
+chkconfig [--add][--del][--list][系统服务] 
+chkconfig [--level <等级代号>][系统服务][on/off/reset]
+```
