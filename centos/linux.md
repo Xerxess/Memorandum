@@ -20,6 +20,9 @@
     - [alias](#alias)
     - [crontab](#crontab)
     - [chkconfig](#chkconfig)
+- [其他linux版本](#其他linux版本)
+    - [Alibaba Cloud Linux 2](#alibaba-cloud-linux-2)
+    - [Inclavare Containers](#inclavare-containers)
 
 <!-- /TOC -->
 
@@ -272,3 +275,26 @@ crontab [ -u user ] { -l | -r | -e }
 chkconfig [--add][--del][--list][系统服务] 
 chkconfig [--level <等级代号>][系统服务][on/off/reset]
 ```
+
+# 其他linux版本
+
+##　Alibaba Cloud Linux 2
+
+https://openanolis.org/blog/alibaba-cloud-linux-lts2/
+
+https://www.alibabacloud.com/help/zh/doc-detail/111881.htm
+
+* 用户态软件包保持与最新版CentOS 7兼容，该版本用户态软件包可直接在Alibaba Cloud Linux 2使用。
+* 默认搭载阿里云CLI。
+* 网络服务从network.service切换为systemd-networkd。
+* 软件包安全漏洞（CVE）修复在Alibaba Cloud Linux 2版本支持期限内会持续更新，详情请参见Alibaba Cloud Linux 2 CVE更新记录。Alibaba Cloud Linux 2提供自动化修复方案，详情请参见基于YUM的安全更新操作。
+
+```
+docker pull registry.cn-hangzhou.aliyuncs.com/alinux/aliyunlinux:2.1903
+```
+
+## Inclavare Containers
+
+开源Enclave容器运行时技术栈和安全架构
+
+https://inclavare-containers.io/
