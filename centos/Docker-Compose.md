@@ -19,6 +19,8 @@
     - [docker-compose ps](#docker-compose-ps)
     - [docker-compose pull](#docker-compose-pull)
     - [docker-compose push](#docker-compose-push)
+    - [小笔记](#小笔记)
+    - [无前台进程闪退解决办法](#无前台进程闪退解决办法)
 
 <!-- /TOC -->
 
@@ -321,4 +323,17 @@ Usage: push [options] [SERVICE...]
 
 Options:
     --ignore-push-failures  推送所有内容，并忽略带有推送失败的图像
+```
+
+## 小笔记
+
+## 无前台进程闪退解决办法
+
+```yml
+version: '3'
+services:
+   php-compose:
+     build:
+       context: ./php-compose
+   tty: true  # 添加tty 相当于 docker run -t 操作
 ```
