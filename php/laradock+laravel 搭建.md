@@ -51,7 +51,7 @@ Workspace 这个镜像是开发环境，所需要的一些工具，可以不污�
 
 ### 使用
 
-* docker-compose build workspace nginx mysql
+* docker-compose build workspace nginx mysql php-fpm
 * docker-compose up -d {container-name} 运行容器
 ----------------------
 * docker-compose build --no-cache {container-name} 
