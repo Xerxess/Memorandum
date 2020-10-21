@@ -3,6 +3,7 @@
 - [Babel](#babel)
 - [.browserslistrc](#browserslistrc)
 - [@babel/preset-env](#babelpreset-env)
+- [regenerator-runtime](#regenerator-runtime)
 
 <!-- /TOC -->
 
@@ -55,4 +56,18 @@ const dd={
     ]
   ]
 }
+```
+
+
+# regenerator-runtime
+
+模块来自facebook的regenerator模块
+生成器函数、async、await函数经babel编译
+
+```js
+// CommonJS
+require("regenerator-runtime/runtime");
+ 
+// ECMAScript 2015
+import "regenerator-runtime/runtime.js";
 ```
