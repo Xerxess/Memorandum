@@ -207,6 +207,7 @@ touchjs | Touchjs | https://github.com/Clouda-team/touchjs
 draggable | 拖放库 | https://github.com/Shopify/draggable
 draggabilly | 拖放库 | https://github.com/desandro/draggabilly
 dragula | 拖放 | https://github.com/bevacqua/dragula
+sortablejs| 拖放创建列表并重新排序 |https://github.com/SortableJS/sortablejs
 fastclick | 消除物理点击和click在移动浏览器上触发事件之间300毫秒的延迟 | https://github.com/ftlabs/fastclick
 dropzone | 易于使用的拖放库上传 | https://github.com/enyo/dropzone
 AlloyTouch | 平滑滚动，旋转，拉动刷新，页面过渡以及网络的任何动作 - 丝般顺滑的触摸运动 | https://github.com/AlloyTeam/AlloyTouch

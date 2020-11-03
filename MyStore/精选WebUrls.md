@@ -152,6 +152,8 @@ http://zeroclipboard.org/
 | charlesproxy    | 抓包工具                                                   | https://www.charlesproxy.com              |
 | pdman           | 跨平台的数据建模                                           | http://www.pdman.cn                       |
 | bandicam        | window Bandicam（班迪录屏）高清视频录制工具（免费 带水印） | https://www.bandicam.cn/                  |
+| IrfanView 64        | 查看图片（可查看图片的exif信息） | https://www.irfanview.com/                  |
+
 
 ## <i id="u-5"></i> API 文档
 
