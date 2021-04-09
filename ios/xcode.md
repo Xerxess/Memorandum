@@ -4,6 +4,7 @@
 
 - [xcode](#xcode)
 - [工具介绍](#工具介绍)
+- [常用快捷键](#常用快捷键)
     - [Instrument工具介绍与使用](#instrument工具介绍与使用)
     - [Accessibility Inspector](#accessibility-inspector)
     - [FileMerge](#filemerge)
@@ -22,6 +23,12 @@ simulator 模拟器
 accessibility inspector 可访问性检查器
 filemerge 文件合并
 application loader 程序加载器
+
+# 常用快捷键
+
+代码格式化:CMD+a -> ctrl ＋ i 格式化
+定位文件位置：CMD + SHIFT + J
+注释：CMD+OPT+/ 或 CMD+/
 
 ## Instrument工具介绍与使用
 
