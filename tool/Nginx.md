@@ -10,6 +10,7 @@
 - [url 加与不加/的区别](#url-加与不加的区别)
 - [允许跨域请求头](#允许跨域请求头)
 - [坑](#坑)
+- [nginx.conf](#nginxconf)
 
 <!-- /TOC -->
 
@@ -199,3 +200,217 @@ server
 
 - Nginx 的继承的一个特性，当子层级设置了 add_header，会直接不使用父级的 add_header。
   http://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header
+
+
+# nginx.conf
+
+
+```
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+      server {
+        listen       1088;
+        server_name  localhost;
+        set $router notpage.html;
+
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Headers X-Requested-With,TENANT_ID,Authorization,Content-Type;
+        add_header Access-Control-Allow-Methods GET,POST,OPTIONS,PUT;
+        add_header Access-Control-Allow-Credentials true;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            if ($request_method = 'OPTIONS') {
+              return 200;
+            }
+            proxy_pass_header Server;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Scheme $scheme;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_read_timeout 300;
+            proxy_pass http://***.***.***.***:***;
+
+            recursive_error_pages on;
+            # root   html;
+            # index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+    server {
+        listen       1089;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # location / {
+        #     root   html;
+        #     index  index.html index.htm;
+        # }
+
+        location ^~ /h5/ {
+            try_files $uri $uri/ @router;
+            alias D:\\*\**\\;
+            index index.html;
+        }
+
+        location /static/ {
+            # try_files $uri $uri/ $router;
+            alias D:\\*\**\\;
+            index index.html;
+        }
+
+        location @router {
+           root D:\\*\**\\;
+           rewrite ^(.*) /index.html break;
+        }
+
+        # location /h5/ {
+        #     root   html;
+        #     index  index.html index.htm;
+        # }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+        
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+
+```
