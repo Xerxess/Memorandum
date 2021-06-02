@@ -62,6 +62,7 @@
         - [noUnusedParameters](#nounusedparameters)
     - [Experimental 实验性](#experimental-实验性)
         - [emitDecoratorMetadata](#emitdecoratormetadata)
+        - [experimentalDecorators](#experimentaldecorators)
     - [Advanced 激进](#advanced-激进)
         - [allowUnreachableCode](#allowunreachablecode)
         - [allowUnusedLabels](#allowunusedlabels)
@@ -651,6 +652,15 @@ false
 
 ### types
 
+```json
+// 如果指定了types ，则仅列出的包将包含在全局范围内。
+{
+  "compilerOptions": {
+    "types": ["node", "jest", "express"]
+  }
+}
+```
+
 ## Source Maps 源地图
 
 ### inlineSourceMap
@@ -745,6 +755,10 @@ const createDefaultKeyboard = (modelID: number) => {
 TypeScript 力求只包含那些确认会被添加到 JavaScript 语言的特性。
 
 ### emitDecoratorMetadata
+
+### experimentalDecorators
+
+启用对装饰器的实验性支持
 
 ## Advanced 激进
 
