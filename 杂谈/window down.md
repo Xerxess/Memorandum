@@ -1,4 +1,5 @@
 https://msdn.itellyou.cn/
+https://next.itellyou.cn/
 
 # window 10
 cn_windows_10_consumer_editions_version_1909_updated_jan_2020_x64_dvd_47161f17.iso
