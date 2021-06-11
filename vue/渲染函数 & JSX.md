@@ -6,10 +6,15 @@
 - [事件 & 按键修饰符](#事件--按键修饰符)
 - [渲染函数 & JSX](#渲染函数--jsx)
 - [插槽](#插槽)
-    - [this.$slots](#thisslots)
-    - [this.$scopedSlots](#thisscopedslots)
+    - [this.\$slots](#this\slots)
+    - [this.\$scopedSlots](#this\scopedslots)
     - [传递作用域插槽](#传递作用域插槽)
 - [函数式组件](#函数式组件)
+- [Vue 中写 TSX](#vue-中写-tsx)
+    - [v-html](#v-html)
+    - [v-if](#v-if)
+    - [v-for](#v-for)
+    - [onClick事件传值（TSX）](#onclick事件传值tsx)
 
 <!-- /TOC -->
 
@@ -17,14 +22,15 @@
 
 ```js
 createElement(
-    // {String | Object | Function}
-    'div',
-    // {Object} 
-    // 一个与模板中 attribute 对应的数据对象。可选。
-    {},
-    // {String | Array}
-    // 子级虚拟节点 (VNodes)，由 `createElement()` 构建
-    [])
+  // {String | Object | Function}
+  'div',
+  // {Object}
+  // 一个与模板中 attribute 对应的数据对象。可选。
+  {},
+  // {String | Array}
+  // 子级虚拟节点 (VNodes)，由 `createElement()` 构建
+  []
+);
 ```
 
 # attribute {Object}
@@ -120,7 +126,7 @@ render: function (createElement) {
 
 # 插槽
 
-## this.$slots
+## this.\$slots
 
 ```js
 render: function (createElement) {
@@ -129,7 +135,7 @@ render: function (createElement) {
 }
 ```
 
-##  this.$scopedSlots
+## this.\$scopedSlots
 
 ```js
 props: ['message'],
@@ -177,6 +183,45 @@ Vue.component('my-component', {
   // 提供第二个参数作为上下文
   render: function (createElement, context) {
     // ...
-  }
-})
+  },
+});
+```
+
+# Vue 中写 TSX
+
+## v-html
+
+```ts
+<main domPropsInnerHTML={this.topicDetail.content} class="markdown-body">
+  loading💤💤
+</main>
+```
+
+## v-if
+
+```ts
+{this.preFlag ? <button class="pageBtn">......</button> : ""}
+```
+
+## v-for
+
+```ts
+{this.pageBtnList.map(page => {
+  return (
+    <button
+      onClick={this.changePageHandler.bind(this, page)}
+      class={[{ currentPage: page === this.currentPage }, "pageBtn"]}
+    >
+      {page}
+    </button>
+  );
+})}
+```
+
+## onClick事件传值（TSX）
+
+```ts
+render(){
+  return <button onClick={this.clickHandler.bind(this, params)}>click me</button>
+}
 ```
