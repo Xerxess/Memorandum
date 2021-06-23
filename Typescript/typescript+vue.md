@@ -1,14 +1,14 @@
 <!-- TOC -->
 
 - [Typescript + Vue](#typescript--vue)
-    - [https://www.typescriptlang.org/](#httpswwwtypescriptlangorg)
-    - [https://www.tslang.cn/index.html](#httpswwwtslangcnindexhtml)
-    - [https://github.com/zhongsp/TypeScript](#httpsgithubcomzhongsptypescript)
-    - [https://class-component.vuejs.org/](#httpsclass-componentvuejsorg)
-    - [https://github.com/kaorun343/vue-property-decorator](#httpsgithubcomkaorun343vue-property-decorator)
+  - [https://www.typescriptlang.org/](#httpswwwtypescriptlangorg)
+  - [https://www.tslang.cn/index.html](#httpswwwtslangcnindexhtml)
+  - [https://github.com/zhongsp/TypeScript](#httpsgithubcomzhongsptypescript)
+  - [https://class-component.vuejs.org/](#httpsclass-componentvuejsorg)
+  - [https://github.com/kaorun343/vue-property-decorator](#httpsgithubcomkaorun343vue-property-decorator)
 - [一些坑](#一些坑)
-    - [vue-property-decorator](#vue-property-decorator)
-        - [@Provide](#provide)
+  - [vue-property-decorator](#vue-property-decorator)
+    - [@Provide](#provide)
 
 <!-- /TOC -->
 
@@ -70,4 +70,12 @@ import { Component, Prop, Ref, Vue } from 'vue-property-decorator';
 export default class App extends Vue {
   @Provide() abc = 'abc';
 }
+```
+
+## .vue 模板文件中类型推断
+
+```ts
+// test.vue
+const test = <any>window.test; // 报错
+const test = window.test as any; // 确定
 ```
