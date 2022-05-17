@@ -1,6 +1,6 @@
 <!-- TOC -->
 
-- [Swift 与 OC 混编](#swift%E4%B8%8Eoc%E6%B7%B7%E7%BC%96)
+- [Swift 与 OC 混编](#swift-%E4%B8%8E-oc-%E6%B7%B7%E7%BC%96)
 
 <!-- /TOC -->
 
