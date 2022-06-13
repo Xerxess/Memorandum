@@ -7,6 +7,10 @@
    template=./.gittemplate
  ```
 
+ ```cmd
+git config commit.template ./.gittemplate
+ ```
+
  .gittemplate 文件模板
 
  ```
