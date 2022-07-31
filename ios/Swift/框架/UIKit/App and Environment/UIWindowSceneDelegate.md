@@ -1,6 +1,7 @@
 <!-- TOC -->
 
 - [UIWindowSceneDelegate](#uiwindowscenedelegate)
+- [Inherits From](#inherits-from)
 - [API](#api)
     - [Managing the Scene's Main Window](#managing-the-scenes-main-window)
     - [Responding to Scene Changes 应对场景变化](#responding-to-scene-changes-应对场景变化)
@@ -15,6 +16,14 @@
 使用UIWindowSceneDelegate对象管理应用程序用户界面一个实例的生命周期。
 窗口场景委托符合UISceneDelegate属性，当其场景连接到应用程序、进入前景等时，您可以使用它接收通知。
 您还可以使用它来响应场景底层环境中的变化。例如，如果用户调整场景大小，请使用委托对内容进行任何必要的更改，以适应新的大小。
+
+```swift
+@MainActor protocol UIWindowSceneDelegate
+```
+
+# Inherits From
+
+UISceneDelegate
 
 # API
 

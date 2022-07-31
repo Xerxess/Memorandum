@@ -7,6 +7,11 @@
     - [Providing a PDF version of your scene 提供您场景的PDF版本](#providing-a-pdf-version-of-your-scene-提供您场景的pdf版本)
     - [Sharing content 共享内容](#sharing-content-共享内容)
     - [Determining window behaviors 确定窗口行为](#determining-window-behaviors-确定窗口行为)
+    - [Working with window geometry  使用窗口几何](#working-with-window-geometry--使用窗口几何)
+    - [Working with focus](#working-with-focus)
+    - [Getting the status bar configuration 获取状态栏配置](#getting-the-status-bar-configuration-获取状态栏配置)
+    - [Configuring a window’s title bar  配置窗口的标题栏](#configuring-a-windows-title-bar--配置窗口的标题栏)
+    - [Supporting types 支持类型](#supporting-types-支持类型)
 
 <!-- /TOC -->
 
@@ -93,5 +98,67 @@ var windowingBehaviors: UISceneWindowingBehaviors?
 // 具有决定窗口行为的属性的对象。
 // ios16
 class UISceneWindowingBehaviors
+
+```
+
+## Working with window geometry  使用窗口几何
+
+ios 16+
+
+```swift
+// 系统空间中窗口场景几何形状的当前值。
+var effectiveGeometry: UIWindowScene.Geometry
+
+// 使用指定的几何首选项对象请求更新窗口场景的几何形状。
+func requestGeometryUpdate(UIWindowScene.GeometryPreferences, errorHandler: ((Error) -> Void)?)
+
+// 提供窗口场景几何信息的对象。
+class UIWindowScene.Geometry
+
+// 用于表示窗口场景几何首选项的抽象超类。
+class UIWindowScene.GeometryPreferences
+
+// 表示iOS应用程序中窗口场景的几何首选项的对象。
+class UIWindowScene.GeometryPreferences.iOS
+
+```
+
+## Working with focus
+
+```swift
+// 负责窗口场景的焦点系统。
+var focusSystem: UIFocusSystem?
+
+```
+
+## Getting the status bar configuration 获取状态栏配置
+
+```swift
+// 状态栏的当前配置。
+var statusBarManager: UIStatusBarManager?
+
+// 描述状态栏配置的对象。
+// 使用UIStatusBarManager对象获取其关联场景的状态栏的当前配置。
+// 您不会直接创建UIStatusBarManager对象。相反，您可以从UIWindowScene对象的statusBarManager属性中检索现有对象。
+// var isStatusBarHidden: Bool 一个布尔值，指示状态栏当前是否隐藏。
+// var statusBarStyle: UIStatusBarStyle 状态栏的当前外观。
+// var statusBarFrame: CGRect 状态栏的框架矩形。
+class UIStatusBarManager
+
+```
+
+## Configuring a window’s title bar  配置窗口的标题栏
+
+```swift
+// Mac app 窗口中显示的标题栏。
+var titlebar: UITitlebar?
+
+```
+
+## Supporting types 支持类型
+
+```swift
+// 请求窗口场景的菜单元素。
+class UIWindowScene.ActivationAction
 
 ```
