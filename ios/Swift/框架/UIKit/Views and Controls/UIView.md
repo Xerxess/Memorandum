@@ -2,43 +2,45 @@
 
 - [UIView](#uiview)
 - [API](#api)
-    - [Configuring a view’s visual appearance  配置视图的视觉外观](#configuring-a-views-visual-appearance--配置视图的视觉外观)
-    - [Configuring the event-related behavior 配置事件相关行为](#configuring-the-event-related-behavior-配置事件相关行为)
-    - [Configuring the bounds and frame rectangles 配置边界和框架矩形](#configuring-the-bounds-and-frame-rectangles-配置边界和框架矩形)
-    - [Managing the view hierarchy 管理视图层次结构](#managing-the-view-hierarchy-管理视图层次结构)
-    - [Observing view-related changes 观察视图相关变化](#observing-view-related-changes-观察视图相关变化)
-    - [Configuring content margins 配置内容页边距](#configuring-content-margins-配置内容页边距)
-    - [Getting the safe area 获取安全区域](#getting-the-safe-area-获取安全区域)
-    - [Managing the view’s constraints 管理视图的约束](#managing-the-views-constraints-管理视图的约束)
-    - [Creating constraints using layout anchors  将自动布局约束附加到视图的锚点之一。](#creating-constraints-using-layout-anchors--将自动布局约束附加到视图的锚点之一)
-    - [Working with layout guides 使用布局指南](#working-with-layout-guides-使用布局指南)
-    - [Measuring in Auto Layout 在自动布局中测量](#measuring-in-auto-layout-在自动布局中测量)
-    - [Aligning views in Auto Layout 在自动布局中对齐视图](#aligning-views-in-auto-layout-在自动布局中对齐视图)
-    - [Triggering Auto Layout 触发自动布局](#triggering-auto-layout-触发自动布局)
-    - [Debugging Auto Layout 调试自动布局](#debugging-auto-layout-调试自动布局)
-    - [Configuring the resizing behavior 配置调整大小的行为](#configuring-the-resizing-behavior-配置调整大小的行为)
-    - [Laying out subviews 布局子视图](#laying-out-subviews-布局子视图)
-    - [Adjusting the user interface 调整用户界面](#adjusting-the-user-interface-调整用户界面)
-    - [Constraining views to the keyboard 将视图限制在键盘上](#constraining-views-to-the-keyboard-将视图限制在键盘上)
-    - [Adding and removing interactions 添加和删除互动](#adding-and-removing-interactions-添加和删除互动)
-    - [Drawing and updating the view 绘制和更新视图](#drawing-and-updating-the-view-绘制和更新视图)
-    - [Updating the view when property values change 在属性值更改时更新视图](#updating-the-view-when-property-values-change-在属性值更改时更新视图)
-    - [Formatting printed view content 格式化打印视图内容](#formatting-printed-view-content-格式化打印视图内容)
-    - [Managing gesture recognizers 管理手势识别器](#managing-gesture-recognizers-管理手势识别器)
-    - [Working with focus 专注地工作](#working-with-focus-专注地工作)
-    - [Using motion effects 使用运动效果](#using-motion-effects-使用运动效果)
-    - [Preserving and restoring state 维护和恢复状态](#preserving-and-restoring-state-维护和恢复状态)
-    - [Capturing a view snapshot 拍摄视图快照](#capturing-a-view-snapshot-拍摄视图快照)
-    - [Identifying the view at runtime 在运行时识别视图](#identifying-the-view-at-runtime-在运行时识别视图)
-    - [Converting between view coordinate systems 在视图坐标系之间转换](#converting-between-view-coordinate-systems-在视图坐标系之间转换)
-    - [Hit-testing in a view 在视图中点击测试](#hit-testing-in-a-view-在视图中点击测试)
-    - [Ending a view-editing session 结束视图编辑会话](#ending-a-view-editing-session-结束视图编辑会话)
+    - [Configuring a view’s visual appearance  配置视图的视觉外观](#configuring-a-views-visual-appearance--%E9%85%8D%E7%BD%AE%E8%A7%86%E5%9B%BE%E7%9A%84%E8%A7%86%E8%A7%89%E5%A4%96%E8%A7%82)
+    - [Configuring the event-related behavior 配置事件相关行为](#configuring-the-event-related-behavior-%E9%85%8D%E7%BD%AE%E4%BA%8B%E4%BB%B6%E7%9B%B8%E5%85%B3%E8%A1%8C%E4%B8%BA)
+    - [Configuring the bounds and frame rectangles 配置边界和框架矩形](#configuring-the-bounds-and-frame-rectangles-%E9%85%8D%E7%BD%AE%E8%BE%B9%E7%95%8C%E5%92%8C%E6%A1%86%E6%9E%B6%E7%9F%A9%E5%BD%A2)
+    - [Managing the view hierarchy 管理视图层次结构](#managing-the-view-hierarchy-%E7%AE%A1%E7%90%86%E8%A7%86%E5%9B%BE%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84)
+    - [Observing view-related changes 观察视图相关变化](#observing-view-related-changes-%E8%A7%82%E5%AF%9F%E8%A7%86%E5%9B%BE%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96)
+    - [Configuring content margins 配置内容页边距](#configuring-content-margins-%E9%85%8D%E7%BD%AE%E5%86%85%E5%AE%B9%E9%A1%B5%E8%BE%B9%E8%B7%9D)
+    - [Getting the safe area 获取安全区域](#getting-the-safe-area-%E8%8E%B7%E5%8F%96%E5%AE%89%E5%85%A8%E5%8C%BA%E5%9F%9F)
+    - [Managing the view’s constraints 管理视图的约束](#managing-the-views-constraints-%E7%AE%A1%E7%90%86%E8%A7%86%E5%9B%BE%E7%9A%84%E7%BA%A6%E6%9D%9F)
+    - [Creating constraints using layout anchors  将自动布局约束附加到视图的锚点之一。](#creating-constraints-using-layout-anchors--%E5%B0%86%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F%E9%99%84%E5%8A%A0%E5%88%B0%E8%A7%86%E5%9B%BE%E7%9A%84%E9%94%9A%E7%82%B9%E4%B9%8B%E4%B8%80)
+    - [Working with layout guides 使用布局指南](#working-with-layout-guides-%E4%BD%BF%E7%94%A8%E5%B8%83%E5%B1%80%E6%8C%87%E5%8D%97)
+    - [Measuring in Auto Layout 在自动布局中测量](#measuring-in-auto-layout-%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E4%B8%AD%E6%B5%8B%E9%87%8F)
+    - [Aligning views in Auto Layout 在自动布局中对齐视图](#aligning-views-in-auto-layout-%E5%9C%A8%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80%E4%B8%AD%E5%AF%B9%E9%BD%90%E8%A7%86%E5%9B%BE)
+    - [Triggering Auto Layout 触发自动布局](#triggering-auto-layout-%E8%A7%A6%E5%8F%91%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80)
+    - [Debugging Auto Layout 调试自动布局](#debugging-auto-layout-%E8%B0%83%E8%AF%95%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80)
+    - [Configuring the resizing behavior 配置调整大小的行为](#configuring-the-resizing-behavior-%E9%85%8D%E7%BD%AE%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%A1%8C%E4%B8%BA)
+    - [Laying out subviews 布局子视图](#laying-out-subviews-%E5%B8%83%E5%B1%80%E5%AD%90%E8%A7%86%E5%9B%BE)
+    - [Adjusting the user interface 调整用户界面](#adjusting-the-user-interface-%E8%B0%83%E6%95%B4%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2)
+    - [Constraining views to the keyboard 将视图限制在键盘上](#constraining-views-to-the-keyboard-%E5%B0%86%E8%A7%86%E5%9B%BE%E9%99%90%E5%88%B6%E5%9C%A8%E9%94%AE%E7%9B%98%E4%B8%8A)
+    - [Adding and removing interactions 添加和删除互动](#adding-and-removing-interactions-%E6%B7%BB%E5%8A%A0%E5%92%8C%E5%88%A0%E9%99%A4%E4%BA%92%E5%8A%A8)
+    - [Drawing and updating the view 绘制和更新视图](#drawing-and-updating-the-view-%E7%BB%98%E5%88%B6%E5%92%8C%E6%9B%B4%E6%96%B0%E8%A7%86%E5%9B%BE)
+    - [Updating the view when property values change 在属性值更改时更新视图](#updating-the-view-when-property-values-change-%E5%9C%A8%E5%B1%9E%E6%80%A7%E5%80%BC%E6%9B%B4%E6%94%B9%E6%97%B6%E6%9B%B4%E6%96%B0%E8%A7%86%E5%9B%BE)
+    - [Formatting printed view content 格式化打印视图内容](#formatting-printed-view-content-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%89%93%E5%8D%B0%E8%A7%86%E5%9B%BE%E5%86%85%E5%AE%B9)
+    - [Managing gesture recognizers 管理手势识别器](#managing-gesture-recognizers-%E7%AE%A1%E7%90%86%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB%E5%99%A8)
+    - [Working with focus 专注地工作](#working-with-focus-%E4%B8%93%E6%B3%A8%E5%9C%B0%E5%B7%A5%E4%BD%9C)
+    - [Using motion effects 使用运动效果](#using-motion-effects-%E4%BD%BF%E7%94%A8%E8%BF%90%E5%8A%A8%E6%95%88%E6%9E%9C)
+    - [Preserving and restoring state 维护和恢复状态](#preserving-and-restoring-state-%E7%BB%B4%E6%8A%A4%E5%92%8C%E6%81%A2%E5%A4%8D%E7%8A%B6%E6%80%81)
+    - [Capturing a view snapshot 拍摄视图快照](#capturing-a-view-snapshot-%E6%8B%8D%E6%91%84%E8%A7%86%E5%9B%BE%E5%BF%AB%E7%85%A7)
+    - [Identifying the view at runtime 在运行时识别视图](#identifying-the-view-at-runtime-%E5%9C%A8%E8%BF%90%E8%A1%8C%E6%97%B6%E8%AF%86%E5%88%AB%E8%A7%86%E5%9B%BE)
+    - [Converting between view coordinate systems 在视图坐标系之间转换](#converting-between-view-coordinate-systems-%E5%9C%A8%E8%A7%86%E5%9B%BE%E5%9D%90%E6%A0%87%E7%B3%BB%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2)
+    - [Hit-testing in a view 在视图中点击测试](#hit-testing-in-a-view-%E5%9C%A8%E8%A7%86%E5%9B%BE%E4%B8%AD%E7%82%B9%E5%87%BB%E6%B5%8B%E8%AF%95)
+    - [Ending a view-editing session 结束视图编辑会话](#ending-a-view-editing-session-%E7%BB%93%E6%9D%9F%E8%A7%86%E5%9B%BE%E7%BC%96%E8%BE%91%E4%BC%9A%E8%AF%9D)
     - [Modifying the accessibility behavior Modifying the accessibility behavior](#modifying-the-accessibility-behavior-modifying-the-accessibility-behavior)
     - [Animating views with block objects](#animating-views-with-block-objects)
-    - [Displaying a playground live view  显示游乐场实时视图](#displaying-a-playground-live-view--显示游乐场实时视图)
-    - [Constants 常量](#constants-常量)
+    - [Displaying a playground live view  显示游乐场实时视图](#displaying-a-playground-live-view--%E6%98%BE%E7%A4%BA%E6%B8%B8%E4%B9%90%E5%9C%BA%E5%AE%9E%E6%97%B6%E8%A7%86%E5%9B%BE)
+    - [Constants 常量](#constants-%E5%B8%B8%E9%87%8F)
 
 <!-- /TOC -->
+
+https://developer.apple.com/documentation/uikit/uiview
 
 # UIView
 
@@ -417,6 +419,7 @@ func sizeToFit()
 var autoresizesSubviews: Bool
 
 // 一个整数位掩码，用于确定接收器在超视图边界发生变化时如何调整自身大小。
+// 用于自动布局，子视图随着父级视图的改变自动调整自身
 var autoresizingMask: UIView.AutoresizingMask
 
 ```
@@ -699,71 +702,74 @@ var playgroundLiveViewRepresentation: PlaygroundLiveViewRepresentation
 
 ```swift
 // 指定支持的动画曲线。
-case easeInOut 轻松进入轻松的曲线导致动画开始缓慢，在持续时间的中间加速，然后在完成之前再次变慢。这是大多数动画的默认曲线。
-case easeIn 轻松进入曲线会导致动画开始缓慢，然后随着动画的进展而加快。
-case easeOut 轻松曲线会导致动画快速开始，然后在完成后放慢速度。
-case linear 线性动画曲线会导致动画在其持续时间内均匀发生。
+// case easeInOut 轻松进入轻松的曲线导致动画开始缓慢，在持续时间的中间加速，然后在完成之前再次变慢。这是大多数动画的默认曲线。
+// case easeIn 轻松进入曲线会导致动画开始缓慢，然后随着动画的进展而加快。
+// case easeOut 轻松曲线会导致动画快速开始，然后在完成后放慢速度。
+// case linear 线性动画曲线会导致动画在其持续时间内均匀发生。
 enum UIView.AnimationCurve
 
 // 使用块对象为视图动画的选项。
-static var layoutSubviews: UIView.AnimationOptions
-Lay out subviews at commit time so that they are animated along with their parent.
-static var allowUserInteraction: UIView.AnimationOptions
-Allow the user to interact with views while they are being animated.
-static var beginFromCurrentState: UIView.AnimationOptions
-Start the animation from the current setting associated with an already in-flight animation.
-static var `repeat`: UIView.AnimationOptions
-Repeat the animation indefinitely.
-static var autoreverse: UIView.AnimationOptions
-Run the animation backwards and forwards (must be combined with the repeat option).
-static var overrideInheritedDuration: UIView.AnimationOptions
-Force the animation to use the original duration value specified when the animation was submitted.
-static var overrideInheritedCurve: UIView.AnimationOptions
-Force the animation to use the original curve value specified when the animation was submitted.
-static var allowAnimatedContent: UIView.AnimationOptions
-Animate the views by changing the property values dynamically and redrawing the view.
-static var showHideTransitionViews: UIView.AnimationOptions
-Hide or show views during a view transition.
-static var overrideInheritedOptions: UIView.AnimationOptions
-The option to not inherit the animation type or any options.
-static var curveEaseInOut: UIView.AnimationOptions
-Specify an ease-in ease-out curve, which causes the animation to begin slowly, accelerate through the middle of its duration, and then slow again before completing.
-static var curveEaseIn: UIView.AnimationOptions
-An ease-in curve causes the animation to begin slowly, and then speed up as it progresses.
-static var curveEaseOut: UIView.AnimationOptions
-An ease-out curve causes the animation to begin quickly, and then slow as it completes.
-static var curveLinear: UIView.AnimationOptions
-A linear animation curve causes an animation to occur evenly over its duration.
-static var transitionFlipFromLeft: UIView.AnimationOptions
-A transition that flips a view around its vertical axis from left to right (the left side of the view moves toward the front and right side toward the back).
-static var transitionFlipFromRight: UIView.AnimationOptions
-A transition that flips a view around its vertical axis from right to left (the right side of the view moves toward the front and left side toward the back).
-static var transitionCurlUp: UIView.AnimationOptions
-A transition that curls a view up from the bottom.
-static var transitionCurlDown: UIView.AnimationOptions
-A transition that curls a view down from the top.
-static var transitionCrossDissolve: UIView.AnimationOptions
-A transition that dissolves from one view to the next.
-static var transitionFlipFromTop: UIView.AnimationOptions
-A transition that flips a view around its horizontal axis from top to bottom (the top side of the view moves toward the front and the bottom side toward the back).
-static var transitionFlipFromBottom: UIView.AnimationOptions 将视图从下到上围绕其水平轴翻转的过渡（视图的底部朝前部移动，顶部朝后移动）。
-static var preferredFramesPerSecond30: UIView.AnimationOptions 每秒30帧的帧速率。
-static var preferredFramesPerSecond60: UIView.AnimationOptions 每秒60帧的帧速率。
+// static var layoutSubviews: UIView.AnimationOptions 在提交时布置子视图，以便它们与父视图一起动画。
+// static var allowUserInteraction: UIView.AnimationOptions 允许用户在动画制作时与视图进行交互。
+// static var beginFromCurrentState: UIView.AnimationOptions 从与已经进行中的动画关联的当前设置开始动画。
+// static var `repeat`: UIView.AnimationOptions 无限重复动画。
+// static var autoreverse: UIView.AnimationOptions 前后运行动画（必须与 repeat 选项结合使用）
+// static var overrideInheritedDuration: UIView.AnimationOptions 强制动画使用提交动画时指定的原始持续时间值。
+// static var overrideInheritedCurve: UIView.AnimationOptions 强制动画使用提交动画时指定的原始曲线值。
+// static var allowAnimatedContent: UIView.AnimationOptions 通过动态更改属性值并重绘视图来为视图设置动画。
+// static var showHideTransitionViews: UIView.AnimationOptions 在视图转换期间隐藏或显示视图。
+// static var overrideInheritedOptions: UIView.AnimationOptions 不继承动画类型或任何选项的选项。
+// static var curveEaseInOut: UIView.AnimationOptions 指定缓入缓出曲线，这会导致动画缓慢开始，在其持续时间的中间加速，然后在完成前再次减速
+// static var curveEaseIn: UIView.AnimationOptions 缓入曲线使动画开始缓慢，然后随着进行而加快。
+// static var curveEaseOut: UIView.AnimationOptions 缓出曲线会导致动画快速开始，然后在完成时变慢。
+// static var curveLinear: UIView.AnimationOptions 线性动画曲线使动画在其持续时间内均匀发生。
+// static var transitionFlipFromLeft: UIView.AnimationOptions 围绕其垂直轴从左到右翻转视图的过渡（视图的左侧向前移动，右侧向后移动）。
+// static var transitionFlipFromRight: UIView.AnimationOptions 将视图围绕其垂直轴从右向左翻转的过渡（视图的右侧向前移动，左侧向后移动）。
+// static var transitionCurlUp: UIView.AnimationOptions 从底部向上卷曲视图的过渡
+// static var transitionCurlDown: UIView.AnimationOptions 从顶部向下卷曲视图的过渡
+// static var transitionCrossDissolve: UIView.AnimationOptions 从一个视图到下一个视图的过渡
+// static var transitionFlipFromTop: UIView.AnimationOptions 围绕水平轴从上到下翻转视图的过渡（视图的顶侧向前移动，底侧向后移动）
+// static var transitionFlipFromBottom: UIView.AnimationOptions 将视图从下到上围绕其水平轴翻转的过渡（视图的底部朝前部移动，顶部朝后移动）。
+// static var preferredFramesPerSecond30: UIView.AnimationOptions 每秒30帧的帧速率。
+// static var preferredFramesPerSecond60: UIView.AnimationOptions 每秒60帧的帧速率。
 struct UIView.AnimationOptions
 
 // 在动画块对象中使用的动画过渡选项。
+// case none 用于指示没有指定转换的选项。
+// case flipFromLeft 一种围绕垂直轴从左到右翻转视图的过渡。视图的左侧向前方移动，右侧向后方移动
+// case flipFromRight 围绕垂直轴从右到左翻转视图的过渡。视图的右侧向前方移动，左侧向后方移动。
+// case curlUp 从底部向上卷曲视图的过渡。
+// case curlDown 从顶部向下卷曲视图的过渡。
 enum UIView.AnimationTransition
 
 // 动画完成后从层次结构中删除视图的选项。
+// case delete 动画完成时从视图层次结构中删除视图的选项
 enum UIView.SystemAnimation
 
 // 与animateKeyframes（withDuration:delay:options:animations:completion:）方法一起使用的关键帧动画选项。
+// static var layoutSubviews: UIView.KeyframeAnimationOptions
+// static var allowUserInteraction: UIView.KeyframeAnimationOptions
+// static var beginFromCurrentState: UIView.KeyframeAnimationOptions
+// static var `repeat`: UIView.KeyframeAnimationOptions
+// static var autoreverse: UIView.KeyframeAnimationOptions
+// static var overrideInheritedDuration: UIView.KeyframeAnimationOptions
+// static var overrideInheritedOptions: UIView.KeyframeAnimationOptions
+// static var calculationModeLinear: UIView.KeyframeAnimationOptions
+// static var calculationModeDiscrete: UIView.KeyframeAnimationOptions
+// static var calculationModePaced: UIView.KeyframeAnimationOptions
+// static var calculationModeCubic: UIView.KeyframeAnimationOptions
+// static var calculationModeCubicPaced: UIView.KeyframeAnimationOptions
 struct UIView.KeyframeAnimationOptions
 
 // 指定对象之间水平或垂直布局约束的键。
+// case horizontal 布置对象之间的水平关系时应用的约束。
+// case vertical 布置对象之间的垂直关系时应用的约束
 enum NSLayoutConstraint.Axis
 
 // 视图的色调调整模式。
+case automatic 视图的色调调整模式与其父视图的色调调整模式相同（如果视图没有父视图，则为 UIViewTintAdjustmentModeNormal）。
+case normal 视图的 tintColor 属性返回视图的完全未修改的色调颜色。
+case dimmed 视图的 tintColor 属性返回视图原始色调颜色的去饱和、变暗版本
 enum UIView.TintAdjustmentMode
 
 // 使用尽可能小尺寸的选项
@@ -776,9 +782,20 @@ class let layoutFittingExpandedSize: CGSize
 class let noIntrinsicMetric: CGFloat
 
 // 自动调整视图大小的选项。
+// static var flexibleLeftMargin: UIView.AutoresizingMask 通过在左边距方向上扩大或缩小视图来调整大小。
+// static var flexibleWidth: UIView.AutoresizingMask 通过扩大或缩小视图的宽度来调整大小
+// static var flexibleRightMargin: UIView.AutoresizingMask 通过在右边距方向上扩大或缩小视图来调整大小。
+// static var flexibleTopMargin: UIView.AutoresizingMask 通过在上边距方向上扩大或缩小视图来调整大小。
+// static var flexibleHeight: UIView.AutoresizingMask 通过扩大或缩小视图的高度来调整大小
+// static var flexibleBottomMargin: UIView.AutoresizingMask 通过在底部边距方向上扩大或缩小视图来调整大小。
 struct UIView.AutoresizingMask
 
 // 对视图内容的语义描述，用于确定在从左到右和从右到左布局之间切换时是否应翻转视图。
+// case unspecified 视图的默认值。在从左到右和从右到左布局之间切换时，视图会翻转
+// case playback 表示播放控件的视图，例如播放、倒带或快进按钮或播放头滑动条。在从左到右和从右到左布局之间切换时，这些视图不会翻转
+// case spatial 表示方向控件的视图，例如用于文本对齐的段控件或用于游戏的 D-pad 控件。在从左到右和从右到左布局之间切换时，这些视图不会翻转
+// case forceLeftToRight 始终使用从左到右布局显示的视图
+// case forceRightToLeft 始终使用从右到左布局显示的视图
 enum UISemanticContentAttribute
 
 ```
