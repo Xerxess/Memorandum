@@ -1,0 +1,305 @@
+<!-- TOC -->
+
+- [UIScrollView](#uiscrollview)
+- [API](#api)
+    - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-回应滚动视图交互)
+    - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--管理内容大小和偏移量)
+    - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-管理内容插入行为)
+    - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-获取布局指南)
+    - [Configuring the Scroll View](#configuring-the-scroll-view)
+    - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-获得滚动状态)
+    - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-管理滚动指示器和刷新控制)
+    - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-滚动到特定位置)
+    - [Managing Touches 管理触摸](#managing-touches-管理触摸)
+    - [Zooming and Panning 缩放和平移](#zooming-and-panning-缩放和平移)
+    - [Managing the Keyboard 管理键盘](#managing-the-keyboard-管理键盘)
+    - [Managing the Index 管理指数](#managing-the-index-管理指数)
+
+<!-- /TOC -->
+
+# UIScrollView
+
+允许滚动和缩放其包含视图的视图
+
+UIScrollView是几个UIKit类的超级类，包括UITableView和UITextView。  
+
+滚动视图除了显示垂直和水平滚动指示器外，滚动视图本身不绘图。  
+滚动视图`必须知道内容视图的大小`，这样它才能知道何时停止滚动。  
+默认情况下，当滚动超过内容的边界时，它会`反弹`。  
+
+由于滚动视图没有滚动条，因此必须知道触摸是否表示滚动的意图与跟踪内容中子视图的意图。为了做出这一决定，它通过启动计时器暂时拦截触地得分事件，并在计时器启动之前，看看触摸手指是否进行任何移动。如果计时器在位置没有显著变化的情况下触发，滚动视图会将跟踪事件发送到内容视图的触摸子视图。如果用户在计时器过之前将手指拖动足够远，滚动视图将取消子视图中的任何跟踪，并自行执行滚动。  
+子类可以覆盖touchesShouldBegin(_:with:in:), isPagingEnabled, and touchesShouldCancel(in:) 方法（滚动视图调用），以影响滚动视图如何处理滚动手势。
+
+UIScrollView类可以有一个委托，该委托必须采用U`IScrollViewDelegate`协议。  
+为了使缩放和平移正常工作，委托必须同时实现viewForZooming（in:）和scrollViewDidEndZooming（_:with:atScale:）。此外，maximumZoomScale and minimumZoomScale `缩放比例必须不同`。
+
+如果您为此视图的`restorationIdentifier`属性分配值，它会尝试在应用程序启动之间保留其滚动相关信息。  
+具体来说，保留`zoomScale、contentInset和contentOffset`属性的值。  
+在恢复过程中，滚动视图会恢复这些值，以便内容看起来滚动到与之前相同的位置。
+
+```swift
+@MainActor class UIScrollView : UIView
+```
+
+# API
+
+## Responding to Scroll View Interactions 回应滚动视图交互
+
+```swift
+// 滚动视图对象的委托。
+var delegate: UIScrollViewDelegate?
+
+// UIScrollViewDelegate协议声明的方法允许采用委托响应来自UIScrollView类的消息，从而响应并在某些方面影响滚动、缩放、缩放内容减速和滚动动画等操作。
+protocol UIScrollViewDelegate
+
+```
+
+## Managing the Content Size and Offset  管理内容大小和偏移量
+
+```swift
+// 内容视图的大小。
+var contentSize: CGSize
+
+//  内容视图的起源与滚动视图的起源偏移的点。
+var contentOffset: CGPoint
+
+// 从内容视图的来源设置与接收者的来源相对应的偏移量。
+func setContentOffset(CGPoint, animated: Bool)
+
+```
+
+## Managing the Content Inset Behavior 管理内容插入行为
+
+```swift
+// 来自内容插入和滚动视图安全区域的嵌入。
+// 使用此属性获取绘制内容的调整区域。
+// contentInsetAdjustmentBehavior 属性决定了安全区域嵌入是否包含在调整中。
+// 然后将安全区域插入添加到contentInset属性中的值中，以获得此属性的最终值。
+var adjustedContentInset: UIEdgeInsets
+
+// 内容视图从安全区域或滚动视图边缘插入的自定义距离。
+// 使用此属性扩展内容与内容视图边缘之间的空间。大小单位是点。默认值为UIEdgeInsetsZero。
+// 
+var contentInset: UIEdgeInsets
+
+// 确定调整后的内容偏移量的行为。
+// 此属性指定如何使用安全区域设置来修改滚动视图的内容区域。
+// 此属性的默认值为UIScrollView.ContentInsetAdjustmentBehavior.automatic。
+// enum ContentInsetAdjustmentBehavior
+// case automatic 自动调整滚动视图嵌入。
+// case scrollableAxes 仅按照可滚动方向调整插入。
+// case never 不要调整滚动视图的插入。
+// case always 务必在内容调整中包含安全区域设置。
+var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior
+
+// 当滚动视图的调整内容集发生变化时调用。
+func adjustedContentInsetDidChange()
+
+```
+
+## Getting the Layout Guides 获取布局指南
+
+```swift
+// 基于滚动视图未变换帧矩形的布局指南。
+var frameLayoutGuide: UILayoutGuide
+
+// 基于滚动视图未翻译内容矩形的布局指南。
+var contentLayoutGuide: UILayoutGuide
+
+```
+
+## Configuring the Scroll View
+
+```swift
+// 确定是否启用滚动的布尔值。
+// 禁用滚动时，滚动视图不接受触摸事件；它会将它们转发到响应链上。
+// 默认值为true
+var isScrollEnabled: Bool
+
+// 一个布尔值，用于确定滚动是否在特定方向上被禁用。
+// 如果此属性为false，则允许在水平和垂直方向滚动。如果此属性为真，并且用户开始向一个一般方向（水平或垂直）拖动，则滚动视图将禁用向另一个方向滚动。如果拖动方向是对角线，则滚动将不会被锁定，用户可以向任何方向拖动，直到拖动完成。
+// 默认值为false
+var isDirectionalLockEnabled: Bool
+
+// 一个布尔值，用于确定是否为滚动视图启用了分页。
+var isPagingEnabled: Bool
+
+// 控制是否启用滚动到顶部手势的布尔值。
+// 滚动到顶部手势是点击状态栏。当用户做出此手势时，系统会要求最靠近状态栏的滚动视图滚动到顶部。如果该滚动视图将scrollsToTop设置为false，则其委托从scrollViewShouldScrollToTop(_:)返回false，或者内容已经在顶部，则什么都不会发生。
+// 滚动视图滚动到内容视图顶部后，它会向委托发送scrollViewDidScrollToTop(_:)消息。
+// 默认值为true。
+var scrollsToTop: Bool
+
+// 一个布尔值，用于控制滚动视图是否越过内容边缘并再次反弹。
+// d默认值为true
+var bounces: Bool
+
+// 一个布尔值，用于确定垂直滚动到达内容末尾时是否总是发生反弹。
+// 如果此属性设置为true并且 bounces:true，即使内容小于滚动视图的边界，也允许垂直拖动
+// 默认为false
+var alwaysBounceVertical: Bool
+
+// 一个布尔值，用于确定水平滚动到达内容视图末尾时是否总是发生反弹。
+var alwaysBounceHorizontal: Bool
+
+```
+
+## Getting the Scrolling State 获得滚动状态
+
+```swift
+// 返回用户是否触摸过内容以启动滚动。
+// 如果用户触摸了内容视图，但可能尚未开始拖动它，则此属性的值为真。
+var isTracking: Bool
+
+// 一个布尔值，指示用户是否已经开始滚动内容。
+// 此属性持有的值可能需要一段时间或距离滚动才能设置为true。
+var isDragging: Bool
+
+// 返回用户抬起手指后内容是否在滚动视图中移动。
+var isDecelerating: Bool
+
+// 一个浮点值，用于确定用户抬起手指后的减速率。
+// 您的应用程序可以使用normal和fast常数作为合理减速率的参考点。
+// struct UIScrollView.DecelerationRate
+// static let normal: UIScrollView.DecelerationRate 滚动视图的默认减速率。
+// static let fast: UIScrollView.DecelerationRate 滚动视图的快速减速率。
+var decelerationRate: UIScrollView.DecelerationRate
+
+```
+
+## Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制
+
+```swift
+// 滚动指示器的样式。
+// enum IndicatorStyle
+// case `default` 滚动指示器的默认样式，为黑色，边框为白色。这种风格适合任何内容背景。
+// case black 一种黑色且小于默认样式的指示器样式。这种风格在白色内容背景下很好。
+// case white 指示器样式为白色，小于默认样式。这种风格在黑色内容背景下很好。
+// 默认 default
+var indicatorStyle: UIScrollView.IndicatorStyle
+
+// 控制水平滚动指示器是否可见的布尔值。
+// 默认true
+var showsHorizontalScrollIndicator: Bool
+
+// 控制垂直滚动指示器是否可见的布尔值。
+// 默认true
+var showsVerticalScrollIndicator: Bool
+
+// 滚动指示器从滚动视图边缘设置的水平距离。
+// 默认zero
+var horizontalScrollIndicatorInsets: UIEdgeInsets
+
+// 滚动指示器从滚动视图边缘插入的垂直距离。
+// 默认zero
+var verticalScrollIndicatorInsets: UIEdgeInsets
+
+// 一个布尔值，指示系统是否自动调整滚动指示器插入。
+// 默认true
+var automaticallyAdjustsScrollIndicatorInsets: Bool
+
+// 瞬间显示滚动指示器。
+func flashScrollIndicators()
+
+// 与滚动视图关联的刷新控件。
+var refreshControl: UIRefreshControl?
+
+```
+
+## Scrolling to a Specific Location 滚动到特定位置
+
+```swift
+// 滚动内容的特定区域，使其在接收器中可见。
+func scrollRectToVisible(CGRect, animated: Bool)
+
+```
+
+## Managing Touches 管理触摸
+
+```swift
+// 被子类覆盖，以自定义手指在显示内容中着陆时的默认行为。
+// UIScrollView的默认行为是调用触摸发生的目标子视图的UIResponder事件处理方法。
+// 如果您不希望滚动视图发送要查看的事件消息，请返回false。如果您希望视图接收这些消息，请返回true（默认值）。
+func touchesShouldBegin(Set<UITouch>, with: UIEvent?, in: UIView) -> Bool
+
+// 返回是否取消与内容子视图相关的触摸并开始拖动
+// 滚动视图在开始向内容视图发送跟踪消息后立即调用此方法。如果它从此方法收到false，它将停止将触摸事件拖动并转发到内容子视图。
+// 如果 canCancelContentTouches 属性的值为 false，滚动视图不会调用此方法。
+func touchesShouldCancel(in: UIView) -> Bool
+
+
+// 控制内容视图中是否触摸的布尔值总是会导致跟踪。
+// 如果此属性的值为true，并且内容中的视图已开始跟踪触摸它的手指，并且如果用户拖动手指足以启动滚动，则视图会收到touchesCancelled(_:with:)消息，滚动视图将触摸作为滚动处理。如果此属性的值为false，则一旦内容视图开始跟踪，滚动视图不会滚动，无论手指移动如何。
+var canCancelContentTouches: Bool
+
+// 一个布尔值，用于确定滚动视图是否延迟了触地手势的处理。
+var delaysContentTouches: Bool
+
+// 用于按下方向按钮的底层手势识别器。
+var directionalPressGestureRecognizer: UIGestureRecognizer
+
+```
+
+## Zooming and Panning 缩放和平移
+
+```swift
+// 平移手势的基础手势识别器。
+var panGestureRecognizer: UIPanGestureRecognizer
+
+// 用于捏合手势的基础手势识别器。
+var pinchGestureRecognizer: UIPinchGestureRecognizer?
+
+// 放大到内容的特定区域，使其在接收器中可见。
+func zoom(to: CGRect, animated: Bool)
+
+// 指定应用于滚动视图内容的当前比例因子的浮点值。
+// 此值决定了当前内容的缩放程度。默认值为1.0。
+var zoomScale: CGFloat
+
+// 指定当前缩放比例的浮点值。
+// 新的缩放值应该在minimumZoomScale and the maximumZoomScale之间。
+func setZoomScale(CGFloat, animated: Bool)
+
+// 一个浮点值，指定可以应用于滚动视图内容的最大缩放因子。
+var maximumZoomScale: CGFloat
+
+// 一个浮点值，指定可以应用于滚动视图内容的最小缩放因子。
+var minimumZoomScale: CGFloat
+
+// 一个布尔值，表示缩放已超过为接收器指定的缩放限制。
+// 如果滚动视图缩放回最小或最大缩放缩放值，则此属性的值为true；否则该值为false。
+var isZoomBouncing: Bool
+
+// 一个布尔值，指示内容视图当前是放大还是缩小。
+// 如果用户正在进行缩放手势，则此属性的值为true，否则为false。
+var isZooming: Bool
+
+// 一个布尔值，用于确定滚动视图在缩放超过最大限制或最小限制时是否为内容缩放添加动画效果。
+var bouncesZoom: Bool
+
+```
+
+## Managing the Keyboard 管理键盘
+
+```swift
+// 在滚动视图中开始拖动时关闭键盘的方式。
+// enum KeyboardDismissMode
+// 默认 none
+case none 键盘不会因拖动而被关闭。
+case onDrag 当拖动开始时，键盘会被关闭。
+case interactive 键盘跟随屏幕外的拖动触摸，可以再次向上拉动以取消关闭。
+
+var keyboardDismissMode: UIScrollView.KeyboardDismissMode
+
+```
+
+## Managing the Index 管理指数
+
+```swift
+// 用户滚动时显示索引的方式。
+// enum IndexDisplayMode
+// case automatic 索引会酌情自动显示或隐藏。
+// case alwaysHidden 索引永远不会显示。
+var indexDisplayMode: UIScrollView.IndexDisplayMode
+
+```
