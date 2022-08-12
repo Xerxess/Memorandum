@@ -14,6 +14,14 @@
     - [Managing the Layer Hierarchy 管理图层层次结构](#managing-the-layer-hierarchy-管理图层层次结构)
     - [Updating Layer Display 更新图层显示](#updating-layer-display-更新图层显示)
     - [Layer Animations](#layer-animations)
+    - [Managing Layer Resizing and Layout 管理图层调整大小和布局](#managing-layer-resizing-and-layout-管理图层调整大小和布局)
+    - [Managing Layer Constraints 管理图层约束](#managing-layer-constraints-管理图层约束)
+    - [Getting the Layer’s Actions 获取图层的操作](#getting-the-layers-actions-获取图层的操作)
+    - [Mapping Between Coordinate and Time Spaces 坐标和时间空间之间的映射](#mapping-between-coordinate-and-time-spaces-坐标和时间空间之间的映射)
+    - [Hit Testing 点击测试](#hit-testing-点击测试)
+    - [Scrolling 上下滚动](#scrolling-上下滚动)
+    - [Identifying the Layer 识别图层](#identifying-the-layer-识别图层)
+    - [Key-Value Coding Extensions 键值编码扩展](#key-value-coding-extensions-键值编码扩展)
 
 <!-- /TOC -->
 
@@ -388,5 +396,156 @@ class func needsDisplay(forKey: String) -> Bool
 // 将指定的动画对象添加到图层的渲染树中。
 // 如果动画的持续时间属性为零或负，则持续时间将更改为kCATransactionAnimationDuration事务属性的当前值（如果设置）或默认值0.25秒
 func add(CAAnimation, forKey: String?)
+
+// 返回具有指定标识符的动画对象。
+// 使用此方法仅检索已与图层关联的动画对象。修改返回对象的任何属性都会导致未定义的行为。
+func animation(forKey: String) -> CAAnimation?
+
+// 移除附加到图层的所有动画。
+func removeAllAnimations()
+
+// 使用指定的键删除动画对象。
+func removeAnimation(forKey: String)
+
+// 返回一个字符串数组，用于标识当前附加到该图层的动画。
+func animationKeys() -> [String]?
+
+```
+
+## Managing Layer Resizing and Layout 管理图层调整大小和布局
+
+```swift
+// 负责布置图层子层的对象。
+var layoutManager: CALayoutManager?
+
+// 无效图层的布局，并将其标记为需要更新。
+func setNeedsLayout()
+
+// 告诉图层更新其布局。
+func layoutSublayers()
+
+// 如果需要，请重新计算接收器的布局。
+func layoutIfNeeded()
+
+// 返回一个布尔值，指示图层是否已被标记为需要布局更新。
+func needsLayout() -> Bool
+
+// 一个位掩码，定义了当层的超层边界发生变化时如何调整图层的大小。
+// 如果您的应用程序不使用布局管理器或约束来处理布局更改，您可以为此属性分配一个值，以根据超级层边界的变化调整图层的大小。
+// 默认值为layerNotSizable。
+// struct CAAutoresizingMask
+// static var layerMinXMargin: CAAutoresizingMask 接收器与其超级视图之间的左边距是灵活的。
+// static var layerWidthSizable: CAAutoresizingMask 接收器的宽度是灵活的。
+// static var layerMaxXMargin: CAAutoresizingMask 接收器与其超级视图之间的正确边距是灵活的。
+// static var layerMinYMargin: CAAutoresizingMask 接收器与其超级视图之间的底部边距是灵活的。
+// static var layerHeightSizable: CAAutoresizingMask 接收器的高度是灵活的。
+// static var layerMaxYMargin: CAAutoresizingMask 接收器与其超级视图之间的最高边距是灵活的。
+var autoresizingMask: CAAutoresizingMask { get set }
+
+// 告知接收器其超级层的大小发生了变化。
+func resize(withOldSuperlayerSize: CGSize)
+
+// 告知接收器的子层，接收器的大小发生了变化。
+func resizeSublayers(withOldSize: CGSize)
+
+// 返回该层在其超级层坐标空间中的首选大小。
+// 在macOS中，此方法的默认实现调用其布局管理器的首选Size（of:）方法，即其layoutManager属性中的对象。
+// 如果该对象不存在或没有实现该方法，则此方法返回映射到其超级层坐标空间的图层当前边界矩形的大小。
+func preferredFrameSize() -> CGSize
+
+```
+
+## Managing Layer Constraints 管理图层约束
+
+```swift
+// 用于定位当前层子层的约束。
+// macOS应用程序可以使用此属性来访问其基于图层的限制。在应用约束之前，您还必须将CAConstraintLayoutManager对象分配给图层的layoutManager属性。
+// iOS应用程序不支持基于层的限制。
+var constraints: [CAConstraint]? { get set }
+
+// 将指定的约束添加到图层中。
+func addConstraint(CAConstraint)
+
+```
+
+## Getting the Layer’s Actions 获取图层的操作
+
+```swift
+// 返回分配给指定键的操作对象。
+func action(forKey: String) -> CAAction?
+
+// 包含图层操作的字典。
+var actions: [String : CAAction]?
+
+// 返回当前类的默认操作。
+class func defaultAction(forKey: String) -> CAAction?
+
+```
+
+## Mapping Between Coordinate and Time Spaces 坐标和时间空间之间的映射
+
+```swift
+// 将点从指定层的坐标系转换为接收器的坐标系。
+func convert(CGPoint, from: CALayer?) -> CGPoint
+
+// 将点从接收器的坐标系转换为指定层的坐标系。
+func convert(CGPoint, to: CALayer?) -> CGPoint
+
+// 将矩形从指定层的坐标系转换为接收器的坐标系。
+func convert(CGRect, from: CALayer?) -> CGRect
+
+// 将矩形从接收器的坐标系转换为指定层的坐标系。
+func convert(CGRect, to: CALayer?) -> CGRect
+
+// 将时间间隔从指定层的时空转换为接收器的时间空间。
+func convertTime(CFTimeInterval, from: CALayer?) -> CFTimeInterval
+
+// 将接收方的时间间隔转换为指定层的时间空间。
+func convertTime(CFTimeInterval, to: CALayer?) -> CFTimeInterval
+```
+
+## Hit Testing 点击测试
+
+```swift
+// 返回包含指定点的层层次结构（包括自身）中接收器最远的后代。
+func hitTest(CGPoint) -> CALayer?
+
+// 返回接收器是否包含指定点。
+func contains(CGPoint) -> Bool
+
+```
+
+## Scrolling 上下滚动
+
+```swift
+// 该层在自身坐标空间中的可见区域。
+// 可见区域是未被包含滚动层裁剪的区域。
+var visibleRect: CGRect { get }
+
+// 在图层最近的祖先滚动层中启动滚动，使指定的点位于滚动层的原点。
+func scroll(CGPoint)
+
+// 在图层最近的祖先滚动图层中启动滚动，以便指定的矩形可见。
+func scrollRectToVisible(CGRect)
+
+```
+
+## Identifying the Layer 识别图层
+
+```swift
+// 接收者的姓名。
+// 一些布局管理器使用图层名称来识别图层。
+// 默认值为nil。
+var name: String? { get set }
+```
+
+## Key-Value Coding Extensions 键值编码扩展
+
+```swift
+// 返回一个布尔值，指示是否应归档指定密钥的值。
+func shouldArchiveValue(forKey: String) -> Bool
+
+// 指定与指定键关联的默认值。
+class func defaultValue(forKey: String) -> Any?
 
 ```
