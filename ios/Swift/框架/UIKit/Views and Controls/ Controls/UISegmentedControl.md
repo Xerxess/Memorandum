@@ -160,10 +160,10 @@ var selectedSegmentTintColor: UIColor? { get set }
 // enum UIBarMetrics : Int, @unchecked Sendable 用于指定外观指标的常量。
 // case `default` 指定设备的默认度量。 默认，竖屏？
 // case compact 指定使用电话惯用语时的指标。 拥挤？横屏？ 紧凑的;紧密的;小型的;
-// case defaultPrompt 为具有prompt属性的条形图指定设备的默认度量，例如UINavigationBar和UISearchBar。
-// case compactPrompt 在使用电话惯用语时，使用 prompt 属性指定条形的度量，例如 UINavigationBar 和 UISearchBar。
+// case defaultPrompt 为具有prompt(提示符)属性的条形图指定设备的默认度量，例如UINavigationBar和UISearchBar。
+// case compactPrompt 在使用电话惯用语时，使用 prompt(提示符) 属性指定条形的度量，例如 UINavigationBar 和 UISearchBar。
 // static var landscapePhone: UIBarMetrics 使用电话习惯用法指定横向方向的指标。
-// static var landscapePhonePrompt: UIBarMetrics 使用带有prompt属性的条形图的电话习惯用法指定横向方向的指标，如UINavigationBar和UISearchBar。
+// static var landscapePhonePrompt: UIBarMetrics 使用带有prompt(提示符)属性的条形图的电话习惯用法指定横向方向的指标，如UINavigationBar和UISearchBar。
 func backgroundImage(for: UIControl.State, barMetrics: UIBarMetrics) -> UIImage?
 
 // 为给定的状态和条形指标设置背景图像
