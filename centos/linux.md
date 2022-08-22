@@ -114,10 +114,10 @@ kill:杀死进程，可以先用ps 或 top命令查看进程的id，然后再用
 用于挂载Linux系统外的文件
 
 ```
-#mount /dev/hda1 /mnt
+mount /dev/hda1 /mnt
 
 // 挂载iso
-#mount -t iso9660 /dev/cdrom /mnt/cdrom
+mount -t iso9660 /dev/cdrom /mnt/cdrom
 ```
 
 # ./configure、make、make install 命令
