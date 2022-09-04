@@ -7,6 +7,10 @@
     - [URLSession](#urlsession)
     - [UserDefaults](#userdefaults)
     - [JSONEncoder && JSONDecoder](#jsonencoder--jsondecoder)
+- [NSAttributedString](#nsattributedstring)
+    - [API](#api)
+    - [](#)
+    - [NSAttributedString.Key](#nsattributedstringkey)
 
 <!-- /TOC -->
 
@@ -162,4 +166,46 @@ let decoder = JSONDecoder()
 let product = try decoder.decode(GroceryProduct.self, from: json)
 
 print(product.name) // Prints "Durian"
+```
+
+# NSAttributedString
+
+具有部分文本关联属性（如视觉样式、超链接或可访问性数据）的字符串。
+
+NSAttributedString对象管理适用于字符串中`单个字符`或`字符范围的字符字符串和相关属性集`（例如字体和字距）。  
+字符及其属性的关联称为`归因字符串`。  
+该集群的两个公共类，NSAttributedString和NSMutableAttributedString分别声明只读归因字符串和可修改归因字符串的编程接口。
+
+`归因字符串`按名称标识属性，使用NSDictionary对象在指定名称下存储值。您可以将您想要的任何属性名称/值对分配给一系列字符——由您的应用程序来解释自定义属性（请参阅归因字符串编程指南）。如果您将归因字符串与Core Text框架一起使用，您也可以使用该框架定义的属性键。
+
+您可以将归因字符串与任何接受它们的API一起使用，例如Core Text。  
+AppKit和UIKit框架还提供了一个NSMutableAttributedString的子类，称为`NSTextStorage`，为扩展文本处理系统提供存储空间。  
+在iOS 6及更高版本中，您可以使用归因字符串在文本视图、文本字段和其他一些控件中显示格式化的文本。  
+AppKit和UIKit还定义了基本归因字符串界面的扩展，允许您在当前图形上下文中绘制其内容。
+
+NSAttributedString对象的默认字体是`Helvetica 12点`，这可能与平台的默认系统字体不同。  
+因此，您可能希望使用适合您应用程序的非默认属性创建新字符串。  
+您还可以使用NSParagraphStyle类及其子类NSMutableParagraphStyle来封装NSAttributedString类使用的段落或标尺属性。
+
+请注意，使用isEqual(_:)方法对NSAttributedString对象进行比较会寻找精确的相等性。  
+比较包括逐个字符字符串等式检查和所有属性的等式检查。如果字符串具有许多属性，例如附件、列表和表，则此类比较不太可能产生匹配。
+
+NSAttributedString类与其核心基金会对应产品CFAttributedString“免费桥接”。
+
+```swift
+class NSAttributedString : NSObject
+```
+
+## API
+
+###
+
+```swift
+
+```
+
+## NSAttributedString.Key
+
+```swift
+
 ```
