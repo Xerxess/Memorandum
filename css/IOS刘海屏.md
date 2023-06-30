@@ -2,6 +2,8 @@
 
 https://webkit.org/blog/7929/designing-websites-for-iphone-x/?hmsr=funteas.com&utm_medium=funteas.com&utm_source=funteas.com
 
+https://developer.mozilla.org/en-US/docs/Web/CSS/env
+
 
 ##　viewport-fit
 
