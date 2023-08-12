@@ -683,3 +683,26 @@ scale-color(#fff,$alpha:-10%); // rgba(255,255,255,.9)
   @return $result;
 }
 ```
+
+```scss
+/**
+ * px 转换为vw
+ * @param {Object} $size
+ */
+@function vw($size, $unitDefault: 1vw, $baseSize:375px) {
+  $isUnit: unitless($size);
+  $result: $baseSize / 100px;
+
+  $size: ($size/($size * 0 + 1)) / 2;
+
+  // @if($isUnit==false) {
+  //   $size: ($size/1px) / 2;
+  // }
+  // @else {
+  //   $size: $size / 2;
+  // }
+
+  $result: $size / $result*1vw;
+  @return $result
+}
+```
