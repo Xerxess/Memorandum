@@ -1,25 +1,25 @@
 <!-- TOC -->
 
 - [UIButton](#uibutton)
-- [响应按钮点击](#响应按钮点击)
-- [配置按钮的外观](#配置按钮的外观)
-- [配置按钮状态](#配置按钮状态)
-- [提供内容](#提供内容)
-- [自定义色调颜色](#自定义色调颜色)
-- [指定边缘插入](#指定边缘插入)
+- [响应按钮点击](#%E5%93%8D%E5%BA%94%E6%8C%89%E9%92%AE%E7%82%B9%E5%87%BB)
+- [配置按钮的外观](#%E9%85%8D%E7%BD%AE%E6%8C%89%E9%92%AE%E7%9A%84%E5%A4%96%E8%A7%82)
+- [配置按钮状态](#%E9%85%8D%E7%BD%AE%E6%8C%89%E9%92%AE%E7%8A%B6%E6%80%81)
+- [提供内容](#%E6%8F%90%E4%BE%9B%E5%86%85%E5%AE%B9)
+- [自定义色调颜色](#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%89%B2%E8%B0%83%E9%A2%9C%E8%89%B2)
+- [指定边缘插入](#%E6%8C%87%E5%AE%9A%E8%BE%B9%E7%BC%98%E6%8F%92%E5%85%A5)
 - [API](#api)
     - [Creating buttons](#creating-buttons)
-    - [Creating buttons of a specific type 创建特定类型的按钮](#creating-buttons-of-a-specific-type-创建特定类型的按钮)
-    - [Creating system buttons 创建系统按钮](#creating-system-buttons-创建系统按钮)
-    - [Creating buttons from a configuration object 从配置对象创建按钮](#creating-buttons-from-a-configuration-object-从配置对象创建按钮)
-    - [Managing the appearance with a configuration object 使用配置对象管理外观](#managing-the-appearance-with-a-configuration-object-使用配置对象管理外观)
-    - [Managing the title 管理标题](#managing-the-title-管理标题)
-    - [Managing images and tint color 管理图像和色调颜色](#managing-images-and-tint-color-管理图像和色调颜色)
-    - [Specifying the role 指定角色](#specifying-the-role-指定角色)
-    - [Specifying the behavioral style 指定行为风格](#specifying-the-behavioral-style-指定行为风格)
-    - [Getting the current state  获取当前状态](#getting-the-current-state--获取当前状态)
-    - [Supporting pointer interactions 支持指针交互](#supporting-pointer-interactions-支持指针交互)
-    - [Supporting menu and toggle buttons 支持菜单和切换按钮](#supporting-menu-and-toggle-buttons-支持菜单和切换按钮)
+    - [Creating buttons of a specific type 创建特定类型的按钮](#creating-buttons-of-a-specific-type-%E5%88%9B%E5%BB%BA%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%89%E9%92%AE)
+    - [Creating system buttons 创建系统按钮](#creating-system-buttons-%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%8C%89%E9%92%AE)
+    - [Creating buttons from a configuration object 从配置对象创建按钮](#creating-buttons-from-a-configuration-object-%E4%BB%8E%E9%85%8D%E7%BD%AE%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%8C%89%E9%92%AE)
+    - [Managing the appearance with a configuration object 使用配置对象管理外观](#managing-the-appearance-with-a-configuration-object-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E5%AF%B9%E8%B1%A1%E7%AE%A1%E7%90%86%E5%A4%96%E8%A7%82)
+    - [Managing the title 管理标题](#managing-the-title-%E7%AE%A1%E7%90%86%E6%A0%87%E9%A2%98)
+    - [Managing images and tint color 管理图像和色调颜色](#managing-images-and-tint-color-%E7%AE%A1%E7%90%86%E5%9B%BE%E5%83%8F%E5%92%8C%E8%89%B2%E8%B0%83%E9%A2%9C%E8%89%B2)
+    - [Specifying the role 指定角色](#specifying-the-role-%E6%8C%87%E5%AE%9A%E8%A7%92%E8%89%B2)
+    - [Specifying the behavioral style 指定行为风格](#specifying-the-behavioral-style-%E6%8C%87%E5%AE%9A%E8%A1%8C%E4%B8%BA%E9%A3%8E%E6%A0%BC)
+    - [Getting the current state  获取当前状态](#getting-the-current-state--%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81)
+    - [Supporting pointer interactions 支持指针交互](#supporting-pointer-interactions-%E6%94%AF%E6%8C%81%E6%8C%87%E9%92%88%E4%BA%A4%E4%BA%92)
+    - [Supporting menu and toggle buttons 支持菜单和切换按钮](#supporting-menu-and-toggle-buttons-%E6%94%AF%E6%8C%81%E8%8F%9C%E5%8D%95%E5%92%8C%E5%88%87%E6%8D%A2%E6%8C%89%E9%92%AE)
 - [UIButton.Configuration](#uibuttonconfiguration)
 
 <!-- /TOC -->
@@ -383,47 +383,47 @@ func updated(for: UIButton) -> UIButton.Configuration
 ```
 
 ```swift
+// 按钮显示的标题标签的文本。
 var title: String?
-//The text of the title label the button displays.
 
+// 按钮的副标题标签显示的文本。
 var subtitle: String?
-//The text the subtitle label of the button displays.
 
+// 按钮标题标签的文本和样式属性。
 var attributedTitle: AttributedString?
-//The text and style attributes for the button’s title label.
 
+// 按钮副标题标签的文本和样式属性。
 var attributedSubtitle: AttributedString?
-//The text and style attributes for the button’s subtitle label.
 
+// 当按钮状态发生变化时，用于更新归因标题的结构。
 var titleTextAttributesTransformer: UIConfigurationTextAttributesTransformer?
-//A structure to update the attributed title when the button state changes.
 
+// 当按钮状态发生变化时，用于更新属性副标题的结构。
 var subtitleTextAttributesTransformer: UIConfigurationTextAttributesTransformer?
-//A structure to update the attributed subtitle when the button state changes.
 
 struct UIConfigurationTextAttributesTransformer
 //Defines a text transformation that can affect the visual appearance of a string.
 
+// 标题和副标题标签之间的距离。
 var titlePadding: CGFloat
-//The distance between the title and subtitle labels.
 
+// 按钮用于布局标题和副标题的文本对齐。
 var titleAlignment: UIButton.Configuration.TitleAlignment
-//The text alignment the button uses to lay out the title and subtitle.
 
+// 按钮显示的前景图像。
 var image: UIImage?
-//The foreground image the button displays.
 
+// 按钮的图像和文本之间的距离。
 var imagePadding: CGFloat
-// The distance between the button’s image and text.
 
+// 按钮放置图像的边缘。
 var imagePlacement: NSDirectionalRectEdge
-// The edge against which the button places the image.
 
+// 当按钮状态发生变化时转换图像颜色的块。
 var imageColorTransformer: UIConfigurationColorTransformer?
-// A block that transforms the image color when the button state changes.
 
+// 按钮符号图像的请求配置对象。
 var preferredSymbolConfigurationForImage: UIImage.SymbolConfiguration?
-// A requested configuration object for the button symbol image.
 
 // 请求按钮首选尺寸的尺寸。
 // 尺寸表示您更喜欢此按钮的系统定义大小。无论此值如何，按钮的确切大小都可能发生变化。
@@ -461,4 +461,15 @@ var cornerStyle: UIButton.Configuration.CornerStyle
 // case medium 一种忽略背景角半径并使用中等系统定义的角半径的样式。
 // case small 一种忽略背景角半径并使用系统定义的小角半径的样式。
 enum UIButton.Configuration.CornerStyle
+
+// 按钮上显示的指示器样式。
+// 使用此属性控制出现在按钮尾随边缘的指示器的样式。
+// enum UIButton.Configuration.Indicator
+// case automatic 根据按钮的属性自动确定指标样式的常量。
+// case none 不显示指标的常数。
+// case popup 显示弹出式指示器的常量。
+var indicator: UIButton.Configuration.Indicator { get set }
+
+// 一个布尔值，用于确定按钮是否显示loading指示器而不是图像
+var showsActivityIndicator: Bool { get set }
 ```
