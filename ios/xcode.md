@@ -3,16 +3,17 @@
 <!-- TOC -->
 
 - [xcode](#xcode)
-- [工具介绍](#工具介绍)
-- [常用快捷键](#常用快捷键)
-    - [Instrument工具介绍与使用](#instrument工具介绍与使用)
+- [工具介绍](#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D)
+- [常用快捷键](#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE)
+- [快捷键设置](#%E5%BF%AB%E6%8D%B7%E9%94%AE%E8%AE%BE%E7%BD%AE)
+    - [Instrument工具介绍与使用](#instrument%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%BD%BF%E7%94%A8)
     - [Accessibility Inspector](#accessibility-inspector)
     - [FileMerge](#filemerge)
-    - [Application Loader(应用程序加载器)](#application-loader应用程序加载器)
-- [Debug、Release、Archive、Profile、Analyze概念解释](#debugreleasearchiveprofileanalyze概念解释)
+    - [Application Loader应用程序加载器](#application-loader%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%8A%A0%E8%BD%BD%E5%99%A8)
+- [Debug、Release、Archive、Profile、Analyze概念解释](#debugreleasearchiveprofileanalyze%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A)
 - [Interface Builder](#interface-builder)
-- [Xcode11: 删除默认Main.storyBoard、自定义根控制器](#xcode11-删除默认mainstoryboard自定义根控制器)
-- [构建的环境变量](#构建的环境变量)
+- [Xcode11: 删除默认Main.storyBoard、自定义根控制器](#xcode11-%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4mainstoryboard%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B9%E6%8E%A7%E5%88%B6%E5%99%A8)
+- [构建的环境变量](#%E6%9E%84%E5%BB%BA%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F)
 
 <!-- /TOC -->
 
@@ -29,6 +30,10 @@ application loader 程序加载器
 代码格式化:CMD+a -> ctrl ＋ i 格式化
 定位文件位置：CMD + SHIFT + J
 注释：CMD+OPT+/ 或 CMD+/
+
+# 快捷键设置
+
+* show completions 代码自动完成
 
 ## Instrument工具介绍与使用
 
