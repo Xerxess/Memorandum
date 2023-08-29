@@ -2,6 +2,11 @@
 
 约束的API
 
+## Getting the safe area 获取安全区域
+
+```swift
+
+```
 
 ## Managing the view’s constraints 管理视图的约束
 

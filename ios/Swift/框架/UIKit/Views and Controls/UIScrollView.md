@@ -2,18 +2,18 @@
 
 - [UIScrollView](#uiscrollview)
 - [API](#api)
-    - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-回应滚动视图交互)
-    - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--管理内容大小和偏移量)
-    - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-管理内容插入行为)
-    - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-获取布局指南)
+    - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-%E5%9B%9E%E5%BA%94%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92)
+    - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E5%A4%A7%E5%B0%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F)
+    - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E6%8F%92%E5%85%A5%E8%A1%8C%E4%B8%BA)
+    - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-%E8%8E%B7%E5%8F%96%E5%B8%83%E5%B1%80%E6%8C%87%E5%8D%97)
     - [Configuring the Scroll View](#configuring-the-scroll-view)
-    - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-获得滚动状态)
-    - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-管理滚动指示器和刷新控制)
-    - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-滚动到特定位置)
-    - [Managing Touches 管理触摸](#managing-touches-管理触摸)
-    - [Zooming and Panning 缩放和平移](#zooming-and-panning-缩放和平移)
-    - [Managing the Keyboard 管理键盘](#managing-the-keyboard-管理键盘)
-    - [Managing the Index 管理指数](#managing-the-index-管理指数)
+    - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-%E8%8E%B7%E5%BE%97%E6%BB%9A%E5%8A%A8%E7%8A%B6%E6%80%81)
+    - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-%E7%AE%A1%E7%90%86%E6%BB%9A%E5%8A%A8%E6%8C%87%E7%A4%BA%E5%99%A8%E5%92%8C%E5%88%B7%E6%96%B0%E6%8E%A7%E5%88%B6)
+    - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-%E6%BB%9A%E5%8A%A8%E5%88%B0%E7%89%B9%E5%AE%9A%E4%BD%8D%E7%BD%AE)
+    - [Managing Touches 管理触摸](#managing-touches-%E7%AE%A1%E7%90%86%E8%A7%A6%E6%91%B8)
+    - [Zooming and Panning 缩放和平移](#zooming-and-panning-%E7%BC%A9%E6%94%BE%E5%92%8C%E5%B9%B3%E7%A7%BB)
+    - [Managing the Keyboard 管理键盘](#managing-the-keyboard-%E7%AE%A1%E7%90%86%E9%94%AE%E7%9B%98)
+    - [Managing the Index 管理指数](#managing-the-index-%E7%AE%A1%E7%90%86%E6%8C%87%E6%95%B0)
 
 <!-- /TOC -->
 
@@ -75,12 +75,12 @@ func setContentOffset(CGPoint, animated: Bool)
 // 使用此属性获取绘制内容的调整区域。
 // contentInsetAdjustmentBehavior 属性决定了安全区域嵌入是否包含在调整中。
 // 然后将安全区域插入添加到contentInset属性中的值中，以获得此属性的最终值。
-var adjustedContentInset: UIEdgeInsets
+var adjustedContentInset: UIEdgeInsets { get }
 
 // 内容视图从安全区域或滚动视图边缘插入的自定义距离。
 // 使用此属性扩展内容与内容视图边缘之间的空间。大小单位是点。默认值为UIEdgeInsetsZero。
 // 
-var contentInset: UIEdgeInsets
+var contentInset: UIEdgeInsets { get set }
 
 // 确定调整后的内容偏移量的行为。
 // 此属性指定如何使用安全区域设置来修改滚动视图的内容区域。
@@ -90,7 +90,7 @@ var contentInset: UIEdgeInsets
 // case scrollableAxes 仅按照可滚动方向调整插入。
 // case never 不要调整滚动视图的插入。
 // case always 务必在内容调整中包含安全区域设置。
-var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior
+var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior { get set }
 
 // 当滚动视图的调整内容集发生变化时调用。
 func adjustedContentInsetDidChange()
@@ -114,25 +114,26 @@ var contentLayoutGuide: UILayoutGuide
 // 确定是否启用滚动的布尔值。
 // 禁用滚动时，滚动视图不接受触摸事件；它会将它们转发到响应链上。
 // 默认值为true
-var isScrollEnabled: Bool
+var isScrollEnabled: Bool { get set }
 
 // 一个布尔值，用于确定滚动是否在特定方向上被禁用。
 // 如果此属性为false，则允许在水平和垂直方向滚动。如果此属性为真，并且用户开始向一个一般方向（水平或垂直）拖动，则滚动视图将禁用向另一个方向滚动。如果拖动方向是对角线，则滚动将不会被锁定，用户可以向任何方向拖动，直到拖动完成。
 // 默认值为false
-var isDirectionalLockEnabled: Bool
+var isDirectionalLockEnabled: Bool { get set }
 
 // 一个布尔值，用于确定是否为滚动视图启用了分页。
-var isPagingEnabled: Bool
+// default:false
+var isPagingEnabled: Bool { get set }
 
 // 控制是否启用滚动到顶部手势的布尔值。
 // 滚动到顶部手势是点击状态栏。当用户做出此手势时，系统会要求最靠近状态栏的滚动视图滚动到顶部。如果该滚动视图将scrollsToTop设置为false，则其委托从scrollViewShouldScrollToTop(_:)返回false，或者内容已经在顶部，则什么都不会发生。
 // 滚动视图滚动到内容视图顶部后，它会向委托发送scrollViewDidScrollToTop(_:)消息。
 // 默认值为true。
-var scrollsToTop: Bool
+var scrollsToTop: Bool { get set }
 
 // 一个布尔值，用于控制滚动视图是否越过内容边缘并再次反弹。
-// d默认值为true
-var bounces: Bool
+// 默认值为true
+var bounces: Bool { get set }
 
 // 一个布尔值，用于确定垂直滚动到达内容末尾时是否总是发生反弹。
 // 如果此属性设置为true并且 bounces:true，即使内容小于滚动视图的边界，也允许垂直拖动
