@@ -1,7 +1,10 @@
 <!-- TOC -->
 
+- [交集根和根边距](#%E4%BA%A4%E9%9B%86%E6%A0%B9%E5%92%8C%E6%A0%B9%E8%BE%B9%E8%B7%9D)
 - [IntersectionObserver](#intersectionobserver)
 - [创建相交观察器](#%E5%88%9B%E5%BB%BA%E7%9B%B8%E4%BA%A4%E8%A7%82%E5%AF%9F%E5%99%A8)
+- [小笔记](#%E5%B0%8F%E7%AC%94%E8%AE%B0)
+    - [rootMargin](#rootmargin)
 
 <!-- /TOC -->
 
@@ -47,3 +50,13 @@ rootBounds: DOMRectReadOnly {x: 0, y: 0, width: 1897, height: 623, top: 0, …} 
 target: div#target 
 time: 12664.099999904633
 ```
+
+# 小笔记
+
+## rootMargin
+
+rootMargin:"-100px" & rootMargin:"100px" 说明：针对可视高度为500  
+理解上与css margin有点区别
+
+* rootMargin:"-100px" 这个观察范围变为400 此时的范围[100,500]
+* rootMargin:"100px" 这个观察范围变为600 此时的范围[-100,500]
