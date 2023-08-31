@@ -14,6 +14,9 @@
     - [Zooming and Panning 缩放和平移](#zooming-and-panning-%E7%BC%A9%E6%94%BE%E5%92%8C%E5%B9%B3%E7%A7%BB)
     - [Managing the Keyboard 管理键盘](#managing-the-keyboard-%E7%AE%A1%E7%90%86%E9%94%AE%E7%9B%98)
     - [Managing the Index 管理指数](#managing-the-index-%E7%AE%A1%E7%90%86%E6%8C%87%E6%95%B0)
+- [小笔记](#%E5%B0%8F%E7%AC%94%E8%AE%B0)
+    - [内容高度自适应](#%E5%86%85%E5%AE%B9%E9%AB%98%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
+    - [contentInsetAdjustmentBehavior](#contentinsetadjustmentbehavior)
 
 <!-- /TOC -->
 
@@ -304,3 +307,48 @@ var keyboardDismissMode: UIScrollView.KeyboardDismissMode
 var indexDisplayMode: UIScrollView.IndexDisplayMode
 
 ```
+
+# 小笔记
+
+## 内容高度自适应
+
+使用一个容器view 设置 bottomAnchor
+
+```swift
+view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
+```
+
+```swift
+let scrollView = UIScrollView()
+let subView = UIView()
+subView.backgroundColor = .green
+let layoutGuide:UILayoutGuide=view.safeAreaLayoutGuide
+view.addSubview(scrollView)
+scrollView.addSubview(subView)
+scrollView.translatesAutoresizingMaskIntoConstraints=false
+subView.translatesAutoresizingMaskIntoConstraints=false
+NSLayoutConstraint.activate([
+    subView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 1000),
+    subView.widthAnchor.constraint(equalToConstant: 100),
+    subView.heightAnchor.constraint(equalToConstant: 100),
+    subView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
+    subView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
+])
+NSLayoutConstraint.activate([
+    scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 0),
+    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+])
+```
+
+## contentInsetAdjustmentBehavior
+
+contentInsetAdjustmentBehavior 是一个用于控制滚动视图（例如 UITableView、UICollectionView 或 UIScrollView）在有键盘或其他输入组件出现时如何调整其内容插入（content inset）的属性。
+  
+在 iOS 中，当键盘或其他输入组件弹出时，滚动视图会自动调整其内容插入，以确保可见内容不被键盘遮挡。
+
+- automatic（默认值）：滚动视图根据当前的滚动指示器自动调整内容插入，以确保可见内容不被键盘遮挡。这是最常用的选项。
+- scrollableAxes：滚动视图只在垂直方向上自动调整内容插入，而在水平方向上保持不变。这对于横向滚动视图（例如水平滚动的 UICollectionView）很有用，可以避免在输入时水平内容发生不必要的调整。
+- never：滚动视图不会自动调整内容插入，而是保持不变。这意味着键盘或其他输入组件可能会遮挡可见内容。
+- always：无论是否有键盘或其他输入组件，滚动视图始终调整其内容插入，以确保可见内容不被遮挡。这可能导致滚动视图的内容在键盘或输入组件未出现时也被调整。

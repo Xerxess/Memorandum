@@ -1,16 +1,16 @@
 <!-- TOC -->
 
 - [UILabel](#uilabel)
-- [Customize the Label's Appearance 自定义标签的外观](#customize-the-labels-appearance-自定义标签的外观)
-- [为广大受众设计label](#为广大受众设计label)
+- [Customize the Label's Appearance 自定义标签的外观](#customize-the-labels-appearance-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E7%9A%84%E5%A4%96%E8%A7%82)
+- [为广大受众设计label](#%E4%B8%BA%E5%B9%BF%E5%A4%A7%E5%8F%97%E4%BC%97%E8%AE%BE%E8%AE%A1label)
 - [API](#api)
-    - [Accessing the Text Attributes 访问文本属性](#accessing-the-text-attributes-访问文本属性)
-    - [Sizing the Label’s Text 调整标签文本的大小](#sizing-the-labels-text-调整标签文本的大小)
-    - [Managing Highlight Values 管理高亮价值观](#managing-highlight-values-管理高亮价值观)
-    - [Drawing a Shadow 画一个阴影](#drawing-a-shadow-画一个阴影)
-    - [Drawing and Positioning Overrides 绘图和定位覆盖](#drawing-and-positioning-overrides-绘图和定位覆盖)
-    - [Getting the Layout Constraints 获得布局约束](#getting-the-layout-constraints-获得布局约束)
-    - [访问其他属性](#访问其他属性)
+    - [Accessing the Text Attributes 访问文本属性](#accessing-the-text-attributes-%E8%AE%BF%E9%97%AE%E6%96%87%E6%9C%AC%E5%B1%9E%E6%80%A7)
+    - [Sizing the Label’s Text 调整标签文本的大小](#sizing-the-labels-text-%E8%B0%83%E6%95%B4%E6%A0%87%E7%AD%BE%E6%96%87%E6%9C%AC%E7%9A%84%E5%A4%A7%E5%B0%8F)
+    - [Managing Highlight Values 管理高亮价值观](#managing-highlight-values-%E7%AE%A1%E7%90%86%E9%AB%98%E4%BA%AE%E4%BB%B7%E5%80%BC%E8%A7%82)
+    - [Drawing a Shadow 画一个阴影](#drawing-a-shadow-%E7%94%BB%E4%B8%80%E4%B8%AA%E9%98%B4%E5%BD%B1)
+    - [Drawing and Positioning Overrides 绘图和定位覆盖](#drawing-and-positioning-overrides-%E7%BB%98%E5%9B%BE%E5%92%8C%E5%AE%9A%E4%BD%8D%E8%A6%86%E7%9B%96)
+    - [Getting the Layout Constraints 获得布局约束](#getting-the-layout-constraints-%E8%8E%B7%E5%BE%97%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F)
+    - [访问其他属性](#%E8%AE%BF%E9%97%AE%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7)
 
 <!-- /TOC -->
 
@@ -166,6 +166,9 @@ var baselineAdjustment: UIBaselineAdjustment { get set }
 var minimumScaleFactor: CGFloat { get set }
 
 // 渲染文本的最大行数。
+// 默认值为 1：如果不设置 numberOfLines 属性，UILabel 将默认显示单行文本。文本超出单行宽度时，会进行截断，并以省略号（...）表示截断的部分。
+// 设置为 0：将 numberOfLines 属性设置为 0，表示文本可以显示多行。UILabel 将根据文本内容和视图的宽度自动进行换行，以适应多行显示。文本将按照自然的单词边界进行换行。
+// 自定义行数：您也可以将 numberOfLines 属性设置为大于 1 的整数值，以限制文本显示的最大行数。如果文本超出指定的行数，将会进行截断。
 var numberOfLines: Int { get set }
 
 ```
