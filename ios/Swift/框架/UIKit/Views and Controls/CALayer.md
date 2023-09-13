@@ -1,27 +1,28 @@
 <!-- TOC -->
 
 - [CALayer](#calayer)
+- [CALayer 与 UIView](#calayer-%E4%B8%8E-uiview)
 - [API](#api)
     - [Creating a Layer](#creating-a-layer)
-    - [Accessing Related Layer Objects 访问相关图层对象](#accessing-related-layer-objects-访问相关图层对象)
+    - [Accessing Related Layer Objects 访问相关图层对象](#accessing-related-layer-objects-%E8%AE%BF%E9%97%AE%E7%9B%B8%E5%85%B3%E5%9B%BE%E5%B1%82%E5%AF%B9%E8%B1%A1)
     - [Accessing the Delegate](#accessing-the-delegate)
-    - [Providing the Layer’s Content 提供图层的内容](#providing-the-layers-content-提供图层的内容)
-    - [Modifying the Layer’s Appearance 修改图层的外观](#modifying-the-layers-appearance-修改图层的外观)
-    - [Layer Filters 图层过滤器](#layer-filters-图层过滤器)
-    - [Configuring the Layer’s Rendering Behavior 配置图层的渲染行为](#configuring-the-layers-rendering-behavior-配置图层的渲染行为)
-    - [Modifying the Layer Geometry  修改图层几何](#modifying-the-layer-geometry--修改图层几何)
-    - [Managing the Layer’s Transform 管理图层的转换](#managing-the-layers-transform-管理图层的转换)
-    - [Managing the Layer Hierarchy 管理图层层次结构](#managing-the-layer-hierarchy-管理图层层次结构)
-    - [Updating Layer Display 更新图层显示](#updating-layer-display-更新图层显示)
+    - [Providing the Layer’s Content 提供图层的内容](#providing-the-layers-content-%E6%8F%90%E4%BE%9B%E5%9B%BE%E5%B1%82%E7%9A%84%E5%86%85%E5%AE%B9)
+    - [Modifying the Layer’s Appearance 修改图层的外观](#modifying-the-layers-appearance-%E4%BF%AE%E6%94%B9%E5%9B%BE%E5%B1%82%E7%9A%84%E5%A4%96%E8%A7%82)
+    - [Layer Filters 图层过滤器](#layer-filters-%E5%9B%BE%E5%B1%82%E8%BF%87%E6%BB%A4%E5%99%A8)
+    - [Configuring the Layer’s Rendering Behavior 配置图层的渲染行为](#configuring-the-layers-rendering-behavior-%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%B1%82%E7%9A%84%E6%B8%B2%E6%9F%93%E8%A1%8C%E4%B8%BA)
+    - [Modifying the Layer Geometry  修改图层几何](#modifying-the-layer-geometry--%E4%BF%AE%E6%94%B9%E5%9B%BE%E5%B1%82%E5%87%A0%E4%BD%95)
+    - [Managing the Layer’s Transform 管理图层的转换](#managing-the-layers-transform-%E7%AE%A1%E7%90%86%E5%9B%BE%E5%B1%82%E7%9A%84%E8%BD%AC%E6%8D%A2)
+    - [Managing the Layer Hierarchy 管理图层层次结构](#managing-the-layer-hierarchy-%E7%AE%A1%E7%90%86%E5%9B%BE%E5%B1%82%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84)
+    - [Updating Layer Display 更新图层显示](#updating-layer-display-%E6%9B%B4%E6%96%B0%E5%9B%BE%E5%B1%82%E6%98%BE%E7%A4%BA)
     - [Layer Animations](#layer-animations)
-    - [Managing Layer Resizing and Layout 管理图层调整大小和布局](#managing-layer-resizing-and-layout-管理图层调整大小和布局)
-    - [Managing Layer Constraints 管理图层约束](#managing-layer-constraints-管理图层约束)
-    - [Getting the Layer’s Actions 获取图层的操作](#getting-the-layers-actions-获取图层的操作)
-    - [Mapping Between Coordinate and Time Spaces 坐标和时间空间之间的映射](#mapping-between-coordinate-and-time-spaces-坐标和时间空间之间的映射)
-    - [Hit Testing 点击测试](#hit-testing-点击测试)
-    - [Scrolling 上下滚动](#scrolling-上下滚动)
-    - [Identifying the Layer 识别图层](#identifying-the-layer-识别图层)
-    - [Key-Value Coding Extensions 键值编码扩展](#key-value-coding-extensions-键值编码扩展)
+    - [Managing Layer Resizing and Layout 管理图层调整大小和布局](#managing-layer-resizing-and-layout-%E7%AE%A1%E7%90%86%E5%9B%BE%E5%B1%82%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E5%92%8C%E5%B8%83%E5%B1%80)
+    - [Managing Layer Constraints 管理图层约束](#managing-layer-constraints-%E7%AE%A1%E7%90%86%E5%9B%BE%E5%B1%82%E7%BA%A6%E6%9D%9F)
+    - [Getting the Layer’s Actions 获取图层的操作](#getting-the-layers-actions-%E8%8E%B7%E5%8F%96%E5%9B%BE%E5%B1%82%E7%9A%84%E6%93%8D%E4%BD%9C)
+    - [Mapping Between Coordinate and Time Spaces 坐标和时间空间之间的映射](#mapping-between-coordinate-and-time-spaces-%E5%9D%90%E6%A0%87%E5%92%8C%E6%97%B6%E9%97%B4%E7%A9%BA%E9%97%B4%E4%B9%8B%E9%97%B4%E7%9A%84%E6%98%A0%E5%B0%84)
+    - [Hit Testing 点击测试](#hit-testing-%E7%82%B9%E5%87%BB%E6%B5%8B%E8%AF%95)
+    - [Scrolling 上下滚动](#scrolling-%E4%B8%8A%E4%B8%8B%E6%BB%9A%E5%8A%A8)
+    - [Identifying the Layer 识别图层](#identifying-the-layer-%E8%AF%86%E5%88%AB%E5%9B%BE%E5%B1%82)
+    - [Key-Value Coding Extensions 键值编码扩展](#key-value-coding-extensions-%E9%94%AE%E5%80%BC%E7%BC%96%E7%A0%81%E6%89%A9%E5%B1%95)
 
 <!-- /TOC -->
 
@@ -39,9 +40,22 @@
 class CALayer : NSObject
 ```
 
+# CALayer 与 UIView
+
+- CALayer 是一个轻量级的绘图类，用于视图的可见内容绘制和动画。  
+- UIView 是对 CALayer 的高级封装，提供了视图层次结构、布局、约束、用户交互和动画等更高级别的功能。  
+
+在开发 iOS 应用程序时，通常会直接使用 UIView，并且在需要直接操作底层图层的情况下，可以通过 UIView 的 layer 属性访问关联的 CALayer 对象。
+
+- 高级封装： UIView 是对 CALayer 的高级封装。在创建 UIView 对象时，系统会自动创建一个关联的 CALayer 对象，并将其设置为 UIView 的图层。
+- 视图层次结构： UIView 支持层次结构，您可以将多个视图嵌套在一起形成视图层次。每个视图都有一个关联的 CALayer 对象，它们一起组成视图层次结构。层次结构的管理使得视图可以相对于父视图进行布局和变换。
+- 布局和约束： UIView 提供了更高级别的布局和约束功能，例如自动布局（Auto Layout）和栈视图（Stack View）。这些功能使得视图可以根据约束自动调整大小和位置，并处理动态内容的变化。
+- 用户交互： UIView 提供了处理用户交互的能力，例如触摸事件处理、手势识别等。CALayer 本身并不处理用户交互，它更专注于视觉效果和动画。
+- 动画： CALayer 提供了一套强大的动画机制，可以对图层的属性进行动画处理。UIView 利用 CALayer 的动画功能，提供了更高级别的动画接口，使得动画的创建和处理更加简单和直观。
+
 # API
 
-## Creating a Layer 
+## Creating a Layer
 
 ```swift
 init()
@@ -64,7 +78,7 @@ func presentation() -> Self?
 func model() -> Self
 ```
 
-## Accessing the Delegate 
+## Accessing the Delegate
 
 ```swift
 // 图层的委托对象。
