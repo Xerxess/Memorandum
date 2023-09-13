@@ -1,8 +1,20 @@
+<!-- TOC -->
+
+- [NSLayoutConstraint](#nslayoutconstraint)
+    - [每个约束都是一个线性方程，格式如下](#%E6%AF%8F%E4%B8%AA%E7%BA%A6%E6%9D%9F%E9%83%BD%E6%98%AF%E4%B8%80%E4%B8%AA%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%A0%BC%E5%BC%8F%E5%A6%82%E4%B8%8B)
+    - [API](#api)
+        - [Accessing constraint data](#accessing-constraint-data)
+        - [Getting the layout priority](#getting-the-layout-priority)
+        - [Identifying a constraint](#identifying-a-constraint)
+        - [Controlling constraint archiving](#controlling-constraint-archiving)
+        - [Constants](#constants)
+
+<!-- /TOC -->
 # NSLayoutConstraint
 
-https://developer.apple.com/documentation/uikit/nslayoutconstraint
+<https://developer.apple.com/documentation/uikit/nslayoutconstraint>
 
-https://developer.apple.com/documentation/uikit/uiview#1653701
+<https://developer.apple.com/documentation/uikit/uiview#1653701>
 
 当您设计应用程序的界面时，您可以在应用程序的窗口中定位视图和其他界面元素，并适当调整其大小。
 然而，由于各种原因，这些视图的大小和位置可能需要在运行时更改：
@@ -71,7 +83,7 @@ class func activate(_ constraints: [NSLayoutConstraint])
 class func deactivate(_ constraints: [NSLayoutConstraint])
 ```
 
-### Accessing constraint data 
+### Accessing constraint data
 
 ```swift
 // 第一个参与约束的对象。
