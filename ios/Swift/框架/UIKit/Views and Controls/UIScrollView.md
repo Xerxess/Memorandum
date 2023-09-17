@@ -50,7 +50,7 @@ UIScrollView类可以有一个委托，该委托必须采用U`IScrollViewDelegat
 
 ```swift
 // 滚动视图对象的委托。
-var delegate: UIScrollViewDelegate?
+weak var delegate: UIScrollViewDelegate? { get set }
 
 // UIScrollViewDelegate协议声明的方法允许采用委托响应来自UIScrollView类的消息，从而响应并在某些方面影响滚动、缩放、缩放内容减速和滚动动画等操作。
 protocol UIScrollViewDelegate
@@ -61,13 +61,18 @@ protocol UIScrollViewDelegate
 
 ```swift
 // 内容视图的大小。
-var contentSize: CGSize
+// default:CGSizeZero.
+var contentSize: CGSize { get set }
 
 //  内容视图的起源与滚动视图的起源偏移的点。
-var contentOffset: CGPoint
+//  default:CGPointZero.
+var contentOffset: CGPoint { get set }
 
 // 从内容视图的来源设置与接收者的来源相对应的偏移量。
-func setContentOffset(CGPoint, animated: Bool)
+func setContentOffset(
+    _ contentOffset: CGPoint,
+    animated: Bool
+)
 
 ```
 
@@ -153,20 +158,31 @@ var alwaysBounceHorizontal: Bool
 ```swift
 // 返回用户是否触摸过内容以启动滚动。
 // 如果用户触摸了内容视图，但可能尚未开始拖动它，则此属性的值为真。
-var isTracking: Bool
+// 当用户开始通过触摸滚动视图并且手指仍然按住时，滚动视图会进入跟踪状态。这时，isTracking 属性的值将为 true。
+// 当用户停止滑动手指或手指离开屏幕时，滚动视图将停止跟踪，isTracking 属性的值将变为 false。
+var isTracking: Bool { get }
 
 // 一个布尔值，指示用户是否已经开始滚动内容。
 // 此属性持有的值可能需要一段时间或距离滚动才能设置为true。
-var isDragging: Bool
+// 当用户通过触摸并拖拽滚动视图时，滚动视图进入拖拽状态，此时 isDragging 属性的值为 true。
+// 当用户停止拖拽手势或手指离开屏幕时，滚动视图停止拖拽，isDragging 属性的值变为 false。
+// 与 isTracking 不同
+// isTracking 主要用于检测用户是否正在跟踪滚动视图，即手指是否仍然按住滚动视图并移动。它可以用于在用户跟踪滚动视图时执行某些操作，例如实时更新滚动视图内容或响应特定的手势行为。
+// isDragging 主要用于检测用户是否正在拖拽滚动视图，即手指按住并移动滚动视图。它可以用于在用户拖拽滚动视图时执行某些操作，例如实时更新界面元素或处理特定的拖拽行为。
+var isDragging: Bool { get }
 
 // 返回用户抬起手指后内容是否在滚动视图中移动。
-var isDecelerating: Bool
+// 当用户通过拖拽手势释放滚动视图时，滚动视图会根据惯性继续滚动一段时间，这个过程称为减速。
+// 在减速期间，isDecelerating 属性的值为 true。
+// 当滚动视图完全停止减速时，isDecelerating 属性的值变为 false。
+var isDecelerating: Bool { get }
 
 // 一个浮点值，用于确定用户抬起手指后的减速率。
 // 您的应用程序可以使用normal和fast常数作为合理减速率的参考点。
-// struct UIScrollView.DecelerationRate
-// static let normal: UIScrollView.DecelerationRate 滚动视图的默认减速率。
-// static let fast: UIScrollView.DecelerationRate 滚动视图的快速减速率。
+// UIScrollView.DecelerationRate
+// .normal（默认值）：普通减速速率，适用于大多数情况。
+// .fast：较快的减速速率，滚动视图会更快地减速并停止。
+// .slow：较慢的减速速率，滚动视图会较慢地减速并停止。
 var decelerationRate: UIScrollView.DecelerationRate
 
 ```
@@ -180,33 +196,33 @@ var decelerationRate: UIScrollView.DecelerationRate
 // case black 一种黑色且小于默认样式的指示器样式。这种风格在白色内容背景下很好。
 // case white 指示器样式为白色，小于默认样式。这种风格在黑色内容背景下很好。
 // 默认 default
-var indicatorStyle: UIScrollView.IndicatorStyle
+var indicatorStyle: UIScrollView.IndicatorStyle { get set }
 
 // 控制水平滚动指示器是否可见的布尔值。
 // 默认true
-var showsHorizontalScrollIndicator: Bool
+var showsHorizontalScrollIndicator: Bool { get set }
 
 // 控制垂直滚动指示器是否可见的布尔值。
 // 默认true
-var showsVerticalScrollIndicator: Bool
+var showsVerticalScrollIndicator: Bool { get set }
 
 // 滚动指示器从滚动视图边缘设置的水平距离。
 // 默认zero
-var horizontalScrollIndicatorInsets: UIEdgeInsets
+var horizontalScrollIndicatorInsets: UIEdgeInsets { get set }
 
 // 滚动指示器从滚动视图边缘插入的垂直距离。
 // 默认zero
-var verticalScrollIndicatorInsets: UIEdgeInsets
+var verticalScrollIndicatorInsets: UIEdgeInsets { get set }
 
 // 一个布尔值，指示系统是否自动调整滚动指示器插入。
 // 默认true
-var automaticallyAdjustsScrollIndicatorInsets: Bool
+var automaticallyAdjustsScrollIndicatorInsets: Bool { get set }
 
 // 瞬间显示滚动指示器。
 func flashScrollIndicators()
 
 // 与滚动视图关联的刷新控件。
-var refreshControl: UIRefreshControl?
+var refreshControl: UIRefreshControl? { get set }
 
 ```
 

@@ -175,11 +175,21 @@ var allControlEvents: UIControl.Event { get }
 
 // 返回与控件关联的所有目标对象。
 var allTargets: Set<AnyHashable> { get }
+
+// 在 iOS 14 及更高版本中引入的，如果你的项目目标 iOS 版本较低，可能需要使用 addTarget(_:action:for:) 方法。
+func addAction(
+    _ action: UIAction,
+    for controlEvents: UIControl.Event
+)
 ```
 
 ## Triggering actions 触发操作
 
 ```swift
+
+//
+func sendAction(_ action: UIAction)
+
 // 调用指定的操作方法。
 func sendAction(Selector, to: Any?, for: UIEvent?)
 

@@ -1,3 +1,33 @@
+<!-- TOC -->
+
+- [UITableView](#uitableview)
+    - [Topics](#topics)
+        - [Creating a table view 创建表视图](#creating-a-table-view-%E5%88%9B%E5%BB%BA%E8%A1%A8%E8%A7%86%E5%9B%BE)
+        - [Providing the data and cells 提供数据和单元格](#providing-the-data-and-cells-%E6%8F%90%E4%BE%9B%E6%95%B0%E6%8D%AE%E5%92%8C%E5%8D%95%E5%85%83%E6%A0%BC)
+        - [Recycling table view cells 回收表视图单元格](#recycling-table-view-cells-%E5%9B%9E%E6%94%B6%E8%A1%A8%E8%A7%86%E5%9B%BE%E5%8D%95%E5%85%83%E6%A0%BC)
+        - [Recycling section headers and footers 回收部分页眉和页脚](#recycling-section-headers-and-footers-%E5%9B%9E%E6%94%B6%E9%83%A8%E5%88%86%E9%A1%B5%E7%9C%89%E5%92%8C%E9%A1%B5%E8%84%9A)
+        - [Managing interactions with the table 管理与表的交互](#managing-interactions-with-the-table-%E7%AE%A1%E7%90%86%E4%B8%8E%E8%A1%A8%E7%9A%84%E4%BA%A4%E4%BA%92)
+        - [Configuring the table’s appearance 配置表格的外观](#configuring-the-tables-appearance-%E9%85%8D%E7%BD%AE%E8%A1%A8%E6%A0%BC%E7%9A%84%E5%A4%96%E8%A7%82)
+        - [Configuring cell height and layout 配置单元高度和布局](#configuring-cell-height-and-layout-%E9%85%8D%E7%BD%AE%E5%8D%95%E5%85%83%E9%AB%98%E5%BA%A6%E5%92%8C%E5%B8%83%E5%B1%80)
+        - [Configuring header and footer appearance 配置页眉和页脚外观](#configuring-header-and-footer-appearance-%E9%85%8D%E7%BD%AE%E9%A1%B5%E7%9C%89%E5%92%8C%E9%A1%B5%E8%84%9A%E5%A4%96%E8%A7%82)
+        - [Customizing the separator appearance 自定义分隔符外观](#customizing-the-separator-appearance-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E9%9A%94%E7%AC%A6%E5%A4%96%E8%A7%82)
+        - [Getting the number of rows and sections 获取行数和节数](#getting-the-number-of-rows-and-sections-%E8%8E%B7%E5%8F%96%E8%A1%8C%E6%95%B0%E5%92%8C%E8%8A%82%E6%95%B0)
+        - [Getting cells and section-based views 获取单元格和基于部分的视图](#getting-cells-and-section-based-views-%E8%8E%B7%E5%8F%96%E5%8D%95%E5%85%83%E6%A0%BC%E5%92%8C%E5%9F%BA%E4%BA%8E%E9%83%A8%E5%88%86%E7%9A%84%E8%A7%86%E5%9B%BE)
+        - [Selecting rows 选择行](#selecting-rows-%E9%80%89%E6%8B%A9%E8%A1%8C)
+        - [Inserting, deleting, and moving rows and sections 插入、删除和移动行和节](#inserting-deleting-and-moving-rows-and-sections-%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E7%A7%BB%E5%8A%A8%E8%A1%8C%E5%92%8C%E8%8A%82)
+        - [Performing batch updates to rows and sections](#performing-batch-updates-to-rows-and-sections)
+        - [Reloading the table view 重新加载表视图](#reloading-the-table-view-%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E8%A1%A8%E8%A7%86%E5%9B%BE)
+        - [Managing drag interactions 管理拖动交互](#managing-drag-interactions-%E7%AE%A1%E7%90%86%E6%8B%96%E5%8A%A8%E4%BA%A4%E4%BA%92)
+        - [Managing drop interactions 管理放置交互](#managing-drop-interactions-%E7%AE%A1%E7%90%86%E6%94%BE%E7%BD%AE%E4%BA%A4%E4%BA%92)
+        - [Scrolling the table view 滚动表视图](#scrolling-the-table-view-%E6%BB%9A%E5%8A%A8%E8%A1%A8%E8%A7%86%E5%9B%BE)
+        - [Putting the table into edit mode 将表置于编辑模式](#putting-the-table-into-edit-mode-%E5%B0%86%E8%A1%A8%E7%BD%AE%E4%BA%8E%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F)
+        - [Configuring the table index 配置表索引](#configuring-the-table-index-%E9%85%8D%E7%BD%AE%E8%A1%A8%E7%B4%A2%E5%BC%95)
+        - [Getting the drawing areas for the table 获取表格的绘图区域](#getting-the-drawing-areas-for-the-table-%E8%8E%B7%E5%8F%96%E8%A1%A8%E6%A0%BC%E7%9A%84%E7%BB%98%E5%9B%BE%E5%8C%BA%E5%9F%9F)
+        - [Working with focus 专注工作](#working-with-focus-%E4%B8%93%E6%B3%A8%E5%B7%A5%E4%BD%9C)
+        - [Managing context menus 管理上下文菜单](#managing-context-menus-%E7%AE%A1%E7%90%86%E4%B8%8A%E4%B8%8B%E6%96%87%E8%8F%9C%E5%8D%95)
+        - [Resizing self-sizing cells 调整自调整单元格大小](#resizing-self-sizing-cells-%E8%B0%83%E6%95%B4%E8%87%AA%E8%B0%83%E6%95%B4%E5%8D%95%E5%85%83%E6%A0%BC%E5%A4%A7%E5%B0%8F)
+
+<!-- /TOC -->
 # UITableView
 
 使用`单列行`显示数据的视图
@@ -331,7 +361,7 @@ func moveSection(
 )
 ```
 
-### Performing batch updates to rows and sections 
+### Performing batch updates to rows and sections
 
 ```swift
 // 将多个插入、删除、重新加载和移动操作作为一个组动画。
