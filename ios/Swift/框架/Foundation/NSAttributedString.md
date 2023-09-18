@@ -314,6 +314,78 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
+## superscript
+
+```swift
+// 文本的上标。
+// macOS 10.0+
+// value:NSNumber
+//  The default value is 0.
+static let superscript: NSAttributedString.Key
+```
+
+## textAlternatives
+
+```swift
+// 文本的替代方案。
+// macOS 10.8+
+static let textAlternatives: NSAttributedString.Key
+```
+
+##
+
+```swift
+// 文本效果。
+// value:NSString
+// 此属性的值是一个NSString对象。
+// 使用此属性指定文本效果，例如LetterpressStyle。
+// 此属性的默认值为nil，表示没有文本效果。
+static let textEffect: NSAttributedString.Key
+```
+
+## toolTip
+
+```swift
+// 工具提示文本。
+// macOS 10.3+
+// value:NSString
+// default value is nil, 
+static let toolTip: NSAttributedString.Key
+```
+
+## underlineColor
+
+```swift
+// 底线的颜色。
+// value:UIColor
+// default:nil
+static let underlineColor: NSAttributedString.Key
+```
+
+##
+
+```swift
+// 文本的下划线样式。
+// value:NSNumber
+// 此属性的值是一个包含整数的NSNumber对象。
+// 对应于NSUnderlineStyle中描述的常量之一。
+// 默认值是styleNone。
+// static var single: NSUnderlineStyle 画一条线。
+// static var thick: NSUnderlineStyle 画一条粗线。
+// static var double: NSUnderlineStyle 画一条双线。
+// static var patternDot: NSUnderlineStyle 画一条点线。
+// static var patternDash: NSUnderlineStyle 画一条虚线。
+// static var patternDashDot: NSUnderlineStyle 画一条由虚线和点交替组成的线。
+// static var patternDashDotDot: NSUnderlineStyle 画一条由交替的虚线和两个点组成的线。
+// static var byWord: NSUnderlineStyle 仅在单词下方或通过单词绘制线条，而不是空白。
+static let underlineStyle: NSAttributedString.Key
+
+
+let attributedString = NSAttributedString(string: "Hello", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+let label = UILabel()
+label.attributedText = attributedString
+```
+
 ##
 
 ```swift

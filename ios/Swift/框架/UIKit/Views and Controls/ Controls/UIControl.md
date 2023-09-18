@@ -1,17 +1,19 @@
 <!-- TOC -->
 
 - [UIControl](#uicontrol)
-- [回应用户互动](#回应用户互动)
-- [支持本地化](#支持本地化)
-- [使控件可访问](#使控件可访问)
-- [Subclassing notes 子分类注释](#subclassing-notes-子分类注释)
+- [回应用户互动](#%E5%9B%9E%E5%BA%94%E7%94%A8%E6%88%B7%E4%BA%92%E5%8A%A8)
+- [支持本地化](#%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E5%8C%96)
+- [使控件可访问](#%E4%BD%BF%E6%8E%A7%E4%BB%B6%E5%8F%AF%E8%AE%BF%E9%97%AE)
+- [Subclassing notes 子分类注释](#subclassing-notes-%E5%AD%90%E5%88%86%E7%B1%BB%E6%B3%A8%E9%87%8A)
 - [APi](#api)
     - [Configuring the control’s attributes](#configuring-the-controls-attributes)
-    - [Accessing the control’s targets and actions 访问控件的目标和操作](#accessing-the-controls-targets-and-actions-访问控件的目标和操作)
-    - [Triggering actions 触发操作](#triggering-actions-触发操作)
-    - [Tracking touches and redrawing controls 跟踪触摸和重新绘制控件](#tracking-touches-and-redrawing-controls-跟踪触摸和重新绘制控件)
-    - [Managing context menus 管理上下文菜单](#managing-context-menus-管理上下文菜单)
-    - [Showing tooltips 显示工具提示](#showing-tooltips-显示工具提示)
+    - [Accessing the control’s targets and actions 访问控件的目标和操作](#accessing-the-controls-targets-and-actions-%E8%AE%BF%E9%97%AE%E6%8E%A7%E4%BB%B6%E7%9A%84%E7%9B%AE%E6%A0%87%E5%92%8C%E6%93%8D%E4%BD%9C)
+    - [Triggering actions 触发操作](#triggering-actions-%E8%A7%A6%E5%8F%91%E6%93%8D%E4%BD%9C)
+    - [Tracking touches and redrawing controls 跟踪触摸和重新绘制控件](#tracking-touches-and-redrawing-controls-%E8%B7%9F%E8%B8%AA%E8%A7%A6%E6%91%B8%E5%92%8C%E9%87%8D%E6%96%B0%E7%BB%98%E5%88%B6%E6%8E%A7%E4%BB%B6)
+    - [Managing context menus 管理上下文菜单](#managing-context-menus-%E7%AE%A1%E7%90%86%E4%B8%8A%E4%B8%8B%E6%96%87%E8%8F%9C%E5%8D%95)
+    - [Showing tooltips 显示工具提示](#showing-tooltips-%E6%98%BE%E7%A4%BA%E5%B7%A5%E5%85%B7%E6%8F%90%E7%A4%BA)
+    - [UIControl.Event](#uicontrolevent)
+- [System Events](#system-events)
 
 <!-- /TOC -->
 
@@ -40,7 +42,7 @@ UIControl类是您扩展以实现自定义控件的子类点。
 您`不是编写代码来跟踪触摸事件`，而是编写操作方法来响应特定于控件的事件。  
 例如，您可以编写一个响应滑块值变化的操作方法。该控件处理跟踪传入的触摸事件和确定何时调用方法的所有工作。
 
-将操作方法添加到控件时，您可以将操作方法和将该方法定义为addTarget(_:action:for:)方法的对象。（您还可以在Interface Builder中配置控件的目标和操作。）目标对象可以是任何对象，但包含控件的通常是视图控制器的根视图。如果您为目标对象指定为零，控件会在响应链中搜索定义指定操作方法的对象。   
+将操作方法添加到控件时，您可以将操作方法和将该方法定义为addTarget(_:action:for:)方法的对象。（您还可以在Interface Builder中配置控件的目标和操作。）目标对象可以是任何对象，但包含控件的通常是视图控制器的根视图。如果您为目标对象指定为零，控件会在响应链中搜索定义指定操作方法的对象。
 操作方法的签名采取三种形式之一。发送方参数对应于调用操作方法的控件，事件参数对应于触发控件相关事件的UIEvent对象。
 
 ```swift
@@ -70,12 +72,12 @@ UIControl.Event类型定义了控件可以报告的用户交互类型，这些�
 子类UIControl允许您访问内置的目标操作机制和简化的事件处理支持。  
 您可以对现有控件进行子分类，并通过以下两种方式之一修改其行为：
 
-* 覆盖现有子类的sendAction(_:to:for:)方法，以观察或修改操作方法向控件相关目标的调度。您可以使用此方法修改指定对象、选择器或事件的调度行为。
-* 覆盖 beginTracking(_:with:), continueTracking(_:with:), endTracking(_:with:), 和 cancelTracking(with:) 方法来跟踪控件中发生的触摸事件。您可以使用跟踪信息来执行其他操作。始终使用这些方法来跟踪触摸事件，而不是UIresponder类定义的方法。
+- 覆盖现有子类的sendAction(_:to:for:)方法，以观察或修改操作方法向控件相关目标的调度。您可以使用此方法修改指定对象、选择器或事件的调度行为。
+- 覆盖 beginTracking(_:with:), continueTracking(_:with:), endTracking(_:with:), 和 cancelTracking(with:) 方法来跟踪控件中发生的触摸事件。您可以使用跟踪信息来执行其他操作。始终使用这些方法来跟踪触摸事件，而不是UIresponder类定义的方法。
 
 # APi
 
-## Configuring the control’s attributes 
+## Configuring the control’s attributes
 
 ```swift
 // 控件的状态，指定为位掩码值。
@@ -239,7 +241,7 @@ var isTouchInside: Bool { get }
 
 ## Managing context menus 管理上下文菜单
 
-https://developer.apple.com/documentation/uikit/uicontrol/adding_context_menus_in_your_app
+<https://developer.apple.com/documentation/uikit/uicontrol/adding_context_menus_in_your_app>
 
 ## Showing tooltips 显示工具提示
 
@@ -251,3 +253,91 @@ var toolTip: String?
 var toolTipInteraction: UIToolTipInteraction?
 
 ```
+
+## UIControl.Event
+
+```swift
+// 用于响应用户按下（Touch Down）按钮或控件的操作。
+// 当用户按下一个按钮或控件时，可以使用 touchDown 事件来捕捉该操作，并执行相应的代码
+static var touchDown: UIControl.Event { get }
+
+// 表示用户按住按钮并重复触发的事件类型
+// 控件中的重复着陆事件；对于此事件，UITouch tapCount方法的值大于1。
+static var touchDownRepeat: UIControl.Event { get }
+
+// 将手指拖入控件边界内的事件。
+// 用户在按钮内部拖动的事件类型
+static var touchDragInside: UIControl.Event { get }
+
+// 将手指拖出控件范围的事件。
+static var touchDragOutside: UIControl.Event { get }
+
+// 手指被拖入控件边界的事件。
+// 仅当触摸起源于控件的边界内，退出边界，然后再次进入边界时，才会传递此事件。
+static var touchDragEnter: UIControl.Event { get }
+
+// 手指从控件内拖到其界限外的事件。
+static var touchDragExit: UIControl.Event { get }
+
+// 用户按住按钮并在按钮内部释放触摸时触发的事件类型。
+static var touchUpInside: UIControl.Event { get }
+
+// 表示用户按住按钮并在按钮外部释放触摸时触发的事件类型。
+static var touchUpOutside: UIControl.Event { get }
+
+// 取消当前控制触摸的系统事件。
+static var touchCancel: UIControl.Event { get }
+
+// 触摸拖动或以其他方式操作控件，使其发出一系列不同的值。
+// 表示用户修改控件的值时触发的事件类型。
+static var valueChanged: UIControl.Event { get }
+
+// 在显示菜单之前已触发菜单操作。
+// iOS 14.0+
+// 表示当用户选择菜单项时触发的事件类型。
+static var menuActionTriggered: UIControl.Event { get }
+
+// 由按钮触发的语义动作。
+// 表示用户触发控件的主要操作时的事件类型
+static var primaryActionTriggered: UIControl.Event { get }
+
+// 通过输入其边界在文本字段中启动编辑会话的触摸。
+// 表示用户开始编辑控件时触发的事件类型。
+// 当用户开始编辑文本框时，textFieldEditingDidBegin(_:) 方法将被调用
+static var editingDidBegin: UIControl.Event { get }
+
+// 在文本字段中进行编辑更改的触摸。
+static var editingChanged: UIControl.Event { get }
+
+// 通过留下边界来结束文本字段中的编辑会话的触摸。
+// 表示当用户结束编辑控件时触发的事件类型。
+static var editingDidEnd: UIControl.Event { get }
+
+// 在文本字段中结束编辑会话的触摸。
+// 表示当用户在编辑控件中按下返回键并释放时触发的事件类型。
+static var editingDidEndOnExit: UIControl.Event { get }
+
+// 所有触摸事件。
+// 表示控件接收到所有触摸事件时触发的事件类型。
+static var allTouchEvents: UIControl.Event { get }
+
+// 文本字段的所有编辑触摸。
+static var allEditingEvents: UIControl.Event { get }
+
+// 可供应用程序使用的一系列控制事件值。
+static var applicationReserved: UIControl.Event { get }
+
+// 为内部框架使用保留的一系列控制事件值。
+static var systemReserved: UIControl.Event { get }
+
+// 所有事件，包括系统事件。
+static var allEvents: UIControl.Event { get }
+```
+
+# System Events
+
+- 启动和终止事件：操作系统通知应用程序启动或终止的事件，典型的例子是应用程序启动时会触发启动事件，而应用程序被关闭时会触发终止事件。
+- 设备状态变化事件：当设备状态发生变化时触发的事件，例如电池电量变化、网络连接状态变化、设备旋转等。
+- 系统警告和错误事件：操作系统通知应用程序有警告或错误发生的事件，例如内存不足、权限被拒绝等。
+- 定时触发事件：操作系统提供的定时器或定时任务，可以触发特定时间间隔或特定时间点的事件。
+- 系统通知和推送事件：当操作系统接收到新的通知或推送消息时触发的事件，应用程序可以监听并处理这些消息。
