@@ -56,6 +56,7 @@ func removeArrangedSubview(_ view: UIView)
 var axis: NSLayoutConstraint.Axis { get set }
 
 // 垂直于堆栈视图轴的排列子视图的对齐。
+// default:UIStackView.Alignment.fill
 // UIStackView.Alignment 
 // case fill 堆栈视图调整其排列视图大小的布局，以便它们填充垂直于堆栈视图轴的可用空间。
 // case center
@@ -68,6 +69,7 @@ var axis: NSLayoutConstraint.Axis { get set }
 var alignment: UIStackView.Alignment { get set }
 
 // 沿堆栈视图轴排列视图的分布。
+// default:UIStackView.Distribution.fill
 // UIStackView.Distribution
 // case fill 当排列视图不适合堆栈视图时，它会根据其压缩阻力优先级缩小视图。如果排列的视图没有填充堆栈视图，它会根据其拥抱优先级来拉伸视图。如果有任何歧义，堆栈视图会根据排列的子视图数组中的索引调整排列视图的大小。 
 // case fillEqually  调整视图大小，使其沿着堆栈视图的轴线大小相同。
