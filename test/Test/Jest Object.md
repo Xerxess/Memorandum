@@ -22,7 +22,7 @@
     - [jest.fn(implementation?) *](#jestfnimplementation-span-stylecolorredspan)
     - [jest.isMockFunction(fn)](#jestismockfunctionfn)
     - [jest.replaceProperty(object, propertyKey, value)](#jestreplacepropertyobject-propertykey-value)
-    - [jest.spyOn(object, methodName)](#jestspyonobject-methodname)
+    - [jest.spyOn(object, methodName) *s](#jestspyonobject-methodname-span-stylecolorredspans)
     - [jest.spyOn(object, methodName, accessType?)](#jestspyonobject-methodname-accesstype)
     - [jest.clearAllMocks()](#jestclearallmocks)
     - [jest.resetAllMocks()](#jestresetallmocks)
@@ -187,10 +187,44 @@ console.log(returnsTrue()); // true;
 用 value 替换 object[propertyKey] 。该属性必须已存在于对象中。同一属性可能会被替换多次。
 `返回被替换的 Jest 属性。`
 
-### jest.spyOn(object, methodName)
+### jest.spyOn(object, methodName) <span style="color:red;">*</span>
 
 创建与 jest.fn 类似的 mock 函数，但也会跟踪对 object[methodName] 的调用。
 `返回 Jest 模拟函数。`
+
+```ts
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import AuthButton from "components/AuthButton";
+// 注意：这里要写成 * as userUtils！！！
+import * as userUtils from "apis/user";
+import { AxiosResponse } from "axios";
+
+// 也很偏向细节，效果也不好
+describe("AuthButton Mock Axios", () => {
+  it("可以正确展示普通用户按钮内容", async () => {
+    jest.spyOn(userUtils, "getUserRole").mockResolvedValueOnce({
+      // 其它的实现...
+      data: { userType: "user" },
+    } as AxiosResponse);
+
+    render(<AuthButton>你好</AuthButton>);
+
+    expect(await screen.findByText("普通用户你好")).toBeInTheDocument();
+  });
+
+  it("可以正确展示管理员按钮内容", async () => {
+    jest.spyOn(userUtils, "getUserRole").mockResolvedValueOnce({
+      // 其它的实现...
+      data: { userType: "admin" },
+    } as AxiosResponse);
+
+    render(<AuthButton>你好</AuthButton>);
+
+    expect(await screen.findByText("管理员你好")).toBeInTheDocument();
+  });
+});
+```
 
 ### jest.spyOn(object, methodName, accessType?)
 
