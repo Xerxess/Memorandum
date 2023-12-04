@@ -5,6 +5,9 @@
 - [Swift内置协议](#swift内置协议)
   - [Sendable 可发送](#sendable-可发送)
   - [Error](#error)
+  - [Equatable](#equatable)
+  - [Hashable](#hashable)
+  - [Comparable](#comparable)
 
 <!-- /code_chunk_output -->
 
@@ -55,3 +58,9 @@ do {
     print("Other error: \(error)")
 }
 ```
+
+## Equatable
+
+## Hashable
+
+## Comparable
