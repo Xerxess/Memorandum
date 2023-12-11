@@ -8,6 +8,7 @@
   - [Equatable](#equatable)
   - [Hashable](#hashable)
   - [Comparable](#comparable)
+  - [Sequence](#sequence)
 
 <!-- /code_chunk_output -->
 
@@ -64,3 +65,30 @@ do {
 ## Hashable
 
 ## Comparable
+
+## Sequence
+
+一种提供对其元素的顺序、迭代访问的类型。
+
+```swift
+// 自定义类型符合 Sequence 可以实现
+struct Countdown: Sequence, IteratorProtocol {
+    var count: Int
+    mutating func next() -> Int? {
+        if count == 0 {
+            return nil
+        } else {
+            defer { count -= 1 }
+            return count
+        }
+    }
+}
+
+let threeToGo = Countdown(count: 3)
+for i in threeToGo {
+    print(i)
+}
+// Prints "3"
+// Prints "2"
+// Prints "1"
+```
