@@ -2,6 +2,8 @@
 
 使用 OptionSet 协议来表示位集类型，其中各个位代表集合的成员。
 
+* 通过使用 OptionSet，您可以轻松地定义和操作多个可选项，并在需要时对它们进行组合、查询和修改。这种方式非常适合处理具有多个开关、配置或标志的场景。
+
 ```swift
 struct ShippingOptions: OptionSet {
     let rawValue: Int // 创建选项集时，请在类型声明中包含 rawValue 属性
