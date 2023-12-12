@@ -1,13 +1,17 @@
-<!-- TOC -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [URLs](#urls)
-    - [URL](#url)
-        - [Topics](#topics)
-        - [Accessing the Parts of a URL 访问URL的各个部分](#accessing-the-parts-of-a-url-%E8%AE%BF%E9%97%AEurl%E7%9A%84%E5%90%84%E4%B8%AA%E9%83%A8%E5%88%86)
-        - [URL字符串 编解码](#url%E5%AD%97%E7%AC%A6%E4%B8%B2-%E7%BC%96%E8%A7%A3%E7%A0%81)
-    - [URLComponents](#urlcomponents)
+  - [URL](#url)
+    - [Topics](#topics)
+    - [Accessing the Parts of a URL 访问URL的各个部分](#accessing-the-parts-of-a-url-访问url的各个部分)
+    - [URL字符串 编解码](#url字符串-编解码)
+  - [URLComponents & URLQueryItem](#urlcomponents--urlqueryitem)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
 # URLs
 
 ## URL
@@ -39,6 +43,46 @@ let fileURL = URL(fileURLWithPath: "/path/to/file.txt")
 let contents = try Data(contentsOf: fileURL) // 从文件读取内容
 try contents.write(to: fileURL) // 将内容写入文件
 
+```
+
+```swift
+let url = URL(string:"https://www.baidu.com/?query=test&query2=test2")
+
+// Optional("https://www.baidu.com/?query=test&query2=test2")
+print(url?.absoluteString)
+
+// Optional(https://www.baidu.com/?query=test&query2=test2)
+print(url?.absoluteURL)
+
+// nil
+print(url?.baseURL)
+
+// nil
+print(url?.fragment)
+
+// Optional("www.baidu.com")
+print(url?.host)
+
+// Optional("/")
+print(url?.lastPathComponent)
+
+// Optional("/")
+print(url?.path)
+
+// Optional("")
+print(url?.pathExtension)
+
+// nil
+print(url?.port)
+
+// Optional("query=test&query2=test2")
+print(url?.query)
+
+// Optional("/")
+print(url?.relativePath)
+
+// Optional("https")
+print(url?.scheme)
 ```
 
 ### Topics
@@ -85,18 +129,22 @@ var scheme: String? { get }
 let urlString = "https://www.example.com/path with spaces"
 if let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
     // 使用编码后的字符串
+    print(encodedString)
+    // https://www.example.com/?id=%E4%B8%AD%E6%96%87
 }
 ```
 
 ```swift
 // URL 解码
-let urlString = "https://www.example.com/path%20with%20spaces"
+let urlString = "https://www.example.com/?id=%E4%B8%AD%E6%96%87"
 if let decodedString = urlString.removingPercentEncoding {
     // 使用解码后的字符串
+    print(decodedString)
+    // https://www.example.com/?id=中文
 }
 ```
 
-## URLComponents
+## URLComponents & URLQueryItem
 
 与 URL 不同
 
