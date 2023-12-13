@@ -1,0 +1,171 @@
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [JSON编码和解码](#json编码和解码)
+  - [JSONEncoder](#jsonencoder)
+  - [JSONEncoder](#jsonencoder-1)
+  - [JSONSerialization](#jsonserialization)
+
+<!-- /code_chunk_output -->
+
+# JSON编码和解码
+
+## JSONEncoder
+
+```swift
+// 必须 符合 Codable
+struct GroceryProduct: Codable {
+    var userName:String = "小明"
+    var name: String
+    var points: Int
+    var description: String?
+}
+
+let pear = GroceryProduct(name: "Pear", points: 250, description: "A ripe pear.")
+
+let encoder = JSONEncoder()
+// 输出格式选项使用充足的空白和缩进使输出易于阅读。
+encoder.outputFormatting = .prettyPrinted
+// 将驼峰式转蛇形式 即userName => user_name
+encoder.keyEncodingStrategy = .convertToSnakeCase
+
+let data = try encoder.encode(pear)
+print(String(data: data, encoding: .utf8)!)
+
+
+/* Prints:
+ {
+   "name" : "Pear",
+   "points" : 250,
+   "description" : "A ripe pear."
+ }
+*/
+```
+
+日期处理
+
+```swift
+struct T:Codable {
+    var nameName = "name"
+    var date = Date.now
+}
+
+let encoder = JSONEncoder()
+encoder.outputFormatting = .prettyPrinted
+encoder.keyEncodingStrategy = .convertToSnakeCase
+
+// 自 1970 年 1 月 1 日午夜 UTC 以来的毫秒数对日期进行编码
+// encoder.dateEncodingStrategy = .millisecondsSince1970
+
+// 自 1970 年 1 月 1 日午夜 UTC 以来的秒数对日期进行编码
+// encoder.dateEncodingStrategy = .secondsSince1970
+
+//  ISO 8601 和 RFC 3339 标准格式化日期的策 "2023-12-13T14:11:49Z"
+// encoder.dateEncodingStrategy = .secondsSince1970
+
+// 自定义1
+// let format = DateFormatter()
+// format.dateFormat = "yyyy-MM-dd hh:mm:ss"
+// encoder.dateEncodingStrategy = .formatted(format)
+
+// 自定义2
+encoder.dateEncodingStrategy = .custom { date, encoder in
+    // 在这里自定义日期的编码方式
+    let dateFormatter = DateFormatter()
+    // dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+    let dateString = dateFormatter.string(from: date)
+    var container = encoder.singleValueContainer()
+    try container.encode(dateString)
+}
+
+let encoderStr = try? encoder.encode(T())
+if let encoderStr,let a = String(data: encoderStr, encoding: .utf8) {
+    print(a)
+}
+
+// {
+//  "name_name" : "name",
+//   "date" : "2023-12-13 22:06:11"
+// }
+```
+
+## JSONEncoder
+
+```swift
+struct T:Codable {
+    var nameName = "name"
+    var date = Date.now
+}
+
+let format = DateFormatter()
+format.dateFormat = "yyyy-MM-dd hh:mm:ss"
+
+let s2 = """
+{
+  "name_name" : "name",
+  "date" : "2023-12-13 22:16:57"
+}
+"""
+
+let dencoder = JSONDecoder()
+// 蛇形键转换为驼峰形键的键解码
+dencoder.keyDecodingStrategy = .convertFromSnakeCase
+dencoder.dateDecodingStrategy = .formatted(format)
+let dencoderObj = try? dencoder.decode(T.self, from: s2.data(using: .utf8)!)
+if let dencoderObj {
+    print(dencoderObj.nameName)
+}
+```
+
+## JSONSerialization
+
+在 JSON 和等效的 Foundation 对象之间进行转换的对象
+
+Foundation 对象转换为 JSON，该对象必须具有以下属性
+
+* 顶级对象是 NSArray 或 NSDictionary ，除非您设置 fragmentsAllowed 选项
+* 所有对象都是 NSString 、 NSNumber 、 NSArray 、 NSDictionary 或 NSNull 的实例
+* 所有字典键都是 NSString 的实例
+* 数字既不是 NaN 也不是无穷大
+
+```swift
+import  Foundation
+
+let jsonString = "{\"name\":\"John\", \"age\":30}"
+if let jsonData = jsonString.data(using: .utf8) {
+    do {
+        let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: [])
+        if let dictionary = jsonObject as? [String: Any] {
+            let name = dictionary["name"] as? String
+            let age = dictionary["age"] as? Int
+            print(name, age)
+        }
+    } catch {
+        print("Error: \(error)")
+    }
+}
+
+// Optional("John") Optional(30)
+```
+
+```swift
+import  Foundation
+
+let dictionary = ["name": "John", "age": 30] as [String : Any]
+do {
+    let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [.prettyPrinted])
+    if let jsonString = String(data: jsonData, encoding: .utf8) {
+        print(jsonString)
+    }
+} catch {
+    print("Error: \(error)")
+}
+
+// {
+//   "name" : "John",
+//   "age" : 30
+// }
+```
