@@ -324,7 +324,7 @@ func setPreservationPriority(
 func preservationPriority(forTag tag: String) -> Double
 ```
 
-## Getting Classes from a Bundlein page link 从 Bundlein 页面链接获取类
+## Getting Classes from a Bundlein 获取类
 
 ```swift
 // 返回指定名称的类对象。
@@ -341,7 +341,7 @@ class let didLoadNotification: NSNotification.Name
 let NSLoadedClasses: String
 ```
 
-## Loading Code from a Bundlein page link 从 Bundlein 页面链接加载代码
+## Loading Code from a Bundlein page 加载代码
 
 ```swift
 // 一个数字数组，指示捆绑包可执行文件支持的架构类型。
@@ -361,4 +361,44 @@ func unload() -> Bool
 
 // 捆绑包的负载状态。
 var isLoaded: Bool { get }
+```
+
+## 代码样例
+
+```swift
+import Foundation
+
+// 获取主要资源束
+let mainBundle = Bundle.main
+
+// 获取资源束中的文件路径
+if let filePath = mainBundle.path(forResource: "image", ofType: "png") {
+    print("File path: \(filePath)")
+}
+
+// 获取资源束中的文件 URL
+if let fileURL = mainBundle.url(forResource: "image", withExtension: "png") {
+    print("File URL: \(fileURL)")
+}
+
+// 获取本地化字符串
+let localizedString = mainBundle.localizedString(forKey: "Greeting", value: nil, table: "Localizable")
+print("Localized string: \(localizedString)")
+
+// 获取资源束的信息字典
+if let infoDictionary = mainBundle.infoDictionary {
+    let appName = infoDictionary["CFBundleName"] as? String
+    let appVersion = infoDictionary["CFBundleShortVersionString"] as? String
+    print("App name: \(appName ?? "")")
+    print("App version: \(appVersion ?? "")")
+}
+
+// 返回与接收者信息属性列表中指定键关联的值。
+if let objKey = mainBundle.object(forInfoDictionaryKey: "CFBundleName") {
+    print(objKey)
+}
+
+// 获取资源束的标识符
+let bundleIdentifier = mainBundle.bundleIdentifier
+print("Bundle identifier: \(bundleIdentifier ?? "")")
 ```
