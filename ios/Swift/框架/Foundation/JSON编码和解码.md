@@ -7,6 +7,8 @@
   - [JSONEncoder](#jsonencoder)
   - [JSONEncoder](#jsonencoder-1)
   - [JSONSerialization](#jsonserialization)
+  - [CodingKeys](#codingkeys)
+  - [Encodable 和 Decodable 的自定义实现来定义您自己的编码和解码逻辑](#encodable-和-decodable-的自定义实现来定义您自己的编码和解码逻辑)
 
 <!-- /code_chunk_output -->
 
@@ -167,5 +169,82 @@ do {
 // {
 //   "name" : "John",
 //   "age" : 30
+// }
+```
+
+## CodingKeys
+
+* 列化数据格式中使用的键与数据类型中的属性名称不匹配，请通过将 String 指定为 CodingKeys 枚举的原始值类型来提供备用键。
+* 可以排除不编码的字段，注意排除字段需要默认初始值
+
+```swift
+import  Foundation
+
+struct myStruct:Codable {
+    var userName:String
+    var sex:String = ""
+    init(userName name:String,sex:String){
+        self.userName = name
+        self.sex = sex
+    }
+    
+    enum CodingKeys:String,CodingKey {
+        case userName = "user_name"
+    }
+    
+}
+let encoder = JSONEncoder()
+encoder.outputFormatting = .prettyPrinted
+let jsonData = try! encoder.encode(myStruct(userName: "小明", sex: "男"))
+print(String(data: jsonData, encoding: .utf8)!)
+
+
+// {
+//  "user_name" : "小明"
+// }
+```
+
+## Encodable 和 Decodable 的自定义实现来定义您自己的编码和解码逻辑
+
+```swift
+struct myStruct:Codable {
+    var userName:String
+    var sex:String = ""
+    var age2:Int?
+ 
+    init(userName name:String,sex:String){
+        self.userName = name
+        self.sex = sex
+    }
+   
+    enum AppendKeys: String,CodingKey {
+        case userName = "user_name"
+        case age
+        case age2
+        case books
+    }
+    
+    func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: AppendKeys.self)
+        try container.encodeIfPresent(age2 , forKey: .age2)
+        try container.encode(userName, forKey: .userName)
+         try container.encode("test", forKey: .age)
+        // 数组
+       var unKeyContainer =  container.nestedUnkeyedContainer(forKey: .books)
+//        try unKeyContainer.encode("")
+        }
+    
+}
+let encoder = JSONEncoder()
+encoder.outputFormatting = .prettyPrinted
+let jsonData = try! encoder.encode(myStruct(userName: "小明", sex: "男"))
+print(String(data: jsonData, encoding: .utf8)!)
+
+// {
+//   "user_name" : "小明",
+//   "age" : "test",
+//   "books" : [
+// 
+//   ]
 // }
 ```
