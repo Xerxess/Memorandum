@@ -8,15 +8,16 @@
     - [Accessing the Parts of a URL 访问URL的各个部分](#accessing-the-parts-of-a-url-访问url的各个部分)
     - [URL字符串 编解码](#url字符串-编解码)
   - [URLComponents & URLQueryItem](#urlcomponents--urlqueryitem)
+  - [通过URL 获取文件内容](#通过url-获取文件内容)
 
 <!-- /code_chunk_output -->
-
 
 # URLs
 
 ## URL
 
 标识资源位置的值，例如远程服务器上的项目或本地文件的路径。
+URL 是引用本地文件的首选方式。大多数从文件读取数据或向文件写入数据的对象都具有接受 URL 而不是路径名作为文件引用的方法。
 
 ```swift
 // URL 类的一些常规用法
@@ -190,4 +191,10 @@ if var urlComponents = URLComponents(string: urlString) {
         // 使用修改后的 URL
     }
 }
+```
+
+## 通过URL 获取文件内容
+
+```swift
+String.init(contentsOf:encoding:)
 ```
