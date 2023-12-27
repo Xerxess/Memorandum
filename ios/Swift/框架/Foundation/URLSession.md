@@ -191,3 +191,74 @@ if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
     }.resume()
 }
 ```
+
+## 代理
+
+```swift
+import PlaygroundSupport
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+import  Foundation
+
+class sessionDataDelegate:NSObject,URLSessionDataDelegate {
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        didCompleteWithError error: Error?
+    ){
+        guard error==nil else {
+            print(error)
+             return
+        }
+        print("请求成功")
+    }
+    
+    // 从服务器收到了初始回复（标头）
+    // 可监测一些头信息
+    // completionHandler(.cancel) 取消
+    // completionHandler(.allow) 继续
+    // completionHandler(.becomeDownload) 转换为下载
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        didReceive response: URLResponse,
+        completionHandler: @escaping @Sendable (URLSession.ResponseDisposition) -> Void
+    ){
+        if let res =  dataTask.response as? HTTPURLResponse
+        {          
+            let headers = res.allHeaderFields
+            //            print(headers)
+        }
+        completionHandler(.becomeDownload)
+    }
+    
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        didReceive data: Data
+    ){
+        print(data)
+    }
+}
+
+
+let urlSession = URLSession(configuration: URLSessionConfiguration.default,delegate: sessionDataDelegate(), delegateQueue: nil)
+
+let task = urlSession.dataTask(with: URL(string: "https://www.jd.com/")!) 
+//{ data, response, error in
+//    //    print(task.currentRequest?.allHTTPHeaderFields)
+//    if let error {
+//        print(error)       
+//    }
+//    if let response = response as? HTTPURLResponse,(200...299).contains(response.statusCode),let data {
+//        let string = String(data: data, encoding: .utf8)!
+//        //        print(string.count)
+//        let starIndex = string.startIndex
+//        let endIndex = string.index(starIndex, offsetBy: 1)
+//        //        print(string[starIndex...endIndex])
+//        let allHeader = response.allHeaderFields
+//        //        print(allHeader)
+//    }
+//}
+task.resume()
+```
