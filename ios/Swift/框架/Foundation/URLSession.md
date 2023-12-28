@@ -7,6 +7,10 @@
 - [URLSessionConfiguration](#urlsessionconfiguration)
 - [HTTPCookieStorage & HTTPCookie](#httpcookiestorage--httpcookie)
 - [URLCache](#urlcache)
+- [URLRequest](#urlrequest)
+- [URLResponse && HTTPURLResponse](#urlresponse--httpurlresponse)
+- [URLSessionTask](#urlsessiontask)
+- [URLSessionDelegate & URLSessionTaskDelegate & URLSessionDownloadDelegate & URLSessionDataDelegate & URLSessionDataDelegate & URLSessionWebSocketDelegate](#urlsessiondelegate--urlsessiontaskdelegate--urlsessiondownloaddelegate--urlsessiondatadelegate--urlsessiondatadelegate--urlsessionwebsocketdelegate)
 
 <!-- /code_chunk_output -->
 
@@ -192,29 +196,154 @@ if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
 }
 ```
 
-## 代理
+## URLRequest
+
+- URLRequest 封装了加载请求的两个基本属性：要加载的URL和用于加载它的策略。
+- 对于 HTTP 和 HTTPS 请求， URLRequest 包括 HTTP 方法（ GET 、 POST 等）和 HTTP 标头。
+- post请求
 
 ```swift
+var request = URLRequest(url: URL(string: "https://www.jd.com/")!)
+// request.cachePolicy = .useProtocolCachePolicy // 请求的缓存策略
+request.addValue("Bearer c3468fdb-59c1-403d-9f7f-f0db9464dd63", forHTTPHeaderField: "Authorization")
+// 同时修改 是累加非修改 "Content-Type": "multipart/form-data,application/json"
+request.addValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+request.httpMethod = "post"
+request.httpBody = "post".data(using: .utf8)
+print(request.cachePolicy == .useProtocolCachePolicy) // 请求的缓存策略
+print(request.allHTTPHeaderFields) // Optional(["Content-Type": "multipart/form-data,application/json", "Authorization": "Bearer c3468fdb-59c1-403d-9f7f-f0db9464dd63"])
+request.setValue("修改", forHTTPHeaderField: "Content-Type")
+print(request.value(forHTTPHeaderField: "Content-Type")) // Optional("修改")
+print(request.url) // Optional(https://www.jd.com/)
+print(request.allowsCellularAccess) // true 属性设置为 true 会使请求有资格通过蜂窝网络运行
+print(request.timeoutInterval) // 60.0
+print(request.httpShouldHandleCookies) // true 是否将与此请求一起发送并设置 cookie
+print(request.allowsExpensiveNetworkAccess) // true 指定低数据模式时请求是否可以使用网络
+print(request.networkServiceType) // NSURLRequest.NetworkServiceType.default 如何使用网络资源
+let task = URLSession.shared.dataTask(with: request)
+```
+
+## URLResponse && HTTPURLResponse
+
+- HTTPURLResponse 继承 URLResponse
+
+```swift
+//  指定状态代码的本地化字符串
+print(HTTPURLResponse.localizedString(forStatusCode: 200)) // no error
+
+ if let res =  dataTask.response as? HTTPURLResponse
+    {          
+        // 响应的 MIME 类型 -- URLResponse
+        print(res.mimeType) // Optional("text/html")
+
+        // 响应的 URL -- URLResponse
+        print(res.url) // URL
+
+        // 响应的原始源提供的文本编码的名称 -- URLResponse
+        print(res.textEncodingName) // Optional("utf-8")
+
+        // 响应数据的建议文件名 -- URLResponse
+        print(res.suggestedFilename) //  Optional("www.jd.com.html")
+
+        // 响应内容的预期长度 -- URLResponse
+        print(res.expectedContentLength) // -1
+
+        // HTTP 状态代码  -- HTTPURLResponse
+        print(res.statusCode) // 200
+
+        // 响应的所有 HTTP 标头字段 -- HTTPURLResponse
+        print(res.allHeaderFields) // [AnyHashable("Expires"): Thu, 28 Dec 2023 08:42:00 GMT, AnyHashable("Content-Length"): 58082, AnyHashable("Content-Type"): text/html; charset=utf-8,...]
+        
+        // 获取指定标头字段对应的值 -- HTTPURLResponse
+        print(res.value(forHTTPHeaderField: "Content-Type")) // Optional("text/html; charset=utf-8")
+    }
+```
+
+## URLSessionTask
+
+## URLSessionDelegate & URLSessionTaskDelegate & URLSessionDownloadDelegate & URLSessionDataDelegate & URLSessionDataDelegate & URLSessionWebSocketDelegate
+
+```swift
+import  Foundation
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-import  Foundation
-
 class sessionDataDelegate:NSObject,URLSessionDataDelegate {
+    var receivedData = Data() // 使用委托收集最终数据 使用委托只能这样获取
+    
+    // URLSessionDelegate
+    // 该会话已失效
+    // 调用 invalidateAndCancel() 方法，会话会立即调用此委托方法
+    func urlSession(
+        _ session: URLSession,
+        didBecomeInvalidWithError error: Error?
+    ){
+        print("该会话已失效")
+    }
+    
+    // URLSessionTaskDelegate
+    // 请求完成
+    // 成功失败都会执行
     func urlSession(
         _ session: URLSession,
         task: URLSessionTask,
         didCompleteWithError error: Error?
     ){
         guard error==nil else {
-            print(error)
-             return
+            print("请求失败:\(error)")
+            return
         }
-        print("请求成功")
+        let str = String(data: receivedData, encoding: .utf8)
+        print("请求成功:内容长度-\(str?.count)")
     }
     
+    // URLSessionTaskDelegate
+    // earliestBeginDate 设置时
+    // 仅当请求在等待网络负载时可能变得过时并且需要由新请求替换时，才应实现此委托方法。
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        willBeginDelayedRequest request: URLRequest,
+        completionHandler: @escaping @Sendable (URLSession.DelayedRequestDisposition, URLRequest?) -> Void
+    ){
+        print("willBeginDelayedRequest")
+    }
+    
+    // URLSessionTaskDelegate
+    // 会话已完成收集任务指标,可查看网络的性能
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        didFinishCollecting metrics: URLSessionTaskMetrics
+    ){
+        // print(metrics.transactionMetrics.count) // URLSessionTaskTransactionMetrics 封装 URL 加载系统在会话任务执行期间收集的性能指标的对象
+        // print(metrics.taskInterval) // DateInterval 任务实例化和任务完成之间的时间间隔
+        // print(metrics.redirectCount) // 重定向次数
+        print("会话已完成收集任务指标")
+    }
+    
+    // URLSessionTaskDelegate
+    // 任务创建完成
+    func urlSession(
+        _ session: URLSession,
+        didCreateTask task: URLSessionTask
+    ){
+        print("任务创建完成")
+    }
+    
+    func urlSession(
+        _ session: URLSession,
+        task: URLSessionTask,
+        didReceiveInformationalResponse response: HTTPURLResponse
+    ){
+        print("didReceiveInformationalResponse")
+    }
+    
+    // URLSessionDataDelegate
     // 从服务器收到了初始回复（标头）
     // 可监测一些头信息
+    // 必须调整completionHandler 函数
     // completionHandler(.cancel) 取消
     // completionHandler(.allow) 继续
     // completionHandler(.becomeDownload) 转换为下载
@@ -227,24 +356,64 @@ class sessionDataDelegate:NSObject,URLSessionDataDelegate {
         if let res =  dataTask.response as? HTTPURLResponse
         {          
             let headers = res.allHeaderFields
-            //            print(headers)
+            //            print(res.mimeType)
+            //            print(res.textEncodingName)
+            //            print(res.suggestedFilename)
+            //            print(res.expectedContentLength)
+            //            print(res.statusCode)
+            //            print(res.allHeaderFields)
+            //            print(res.value(forHTTPHeaderField: "Content-Type"))           
+            //            print(HTTPURLResponse.localizedString(forStatusCode: 200))
         }
-        completionHandler(.becomeDownload)
+        //  completionHandler(.becomeDownload)
+        completionHandler(.allow)
     }
     
+    // URLSessionDataDelegate
+    // urlSession(_:dataTask:didReceive:completionHandler:) 
+    // completionHandler(.becomeDownload) 调用则执行以下委托
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        didBecome downloadTask: URLSessionDownloadTask
+    ){
+        print("已转换为下载")
+    }
+    
+    // URLSessionDataDelegate
+    // 数据任务已收到一些预期数据
+    // 数据未完全接收，会多次触发
     func urlSession(
         _ session: URLSession,
         dataTask: URLSessionDataTask,
         didReceive data: Data
     ){
         print(data)
+        receivedData.append(data)
+        // 29762 bytes 第一次
+        // 28369 bytes 第二次
+        // 39283 bytes 第三次
+        // 88033 bytes 第四次
+    }
+    
+    // URLSessionDataDelegate
+    // 主动缓存数据，如果需要
+    // 必须调整completionHandler 函数
+    func urlSession(
+        _ session: URLSession,
+        dataTask: URLSessionDataTask,
+        willCacheResponse proposedResponse: CachedURLResponse,
+        completionHandler: @escaping @Sendable (CachedURLResponse?) -> Void
+    ){
+        print("是否需要缓存数据")
+        completionHandler(proposedResponse)
     }
 }
 
 
 let urlSession = URLSession(configuration: URLSessionConfiguration.default,delegate: sessionDataDelegate(), delegateQueue: nil)
 
-let task = urlSession.dataTask(with: URL(string: "https://www.jd.com/")!) 
+let task = urlSession.dataTask(with: URL(string: "https://www.jd.com/")!)
 //{ data, response, error in
 //    //    print(task.currentRequest?.allHTTPHeaderFields)
 //    if let error {
@@ -252,7 +421,7 @@ let task = urlSession.dataTask(with: URL(string: "https://www.jd.com/")!)
 //    }
 //    if let response = response as? HTTPURLResponse,(200...299).contains(response.statusCode),let data {
 //        let string = String(data: data, encoding: .utf8)!
-//        //        print(string.count)
+//               print(string.count)
 //        let starIndex = string.startIndex
 //        let endIndex = string.index(starIndex, offsetBy: 1)
 //        //        print(string[starIndex...endIndex])
