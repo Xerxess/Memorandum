@@ -1,21 +1,21 @@
-<!-- TOC -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Numbers, Data, and Basic Values](#numbers-data-and-basic-values)
-    - [Int](#int)
-        - [Topics](#topics)
-            - [Creating a Random Integer 创建随机整数](#creating-a-random-integer-%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E6%95%B4%E6%95%B0)
-            - [Performing Calculations 执行计算](#performing-calculations-%E6%89%A7%E8%A1%8C%E8%AE%A1%E7%AE%97)
-            - [Finding the Sign and Magnitude 找到符号和大小](#finding-the-sign-and-magnitude-%E6%89%BE%E5%88%B0%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%A4%A7%E5%B0%8F)
-    - [Double](#double)
-        - [Creating a Random Value 创建随机值](#creating-a-random-value-%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E5%80%BC)
-    - [Decimal](#decimal)
-    - [NumberFormatter](#numberformatter)
-        - [Configuring Formatter Behavior and Style](#configuring-formatter-behavior-and-style)
-        - [Converting Between Numbers and Strings 在数字和字符串之间转换](#converting-between-numbers-and-strings-%E5%9C%A8%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2)
-        - [Configuring Rounding Behavior 配置四舍五入行为](#configuring-rounding-behavior-%E9%85%8D%E7%BD%AE%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5%E8%A1%8C%E4%B8%BA)
-        - [Configuring Integer and Fraction Digits 配置整数和分数数字](#configuring-integer-and-fraction-digits-%E9%85%8D%E7%BD%AE%E6%95%B4%E6%95%B0%E5%92%8C%E5%88%86%E6%95%B0%E6%95%B0%E5%AD%97)
+  - [Int](#int)
+    - [Topics](#topics)
+      - [Creating a Random Integer 创建随机整数](#creating-a-random-integer-创建随机整数)
+      - [Performing Calculations 执行计算](#performing-calculations-执行计算)
+      - [Finding the Sign and Magnitude 找到符号和大小](#finding-the-sign-and-magnitude-找到符号和大小)
+  - [Double](#double)
+    - [Creating a Random Value 创建随机值](#creating-a-random-value-创建随机值)
+  - [Decimal](#decimal)
+    - [Decimal.FormatStyle](#decimalformatstyle)
+  - [NumberFormatter](#numberformatter)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
 
 # Numbers, Data, and Basic Values
 
@@ -108,6 +108,55 @@ Decimal 类型使用基于十进制的算术运算，以保持精度和准确性
 struct Decimal
 ```
 
+### Decimal.FormatStyle
+
+```swift
+var decimal:Decimal = 1000000000001
+var style:Decimal.FormatStyle = .number
+
+style = style.grouping(.never)
+print(decimal.formatted(style)) // 1000000000001
+
+style = style.grouping(.automatic)
+print(decimal.formatted(style)) // 1,000,000,000,001
+
+style = style.decimalSeparator(strategy: .always)
+print(decimal.formatted(style)) // 1,000,000,000,001.
+
+style = style.decimalSeparator(strategy: .automatic)
+print(decimal.formatted(style)) // 1,000,000,000,001
+
+style = style.notation(.scientific)
+print(decimal.formatted(style)) // 科学计数 1E12
+
+style = style.notation(.automatic).sign(strategy: .always())
+print(decimal.formatted(style)) // 显示符号 +1,000,000,000,001
+
+style = style.scale(0.001)
+print(decimal.formatted(style)) // 通过比例调整 +1,000,000,000.001
+
+decimal = 1000000000001.4454444444444444444
+var style2:Decimal.FormatStyle = .number.precision(.fractionLength(2)).grouping(.never)
+print(decimal.formatted(style2)) // 两位小数 1000000000001.45
+
+decimal = 0.89
+print(decimal.formatted(Decimal.FormatStyle.Percent())) // 百分比 89%
+```
+
+```swift
+// 将输入表示（例如格式化字符串）解析为提供的数据类型的类型
+let decimalString:String = "1,000,000,000,001"
+let decimalStyle:Decimal.FormatStyle = Decimal.FormatStyle.number
+
+// 方法一
+let decimal =  try Decimal(decimalString,format: decimalStyle)
+print(decimal) // 1000000000001
+
+// 方法二
+let decimal2 = try decimalStyle.parseStrategy.parse(decimalString)
+print(decimal2) // 1000000000001
+```
+
 ## NumberFormatter
 
 在数值及其文本表示之间转换的格式化程序。  
@@ -136,89 +185,4 @@ if let number = formatter.number(from: string) {
     let doubleValue = number.doubleValue
     print(doubleValue) // 输出: 1234.56
 }
-```
-
-```swift
-// 本地化支持
-let number = 1234.56
-
-let formatter = NumberFormatter()
-formatter.numberStyle = .currency
-
-let formattedString = formatter.string(from: NSNumber(value: number))
-print(formattedString ?? "") // 根据当前区域设置输出适当的货币格式
-```
-
-### Configuring Formatter Behavior and Style
-
-```swift
-// 接收器使用的数字样式。
-// enum Style : UInt, @unchecked Sendable
-// .none 1235
-// .decimal 1,234.568
-// .percent 12%
-// .scientific 1.2345678E3
-// .currency ￥1,234.57
-var numberStyle: NumberFormatter.Style { get set }
-```
-
-### Converting Between Numbers and Strings 在数字和字符串之间转换
-
-```swift
-// 返回通过解析给定字符串创建的NSNumber对象。
-func number(from string: String) -> NSNumber?
-
-// 返回一个包含所提供数字对象的格式化值的字符串。
-func string(from number: NSNumber) -> String?
-
-// 返回具有指定样式的本地化数字字符串。
-class func localizedString(
-    from num: NSNumber,
-    number nstyle: NumberFormatter.Style
-) -> String
-```
-
-### Configuring Rounding Behavior 配置四舍五入行为
-
-```swift
-// 接收器使用的四舍五入行为。
-// class NSDecimalNumberHandler : NSObject
-@NSCopying
-var roundingBehavior: NSDecimalNumberHandler { get set }
-
-// 接收器使用的舍入增量。
-@NSCopying
-var roundingIncrement: NSNumber! { get set }
-
-// 接收器使用的舍入模式。
-// enum RoundingMode : UInt, @unchecked Sendable
-// case ceiling 向正无穷方向舍入，即取最接近且不小于该数的整数。
-// case floor 向负无穷方向舍入，即取最接近且不大于该数的整数。
-// case down 向零方向舍入，即取最接近且不大于该数的整数。
-// case up 远离零方向舍入，即取最接近且不小于该数的整数。
-// case halfEven 银行家舍入法，即四舍六入五成双。如果舍弃部分的左边一位是偶数，则舍入结果不变；如果舍弃部分的左边一位是奇数，则舍入结果加 1。
-// case halfDown 四舍五入，如果舍弃部分大于或等于 0.5，则舍入结果加 1；否则舍入结果不变。
-// case halfUp 五舍六入，如果舍弃部分大于 0.5，则舍入结果加 1；否则舍入结果不变。
-var roundingMode: NumberFormatter.RoundingMode { get set }
-```
-
-### Configuring Integer and Fraction Digits 配置整数和分数数字
-
-```swift
-// 十进制分隔符之前的最小位数。
-var minimumIntegerDigits: Int { get set }
-var numberFormatter = NumberFormatter()
-numberFormatter.minimumIntegerDigits = 0 // default
-numberFormatter.string(from: 123) // 123
-numberFormatter.minimumIntegerDigits = 5
-numberFormatter.string(from: 123) // 00123
-
-// 十进制分隔符之前的最大位数。
-var maximumIntegerDigits: Int { get set }
-
-// 十进制分隔符后面的最小位数。
-var minimumFractionDigits: Int { get set }
-
-// 分位数点后的最大位数。
-var maximumFractionDigits: Int { get set }
 ```

@@ -431,3 +431,67 @@ let task = urlSession.dataTask(with: URL(string: "https://www.jd.com/")!)
 //}
 task.resume()
 ```
+
+### 下载
+
+```swift
+import PlaygroundSupport
+import Dispatch
+import Foundation
+import UIKit
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+
+import  Foundation
+
+func parseFileName(from contentDisposition: String) -> String? {
+    let fileNameKey = "filename="
+    guard let range = contentDisposition.range(of: fileNameKey),
+          let fileNameStartIndex = contentDisposition.index(range.upperBound, offsetBy: 1, limitedBy: contentDisposition.endIndex) else {
+        return nil
+    }
+    
+    let fileName = String(contentDisposition[fileNameStartIndex...])
+    return fileName
+}
+
+class sessionDataDelegate:NSObject,URLSessionDataDelegate,URLSessionDownloadDelegate {
+    // URLSessionDownloadDelegate
+    // 告诉代理下载任务已完成下载
+    // location 为临时URL,保存文件只转移到永久目录下
+    func urlSession(
+        _ session: URLSession,
+        downloadTask: URLSessionDownloadTask,
+        didFinishDownloadingTo location: URL
+    ){
+        print("已完成下载")
+        print(location)
+        if let res =  downloadTask.response as? HTTPURLResponse,let disposition = res.value(forHTTPHeaderField: "Content-Disposition"),let fileName = parseFileName(from: disposition) {
+            print(res.value(forHTTPHeaderField: "Content-Disposition"))
+            print(fileName) 
+        }        
+        var fileURL = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        var fileURL2 = fileURL!.appending(path: "download.zip")
+        print(fileURL2)
+        try? FileManager.default.moveItem(at: location, to: fileURL2)
+    }
+    
+    // URLSessionDownloadDelegate
+    // 通知下载进度
+    func urlSession(
+        _ session: URLSession,
+        downloadTask: URLSessionDownloadTask,
+        didWriteData bytesWritten: Int64,
+        totalBytesWritten: Int64,
+        totalBytesExpectedToWrite: Int64
+    ){
+        let pree = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)*100
+        print("通知下载进度:\(pree)")
+    }
+}
+
+
+let urlSession = URLSession(configuration: URLSessionConfiguration.default,delegate: sessionDataDelegate(), delegateQueue: nil)
+let downloadURL:URL! = URL(string: "https://vscode.download.prss.microsoft.com/dbazure/download/stable/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/VSCode-darwin-universal.zip")
+let downloadTask = urlSession.downloadTask(with: downloadURL).resume()
+```
