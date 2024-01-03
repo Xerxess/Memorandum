@@ -3,8 +3,14 @@
 <!-- code_chunk_output -->
 
 - [String](#string)
-  - [CharacterSet 字符集](#characterset-字符集)
+  - [String.Index](#stringindex)
+  - [StringProtocol 字符串协议](#stringprotocol-字符串协议)
+  - [字符串URL 编解码](#字符串url-编解码)
+    - [CharacterSet 字符集](#characterset-字符集)
   - [base64编码](#base64编码)
+  - [常用方法集](#常用方法集)
+    - [首字母排序](#首字母排序)
+    - [中文首字母](#中文首字母)
 
 <!-- /code_chunk_output -->
 
@@ -76,10 +82,108 @@ for r in arr {
 // 返回集合的随机元素
 print(str.randomElement())
 
+let lowercase = "a"..."z"
+print(lowercase.contains("b")) // true
+for st in "a"..."z" { // * 注意 错误语法 字符串无此语法
+    print(st) 
+}
 
 ```
 
-## CharacterSet 字符集
+## String.Index
+
+字符串使用String.Index 管理索引
+
+```swift
+let str = "中文2，中文2，中文1，中文3"
+let findIndex = str.firstIndex(of: "1")!
+print(str[...findIndex]) // 中文2，中文2，中文1
+
+let findLastIndex = str.lastIndex(of: "2")!
+print(str[...findLastIndex]) // 中文2，中文2
+```
+
+```swift
+let str = "中文2，中文2，中文1"
+print(str.startIndex) // 
+print(str.endIndex) // 
+print(str[str.startIndex..<str.endIndex]) // 中文2，中文2，中文1
+print(str[str.startIndex...]) // 中文2，中文2，中文1
+print(str[str.endIndex...]) // ''
+
+print(str.distance(from: str.startIndex, to: str.endIndex)) // 11 两个索引之间的距离
+
+var strIndex = str.index(before: str.endIndex) // 前一个索引
+print(str[strIndex]) // 1
+
+strIndex = str.index(after: str.startIndex) // 后一个索引
+print(str[strIndex]) // 文
+
+strIndex = str.index(str.startIndex, offsetBy: 2) // 指定偏移索引
+print(str[...strIndex]) // 中文2
+
+// 指定偏移索引,防止溢出错误
+if let strIndex = str.index(str.startIndex, offsetBy: 100, limitedBy: str.endIndex) {
+    print(str[...strIndex]) // 无输出
+}
+
+
+var index = str.startIndex
+
+str.formIndex(&index, offsetBy: 5) // inout版本 指定偏移索引
+print(str[...index]) // 中文2，中文
+
+// inout版本 指定偏移索引,防止溢出错误
+if str.formIndex(&index, offsetBy: 100, limitedBy: str.endIndex) {
+    let str3 = str.substring(to:index)
+    print(str3) // 无输出
+}
+```
+
+## StringProtocol 字符串协议
+
+```swift
+// 每个单词都更改为其相应的大写拼写
+print("小明".capitalized) // 小明
+print("xiao ming".capitalized) // Xiao Ming
+
+print("xiao ming".localizedCapitalized) // Xiao Ming
+print("xiao ming".localizedUppercase) // XIAO MING
+print("XIAO MING".localizedLowercase) // xiao ming
+print("%E4%B8%AD%E6%96%87".removingPercentEncoding) // Optional("中文")
+
+// 汉字转拼音
+var pinyin = "世界，你好".applyingTransform(.toLatin, reverse: false) ?? ""
+print(pinyin) // shì jiè， nǐ hǎo
+pinyin = pinyin.applyingTransform(.stripDiacritics, reverse: false)!
+print(pinyin) // shi jie， ni hao
+
+pinyin = "世界，你好".applyingTransform(.toXMLHex, reverse: false) ?? ""
+print(pinyin) // &#x4E16;&#x754C;&#xFF0C;&#x4F60;&#x597D;
+
+pinyin = "hàn zì".applyingTransform(.mandarinToLatin, reverse: false) ?? ""
+print(pinyin) // hàn zì
+
+print(pinyin.applyingTransform(.stripCombiningMarks, reverse: false) ?? "") // han zi
+
+let str = "中文2，中文2，中文1"
+print(str.appending("-appending")) // 中文2，中文2，中文1appending
+print(str.data(using: .utf8)) // 返回一个 Data 包含使用给定编码编码的 String 的表示形式
+
+let strMultipleLines = #"""
+中文1
+中文2
+中文3
+"""#
+
+strMultipleLines.enumerateLines { line, stop in
+    print(line)
+}
+```
+
+## 字符串URL 编解码
+
+### CharacterSet 字符集
 
 - 字母（Letter）L :
   - 小写（lowercase） Ll
@@ -201,4 +305,41 @@ if let decodedData = Data(base64Encoded: base64String) {
         print("Decoded string: \(decodedString)")
     }
 }
+```
+
+## 常用方法集
+
+### 首字母排序
+
+```swift
+let strings = ["Apple", "Banana", "Cat", "Dog", "Elephant"]
+
+let sortedStrings = strings.sorted { (str1, str2) -> Bool in
+    guard let firstChar1 = str1.first?.lowercased(), let firstChar2 = str2.first?.lowercased() else {
+        return false
+    }
+    return firstChar1 < firstChar2
+}
+
+print(sortedStrings)
+```
+
+### 中文首字母
+
+```swift
+extension String {
+    func chineseInitial() -> String {
+        let mutableString = NSMutableString(string: self) as CFMutableString
+        CFStringTransform(mutableString, nil, kCFStringTransformToLatin, false)
+        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
+        let pinyin = mutableString as String
+        let initial = pinyin.uppercased().prefix(1)
+        return String(initial)
+    }
+}
+
+let chineseString = "你好，世界！"
+let initial = chineseString.chineseInitial()
+
+print(initial) // N
 ```
