@@ -168,17 +168,130 @@ print(pinyin.applyingTransform(.stripCombiningMarks, reverse: false) ?? "") // h
 
 let str = "中文2，中文2，中文1"
 print(str.appending("-appending")) // 中文2，中文2，中文1appending
+
 print(str.data(using: .utf8)) // 返回一个 Data 包含使用给定编码编码的 String 的表示形式
 
 let strMultipleLines = #"""
-中文1
-中文2
-中文3
+    中文1
+    中文2
+    中文3
 """#
 
 strMultipleLines.enumerateLines { line, stop in
     print(line)
 }
+
+
+// 在末尾补充指定长度字符
+print(str.padding(toLength: 5, withPad: " ",startingAt: 0))  // 中文2，中
+print(str.padding(toLength: 20, withPad: ",***",startingAt: 0)) // 中文2，中文2，中文1,***,***,
+print(str.padding(toLength: 20, withPad: ",***",startingAt: 3)) // 中文2，中文2，中文1*,***,***
+
+
+print(str.contains("中文2")) // true
+
+
+var foldedStr = "Café au lait".folding(options: .diacriticInsensitive, locale: nil)
+print(foldedStr) // Output: "Cafe au lait"
+
+foldedStr = "Café au lait".folding(options: [.diacriticInsensitive,.caseInsensitive], locale: nil)
+print(foldedStr) // Output: "cafe au lait"
+
+let rangeString = "AbcdEfGHIJKlmn"
+let strRange = rangeString.range(of: "gHiJk",options: .caseInsensitive) // 获得一个String.Index Range
+
+if let strRange {
+    print(rangeString[strRange]) // GHIJK
+    print(rangeString[strRange.lowerBound...strRange.upperBound]) // GHIJKl
+    print(rangeString[...strRange.lowerBound]) // AbcdEfG
+    print(rangeString[...strRange.upperBound]) // AbcdEfGHIJKl
+    print(rangeString[strRange.upperBound...]) // lmn
+}
+
+// 替换字符串
+print("中文2，中文2，中文1".replacingOccurrences(of: "中文2", with: "中文1")) // 中文1，中文1，中文1
+
+// 通过Range替换字符串
+print(str.replacingCharacters(in: str.startIndex..<str.index(str.endIndex, offsetBy: -3), with: "a")) // a中文1
+
+// 通过正则替换字符串
+print(str.replacing(/中文/, with: "小明")) // 小明2，小明2，小明1
+
+// split 字符串
+({
+    let str = "apple,,banana,orange,,grape"
+    let separator = ",,"
+    let substrings = str.split(separator: separator)
+    
+    for substring in substrings {
+        print(substring)
+    } 
+    //    apple
+    //    banana,orange
+    //    grape
+})()
+
+// // omittingEmptySubsequences = true
+({
+    let str = "apple,banana,orange,,grape"
+    let separator = ","
+    let maxSplits = Int.max
+    let omittingEmptySubsequences = true
+    
+    let substrings = str.split(separator: separator, 
+                               maxSplits: maxSplits, 
+                               omittingEmptySubsequences: omittingEmptySubsequences)
+    
+    for substring in substrings {
+        print(substring)
+    } 
+    //    apple
+    //    banana
+    //    orange
+    //    grape
+})()
+
+// omittingEmptySubsequences = false
+({
+    let str = "apple,banana,orange,,grape"
+    let separator = ","
+    let maxSplits = Int.max
+    let omittingEmptySubsequences = false
+    
+    let substrings = str.split(separator: separator, 
+                               maxSplits: maxSplits, 
+                               omittingEmptySubsequences: omittingEmptySubsequences)
+    
+    for substring in substrings {
+        print(substring)
+    } 
+    //    apple
+    //    banana
+    //    orange
+    //            空值也会输出
+    //    grape
+})()
+
+
+// trim 去除空字符
+({
+    let str = "   Hello, World!   "
+    let characterSet = CharacterSet.whitespaces
+    let trimmedString = str.trimmingCharacters(in: characterSet)
+    print(trimmedString) // Output: "Hello, World!"
+}())
+
+// substring
+({
+    let str = "Hello, World!"
+    var substringString = str.substring(from:str.startIndex)
+    print(substringString) // Output: "Hello, World!"
+    substringString = str.substring(to:str.endIndex)
+    print(substringString) // Output: "Hello, World!"
+    substringString = str.substring(with: str.range(of: "World")!)
+    print(substringString) // Output: "World"
+}())
+
 ```
 
 ## 字符串URL 编解码
