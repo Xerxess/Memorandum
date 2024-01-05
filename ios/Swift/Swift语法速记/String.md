@@ -187,6 +187,13 @@ print(str.padding(toLength: 5, withPad: " ",startingAt: 0))  // 中文2，中
 print(str.padding(toLength: 20, withPad: ",***",startingAt: 0)) // 中文2，中文2，中文1,***,***,
 print(str.padding(toLength: 20, withPad: ",***",startingAt: 3)) // 中文2，中文2，中文1*,***,***
 
+({
+    let str = "中文2，中文2，中文1"
+    let paddingCharacter: Character = "*"
+    let paddedString = String(repeating: paddingCharacter, count: 5) + str
+    print(paddedString) // *****中文2，中文2，中文1
+}())
+
 
 print(str.contains("中文2")) // true
 
