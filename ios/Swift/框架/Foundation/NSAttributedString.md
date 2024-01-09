@@ -1,3 +1,43 @@
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [NSAttributedString](#nsattributedstring)
+  - [Topics](#topics)
+    - [Creating an Attributed String 创建属性字符串](#creating-an-attributed-string-创建属性字符串)
+    - [Retrieving Character Information 检索角色信息](#retrieving-character-information-检索角色信息)
+    - [Retrieving Attribute Information 检索属性信息](#retrieving-attribute-information-检索属性信息)
+  - [NSAttributedString.DocumentAttributeKey](#nsattributedstringdocumentattributekey)
+  - [NSAttributedString.Key](#nsattributedstringkey)
+    - [attachment](#attachment)
+    - [backgroundColor](#backgroundcolor)
+    - [baselineOffset](#baselineoffset)
+    - [cursor](#cursor)
+    - [font](#font)
+    - [foregroundColor](#foregroundcolor)
+    - [glyphInfo](#glyphinfo)
+    - [kern](#kern)
+    - [ligature](#ligature)
+    - [link](#link)
+    - [markdownSourcePosition](#markdownsourceposition)
+    - [markedClauseSegment](#markedclausesegment)
+    - [paragraphStyle](#paragraphstyle)
+    - [shadow](#shadow)
+    - [spellingState](#spellingstate)
+    - [strikethroughColor](#strikethroughcolor)
+    - [strikethroughStyle](#strikethroughstyle)
+    - [strokeColor](#strokecolor)
+    - [strokeWidth](#strokewidth)
+    - [superscript](#superscript)
+    - [textAlternatives](#textalternatives)
+    - [textEffect](#texteffect)
+    - [toolTip](#tooltip)
+    - [underlineColor](#underlinecolor)
+    - [underlineStyle](#underlinestyle)
+    - [DEMO](#demo)
+
+<!-- /code_chunk_output -->
+
 # NSAttributedString
 
 其部分文本具有相关属性（如视觉样式、超链接或可访问性数据）的字符串。  
@@ -7,14 +47,14 @@ NSAttributedString 是 iOS 和 macOS 开发中用于处理富文本（富有样�
 class NSAttributedString : NSObject
 ```
 
-* NSAttributedString 只读字符串
-* NSMutableAttributedString 可修改字符。
-* 您将属性字符串与任何接受它们的API一起使用，例如Core Text。AppKit和UIKit框架还提供了NSMutableAttributedString的子类，称为NSTextStorage，为扩展文本处理系统提供存储。在iOS 6及更高版本中，您可以使用属性字符串在文本视图、文本字段和其他一些控件中显示格式化文本。AppKit和UIKit还定义了基本归因字符串界面的扩展，允许您在当前图形上下文中绘制其内容。
-* NSAttributedString对象的默认字体是Helvetica 12点,使用NSParagraphStyle类及其子类NSMutableParagraphStyle来封装NSAttributedString类使用的段落或标尺属性。
+- NSAttributedString 只读字符串
+- NSMutableAttributedString 可修改字符。
+- 您将属性字符串与任何接受它们的API一起使用，例如Core Text。AppKit和UIKit框架还提供了NSMutableAttributedString的子类，称为NSTextStorage，为扩展文本处理系统提供存储。在iOS 6及更高版本中，您可以使用属性字符串在文本视图、文本字段和其他一些控件中显示格式化文本。AppKit和UIKit还定义了基本归因字符串界面的扩展，允许您在当前图形上下文中绘制其内容。
+- NSAttributedString对象的默认字体是Helvetica 12点,使用NSParagraphStyle类及其子类NSMutableParagraphStyle来封装NSAttributedString类使用的段落或标尺属性。
 
-# Topics
+## Topics
 
-## Creating an Attributed String 创建属性字符串
+### Creating an Attributed String 创建属性字符串
 
 ```swift
 // 使用指定字符串的字符创建属性字符串，并且没有属性信息。
@@ -33,7 +73,7 @@ init(attributedString attrStr: NSAttributedString)
 https://developer.apple.com/documentation/foundation/nsattributedstring/#1651516
 ```
 
-## Retrieving Character Information 检索角色信息
+### Retrieving Character Information 检索角色信息
 
 ```swift
 //  属性字符串作为字符串的字符内容。
@@ -44,7 +84,7 @@ var string: String { get }
 var length: Int { get }
 ```
 
-## Retrieving Attribute Information 检索属性信息
+### Retrieving Attribute Information 检索属性信息
 
 ```swift
 // 返回指定索引处字符的属性。
@@ -82,11 +122,17 @@ func attribute(
 ) -> Any?
 ```
 
-# NSAttributedString.Key
+## NSAttributedString.DocumentAttributeKey
+
+```swift
+
+```
+
+## NSAttributedString.Key
 
 您可以应用于属性字符串中文本的属性。
 
-## attachment
+### attachment
 
 ```swift
 // attachment 在富文本字符串中是一个特殊的属性，它可以用于将非文本内容（例如图像、视图等）插入到文本中。
@@ -107,7 +153,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## backgroundColor
+### backgroundColor
 
 ```swift
 // 文本后面的背景颜色。
@@ -115,7 +161,7 @@ label.attributedText = attributedString
 static let backgroundColor: NSAttributedString.Key
 ```
 
-## baselineOffset
+### baselineOffset
 
 ```swift
 // 文本位置的垂直偏移量。
@@ -128,7 +174,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## cursor
+### cursor
 
 ```swift
 // 光标对象。
@@ -137,7 +183,7 @@ label.attributedText = attributedString
 static let cursor: NSAttributedString.Key
 ```
 
-## font
+### font
 
 ```swift
 // 文本的字体。
@@ -150,7 +196,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## foregroundColor
+### foregroundColor
 
 ```swift
 // 文本的颜色。
@@ -159,7 +205,7 @@ label.attributedText = attributedString
 static let foregroundColor: NSAttributedString.Key
 ```
 
-## glyphInfo
+### glyphInfo
 
 ```swift
 // 字形信息对象的名称。
@@ -169,7 +215,7 @@ static let foregroundColor: NSAttributedString.Key
 static let glyphInfo: NSAttributedString.Key
 ```
 
-## kern
+### kern
 
 ```swift
 // 文本的字距。
@@ -181,7 +227,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## ligature
+### ligature
 
 ```swift
 // 文本的连字。
@@ -194,7 +240,7 @@ label.attributedText = attributedString
 static let ligature: NSAttributedString.Key
 ```
 
-## link
+### link
 
 ```swift
 // 文本的链接。
@@ -202,14 +248,14 @@ static let ligature: NSAttributedString.Key
 static let link: NSAttributedString.Key
 ```
 
-## markdownSourcePosition
+### markdownSourcePosition
 
 ```swift
 // 与一些归因文本对应的Markdown源字符串中的位置。
 static let markdownSourcePosition: NSAttributedString.Key
 ```
 
-##
+### markedClauseSegment
 
 ```swift
 // 标记子句段的索引。
@@ -217,7 +263,7 @@ static let markdownSourcePosition: NSAttributedString.Key
 static let markedClauseSegment: NSAttributedString.Key
 ```
 
-## paragraphStyle
+### paragraphStyle
 
 ```swift
 // 文本的段落样式。
@@ -243,7 +289,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## shadow
+### shadow
 
 ```swift
 // 文本的阴影。
@@ -259,7 +305,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## spellingState
+### spellingState
 
 ```swift
 // 文本的拼写状态。
@@ -267,7 +313,7 @@ label.attributedText = attributedString
 static let spellingState: NSAttributedString.Key
 ```
 
-## strikethroughColor
+### strikethroughColor
 
 ```swift
 // 可以用于设置富文本字符串中删除线的颜色
@@ -279,7 +325,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## strikethroughStyle
+### strikethroughStyle
 
 ```swift
 // 文本的删除线样式。
@@ -292,7 +338,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## strokeColor
+### strokeColor
 
 ```swift
 // 描边的颜色。
@@ -301,7 +347,7 @@ label.attributedText = attributedString
 static let strokeColor: NSAttributedString.Key
 ```
 
-## strokeWidth
+### strokeWidth
 
 ```swift
 // 描边的宽度。
@@ -314,7 +360,7 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-## superscript
+### superscript
 
 ```swift
 // 文本的上标。
@@ -324,7 +370,7 @@ label.attributedText = attributedString
 static let superscript: NSAttributedString.Key
 ```
 
-## textAlternatives
+### textAlternatives
 
 ```swift
 // 文本的替代方案。
@@ -332,7 +378,7 @@ static let superscript: NSAttributedString.Key
 static let textAlternatives: NSAttributedString.Key
 ```
 
-##
+### textEffect
 
 ```swift
 // 文本效果。
@@ -343,7 +389,7 @@ static let textAlternatives: NSAttributedString.Key
 static let textEffect: NSAttributedString.Key
 ```
 
-## toolTip
+### toolTip
 
 ```swift
 // 工具提示文本。
@@ -353,7 +399,7 @@ static let textEffect: NSAttributedString.Key
 static let toolTip: NSAttributedString.Key
 ```
 
-## underlineColor
+### underlineColor
 
 ```swift
 // 底线的颜色。
@@ -362,7 +408,7 @@ static let toolTip: NSAttributedString.Key
 static let underlineColor: NSAttributedString.Key
 ```
 
-##
+### underlineStyle
 
 ```swift
 // 文本的下划线样式。
@@ -386,8 +432,142 @@ let label = UILabel()
 label.attributedText = attributedString
 ```
 
-##
+### DEMO
 
 ```swift
+import UIKit
+
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var stack: UIStackView!
+    // Tag标签
+    lazy var tag:UIImage = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 90, height: 20))
+        
+        label.backgroundColor = UIColor.blue
+        label.textColor = UIColor.white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.text = "TOP 10"
+        
+        label.layer.cornerRadius = 3  // 设置圆角半径
+        label.layer.masksToBounds = true  // 将超出圆角区域的内容裁剪
+        
+        // 创建图像的绘制上下文
+        UIGraphicsBeginImageContextWithOptions(label.bounds.size, false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return UIImage(named: "default-avatar")!
+        }
+        
+        // 在绘制上下文中绘制标签
+        label.layer.render(in: context)
+        
+        // 从绘制上下文中获取图像
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // 结束绘制上下文
+        UIGraphicsEndImageContext()
+        return image!
+    }()
+    
+    // 上标
+    lazy var superscriptAttributes = {
+        let attributedString = NSMutableAttributedString(string: "H2O")
+        
+        // 添加上标
+        let superscriptAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .baselineOffset: 8
+        ]
+        attributedString.setAttributes(superscriptAttributes, range: NSRange(location: 1, length: 1))
+        
+        // 添加下标
+        let subscriptAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .baselineOffset: -6
+        ]
+        attributedString.setAttributes(subscriptAttributes, range: NSRange(location: 2, length: 1))
+    }()
+    
+    // 下标
+    lazy var subscriptAttributes = {
+        let attributedString = NSMutableAttributedString(string: "H2O")
+        
+        // 添加上标
+        let superscriptAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .baselineOffset: 8
+        ]
+        attributedString.setAttributes(superscriptAttributes, range: NSRange(location: 1, length: 1))
+        
+        // 添加下标
+        let subscriptAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .baselineOffset: -6
+        ]
+        attributedString.setAttributes(subscriptAttributes, range: NSRange(location: 2, length: 1))
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel()
+        view.addSubview(label)
+        label.numberOfLines = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 90),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            label.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8)
+        ])
+        
+        // 附件
+        let image = UIImage(named: "default-avatar")
+        let attachment = NSTextAttachment()
+        attachment.bounds = CGRect(x: 1, y: 0, width: 90, height: 20)
+        let baselineOffset2 = (UIFont.systemFont(ofSize: 14).capHeight - attachment.bounds.size.height) / 2.0
+        attachment.image = tag
+        
+        
+        // 设置文本样式、行高
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = 5
+        
+        let attr = NSMutableAttributedString(string: "文档级别属性是应用于整个文档级别属性是应用于整个文档级别属性是应用于整个文档级别属性是应用于整个 NSAttributedString 的属性，而不是仅仅应用于特定的字符范围。",attributes: [.baselineOffset:0,.foregroundColor:UIColor.red,.font:UIFont.systemFont(ofSize: 14)])
+        let ms = NSMutableAttributedString(attachment: attachment)
+//        ms.addAttributes([.baselineOffset:baselineOffset2], range: NSRange(location: 0, length: ms.length))
+        attr.insert(ms, at: 1)
+        
+//        attr.addAttributes([.paragraphStyle:paragraphStyle], range: NSRange(location: 0, length: attr.length))
+        label.attributedText = attr
+        print(attr.length)
+        
+        //
+        let attributedString = NSMutableAttributedString(string: "Hello")
+        
+        // 创建附件
+        let attachment2 = NSTextAttachment()
+        attachment2.bounds = CGRect(x: 0, y: 0, width: 22, height: 22)
+        attachment2.image = UIImage(named: "default-avatar")
+        
+        // 调整基线偏移量
+        let font = UIFont.systemFont(ofSize: 20)
+        let attachmentSize = attachment2.bounds.size
+        let baselineOffset = (font.capHeight - attachmentSize.height) / 2.0
+        print(font.capHeight)
+        // 创建附件属性字符串
+        let attachmentString = NSAttributedString(attachment: attachment2)
+        let attributedAttachmentString = NSMutableAttributedString(attributedString: attachmentString)
+        attributedAttachmentString.addAttribute(NSAttributedString.Key.baselineOffset, value: baselineOffset, range: NSRange(location: 0, length: attributedAttachmentString.length))
+        print(attributedAttachmentString.length)
+        
+        // 将附件属性字符串添加到主属性字符串
+        attributedString.append(attributedAttachmentString)
+        
+        // label.attributedText = attributedString
+    }
+}
 
 ```
