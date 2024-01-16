@@ -34,3 +34,23 @@ if freeOptions.contains(.priority) {
 }
 // Prints "You've earned free priority shipping!"
 ```
+
+## OptionSet 事项
+
+> OptionSet 可组合
+
+```swift
+struct ShippingOptions: OptionSet {
+    let rawValue: Int // 创建选项集时，请在类型声明中包含 rawValue 属性
+    
+    static let nextDay    = ShippingOptions(rawValue: 1 << 0)
+    static let secondDay  = ShippingOptions(rawValue: 1 << 1)
+    static let priority   = ShippingOptions(rawValue: 1 << 2)
+    static let standard   = ShippingOptions(rawValue: 1 << 3)
+}
+
+let singleOption: ShippingOptions = .priority
+let multipleOptions: ShippingOptions = [.nextDay, .secondDay, .priority]
+let singleOptionRawValue = singleOption.rawValue
+let multipleOptionsRawValue = multipleOptions.rawValue
+```

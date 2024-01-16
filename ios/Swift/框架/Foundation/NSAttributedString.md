@@ -35,6 +35,7 @@
     - [underlineColor](#underlinecolor)
     - [underlineStyle](#underlinestyle)
     - [DEMO](#demo)
+- [AttributedString (ios15)](#attributedstring-ios15)
 
 <!-- /code_chunk_output -->
 
@@ -426,8 +427,8 @@ static let underlineColor: NSAttributedString.Key
 // static var byWord: NSUnderlineStyle 仅在单词下方或通过单词绘制线条，而不是空白。
 static let underlineStyle: NSAttributedString.Key
 
-
-let attributedString = NSAttributedString(string: "Hello", attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+let underlineStyle = [NSUnderlineStyle.single,.patternDot]
+let attributedString = NSAttributedString(string: "Hello", attributes: [.underlineStyle: underlineStyle.rawValue])
 let label = UILabel()
 label.attributedText = attributedString
 ```
@@ -570,4 +571,176 @@ class ViewController: UIViewController {
     }
 }
 
+```
+
+# AttributedString (ios15)
+
+```swift
+class ViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0 // 0 不限制
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 90),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            label.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8)
+        ])
+        
+        var attrString = AttributedString("Hello, World!小红问小明，小明是誰,小明回小红，谁是小明,小红问小明，小明是誰,小明回小红，谁是小明")
+        
+        // 字体色
+        attrString.uiKit.foregroundColor = .yellow
+        
+        // 背景色
+        attrString.uiKit.backgroundColor = .white
+        
+        // 字体
+        let font = UIFont.systemFont(ofSize: 22,weight: .bold)
+        attrString.uiKit.font = font
+        
+        // 字距
+        //        attrString.uiKit.kern = 20
+        
+        // 文字投影
+        let shadow =  NSShadow()
+        shadow.shadowOffset = .init(width: 5, height: 5)
+        shadow.shadowBlurRadius = 5
+        attrString.uiKit.shadow = shadow
+        
+        // 笔画
+        attrString.uiKit.strokeWidth = -5 // 负值描边
+        attrString.uiKit.strokeColor = .red
+        
+        // 下划线
+        // .single（单线）、.double（双线）、.thick（粗线）
+        attrString.uiKit.underlineStyle = [.patternDot,.single]
+        attrString.uiKit.underlineColor = .red
+        
+        // 下划线
+        // .single（单线）、.double（双线）、.thick（粗线）
+        attrString.uiKit.strikethroughStyle = [.patternDot,.single]
+        attrString.uiKit.strikethroughColor = .green
+        
+        // 文本效果
+        // attrString.uiKit.textEffect = .letterpressStyle
+        
+        // 附件
+        let attachmentString = {
+            let image = UIImage(named: "default-avatar")
+            let attachment = NSTextAttachment()
+            attachment.bounds = CGRect(x: 1, y: 0, width: 20, height: 20)
+            attachment.image = image
+            return AttributedString(NSAttributedString(attachment: attachment))
+        }()
+        attrString.append(attachmentString)
+        
+        // AttributedString 添加附件
+        var attachmentString2 = {
+            let image = UIImage(named: "default-avatar")!
+            let addTextAttachment = NSTextAttachment(image:image)
+            let attachmentString = AttributedString("\(UnicodeScalar(NSTextAttachment.character)!)", attributes: AttributeContainer.attachment(addTextAttachment))
+            return attachmentString
+        }()
+        attrString.append(attachmentString2)
+        
+        // 设置文本样式、行高
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.firstLineHeadIndent = 44.0 // 第一行缩进
+        paragraphStyle.headIndent = 22.0 // 段落首行以外各行的缩进
+        paragraphStyle.lineSpacing = 16
+        //            .byWordWrapping: 按单词换行，保持单词完整。
+        //            .byCharWrapping: 按字符换行，不考虑单词边界。
+        //            .byClipping: 切除文本，超出指定宽度的部分将被截断。
+        //            .byTruncatingHead: 省略并在文本头部添加省略号。
+        //            .byTruncatingTail: 省略并在文本尾部添加省略号。
+        //            .byTruncatingMiddle: 省略并在文本中间添加省略号。
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        attrString.uiKit.paragraphStyle = paragraphStyle
+        
+        label.attributedText = NSAttributedString(attrString)
+        
+    }
+}
+
+```
+
+> AttributeContainer 链式操作
+
+- foregroundColor,backgroundColor 需要从内部消除歧义，默认是 “SwiftUI.ForegroundColor” “SwiftUI.BackgroundColor
+
+```swift
+class ViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0 // 0 不限制
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 90),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            label.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8)
+        ])
+        
+        var attrString = AttributedString("Hello, World!小红问小明，小明是誰,小明回小红，谁是小明,小红问小明，小明是誰,小明回小红，谁是小明")
+        
+        // 字体
+        let font = UIFont.systemFont(ofSize: 22,weight: .bold)
+        // 文字投影
+        let shadow =  NSShadow()
+        shadow.shadowOffset = .init(width: 5, height: 5)
+        shadow.shadowBlurRadius = 5
+        
+        // 附件
+        let attachmentString = {
+            let image = UIImage(named: "default-avatar")
+            let attachment = NSTextAttachment()
+            attachment.bounds = CGRect(x: 1, y: 0, width: 20, height: 20)
+            attachment.image = image
+            return AttributedString(NSAttributedString(attachment: attachment))
+        }()
+        attrString.append(attachmentString)
+        
+        // AttributedString 添加附件
+        var attachmentString2 = {
+            let image = UIImage(named: "default-avatar")!
+            let addTextAttachment = NSTextAttachment(image:image)
+            let attachmentString = AttributedString("\(UnicodeScalar(NSTextAttachment.character)!)", attributes: AttributeContainer.attachment(addTextAttachment))
+            return attachmentString
+        }()
+        attrString.append(attachmentString2)
+        
+        // 设置文本样式、行高
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.firstLineHeadIndent = 44.0 // 第一行缩进
+        paragraphStyle.headIndent = 22.0 // 段落首行以外各行的缩进
+        paragraphStyle.lineSpacing = 16
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        let container = AttributeContainer()
+        let myContainer = container
+            .foregroundColor(UIColor.yellow)
+            .backgroundColor(UIColor.white)
+            .font(font)
+            .shadow(shadow)
+            .strokeWidth(-5)
+            .strokeColor(.red)
+            .underlineStyle([.patternDot,.single])
+            .underlineColor(.red)
+            .strikethroughStyle([.patternDot,.single])
+            .strikethroughColor(.green)
+            .paragraphStyle(paragraphStyle)
+        
+        attrString.mergeAttributes(myContainer)
+        
+        label.attributedText = NSAttributedString(attrString)
+        
+    }
+}
 ```
