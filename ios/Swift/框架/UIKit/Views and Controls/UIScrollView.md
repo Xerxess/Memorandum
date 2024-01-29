@@ -2,21 +2,21 @@
 
 - [UIScrollView](#uiscrollview)
 - [API](#api)
-    - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-%E5%9B%9E%E5%BA%94%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92)
-    - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E5%A4%A7%E5%B0%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F)
-    - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E6%8F%92%E5%85%A5%E8%A1%8C%E4%B8%BA)
-    - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-%E8%8E%B7%E5%8F%96%E5%B8%83%E5%B1%80%E6%8C%87%E5%8D%97)
-    - [Configuring the Scroll View](#configuring-the-scroll-view)
-    - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-%E8%8E%B7%E5%BE%97%E6%BB%9A%E5%8A%A8%E7%8A%B6%E6%80%81)
-    - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-%E7%AE%A1%E7%90%86%E6%BB%9A%E5%8A%A8%E6%8C%87%E7%A4%BA%E5%99%A8%E5%92%8C%E5%88%B7%E6%96%B0%E6%8E%A7%E5%88%B6)
-    - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-%E6%BB%9A%E5%8A%A8%E5%88%B0%E7%89%B9%E5%AE%9A%E4%BD%8D%E7%BD%AE)
-    - [Managing Touches 管理触摸](#managing-touches-%E7%AE%A1%E7%90%86%E8%A7%A6%E6%91%B8)
-    - [Zooming and Panning 缩放和平移](#zooming-and-panning-%E7%BC%A9%E6%94%BE%E5%92%8C%E5%B9%B3%E7%A7%BB)
-    - [Managing the Keyboard 管理键盘](#managing-the-keyboard-%E7%AE%A1%E7%90%86%E9%94%AE%E7%9B%98)
-    - [Managing the Index 管理指数](#managing-the-index-%E7%AE%A1%E7%90%86%E6%8C%87%E6%95%B0)
+  - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-%E5%9B%9E%E5%BA%94%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92)
+  - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E5%A4%A7%E5%B0%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F)
+  - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E6%8F%92%E5%85%A5%E8%A1%8C%E4%B8%BA)
+  - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-%E8%8E%B7%E5%8F%96%E5%B8%83%E5%B1%80%E6%8C%87%E5%8D%97)
+  - [Configuring the Scroll View](#configuring-the-scroll-view)
+  - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-%E8%8E%B7%E5%BE%97%E6%BB%9A%E5%8A%A8%E7%8A%B6%E6%80%81)
+  - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-%E7%AE%A1%E7%90%86%E6%BB%9A%E5%8A%A8%E6%8C%87%E7%A4%BA%E5%99%A8%E5%92%8C%E5%88%B7%E6%96%B0%E6%8E%A7%E5%88%B6)
+  - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-%E6%BB%9A%E5%8A%A8%E5%88%B0%E7%89%B9%E5%AE%9A%E4%BD%8D%E7%BD%AE)
+  - [Managing Touches 管理触摸](#managing-touches-%E7%AE%A1%E7%90%86%E8%A7%A6%E6%91%B8)
+  - [Zooming and Panning 缩放和平移](#zooming-and-panning-%E7%BC%A9%E6%94%BE%E5%92%8C%E5%B9%B3%E7%A7%BB)
+  - [Managing the Keyboard 管理键盘](#managing-the-keyboard-%E7%AE%A1%E7%90%86%E9%94%AE%E7%9B%98)
+  - [Managing the Index 管理指数](#managing-the-index-%E7%AE%A1%E7%90%86%E6%8C%87%E6%95%B0)
 - [小笔记](#%E5%B0%8F%E7%AC%94%E8%AE%B0)
-    - [内容高度自适应](#%E5%86%85%E5%AE%B9%E9%AB%98%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
-    - [contentInsetAdjustmentBehavior](#contentinsetadjustmentbehavior)
+  - [内容高度自适应](#%E5%86%85%E5%AE%B9%E9%AB%98%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
+  - [contentInsetAdjustmentBehavior](#contentinsetadjustmentbehavior)
 
 <!-- /TOC -->
 
@@ -326,6 +326,40 @@ var indexDisplayMode: UIScrollView.IndexDisplayMode
 
 # 小笔记
 
+## 答疑解惑
+
+### 自动布局
+
+- UIScrollView的边缘或边距与其内容之间的约束会附加到滚动视图的内容区域 !重点 !重点 !重点
+- UIScrollView框架的高度、宽度或中心点之间的限制 !重点 !重点 !重点
+
+```swift
+// 以下DEMO 
+// contentView 不会铺满 UIScrollView
+// 由于 UIScrollView的边缘或边距与其内容之间的约束会附加到滚动视图的内容区域 
+// 此时 UIScrollView 无内容区域 即 contentView.width=0,contentView.height=0
+let scrollView = UIScrollView()
+let contentView = UIView()
+contentView.backgroundColor = .green
+let layoutGuide:UILayoutGuide = view.safeAreaLayoutGuide
+view.addSubview(scrollView)
+scrollView.addSubview(contentView)
+scrollView.translatesAutoresizingMaskIntoConstraints=false
+contentView.translatesAutoresizingMaskIntoConstraints=false
+NSLayoutConstraint.activate([
+    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+    contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+])
+NSLayoutConstraint.activate([
+    scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+])
+```
+
 ## 内容高度自适应
 
 使用一个容器view 设置 bottomAnchor
@@ -336,19 +370,19 @@ view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // �
 
 ```swift
 let scrollView = UIScrollView()
-let subView = UIView()
-subView.backgroundColor = .green
-let layoutGuide:UILayoutGuide=view.safeAreaLayoutGuide
+let contentView = UIView()
+contentView.backgroundColor = .green
+let layoutGuide:UILayoutGuide = view.safeAreaLayoutGuide
 view.addSubview(scrollView)
-scrollView.addSubview(subView)
+scrollView.addSubview(contentView)
 scrollView.translatesAutoresizingMaskIntoConstraints=false
-subView.translatesAutoresizingMaskIntoConstraints=false
+contentView.translatesAutoresizingMaskIntoConstraints=false
 NSLayoutConstraint.activate([
-    subView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 1000),
-    subView.widthAnchor.constraint(equalToConstant: 100),
-    subView.heightAnchor.constraint(equalToConstant: 100),
-    subView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
-    subView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
+    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+    contentView.widthAnchor.constraint(equalToConstant: 100),
+    contentView.heightAnchor.constraint(equalToConstant: 100),
+    contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
+    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
 ])
 NSLayoutConstraint.activate([
     scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 0),

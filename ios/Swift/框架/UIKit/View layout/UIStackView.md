@@ -1,6 +1,22 @@
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [UIStackView](#uistackview)
+  - [堆栈视图和自动布局](#堆栈视图和自动布局)
+  - [API](#api)
+    - [Managing arranged subviews 管理排列的子视图](#managing-arranged-subviews-管理排列的子视图)
+    - [Configuring the layout 配置布局](#configuring-the-layout-配置布局)
+    - [Adding space between items 在项目之间添加空间](#adding-space-between-items-在项目之间添加空间)
+  - [小笔记](#小笔记)
+  - [UIStackView.Alignment](#uistackviewalignment)
+  - [UIStackView.Distribution](#uistackviewdistribution)
+
+<!-- /code_chunk_output -->
+
 # UIStackView
 
-https://developer.apple.com/documentation/uikit/uistackview
+<https://developer.apple.com/documentation/uikit/uistackview>
 
 一个简化的界面，用于在列或行中布局视图集合。
 
@@ -112,3 +128,84 @@ class let spacingUseDefault: CGFloat
 // 系统定义的相邻视图的间距。
 class let spacingUseSystem: CGFloat
 ```
+
+## 小笔记
+
+- 如果 UIStackView 有宽度约束，arrangedSubviews 会根据配置分配
+- 如果 UIStackView 没有宽度、高度约束，UIStackView的高宽为 arrangedSubviews 之和
+
+## UIStackView.Alignment
+
+> UIStackView.Alignment.fill 填充垂直于堆栈视图轴的可用空间
+
+![Alt text](image-1.png)
+
+> UIStackView.Alignment.center 堆栈视图将其排列视图的中心与其沿轴的中心对齐
+
+![Alt text](image-2.png)
+
+> UIStackView.Alignment.leading 堆栈视图沿其前缘对齐其排列视图的前缘
+
+![Alt text](image-3.png)
+
+> UIStackView.Alignment.trailing 堆栈视图沿其后缘对齐其排列视图的后缘
+
+![Alt text](image-4.png)
+
+> top ==  UIStackView.Alignment.leading
+
+![Alt text](image-5.png)
+
+> bottom ==  UIStackView.Alignment.trailing
+
+![Alt text](image-6.png)
+
+> UIStackView.Alignment.firstBaseline 堆栈视图根据其第一基线对齐其排列的视图
+
+![Alt text](image-7.png)
+
+> UIStackView.Alignment.lastBaseline 堆栈视图根据最后的基线对齐排列的视图
+
+![Alt text](image-8.png)
+
+## UIStackView.Distribution
+
+> UIStackView.Distribution.fill 堆栈视图会调整其排列视图的大小，使它们填满堆栈视图轴线上的可用空间。
+
+当排列的视图无法放入堆栈视图时，它会根据视图的抗压缩性优先级缩小视图。如果排列好的视图没有填满堆栈视图，堆栈视图会根据视图的拥抱优先级拉伸视图。如果有任何不明确的地方，堆栈视图会根据已排列视图在 arrangedSubviews 数组中的索引来调整已排列视图的大小。
+
+```swift
+// 设置视图内容的压缩抗性优先级的方法
+// 较高的优先级值表示视图更不容易被压缩。例如.required、.defaultHigh、.defaultLow等。
+// .required：表示视图的内容在压缩时必须被保持不变，不允许压缩。
+// .defaultHigh：表示视图的内容在压缩时具有较高的抗性，只允许轻微的压缩。
+// .defaultLow：表示视图的内容在压缩时相对容易被压缩，可以更多地进行压缩。
+// .fittingSizeLevel：表示视图的内容在压缩时允许更大程度的压缩，以适应可用空间。
+func setContentCompressionResistancePriority(UILayoutPriority, for: NSLayoutConstraint.Axis)
+
+// 设置视图内容的拉伸抗性优先级的方法。它是UIView的一个方法，用于调整视图在自动布局中的行为
+// 较高的优先级值表示视图更不容易被拉伸。定义了不同优先级的常量，例如.required、.defaultHigh、.defaultLow等。
+// .required：表示视图的内容在拉伸时必须被保持不变，不允许压缩。
+// .defaultHigh：表示视图的内容在拉伸时具有较高的抗性，只允许轻微的拉伸。
+// .defaultLow：表示视图的内容在拉伸时相对容易被拉伸，可以更多地进行拉伸。
+// .fittingSizeLevel：表示视图的内容在拉伸时允许更大程度的拉伸，以适应可用空间。
+func setContentHuggingPriority(UILayoutPriority, for: NSLayoutConstraint.Axis)
+```
+
+![Alt text](image-9.png)
+
+> UIStackView.Distribution.fillEqually 堆栈视图会调整其排列视图的大小，使它们填满堆栈视图轴线上的可用空间,使它们沿着堆栈视图的轴线大小相同。
+
+![Alt text](image-10.png)
+
+> UIStackView.Distribution.fillProportionally 视图会根据其内在内容的大小，沿着堆栈视图的轴线按比例调整大小
+
+![Alt text](image-11.png)
+
+> UIStackView.Distribution.equalSpacing 均匀填充视图之间的间距
+
+![Alt text](image-12.png)
+
+> UIStackView.Distribution.equalCentering 堆栈视图的轴线以相等的中心到中心间距定位排列的视图，同时保持间距属性在视图之间的距离
+
+![Alt text](image-13.png)
