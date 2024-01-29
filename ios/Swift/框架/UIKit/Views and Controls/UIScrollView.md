@@ -337,6 +337,7 @@ var indexDisplayMode: UIScrollView.IndexDisplayMode
 // 以下DEMO 
 // contentView 不会铺满 UIScrollView
 // 由于 UIScrollView的边缘或边距与其内容之间的约束会附加到滚动视图的内容区域 
+// contentSize 默认为 CGSizeZero
 // 此时 UIScrollView 无内容区域 即 contentView.width=0,contentView.height=0
 let scrollView = UIScrollView()
 let contentView = UIView()
@@ -347,17 +348,18 @@ scrollView.addSubview(contentView)
 scrollView.translatesAutoresizingMaskIntoConstraints=false
 contentView.translatesAutoresizingMaskIntoConstraints=false
 NSLayoutConstraint.activate([
-    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-    contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-    contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+    scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+    scrollView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+    scrollView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+    scrollView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 ])
 NSLayoutConstraint.activate([
-    scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor), // 约束附加到滚动视图的内容区域,并非约束scrollView上
+    contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor), // 约束附加到滚动视图的内容区域,并非约束scrollView上
+    contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor), // 约束附加到滚动视图的内容区域,并非约束scrollView上
+    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor) // 约束附加到滚动视图的内容区域,并非约束scrollView上
 ])
+
 ```
 
 ## 内容高度自适应
@@ -365,31 +367,46 @@ NSLayoutConstraint.activate([
 使用一个容器view 设置 bottomAnchor
 
 ```swift
-view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
+box.bottomAnchor.constraint(equalTo: contentView.bottomAnchor) // 注意非常重要
 ```
 
 ```swift
-let scrollView = UIScrollView()
-let contentView = UIView()
-contentView.backgroundColor = .green
-let layoutGuide:UILayoutGuide = view.safeAreaLayoutGuide
-view.addSubview(scrollView)
-scrollView.addSubview(contentView)
-scrollView.translatesAutoresizingMaskIntoConstraints=false
-contentView.translatesAutoresizingMaskIntoConstraints=false
-NSLayoutConstraint.activate([
-    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-    contentView.widthAnchor.constraint(equalToConstant: 100),
-    contentView.heightAnchor.constraint(equalToConstant: 100),
-    contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
-    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0) // 注意非常重要
-])
-NSLayoutConstraint.activate([
-    scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 0),
-    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-])
+({
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    contentView.backgroundColor = .green
+    let layoutGuide:UILayoutGuide = view.safeAreaLayoutGuide
+    view.addSubview(scrollView)
+    scrollView.addSubview(contentView)
+    scrollView.translatesAutoresizingMaskIntoConstraints=false
+    contentView.translatesAutoresizingMaskIntoConstraints=false
+    
+    NSLayoutConstraint.activate([
+        scrollView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+        scrollView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+        scrollView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+        scrollView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+    ])
+    NSLayoutConstraint.activate([
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),// 约束附加到滚动视图的内容区域,并非约束scrollView上
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),// 约束附加到滚动视图的内容区域,并非约束scrollView上
+        contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),// 约束附加到滚动视图的内容区域,并非约束scrollView上
+        contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),// 约束附加到滚动视图的内容区域,并非约束scrollView上
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor) // 约束附加到滚动视图的内容区域,并非约束scrollView上
+    ])
+    
+    // 子内容视图
+    let box = UIView()
+    box.translatesAutoresizingMaskIntoConstraints=false
+    box.backgroundColor = .red
+    contentView.addSubview(box)
+    NSLayoutConstraint.activate([
+        box.widthAnchor.constraint(equalToConstant: 100),
+        box.heightAnchor.constraint(equalToConstant: 100),
+        box.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 1000),
+        box.bottomAnchor.constraint(equalTo: contentView.bottomAnchor) // 通过约束，设置contentSize
+    ])
+}())
 ```
 
 ## contentInsetAdjustmentBehavior
