@@ -326,6 +326,28 @@ var indexDisplayMode: UIScrollView.IndexDisplayMode
 
 # 小笔记
 
+## 图解
+
+![Alt text](image.png)
+
+> scrollView.contentInset = .init(top: 50, left: 50, bottom: 0, right: 0)
+
+```swift
+// 未设置 contentInset
+print(scrollView.safeAreaLayoutGuide.layoutFrame) // (0.0, 0.0, 393.0, 196.66666666666666)
+print(scrollView.layoutMarginsGuide.layoutFrame) // (8, 8.0, 377.0, 180.66666666666666)
+
+// 设置 contentInset
+// contentInset 是 UIScrollView 与 内容区域 边距
+// 且 UIScrollView的边缘或边距与其内容之间的约束会附加到滚动视图的内容区域 !重点 !重点 !重点 
+// 此时 safeAreaLayoutGuide.layoutFrame  (0.0, 0.0, 393.0, 196.66666666666666) 会导致针对safeAreaLayoutGuide布局不准确，具体表现 top = top+50(边距) , left=left+50(边距)
+// 与 正常理解 UIView safeAreaLayoutGuide.layoutFrame 的布局习惯不统一
+// 猜测 ios 处理  top-50 , left-50
+scrollView.contentInset = .init(top: 50, left: 50, bottom: 0, right: 0)
+print(scrollView.safeAreaLayoutGuide.layoutFrame) // (-50.0, -50.0, 393.0, 196.66666666666666)
+print(scrollView.layoutMarginsGuide.layoutFrame) // (-42.0, -42.0, 377.0, 180.66666666666666)
+```
+
 ## 答疑解惑
 
 ### 自动布局
