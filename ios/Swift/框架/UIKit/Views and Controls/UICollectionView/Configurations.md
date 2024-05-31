@@ -108,3 +108,4 @@ cell.backgroundConfiguration = backgroundConfig
 * var backgroundColor: UIColor?
 * var visualEffect: UIVisualEffect?
 * var image: UIImage?
+* var imageContentMode: UIView.ContentMode
