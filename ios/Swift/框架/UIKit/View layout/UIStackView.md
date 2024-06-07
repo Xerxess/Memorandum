@@ -39,7 +39,7 @@ class UIStackView : UIView
 
 对于除UIStackView.Distribution.fillEqually分发以外的所有发行版，堆栈视图在沿堆栈轴计算其大小时使用每个排列视图的`intinticallyContentSize`属性。UIStackView.Distribution.fillEqually调整所有排列视图的大小，使其大小相同，沿着其轴填充堆栈视图。如果可能的话，堆栈视图会拉伸所有排列的视图，以匹配沿堆栈轴线具有最长内在尺寸的视图。
 
-对于除UIStackView.Alignment.fill对齐以外的所有对齐，堆栈视图在计算其垂直于堆栈轴的大小时使用每个排列视图的intrintrintContentSize属性。UIStackView.Alignment.fill调整所有排列视图的大小，以便它们垂直于其轴填充堆栈视图。如果可能的话，堆栈视图会拉伸所有排列的视图，以匹配垂直于堆栈轴的最大内在尺寸的视图。
+对于除UIStackView.Alignment.fill对齐以外的所有对齐，堆栈视图在计算其垂直于堆栈轴的大小时使用每个排列视图的`intrintrintContentSize`属性。UIStackView.Alignment.fill调整所有排列视图的大小，以便它们垂直于其轴填充堆栈视图。如果可能的话，堆栈视图会拉伸所有排列的视图，以匹配垂直于堆栈轴的最大内在尺寸的视图。
 
 ## API
 

@@ -109,3 +109,87 @@ cell.backgroundConfiguration = backgroundConfig
 * var visualEffect: UIVisualEffect?
 * var image: UIImage?
 * var imageContentMode: UIView.ContentMode
+
+# 自定义 UIContentView
+
+知识点
+
+* protocol UIContentConfiguration 该协议提供了内容配置对象的蓝图，其中包含内容视图的默认样式和内容。内容配置封装了内容视图自定义的所有受支持的属性和行为。您可以使用配置来创建内容视图。
+* protocol UIContentView 设置内容视图的 configuration 属性会将新配置应用于视图，从而使视图呈现对其外观的任何更新。
+
+```swift
+struct MyModel {
+    var currentPriority:Int
+    var title:String
+}
+
+// UIContentConfiguration
+struct MyContentConfiguration: UIContentConfiguration {
+    var reminder: MyModel // This is a copy of the model.
+    
+    func makeContentView() -> UIView & UIContentView {
+        return PriorityContentView(self)
+    }
+    func updated(for state: UIConfigurationState) -> ReminderContentConfiguration {
+        return self
+    }
+    mutating func updatePriority(to newPriority: Int) {
+        reminder.currentPriority = newPriority
+    }
+}
+
+// UIContentView
+class MyContentView : UIView, UIContentView {
+    
+    // Define the UI elements.
+    let priorityLabel = UILabel()
+    let prioritySlider = UISlider()
+    var priorityStack = UIStackView()
+    
+    init() {
+        // Apply style to the user interface.
+        priorityStack = UIStackView(arrangedSubviews: [priorityLabel, prioritySlider])
+        priorityStack.axis = .vertical
+        self.addSubview(priorityStack)
+        
+        priorityLabel.textAlignment = .center
+        priorityLabel.textColor = .white
+        
+        prioritySlider.maximumValue = 10.0
+        prioritySlider.minimumValue = 0.0
+        prioritySlider.addTarget(self, action: #selector(self.sliderValueDidChange(_:)), for: .valueChanged)
+    }
+
+    init(_ configuration: UIContentConfiguration) {
+        self.configuration = configuration    
+        self.configure(configuration: configuration) // Add this function below.
+    }
+
+    var configuration: UIContentConfiguration {
+        didSet {
+            self.configure(configuration: configuration)
+        }
+    }
+
+    func configure(configuration: UIContentConfiguration) {
+        guard let configuration = configuration as? MyContentConfiguration else { return }
+        self.priorityLabel.text = configuration.reminder.title + " (priority: \(configuration.reminder.currentPriority))"
+        self.prioritySlider.value = Float(configuration.reminder.currentPriority)
+    }
+
+    // 滑块值更改时应用配置
+    @objc func sliderValueDidChange(_ sender: UISlider!) {
+        // Snap the slider value to integer steps.
+        sender.value = round(sender.value)
+        guard var configuration = configuration as? MyContentConfiguration else { return }
+        configuration.updatePriority(to: Int(sender.value))
+        self.configure(configuration: configuration)
+    }
+}
+
+let myContentView = MyContentView()
+let config = MyContentConfiguration()
+config.reminder = MyModel()
+myContentView.configure(config)
+superView.addSubView(myContentView)
+```

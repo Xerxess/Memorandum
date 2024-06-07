@@ -12,7 +12,13 @@
 
 您可以在任何类型的布局中使用列表单元格。在列表中使用列表单元格可以为单元格启用额外的列表特定行为。例如，在列表部分或布局中，您可以定义列表单元格之间的分隔符对齐，并为每个单元格的前缘和后缘配置滑动操作。您可以使用列表（使用：layoutEnvironment:）创建单个列表部分，或使用列表（使用：）创建完整的列表布局。
 
-您可以使用列表单元格的defaultContentConfiguration()获取具有预配置默认样式的列表内容配置。获得默认配置后，您将内容分配给它，自定义任何其他属性，并将其作为当前内容配置分配给单元格。有关自定义选项，请参阅UIListContentConfiguration。
+您可以使用列表单元格的 defaultContentConfiguration()获取具有预配置默认样式的列表内容配置。获得默认配置后，您将内容分配给它，自定义任何其他属性，并将其作为当前内容配置分配给单元格。有关自定义选项，请参阅 UIListContentConfiguration。
+
+UICollectionViewListCell 具有三个配置属性：
+
+- contentConfiguration - 描述单元格的标签、图像、按钮等
+- backgroundConfiguration ——描述单元格的背景颜色、渐变、图像和其他视觉属性
+- configurationState - 描述当用户选择、突出显示、拖动或以其他方式与其交互时单元格的样式
 
 ```swift
 @MainActor class UICollectionViewListCell : UICollectionViewCell
@@ -27,9 +33,9 @@
 
 ## UICellAccessory
 
- 集合视图列表单元格中的附件
+集合视图列表单元格中的附件
 
- 单元格附件是可以添加到列表单元格 ( UICollectionViewListCell ) 的视觉元素。  
+单元格附件是可以添加到列表单元格 ( UICollectionViewListCell ) 的视觉元素。  
  您可以使用单元格附件作为视觉指示器，或让用户执行特定于单元格的操作，例如`选择、重新排序或删除单元格`。  
  单元格附件出现在单元格内容视图之外的单元格的前缘或后缘。
 
@@ -38,19 +44,19 @@
   - case whenEditing 该附件仅在单元格处于编辑模式时显示。
   - case whenNotEditing 仅当单元格不处于编辑模式时才会显示附件
 
-> static func disclosureIndicator(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.DisclosureIndicatorOptions) -> UICellAccessory 
+> static func disclosureIndicator(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.DisclosureIndicatorOptions) -> UICellAccessory
 
 配件是一个指向尾部方向的披露楔形。该配件出现在电池的尾部边缘.使用此单元格附件指示用户可以点击该单元格来公开其他内容。
 
 - UICellAccessory.DisclosureIndicatorOptions 披露指示器的配置选项
- ![Alt text](./image/image.png)
+  ![Alt text](./image/image.png)
 
-> static func outlineDisclosure(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.OutlineDisclosureOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory  
+> static func outlineDisclosure(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.OutlineDisclosureOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory
 
 创建具有指定显示状态、配置选项和可选操作处理程序的大纲公开系统附件。  
 使用此单元格附件来指示项目可以展开和折叠，并使用户能够在展开和折叠状态之间切换。
 
- ![Alt text](./image/image2.png)
+![Alt text](./image/image2.png)
 
 > static func popUpMenu(UIMenu, displayed: UICellAccessory.DisplayedState, options: UICellAccessory.PopUpMenuOptions, selectedElementDidChangeHandler: UICellAccessory.MenuSelectedElementDidChangeHandler?) -> UICellAccessory
 
@@ -58,35 +64,35 @@
 
 配置的弹出菜单单元附件，显示为一对向上和向下的 V 形图案。该附件表示点击单元格中的任意位置会显示一个弹出菜单。该附件出现在电池的后缘。
 
- ![Alt text](./image/image3.png)
+![Alt text](./image/image3.png)
 
- > static func checkmark(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.CheckmarkOptions) -> UICellAccessory
+> static func checkmark(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.CheckmarkOptions) -> UICellAccessory
 
- 创建具有指定显示状态和配置选项的复选标记系统附件。
+创建具有指定显示状态和配置选项的复选标记系统附件。
 
- ![Alt text](./image/image4.png)
+![Alt text](./image/image4.png)
 
- > static func delete(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.DeleteOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory
+> static func delete(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.DeleteOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory
 
- 创建具有指定显示状态、配置选项和可选操作处理程序的删除系统附件。
+创建具有指定显示状态、配置选项和可选操作处理程序的删除系统附件。
 
- ![Alt text](./image/image5.png)
+![Alt text](./image/image5.png)
 
- > static func insert(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.InsertOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory
+> static func insert(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.InsertOptions, actionHandler: UICellAccessory.ActionHandler?) -> UICellAccessory
 
- 创建具有指定显示状态、配置选项和可选操作处理程序的插入系统附件。
+创建具有指定显示状态、配置选项和可选操作处理程序的插入系统附件。
 
-  ![Alt text](./image/image6.png)
+![Alt text](./image/image6.png)
 
-  > static func reorder(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.ReorderOptions) -> UICellAccessory
+> static func reorder(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.ReorderOptions) -> UICellAccessory
 
-  创建具有指定显示状态和配置选项的重新排序系统附件
+创建具有指定显示状态和配置选项的重新排序系统附件
 
-  ![Alt text](./image/image7.png)
+![Alt text](./image/image7.png)
 
-  > static func multiselect(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.MultiselectOptions) -> UICellAccessory
+> static func multiselect(displayed: UICellAccessory.DisplayedState, options: UICellAccessory.MultiselectOptions) -> UICellAccessory
 
-  创建具有指定显示状态和配置选项的多选系统附件
+创建具有指定显示状态和配置选项的多选系统附件
 
 ![Alt text](./image/image8.png)
 
