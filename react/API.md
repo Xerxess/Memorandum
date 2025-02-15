@@ -188,5 +188,7 @@ function HorizontalRule({ show }) {
     return <hr className={theme} />;
   }
   return false;
-}s
+}
 ```
+
+
