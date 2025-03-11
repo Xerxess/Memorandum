@@ -8,9 +8,9 @@
     - [Managing arranged subviews 管理排列的子视图](#managing-arranged-subviews-管理排列的子视图)
     - [Configuring the layout 配置布局](#configuring-the-layout-配置布局)
     - [Adding space between items 在项目之间添加空间](#adding-space-between-items-在项目之间添加空间)
-  - [小笔记](#小笔记)
   - [UIStackView.Alignment](#uistackviewalignment)
   - [UIStackView.Distribution](#uistackviewdistribution)
+  - [小笔记](#小笔记)
 
 <!-- /code_chunk_output -->
 
@@ -129,10 +129,7 @@ class let spacingUseDefault: CGFloat
 class let spacingUseSystem: CGFloat
 ```
 
-## 小笔记
 
-- 如果 UIStackView 有宽度约束，arrangedSubviews 会根据配置分配
-- 如果 UIStackView 没有宽度、高度约束，UIStackView的高宽为 arrangedSubviews 之和
 
 ## UIStackView.Alignment
 
@@ -209,3 +206,22 @@ func setContentHuggingPriority(UILayoutPriority, for: NSLayoutConstraint.Axis)
 > UIStackView.Distribution.equalCentering 堆栈视图的轴线以相等的中心到中心间距定位排列的视图，同时保持间距属性在视图之间的距离
 
 ![Alt text](image-13.png)
+
+
+## 小笔记
+
+- 如果 UIStackView 有宽度约束，arrangedSubviews 会根据配置分配
+- 如果 UIStackView 没有宽度、高度约束，UIStackView的高宽为 arrangedSubviews 之和
+- 如果 UIStackView 子元素如label 宽度超出父宽度如下： 图标被压缩至0
+
+![alt text](image-14.png)
+
+要解决可设置
+
+```swift
+// 设置抗拉伸，抗压缩
+imageView.setContentHuggingPriority(.required, for: .horizontal)
+imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+```
+
+![alt text](image-15.png)

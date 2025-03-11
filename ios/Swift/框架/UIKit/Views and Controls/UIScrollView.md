@@ -441,3 +441,16 @@ contentInsetAdjustmentBehavior 是一个用于控制滚动视图（例如 UITabl
 - scrollableAxes：滚动视图只在垂直方向上自动调整内容插入，而在水平方向上保持不变。这对于横向滚动视图（例如水平滚动的 UICollectionView）很有用，可以避免在输入时水平内容发生不必要的调整。
 - never：滚动视图不会自动调整内容插入，而是保持不变。这意味着键盘或其他输入组件可能会遮挡可见内容。
 - always：无论是否有键盘或其他输入组件，滚动视图始终调整其内容插入，以确保可见内容不被遮挡。这可能导致滚动视图的内容在键盘或输入组件未出现时也被调整。
+
+## contentInset 导致 安全区域变为 负值
+
+```swift
+// 以下观点为个人猜测，非官方说明
+// 添加后 UIScrollView 的宽度为 UIScrollView.frame -  contentInset
+// 1.坐标系原点 (0,0) 移动到 （50，20）
+// 2.ios 将坐标系 调整到 （50，20） 即 （0，0）
+// 3.安全区域即（0，0）移动到 (-50,20)
+contentInset = .init(top: 20, left: 50, bottom: 0, right: 0)
+```
+
+![alt text](image-1.png)
