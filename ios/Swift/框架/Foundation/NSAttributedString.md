@@ -44,6 +44,9 @@
 其部分文本具有相关属性（如视觉样式、超链接或可访问性数据）的字符串。  
 NSAttributedString 是 iOS 和 macOS 开发中用于处理富文本（富有样式和格式）的类。它是 NSString 的子类，允许你为字符串的不同部分应用不同的样式，例如字体、颜色、文本大小、段落样式等。
 
+https://developer.apple.com/documentation/foundation/nsattributedstring
+https://developer.apple.com/documentation/foundation/nsattributedstring/key
+
 ```swift
 class NSAttributedString : NSObject
 ```
