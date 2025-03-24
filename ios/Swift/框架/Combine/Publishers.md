@@ -59,12 +59,12 @@
     - [Publishers.Last 一个操作符（operator），用于从发布者（publisher）中获取最后一个元素或满足特定条件的第一个元素](#publisherslast-一个操作符operator用于从发布者publisher中获取最后一个元素或满足特定条件的第一个元素)
     - [Publishers.LastWhere](#publisherslastwhere)
     - [Publishers.TryLastWhere](#publisherstrylastwhere)
-    - [Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量。](#publishersoutput-一个操作符operator重新发布元素最多不超过指定的最大数量)
+    - [Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量](#publishersoutput-一个操作符operator重新发布元素最多不超过指定的最大数量)
   - [Combining Elements from Multiple Publishers 合并来自多个发布者的元素](#combining-elements-from-multiple-publishers-合并来自多个发布者的元素)
-    - [Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合。](#publisherscombinelatest-一个操作符operator用于将多个发布者publishers的最新值进行组合)
+    - [Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合](#publisherscombinelatest-一个操作符operator用于将多个发布者publishers的最新值进行组合)
     - [Publishers.CombineLatest3](#publisherscombinelatest3)
     - [Publishers.CombineLatest4](#publisherscombinelatest4)
-    - [Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者。](#publishersmerge-一个操作符operator用于将多个发布者publishers的值合并成一个发布者)
+    - [Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者](#publishersmerge-一个操作符operator用于将多个发布者publishers的值合并成一个发布者)
     - [Publishers.Merge3](#publishersmerge3)
     - [Publishers.Merge4](#publishersmerge4)
     - [Publishers.Merge5](#publishersmerge5)
@@ -72,22 +72,22 @@
     - [Publishers.Merge7](#publishersmerge7)
     - [Publishers.Merge8](#publishersmerge8)
     - [Publishers.MergeMany](#publishersmergemany)
-    - [Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对。](#publisherszip-一个操作符operator用于将多个发布者publishers的值进行配对)
+    - [Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对](#publisherszip-一个操作符operator用于将多个发布者publishers的值进行配对)
     - [Publishers.Zip4](#publisherszip4)
   - [Republishing Elements by Subscribing to New Publishers 通过订阅新发布者重新发布元素](#republishing-elements-by-subscribing-to-new-publishers-通过订阅新发布者重新发布元素)
-    - [Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者。](#publishersflatmap-一个操作符operator用于将发布者publisher的每个值映射到另一个发布者并将结果合并为一个单一的发布者)
-    - [Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅。](#publishersswitchtolatest-一个操作符operator用于将一个发布者publisher中的最新发布者的值进行合并和订阅)
+    - [Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者](#publishersflatmap-一个操作符operator用于将发布者publisher的每个值映射到另一个发布者并将结果合并为一个单一的发布者)
+    - [Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅](#publishersswitchtolatest-一个操作符operator用于将一个发布者publisher中的最新发布者的值进行合并和订阅)
   - [Handling Errors 处理错误](#handling-errors-处理错误)
     - [Publishers.AssertNoFailure](#publishersassertnofailure)
     - [Publishers.Catch](#publisherscatch)
     - [Publishers.TryCatch](#publisherstrycatch)
     - [Publishers.Retry](#publishersretry)
   - [Controlling Timing 控制时序](#controlling-timing-控制时序)
-    - [Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔。](#publishersmeasureinterval-一个操作符operator用于测量两次值发出之间的时间间隔)
-    - [Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值。](#publishersdebounce-一个操作符operator用于限制发布者publisher发出值的频率并在指定的时间间隔内只发出最新的值)
-    - [Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间。](#publishersdelay-一个操作符operator用于延迟发布者publisher发出值的时间)
+    - [Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔](#publishersmeasureinterval-一个操作符operator用于测量两次值发出之间的时间间隔)
+    - [Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值](#publishersdebounce-一个操作符operator用于限制发布者publisher发出值的频率并在指定的时间间隔内只发出最新的值)
+    - [Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间](#publishersdelay-一个操作符operator用于延迟发布者publisher发出值的时间)
     - [Publishers.Throttle 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出第一个值](#publishersthrottle-一个操作符operator用于限制发布者publisher发出值的频率并在指定的时间间隔内只发出第一个值)
-    - [Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间。](#publisherstimeout-一个操作符operator用于设置发布者publisher的超时时间)
+    - [Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间](#publisherstimeout-一个操作符operator用于设置发布者publisher的超时时间)
   - [Encoding and Decoding 编码和解码](#encoding-and-decoding-编码和解码)
     - [Publishers.Decode](#publishersdecode)
     - [Publishers.Encode](#publishersencode)
@@ -97,21 +97,20 @@
     - [Publishers.MapKeyPath3](#publishersmapkeypath3)
   - [Working with Multiple Subscribers 使用多个订阅者](#working-with-multiple-subscribers-使用多个订阅者)
     - [Publishers.Multicast 一个操作符（operator），用于将一个发布者（publisher）转换为多个订阅者共享的可连接发布者（connectable publisher）](#publishersmulticast-一个操作符operator用于将一个发布者publisher转换为多个订阅者共享的可连接发布者connectable-publisher)
-    - [Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值。](#publishersshare-一个操作符operator用于在多个订阅者之间共享一个发布者publisher的订阅关系和接收到的值)
+    - [Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值](#publishersshare-一个操作符operator用于在多个订阅者之间共享一个发布者publisher的订阅关系和接收到的值)
   - [Buffering Elements 缓冲元素](#buffering-elements-缓冲元素)
     - [Publishers.Buffer](#publishersbuffer)
     - [Publishers.BufferingStrategy](#publishersbufferingstrategy)
     - [Publishers.PrefetchStrategy](#publishersprefetchstrategy)
   - [Using Explicit Publisher Connections 使用显式发布者连接](#using-explicit-publisher-connections-使用显式发布者连接)
-    - [Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者。](#publishersautoconnect-一个操作符operator用于自动连接一个可连接发布者connectable-publisher到其第一个订阅者)
-    - [Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型。](#publishersmakeconnectable-一个操作符operator用于将一个可连接发布者connectable-publisher转换为可连接的发布者类型)
+    - [Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者](#publishersautoconnect-一个操作符operator用于自动连接一个可连接发布者connectable-publisher到其第一个订阅者)
+    - [Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型](#publishersmakeconnectable-一个操作符operator用于将一个可连接发布者connectable-publisher转换为可连接的发布者类型)
   - [Debugging 调试](#debugging-调试)
-    - [Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误。](#publishersbreakpoint-一个调试操作符operator用于在管道中设置断点以便在特定条件下打印调试信息和错误)
-    - [Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作。](#publishershandleevents-一个操作符operator用于在管道中插入处理事件的操作)
+    - [Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误](#publishersbreakpoint-一个调试操作符operator用于在管道中设置断点以便在特定条件下打印调试信息和错误)
+    - [Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作](#publishershandleevents-一个操作符operator用于在管道中插入处理事件的操作)
     - [Publishers.Print](#publishersprint)
 
 <!-- /code_chunk_output -->
-
 
 # Publishers
 
@@ -585,7 +584,7 @@ cancellable = numbers.publisher
 
 ### Publishers.TryLastWhere
 
-### Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量。
+### Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量
 
 ```swift
 let numbers = (0...10)
@@ -597,7 +596,7 @@ cancellable = numbers.publisher
 
 ## Combining Elements from Multiple Publishers 合并来自多个发布者的元素
 
-### Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合。
+### Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合
 
 ```swift
 let pub1 = PassthroughSubject<Int, Never>()
@@ -653,7 +652,7 @@ pub1.send(13)
 
 ### Publishers.CombineLatest4
 
-### Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者。
+### Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者
 
 ```swift
 let publisher = PassthroughSubject<Int, Never>()
@@ -685,7 +684,7 @@ publisher.send(17)
 
 ### Publishers.MergeMany
 
-### Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对。
+### Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对
 
 ```swift
 let numbersPub = PassthroughSubject<Int, Never>()
@@ -707,7 +706,7 @@ lettersPub.send("B")     // numbers: 1,2,3     letters: "B"       zip output: (2
 
 ## Republishing Elements by Subscribing to New Publishers 通过订阅新发布者重新发布元素
 
-### Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者。
+### Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者
 
 ```swift
 let numbers = [1, 2, 3, 4, 5]
@@ -727,7 +726,7 @@ let cancellable = mappedPublisher.sink { value in
 // 10
 ```
 
-### Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅。
+### Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅
 
 ## Handling Errors 处理错误
 
@@ -741,7 +740,7 @@ let cancellable = mappedPublisher.sink { value in
 
 ## Controlling Timing 控制时序
 
-### Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔。
+### Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔
 
 ```swift
 Timer.publish(every: 1, on: .main, in: .default)
@@ -753,7 +752,7 @@ Timer.publish(every: 1, on: .main, in: .default)
 //      Stride(magnitude: 0.9992760419845581)
 ```
 
-### Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值。
+### Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值
 
 ```swift
 let bounces:[(Int,TimeInterval)] = [
@@ -783,7 +782,7 @@ for bounce in bounces {
 // Received index 5
 ```
 
-### Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间。
+### Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间
 
 ```swift
 let publisher = PassthroughSubject<Int, Never>()
@@ -807,7 +806,7 @@ let cancellable = Timer.publish(every: 3.0, on: .main, in: .default)
      )
 ```
 
-### Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间。
+### Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间
 
 ```swift
 let publisher = PassthroughSubject<Int, Error>()
@@ -878,7 +877,7 @@ let  cancellable2 = pub
 pub.connect()
 ```
 
-### Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值。
+### Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值
 
 ```swift
 let pub = (1...3).publisher
@@ -902,16 +901,16 @@ let cancellable2 = pub
 
 ## Using Explicit Publisher Connections 使用显式发布者连接
 
-### Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者。
+### Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者
 
 当订阅者首次连接时，该发布者会调用上游 ConnectablePublisher 的 connect() 功能。
 
-### Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型。
+### Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型
 
 ## Debugging 调试
 
-### Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误。
+### Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误
 
-### Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作。
+### Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作
 
 ### Publishers.Print
