@@ -83,6 +83,7 @@ func setContentOffset(
 // 使用此属性获取绘制内容的调整区域。
 // contentInsetAdjustmentBehavior 属性决定了安全区域嵌入是否包含在调整中。
 // 然后将安全区域插入添加到contentInset属性中的值中，以获得此属性的最终值。
+// adjustedContentInset 包含  contentInset 的值
 var adjustedContentInset: UIEdgeInsets { get }
 
 // 内容视图从安全区域或滚动视图边缘插入的自定义距离。
