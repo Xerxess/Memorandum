@@ -74,6 +74,8 @@ for child in mirror.children {
 
 ### 枚举
 
+- 这种方式更适用于类型数量固定且不需要扩展的场景。
+
 ```swift
 enum ImagePropertyKeyPath<T> {
     case tintColor(WritableKeyPath<UIListContentConfiguration.ImageProperties, UIColor?>)
