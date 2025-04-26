@@ -46,13 +46,19 @@
 var state: UIGestureRecognizer.State
 
 // 一个布尔值，决定在识别到手势时是否将触摸传送到视图。
-// 当此属性为true（默认值）且手势识别器识别其手势时，该手势的待定触摸不会传递到视图，之前传递的触摸将通过发送到视图的touchsCancelled(_:with:)消息取消。如果手势识别器无法识别其手势，或者如果此属性的值为false，则视图将接收多点触摸序列中的所有触摸。
+// 当此属性为 true （默认值）且手势识别器识别到相应手势时，该手势中待处理的触摸将不会传递到视图，并且之前传递的触摸将通过向视图发送 touchesCancelled(_:with:)  消息取消。
+// 如果手势识别器无法识别相应手势，或者此属性的值为 false ，则视图将接收多点触摸序列中的所有触摸。
 var cancelsTouchesInView: Bool { get set }
 
 // 一个布尔值，用于确定手势识别器是否延迟在开始阶段向其视图发送触摸。
+// 当此属性的值为 false （默认值）时，视图会与手势识别器并行分析 UITouch.Phase.began and UITouch.Phase.moved  中的触摸事件。
+// 当此属性的值为 true 时，窗口会暂停将  UITouch.Phase.began 阶段的触摸对象传递给视图。如果手势识别器随后识别出其手势，则会丢弃这些触摸对象。但是，如果手势识别器未识别出其手势，则窗口会通过 touchesBegan(_:with:) 消息将这些对象传递给视图（可能还会通过后续的 touchesMoved(_:with:) 消息告知其触摸的当前位置）。
+// 将此属性设置为 true 可阻止视图处理  UITouch.Phase.began 阶段中可能被识别为此手势的一部分的任何触摸。
 var delaysTouchesBegan: Bool { get set }
 
 // 一个布尔值，用于确定手势识别器是否延迟在结束阶段向其视图发送触摸。
+// 当此属性的值为true （默认值）且手势识别器正在分析触摸事件时，窗口会暂停将 UITouch.Phase.ended阶段中的触摸对象传送到附加视图。如果手势识别器随后识别出其手势，则这些触摸对象将被取消（带有 touchesCancelled(_:with:)消息）。如果手势识别器无法识别其手势，则窗口会在调用视图的 touchesEnded(_:with:)方法时传送这些对象。
+// 将此属性设置为false可在手势识别器分析相同触摸时将 UITouch.Phase.ended 中的触摸对象传送到视图。
 var delaysTouchesEnded: Bool { get set }
 ```
 
@@ -66,9 +72,11 @@ func location(in: UIView?) -> CGPoint
 func location(ofTouch: Int, in: UIView?) -> CGPoint
 
 // 在创建对象时，创建手势识别器和另一个手势识别器之间的依赖关系。
-// 例子:当您想要单次点击手势要求双次点击手势失败时。
-// 当 toFail 手势失败时当前手势生效
-func require(toFail: UIGestureRecognizer)
+// 当 otherGestureRecognizer 手势失败时当前手势生效
+// 如果 otherGestureRecognizer 转换为 UIGestureRecognizer.State.failed ，则当前手势识别器将转换为其正常的下一个状态。
+// 如果 otherGestureRecognizer 转换为 recognized 或 UIGestureRecognizer.State.began ，则当前手势识别器转换为 UIGestureRecognizer.State.failed 。
+// 举个例子，当你希望单击手势要求双击手势失败时，可能会调用此方法
+func require(toFail otherGestureRecognizer: UIGestureRecognizer)
 
 
 ```
