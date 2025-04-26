@@ -3,6 +3,7 @@
 <!-- code_chunk_output -->
 
 - [NotificationCenter](#notificationcenter)
+  - [常用通知](#常用通知)
 
 <!-- /code_chunk_output -->
 
@@ -71,4 +72,51 @@ notificationCenter.post(name: notificationName, object: classTaget)
 // notification: nil-小明
 notificationCenter.post(name: notificationName, object: nil)
 // 无输出 object 有具体类型，不符合通知接收要求
+```
+
+## 常用通知
+
+```swift
+// 键盘相关
+static let keyboardNotifications: [Notification.Name] = [
+    UIResponder.keyboardWillShowNotification, // 在显示键盘之前立即发布的通知
+    UIResponder.keyboardWillHideNotification, // 关闭键盘之前立即发布的通知
+    UIResponder.keyboardDidShowNotification, // 显示键盘后立即发布的通知
+    UIResponder.keyboardDidHideNotification, // 关闭键盘后立即发布的通知
+    UIResponder.keyboardWillChangeFrameNotification, // 在键盘框架更改之前发布的通知
+    UIResponder.keyboardDidChangeFrameNotification // 键盘框架更改后立即发布的通知
+]
+
+// 应用生命周期
+static let appLifecycleNotifications: [Notification.Name] = [
+    UIApplication.didEnterBackgroundNotification,// 当应用程序进入后台时发布的通知。
+    UIApplication.willEnterForegroundNotification, // 在应用程序离开后台状态成为活动应用程序之前不久发布的通知。
+    UIApplication.didFinishLaunchingNotification,// 应用程序启动完成后立即发布的通知
+    UIApplication.didBecomeActiveNotification,// 当应用程序处于活动状态时发布的通知
+    UIApplication.willResignActiveNotification,// 该应用程序不再活跃并失去焦点时发布的通知
+    UIApplication.willTerminateNotification, // 当应用程序即将终止时发布的通知
+    UIApplication.protectedDataWillBecomeUnavailableNotification, // 一份通知，即在受保护文件被锁定并变得无法访问之前发帖。
+    UIApplication.significantTimeChangeNotification,// significantTimeChangeNotification
+    UIApplication.backgroundRefreshStatusDidChangeNotification, // 当应用程序在后台下载内容的状态更改时，该通知发布。
+    UIApplication.protectedDataDidBecomeAvailableNotification,// 当受保护的文件可供您的代码访问时，会发布通知。
+    UIApplication.userDidTakeScreenshotNotification // 当某人在设备上截屏时发布的通知
+]
+
+// 设备相关
+static let deviceNotifications: [Notification.Name] = [
+    UIDevice.orientationDidChangeNotification,// 当设备的方向发生变化时发布通知。
+    UIDevice.batteryLevelDidChangeNotification,// 电池电量发生变化时发布的通知。
+    UIDevice.batteryStateDidChangeNotification, // 电池状态发生变化时发布的通知。
+    UIDevice.proximityStateDidChangeNotification // 当距离传感器的状态发生变化时发布的通知。
+]
+
+// 内存警告
+static let memoryNotifications: [Notification.Name] = [
+    UIApplication.didReceiveMemoryWarningNotification
+]
+
+// 语言和地区变化
+static let localeNotifications: [Notification.Name] = [
+    NSLocale.currentLocaleDidChangeNotification
+]
 ```
