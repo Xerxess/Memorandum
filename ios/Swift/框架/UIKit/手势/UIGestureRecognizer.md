@@ -159,13 +159,15 @@ func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognize
     return false
 }
 
+//returns true : 识别 gestureRecognizer  -> 需要 otherGestureRecognizer 失败.
+//returns false : 识别 gestureRecognizer -> 不需要 otherGestureRecognizer 失败.
 func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    // 返回 true 表示 gestureRecognizer 应该等待 otherGestureRecognizer 失败
     return false
 }
 
+//returns true : gestureRecognizer 失败后 -> 识别 otherGestureRecognizer.
+//returns false : gestureRecognizer 不需要失败 -> 识别 otherGestureRecognizer.
 func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    // 返回 true 表示 otherGestureRecognizer 应该等待 gestureRecognizer 失败
     return false
 }
 ```

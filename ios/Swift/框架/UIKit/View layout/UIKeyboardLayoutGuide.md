@@ -3,10 +3,26 @@
 <!-- code_chunk_output -->
 
 - [UIKeyboardLayoutGuide](#uikeyboardlayoutguide)
+  - [usesBottomSafeArea](#usesbottomsafearea)
+  - [iphone 上的键盘](#iphone-上的键盘)
 
 <!-- /code_chunk_output -->
 
 # UIKeyboardLayoutGuide
+
+- 不同类型的键盘处于活动状态时，系统报告 keyboard Layout Guide near 和 away From 哪些边缘
+  - Docked keyboards (iphone 的键盘)
+    - 始终 away From 前缘、后缘和顶缘
+    - 始终 near 底部边缘
+  - (Split and undocked keyboards) 拆分和脱离底座的键盘
+        - 始终 away From 前缘、后缘和底缘
+        - 可以 near 顶部边缘
+  - 浮动键盘：
+    - 可以 away From 所有边缘
+    - 可以 near 任意边或任意两个相邻边
+  - 快捷方式栏（可通过外部连接键盘使用）：
+    - 始终 away From 顶部边缘并 near 底部边缘
+    - 折叠状态下可 near 前缘或后缘
 
 > followsUndockedKeyboard = false 时，指南会在键盘停靠时与键盘匹配。当键盘不在屏幕上时，参考线位于窗口底部，高度等于当前 safeAreaInsets 的底部
 
@@ -66,4 +82,25 @@ let nearTrailing = toolbar.trailingAnchor.constraint(equalTo:
 nearTrailing.identifier = "KB-nearTrailing"
 view.keyboardLayoutGuide.setConstraints([nearTrailing],
   activeWhenNearEdge: .trailing)
+```
+
+## usesBottomSafeArea 
+
+```swift
+ // 一个布尔值，指示布局指南是否使用视图的安全区域布局指南
+ var usesBottomSafeArea: Bool { get set }
+```
+
+## iphone 上的键盘
+
+```swift
+// 生效 键盘始终远离顶部边缘
+view.keyboardLayoutGuide.setConstraints([keyboardLayout], activeWhenAwayFrom: .top) 
+// 不生效
+view.keyboardLayoutGuide.setConstraints([keyboardLayout], activeWhenAwayFrom: .top) 
+
+// 键盘始终靠近底部边缘
+view.keyboardLayoutGuide.setConstraints([bottomLayout], activeWhenNearEdge: .bottom)
+// 生效 不生效
+view.keyboardLayoutGuide.setConstraints([bottomLayout], activeWhenNearEdge: .bottom)
 ```

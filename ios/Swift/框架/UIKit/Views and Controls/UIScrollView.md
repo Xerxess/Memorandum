@@ -1,24 +1,40 @@
-<!-- TOC -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [UIScrollView](#uiscrollview)
 - [API](#api)
-  - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-%E5%9B%9E%E5%BA%94%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE%E4%BA%A4%E4%BA%92)
-  - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E5%A4%A7%E5%B0%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F)
-  - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-%E7%AE%A1%E7%90%86%E5%86%85%E5%AE%B9%E6%8F%92%E5%85%A5%E8%A1%8C%E4%B8%BA)
-  - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-%E8%8E%B7%E5%8F%96%E5%B8%83%E5%B1%80%E6%8C%87%E5%8D%97)
+  - [Responding to Scroll View Interactions 回应滚动视图交互](#responding-to-scroll-view-interactions-回应滚动视图交互)
+  - [Managing the Content Size and Offset  管理内容大小和偏移量](#managing-the-content-size-and-offset--管理内容大小和偏移量)
+  - [Managing the Content Inset Behavior 管理内容插入行为](#managing-the-content-inset-behavior-管理内容插入行为)
+  - [Getting the Layout Guides 获取布局指南](#getting-the-layout-guides-获取布局指南)
   - [Configuring the Scroll View](#configuring-the-scroll-view)
-  - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-%E8%8E%B7%E5%BE%97%E6%BB%9A%E5%8A%A8%E7%8A%B6%E6%80%81)
-  - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-%E7%AE%A1%E7%90%86%E6%BB%9A%E5%8A%A8%E6%8C%87%E7%A4%BA%E5%99%A8%E5%92%8C%E5%88%B7%E6%96%B0%E6%8E%A7%E5%88%B6)
-  - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-%E6%BB%9A%E5%8A%A8%E5%88%B0%E7%89%B9%E5%AE%9A%E4%BD%8D%E7%BD%AE)
-  - [Managing Touches 管理触摸](#managing-touches-%E7%AE%A1%E7%90%86%E8%A7%A6%E6%91%B8)
-  - [Zooming and Panning 缩放和平移](#zooming-and-panning-%E7%BC%A9%E6%94%BE%E5%92%8C%E5%B9%B3%E7%A7%BB)
-  - [Managing the Keyboard 管理键盘](#managing-the-keyboard-%E7%AE%A1%E7%90%86%E9%94%AE%E7%9B%98)
-  - [Managing the Index 管理指数](#managing-the-index-%E7%AE%A1%E7%90%86%E6%8C%87%E6%95%B0)
-- [小笔记](#%E5%B0%8F%E7%AC%94%E8%AE%B0)
-  - [内容高度自适应](#%E5%86%85%E5%AE%B9%E9%AB%98%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
+  - [Getting the Scrolling State 获得滚动状态](#getting-the-scrolling-state-获得滚动状态)
+  - [Managing the Scroll Indicator and Refresh Control 管理滚动指示器和刷新控制](#managing-the-scroll-indicator-and-refresh-control-管理滚动指示器和刷新控制)
+  - [Scrolling to a Specific Location 滚动到特定位置](#scrolling-to-a-specific-location-滚动到特定位置)
+  - [Managing Touches 管理触摸](#managing-touches-管理触摸)
+  - [Zooming and Panning 缩放和平移](#zooming-and-panning-缩放和平移)
+  - [Managing the Keyboard 管理键盘](#managing-the-keyboard-管理键盘)
+  - [Managing the Index 管理指数](#managing-the-index-管理指数)
+- [小笔记](#小笔记)
+  - [图解](#图解)
+  - [答疑解惑](#答疑解惑)
+    - [自动布局](#自动布局)
+  - [内容高度自适应](#内容高度自适应)
   - [contentInsetAdjustmentBehavior](#contentinsetadjustmentbehavior)
+  - [contentInset 导致 安全区域变为 负值](#contentinset-导致-安全区域变为-负值)
+  - [scrollViewDidScroll 系统会自动调用导致逻辑错误,判断是用户交互发生的滚动](#scrollviewdidscroll-系统会自动调用导致逻辑错误判断是用户交互发生的滚动)
+  - [是否滚动已滚动到底部](#是否滚动已滚动到底部)
+  - [检测自然滚动结束](#检测自然滚动结束)
+    - [通过 UIScrollViewDelegate 代理方法](#通过-uiscrollviewdelegate-代理方法)
+    - [通过 CADisplayLink](#通过-cadisplaylink)
+  - [verticalScrollIndicatorInsets、automaticallyAdjustsScrollIndicatorInsets 一些注意事项](#verticalscrollindicatorinsets-automaticallyadjustsscrollindicatorinsets-一些注意事项)
+    - [verticalScrollIndicatorInsets 设置为非(默认值)](#verticalscrollindicatorinsets-设置为非默认值)
+    - [控制器 additionalSafeAreaInsets 会影响 系统的调整策略](#控制器-additionalsafeareainsets-会影响-系统的调整策略)
+    - [底部无法自动调整](#底部无法自动调整)
+  - [subView.convert(.init(x: 0, y: 0), to: scrollView)](#subviewconvertinitx-0-y-0-to-scrollview)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
 
 # UIScrollView
 
@@ -455,3 +471,155 @@ contentInset = .init(top: 20, left: 50, bottom: 0, right: 0)
 ```
 
 ![alt text](image-1.png)
+
+## scrollViewDidScroll 系统会自动调用导致逻辑错误,判断是用户交互发生的滚动
+
+- scrollViewDidScroll 系统会自动调用，通过 isUserDragging 标识判断只处理用户交互滚动
+
+```swift
+class Demo:UIViewController { 
+    var isUserDragging = false
+    var scrollView = UIScrollView()
+    override func viewDidLoad() {
+        scrollView.delegate = self
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            .edges.equalToSuperview()
+         }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView){
+        let offset = scrollView.contentOffset.y + scrollView.adjustedContentInset.top
+        if loadPreDataIng {
+            return
+        }
+        if offset <= 50 && isUserDragging {
+            // 处罚一些逻辑
+        }
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
+        print("scrollViewWillBeginDragging")
+        isUserDragging = true
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){
+        print("scrollViewDidEndDragging",decelerate)
+        if !decelerate {
+            isUserDragging = false
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        print("scrollViewDidEndDecelerating")
+        isUserDragging = false
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView){
+        print("scrollViewDidEndScrollingAnimation")
+    }
+}
+```
+
+## 是否滚动已滚动到底部
+
+```swift
+extension UIScrollView {
+    /// 是否滚动已滚动到底部
+    /// - bounds: UIScrollView.bounds 变化前的 bounds 信息
+    func isScrolledToBottom(_ bounds:CGSize = .zero) -> Bool {
+        let contentOffsetY = self.contentOffset.y
+        let contentHeight = self.contentSize.height
+        let frameHeight = max(bounds.height,self.bounds.height)
+        let adjustedContentInset = self.adjustedContentInset
+        
+        // 考虑 contentInset
+        let threshold: CGFloat = 2 // 可以设置一个阈值
+        var calculateOffsetY = contentHeight - frameHeight - threshold
+        if self.contentInsetAdjustmentBehavior != .never {
+            calculateOffsetY += adjustedContentInset.bottom
+        }
+//        print(bounds.height,self.bounds.height,contentOffsetY,calculateOffsetY)
+        return contentOffsetY >= calculateOffsetY
+    }
+}
+```
+
+## 检测自然滚动结束
+
+### 通过 UIScrollViewDelegate 代理方法
+
+```swift
+func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView){
+        print("scrollViewDidEndScrollingAnimation")
+    }
+```
+
+### 通过 CADisplayLink
+
+```swift
+var displayLink: CADisplayLink?
+var completionBlock: (() -> Void)?
+
+func scrollToRowWithCompletion(completion: @escaping () -> Void) {
+    self.tableView.scrollToRow(at: IndexPath(row:self.messages.count - 1, section: 0), at: .bottom, animated: true)
+    
+    displayLink = CADisplayLink(target: self, selector: #selector(checkScrollingFinished))
+    displayLink?.add(to: .current, forMode: .default)
+    
+    // 存储 completion block
+    self.completionBlock = completion
+}
+
+@objc func checkScrollingFinished() {
+    if !tableView.isDragging && !tableView.isDecelerating && !tableView.isScrollAnimating {
+        print("已停止运动")
+        displayLink?.invalidate()
+        displayLink = nil
+        
+        // 执行 completion block
+        completionBlock?()
+        completionBlock = nil
+    }
+}
+```
+
+## verticalScrollIndicatorInsets、automaticallyAdjustsScrollIndicatorInsets 一些注意事项
+
+### verticalScrollIndicatorInsets 设置为非(默认值)
+
+- verticalScrollIndicatorInsets 设置为非(默认值)后系统的调整策略调整是依据当前的安全区域调整，在手机横向时会出现左右安全区域，则不会停靠最右侧
+
+```swift
+collectionView.automaticallyAdjustsScrollIndicatorInsets = true
+collectionView.verticalScrollIndicatorInsets = .init(top: 10, left: 0, bottom: 0, right: 0)
+```
+
+![alt text](image-2.png)
+
+### 控制器 additionalSafeAreaInsets 会影响 系统的调整策略
+
+```swift
+additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 10, right: 0)
+```
+
+### 底部无法自动调整
+
+- 在自定义的容器视图或容器视图控制器中，系统为调整顶部的verticalScrollIndicatorInsets，而底部不会自动调整，需要手动设置。（不知道是BUG,还是有意为之）
+  - 解决方法：additionalSafeAreaInsets 设置底部的值，设置后，系统可以自动调整了。
+
+## subView.convert(.init(x: 0, y: 0), to: scrollView)
+
+- 子视图换算scrollView坐标时，是根据scrollView.contentOffset.y = 0 的位置进行换算的。
+- 如果要获取当前视窗的坐标，你设置nil,或  view
+
+```swift
+// 根据scrollView.contentOffset.y = 0 的位置进行换算的
+subView.convert(.init(x: 0, y: 0), to: scrollView)
+
+// 换算window 的坐标
+subView.convert(.init(x: 0, y: 0), to: nil)
+
+//  换算控制器根 view 的坐标
+subView.convert(.init(x: 0, y: 0), to: view)
+```
