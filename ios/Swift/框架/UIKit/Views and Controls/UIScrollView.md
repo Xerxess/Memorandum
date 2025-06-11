@@ -33,6 +33,13 @@
     - [控制器 additionalSafeAreaInsets 会影响 系统的调整策略](#控制器-additionalsafeareainsets-会影响-系统的调整策略)
     - [底部无法自动调整](#底部无法自动调整)
   - [subView.convert(.init(x: 0, y: 0), to: scrollView)](#subviewconvertinitx-0-y-0-to-scrollview)
+  - [通过 velocity 速度计算位移距离](#通过-velocity-速度计算位移距离)
+    - [通过递归](#通过递归)
+    - [通过数学计算](#通过数学计算)
+  - [UIScrollView 嵌套分析](#uiscrollview-嵌套分析)
+    - [默认嵌套](#默认嵌套)
+    - [嵌套方式一：同时滚动](#嵌套方式一同时滚动)
+    - [嵌套方式二：子视图完全接管滚动，不透传到父视图](#嵌套方式二子视图完全接管滚动不透传到父视图)
 
 <!-- /code_chunk_output -->
 
@@ -622,4 +629,108 @@ subView.convert(.init(x: 0, y: 0), to: nil)
 
 //  换算控制器根 view 的坐标
 subView.convert(.init(x: 0, y: 0), to: view)
+```
+
+## 通过 velocity 速度计算位移距离
+
+### 通过递归
+
+```swift
+private func decelerate(_ velocity:CGFloat,startOffsetY:CGFloat = 0.0) -> CGFloat {
+        var velocity = velocity
+        let decelerationRate: CGFloat = UIScrollView.DecelerationRate.normal.rawValue // 减速度
+        
+        // 更新位置
+        let stoppingDistance = velocity
+        // 减速
+        velocity *= decelerationRate
+        
+        // 检查是否停止
+        if abs(velocity) > 0.02 {
+            return self.decelerate(velocity,startOffsetY: startOffsetY + stoppingDistance)
+        } else {
+            return startOffsetY + stoppingDistance
+        }
+    }
+```
+
+### 通过数学计算
+
+```swift
+ func calculateStopDistance(fromVelocity velocity: CGFloat, withDecelerationRate rate: CGFloat = 0.998) -> CGFloat {
+        let lnRate = log(rate)
+        return velocity / (-lnRate)
+    }
+```
+
+## UIScrollView 嵌套分析
+
+### 默认嵌套
+
+- 父视图滚动，子视图不滚动
+- 子视图滚动
+  - 子视图可滚动，父视图不参与滚动
+  - 子视图滚动到顶部或底部后再次滑动，父视图接管滚动 （ios 17.4 transfersHorizontalScrollingToParent 和 transfersVerticalScrollingToParent 可以改变这个行为，但`仅限于子视图contentSize是可滚动的`）
+
+### 嵌套方式一：同时滚动
+
+- 借助手势代理，实现子视图和父视图同时滚动
+  - 父视图滚动，子视图不滚动
+  - 子视图滚动，父视图也滚动滚动
+    - 子视图滚动到顶部时,在ios 17.4 下 （即ios 17.4  transfersHorizontalScrollingToParent 和 transfersVerticalScrollingToParent）的相关配置下，子视图没有缓冲效果
+    - ios 17.4 配置 transfersVerticalScrollingToParent 或 transfersHorizontalScrollingToParent 为 false 时后，子视图有缓冲效果
+
+```swift
+class MyUIScrollView:UIScrollView,UIGestureRecognizerDelegate {
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool{
+            return true
+        }
+
+}
+```
+
+### 嵌套方式二：子视图完全接管滚动，不透传到父视图
+
+- 借助手势代理
+
+```swift
+// 方式一：此方式直接使用父视图 的平移手势失效。
+// 直接让子视图手势只在子视图进行平移
+class MyUIScrollView:UIScrollView,UIGestureRecognizerDelegate{
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        if gestureRecognizer is UIPanGestureRecognizer {
+            gestureRecognizer.state = .failed
+        }
+        return false
+    }
+    
+}
+```
+
+```swift
+// 方式二：此方式基本没问题，但如果子视图没手势时快速滑动也会使父视图滚动
+// 如：当TableView 没有侧滑菜单时，快速滑动会触发父视图滚动,原因快速滑动导致传递到父视图，导致父视图滚动
+// 如：当TableView 有侧滑菜单时，快速滑动不会触发父视图滚动，原因是代理拦截手势且不会失效
+class MyUIScrollView:UIScrollView,UIGestureRecognizerDelegate{
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return false
+    }
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
+    }
+    
+}
 ```
