@@ -27,14 +27,15 @@
 
 # Info.plist
 
+- 从Xcode13开始，新建的工程不再要求使用配置文件（Info.plist、entitlements）。如果需要修改Xcode的配置，请直接在Xcode面板"target - Info - Custom iOS Target Properties"和"build   settings"中设置。
+  - 修改Info.plist后不一定会马上生效，Xcode同步会有一定延迟。最保险的方法就是重启一下Xcode，强制触发同步。
+  - 回到从前的Info.plist BuildSetting - Generate Info.plist File设置为NO，关闭打包合并功能
+
 信息属性列表文件是一个结构化文本文件，其中包含捆绑可执行文件的基本配置信息。
 
 - 注意，xcode 的 Info.plist 可视化的 `键值` 与 `编程对象的键有差异`，但 Info.plist 源码映射的是编程的键如(配置时可直接键入编程Key)：
 
 > Appearance 映射到的是 UIUserInterfaceStyle
-
-![Alt text](image-2.png)
-![Alt text](image.png)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -88,9 +89,10 @@
 
 ## 定位
 
-- [NSLocationAlwaysAndWhenInUseUsageDescription]:String 一条信息，告诉用户为什么应用程序要求随时访问用户的位置信息。
+- [NSLocationAlwaysAndWhenInUseUsageDescription]:String 一条信息，告诉用户为什么应用程序要求随时访问用户的位置信息。 需要获取您的位置信息
 - [NSLocationWhenInUseUsageDescription]:String 一条信息，告诉用户应用程序在前台运行时请求访问用户位置信息的原因。
 - [NSLocationDefaultAccuracyReduced]:Bool 一个布尔值，表示应用程序是否在默认情况下请求降低定位精度
+- [NSLocationTemporaryUsageDescriptionDictionary] 需要获取您的精确位置信息
 
 ## 媒体库
 

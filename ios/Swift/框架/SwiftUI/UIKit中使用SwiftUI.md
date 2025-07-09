@@ -6,16 +6,21 @@
   - [使用 UIHostingController](#使用-uihostingcontroller)
   - [在 UIKit 中展示 SwiftUI 视图的简便方法](#在-uikit-中展示-swiftui-视图的简便方法)
   - [在 UITableViewCell 或 UICollectionViewCell 中使用 SwiftUI](#在-uitableviewcell-或-uicollectionviewcell-中使用-swiftui)
-  - [数据传递与通信](#数据传递与通信)
-    - [从 UIKit 到 SwiftUI](#从-uikit-到-swiftui)
-    - [从 SwiftUI 到 UIKit](#从-swiftui-到-uikit)
-  - [使用 UIViewRepresentable 将 UIKit 视图集成到 SwiftUI](#使用-uiviewrepresentable-将-uikit-视图集成到-swiftui)
+  - [高级集成 - 数据双向绑定 (数据传递与通信)](#高级集成---数据双向绑定-数据传递与通信)
 
 <!-- /code_chunk_output -->
 
 # UIKit中使用SwiftUI
 
+- 何时在UIKit中使用SwiftUI
+    1. 快速构建现代UI
+    2. 利用SwiftUI的声明式语法
+    3. 需要复杂的动画效果
+    4. 数据绑定更简单
+
 ## 使用 UIHostingController
+
+https://developer.apple.com/documentation/swiftui/uihostingcontroller
 
 UIHostingController，它是一个 UIViewController 子类，可以承载 SwiftUI 视图
 
@@ -121,85 +126,219 @@ extension UIView {
 }
 ```
 
-## 数据传递与通信
-
-### 从 UIKit 到 SwiftUI
+## 高级集成 - 数据双向绑定 (数据传递与通信)
 
 ```swift
-class ViewController: UIViewController {
-    var userData: UserData = UserData()
+import UIKit
+import SwiftUI
+import Combine
+
+// 共享数据模型
+class SharedDataModel: ObservableObject {
+    @Published var counter: Int = 0
+    @Published var message: String = "初始消息"
+    @Published var items: [String] = ["项目1", "项目2", "项目3"]
     
-    func updateProfile() {
-        // 使用 @ObservedObject 或 @StateObject 的 SwiftUI 视图
-        let profileView = ProfileView(userData: userData)
-        let hostingController = UIHostingController(rootView: profileView)
-        
-        // 呈现视图控制器
-        present(hostingController, animated: true)
-        
-        // 稍后更新数据
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.userData.name = "新名字"  // SwiftUI 视图将自动更新
-        }
+    func incrementCounter() {
+        counter += 1
+        message = "计数器: \(counter)"
+    }
+    
+    func addItem(_ item: String) {
+        items.append(item)
+    }
+    
+    func removeItem(at index: Int) {
+        guard index < items.count else { return }
+        items.remove(at: index)
     }
 }
 
-// SwiftUI 视图
-struct ProfileView: View {
-    @ObservedObject var userData: UserData
+// UIKit视图控制器
+class HybridViewController: UIViewController {
+    private let dataModel = SharedDataModel()
+    private var cancellables = Set<AnyCancellable>()
+    
+    // UIKit UI 组件
+    private lazy var counterLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+        label.layer.cornerRadius = 8
+        label.layer.masksToBounds = true
+        return label
+    }()
+    
+    private lazy var incrementButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.title = "UIKit 增加"
+        config.cornerStyle = .medium
+        let button = UIButton(configuration: config)
+        button.addTarget(self, action: #selector(incrementTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupDataBinding()
+        addSwiftUIView()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .systemBackground
+        title = "UIKit + SwiftUI 数据共享"
+        
+        // 添加UIKit组件
+        view.addSubview(counterLabel)
+        view.addSubview(incrementButton)
+        view.addSubview(messageLabel)
+        
+        // 设置约束
+        counterLabel.translatesAutoresizingMaskIntoConstraints = false
+        incrementButton.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            counterLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            counterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            counterLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            counterLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            incrementButton.topAnchor.constraint(equalTo: counterLabel.bottomAnchor, constant: 16),
+            incrementButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            incrementButton.widthAnchor.constraint(equalToConstant: 120),
+            incrementButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            messageLabel.topAnchor.constraint(equalTo: incrementButton.bottomAnchor, constant: 16),
+            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+    
+    private func setupDataBinding() {
+        // 监听数据模型变化
+        dataModel.$counter
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] counter in
+                self?.counterLabel.text = "计数器: \(counter)"
+            }
+            .store(in: &cancellables)
+        
+        dataModel.$message
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.messageLabel.text = message
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func addSwiftUIView() {
+        let swiftUIView = SwiftUIDataView(dataModel: dataModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+        
+        hostingController.view.backgroundColor = .clear
+    }
+    
+    @objc private func incrementTapped() {
+        dataModel.incrementCounter()
+    }
+}
+
+// SwiftUI视图
+struct SwiftUIDataView: View {
+    @ObservedObject var dataModel: SharedDataModel
+    @State private var newItemText = ""
     
     var body: some View {
-        VStack {
-            Text("名字: \(userData.name)")
-            Button("返回") {
-                // 关闭当前视图
+        VStack(spacing: 20) {
+            Text("SwiftUI 数据视图")
+                .font(.title2)
+                .foregroundColor(.green)
+            
+            VStack(spacing: 16) {
+                // 显示计数器
+                HStack {
+                    Text("当前计数:")
+                    Spacer()
+                    Text("\(dataModel.counter)")
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
+                .padding()
+                .background(Color.blue.opacity(0.1))
+                .cornerRadius(8)
+                
+                // SwiftUI增加按钮
+                Button("SwiftUI 增加") {
+                    dataModel.incrementCounter()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+                
+                // 项目列表
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("项目列表:")
+                        .font(.headline)
+                    
+                    ForEach(dataModel.items.indices, id: \.self) { index in
+                        HStack {
+                            Text(dataModel.items[index])
+                            Spacer()
+                            Button("删除") {
+                                dataModel.removeItem(at: index)
+                            }
+                            .buttonStyle(.borderless)
+                            .foregroundColor(.red)
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+                
+                // 添加新项目
+                HStack {
+                    TextField("新项目", text: $newItemText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Button("添加") {
+                        if !newItemText.isEmpty {
+                            dataModel.addItem(newItemText)
+                            newItemText = ""
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(newItemText.isEmpty)
+                }
             }
         }
-    }
-}
-
-class UserData: ObservableObject {
-    @Published var name: String = "初始名字"
-}
-```
-
-### 从 SwiftUI 到 UIKit
-
-```swift
-struct ActionButtonView: View {
-    var onButtonTap: () -> Void
-    var body: some View {
-        Button("执行操作") {
-            onButtonTap()
-        }
-    }
-}
-
-// 在 UIKit 中使用
-let actionView = ActionButtonView(onButtonTap: {
-    // 在这里执行 UIKit 代码
-    self.showAlert(message: "按钮被点击")
-})
-let hostingController = UIHostingController(rootView: actionView)
-```
-
-## 使用 UIViewRepresentable 将 UIKit 视图集成到 SwiftUI
-
-```swift
-struct UIKitMapView: UIViewRepresentable {
-    func makeUIView(context: Context) -> MKMapView {
-        MKMapView()
-    }
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        // 更新地图视图
-    }
-}
-
-// 在 SwiftUI 中使用
-struct ContentView: View {
-    var body: some View {
-        UIKitMapView()
-            .frame(height: 300)
+        .padding()
+        .background(Color.green.opacity(0.05))
+        .cornerRadius(12)
     }
 }
 ```

@@ -120,6 +120,7 @@ Interface Builder（IB）是Mac OS X平台下用于设计和测试用户界面�
 # 构建的环境变量
 
 https://help.apple.com/xcode/mac/11.4/#/itcaec37c2a6
+https://developer.apple.com/documentation/xcode/build-settings-reference
 
 ```c++
 // 产品的基本名称
