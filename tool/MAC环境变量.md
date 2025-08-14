@@ -23,6 +23,12 @@ Bourne Shell：
 3.~/.bash_profile  （一般在这个文件中添加用户级环境变量）  
 每个用户都可使用该文件输入专用于自己使用的shell信息,当用户登录时,该文件仅仅执行一次!
 
+```
+// 立即生效
+source ~/.bash_profile
+source ~/.bashrc
+```
+
 java 环境变量配置
 
 https://www.jianshu.com/p/27e494e45f78
