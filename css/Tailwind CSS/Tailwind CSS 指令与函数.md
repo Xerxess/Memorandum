@@ -6,7 +6,13 @@
   - [@tailwind 指令](#tailwind-指令)
   - [@apply 指令](#apply-指令)
   - [@layer 指令](#layer-指令)
-  - [@import 指令](#import-指令)
+  - [@import 指令 （v4）](#import-指令-v4)
+  - [@theme （v4）](#theme-v4)
+  - [@source （v4）](#source-v4)
+  - [@utility （v4）](#utility-v4)
+  - [@variant （v4）](#variant-v4)
+  - [@custom-variant 添加自定义变体 （v4）](#custom-variant-添加自定义变体-v4)
+  - [@reference （v4）](#reference-v4)
   - [Tailwind CSS 的函数](#tailwind-css-的函数)
 
 <!-- /code_chunk_output -->
@@ -89,12 +95,101 @@
 }
 ```
 
-## @import 指令
+## @import 指令 （v4）
 
-```tsx
-@import '<path-to-file>';
+- 使用 @import 指令内联导入 CSS 文件，包括 Tailwind 本身
+
+```css
+@import "tailwindcss";
 ```
+
+## @theme （v4）
+
+- 一句话概括：定义项目的全局设计系统，如颜色、字体、间距、断点等。
+- 详细解释：你可以在 @theme 块内使用 CSS 自定义属性（--variable-name）来定义或覆盖 Tailwind 的默认主题。这些变量会自动生成对应的工具类。
+
+## @source （v4）
+
+- 使用 @source 指令明确指定 Tailwind 自动内容检测未选取的源文件
+
+## @utility （v4）
+
+- 使用 @utility 指令将自定义实用程序添加到您的项目，这些实用程序可与 hover 、 focus 和 lg 等变体一起使用
+
+
+```css
+@utility content-auto {
+  content-visibility: auto;
+}
+```
+
+```html
+<div class="content-auto">
+  <!-- ... -->
+</div>
+```
+
+```css
+@theme {
+  --tab-size-2: 2;
+  --tab-size-4: 4;
+  --tab-size-github: 8;
+}
+@utility tab-* {
+/* - 匹配主题值：tab-size: --value(--tab-size-*); 可以匹配 tab-2, tab-4 等在 @theme 中定义的值。
+   - 匹配原始值：tab-size: --value(integer); 可以匹配 tab-1, tab-76 等。
+   - 匹配任意值：tab-size: --value([integer]); 可以匹配 tab-[1], tab-[76] 等。
+   - 处理修饰符：line-height: --modifier(--leading-*); 可以处理 text-lg/leading-loose 这样的修饰符。 */
+  tab-size: --value(--tab-size-*);
+  tab-size: --value(integer);
+  tab-size: --value("inherit", "initial", "unset");
+  tab-size: --value([integer]);
+}
+```
+
+## @variant （v4）
+
+- 使用 @variant 指令在自定义 CSS 中应用 Tailwind 变体
+
+```css
+.my-element {
+  background: white;
+  @variant dark {
+    background: black;
+  }
+}
+
+/* 编译后的 CSS */
+.my-element {
+  background: white;
+  @media (prefers-color-scheme: dark) {
+    background: black;
+  }
+}
+```
+
+## @custom-variant 添加自定义变体 （v4）
+
+- 使用 @custom-variant 指令添加自己的自定义变体
+- 使用 @custom-variant 指令，@slot 作为占位符。
+
+```css
+@custom-variant theme-midnight {
+  &:where([data-theme="midnight"] *) {
+    @slot;
+  }
+}
+```
+
+```html
+<html data-theme="midnight">
+  <button class="theme-midnight:bg-black ..."></button>
+</html>
+```
+
+## @reference （v4）
 
 ## Tailwind CSS 的函数
 
-
+- --alpha()
+- --spacing()
