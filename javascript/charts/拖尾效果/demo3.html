@@ -28,105 +28,149 @@
   <canvas id="stage"></canvas>
 
   <script>
+    // ==================== 初始化配置 ====================
     const canvas = document.getElementById('stage');
     const ctx = canvas.getContext('2d');
-    const DPR = window.devicePixelRatio || 1;
+    const DPR = window.devicePixelRatio || 1;  // 设备像素比（高清屏幕适配）
 
-    const FIREWORK_INTERVAL = 900;
-    const PARTICLES_PER_BURST = 40;
-    const PARTICLE_TRAIL = 18;
-    const GRAVITY = 0.06;
-    const FRICTION = 0.992;
-    const TRAIL_FADE = 0.88; // 越接近 1 拖尾越短
+    // ==================== 参数配置 ====================
+    // 【拖尾策略】Demo3 采用 "逐帧褪色法"：不清除画布，而是每帧逐渐降低整个画布的亮度
+    // 这样可以实现连贯、梦幻的拖尾效果，且性能更高（只需一次 fillRect）
+    const FIREWORK_INTERVAL = 900;        // 自动发射烟花的时间间隔（毫秒）
+    const PARTICLES_PER_BURST = 40;       // 每次爆炸产生的粒子数量（比 Demo2 少）
+    const PARTICLE_TRAIL = 18;            // 粒子拖尾的长度（比 Demo2 短，20 -> 18）
+    const GRAVITY = 0.06;                 // 重力加速度（比 Demo2 小，0.08 -> 0.06）
+    const FRICTION = 0.992;               // 摩擦系数（比 Demo2 大，0.981 -> 0.992，衰减慢）
+    const TRAIL_FADE = 0.88;              // 【新增】拖尾褪色系数（每帧保留 88% 的亮度）
+                                          // 越接近 1，拖尾越长；越接近 0，拖尾越短
+    // 拖尾长度计算：原像素亮度 = 亮度 × (0.88)^帧数
+    // 第 10 帧：100% × 0.88^9 ≈ 31% 亮度
+    // 第 20 帧：100% × 0.88^19 ≈ 9% 亮度
+    // 第 30 帧：100% × 0.88^29 ≈ 2% 亮度（基本消失）
 
-    let rockets = [];
-    let particles = [];
-    let lastTime = performance.now();
-    let accumulator = 0;
+    // ==================== 状态变量 ====================
+    let rockets = [];                     // 活跃火箭数组
+    let particles = [];                   // 活跃粒子数组
+    let lastTime = performance.now();     // 上一帧的时间戳
+    let accumulator = 0;                  // 时间累加器（用于自动发射）
 
     function resize() {
       const { innerWidth: w, innerHeight: h } = window;
-      canvas.width = w * DPR;
+      canvas.width = w * DPR;                  // Canvas 分辨率（物理像素）
       canvas.height = h * DPR;
-      canvas.style.width = w + 'px';
+      canvas.style.width = w + 'px';          // CSS 显示大小
       canvas.style.height = h + 'px';
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // 设置转换矩阵适应高清屏幕
     }
     resize();
     window.addEventListener('resize', resize);
 
+    // ==================== 火箭类 ====================
+    // 【拖尾机制】Demo3 火箭同样维护 history，但不在 draw() 时重绘
+    // 拖尾效果由 fadeCanvas() 和新绘制的火箭组合产生
     class Rocket {
       constructor(x, targetY, hue) {
-        this.x = x;
-        this.y = canvas.height / DPR;
-        this.targetY = targetY;
-        this.vx = (Math.random() - 0.5) * 1.2;
-        this.vy = -5 - Math.random() * 2;
-        this.hue = hue;
-        this.history = [];
+        this.x = x;                    // 当前 X 坐标
+        this.y = canvas.height / DPR;  // 起始 Y 坐标（屏幕底部）
+        this.targetY = targetY;        // 目标爆炸高度
+        this.vx = (Math.random() - 0.5) * 1.2;  // 水平速度（±0.6，比 Demo2 大）
+        this.vy = -5 - Math.random() * 2;       // 垂直速度（向上，-5 到 -7）
+        this.hue = hue;                // 颜色（0-360）
+        this.history = [];             // 位置历史数组
       }
+
       update(dt) {
+        // 【关键】存储当前位置到 history
         this.history.push({ x: this.x, y: this.y });
+        // Demo3 使用 PARTICLE_TRAIL 统一管理，不用单独的 ROCKET_TRAIL
         if (this.history.length > PARTICLE_TRAIL) this.history.shift();
+
+        // 更新物理位置
         this.x += this.vx * dt;
         this.y += this.vy * dt;
-        this.vy += (GRAVITY * 0.3) * dt;
+        this.vy += (GRAVITY * 0.3) * dt;  // 重力作用（比 Demo2 弱，0.4 -> 0.3）
+
+        // 检查是否到达爆炸点
         if (this.vy >= 0 || this.y <= this.targetY) {
           explode(this.x, this.y, this.hue);
           return false;
         }
         return true;
       }
+
       draw() {
+        // 【注】Demo3 火箭的拖尾直接由历史位置遍历形成
+        // 这些历史点会被 fadeCanvas() 逐帧褪色，形成连贯的拖尾
         ctx.globalCompositeOperation = 'lighter';
+
+        // 绘制拖尾：历史点透明度从低到高
         for (let i = 0; i < this.history.length; i++) {
           const p = this.history[i];
-          const alpha = i / this.history.length;
+          const alpha = i / this.history.length;  // 从 0 开始（比 Demo2 的 1/length 更暗）
           ctx.fillStyle = `hsla(${this.hue}, 90%, 70%, ${alpha})`;
           ctx.fillRect(p.x - 1, p.y - 1, 2, 2);
         }
+
+        // 绘制火箭头部（最亮）
         ctx.fillStyle = `hsla(${this.hue}, 100%, 85%, 1)`;
         ctx.fillRect(this.x - 1, this.y - 6, 2, 8);
       }
     }
 
+    // ==================== 粒子类 ====================
+    // 【拖尾机制】粒子维护 history，draw() 时绘制连线
+    // 不同的是 update() 方法不接收 dt 参数（固定时间步）
     class Particle {
       constructor(x, y, hue) {
+        // 随机方向和速度
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 4 + 1.5;
-        this.x = x;
-        this.y = y;
+        const speed = Math.random() * 4 + 1.5;  // 速度 1.5-5.5
+
+        this.x = x;                 // 爆炸中心 X
+        this.y = y;                 // 爆炸中心 Y
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
-        this.alpha = 1;
-        this.decay = Math.random() * 0.015 + 0.012;
+        this.alpha = 1;             // 透明度（从 1 逐渐衰减到 0）
+        this.decay = Math.random() * 0.015 + 0.012;  // 透明度衰减速率（比 Demo2 更小，衰退慢）
         this.hue = hue + (Math.random() * 40 - 20);
         this.history = [];
       }
+
+      // 【改动】Demo3 不接收 dt 参数，使用固定时间步
       update() {
+        // 【关键】存储当前位置到 history
         this.history.push({ x: this.x, y: this.y });
         if (this.history.length > PARTICLE_TRAIL) this.history.shift();
 
-        this.x += this.vx;
+        // 更新物理位置（不乘以 dt，使用固定时间步）
+        this.x += this.vx;      // 直接使用速度
         this.y += this.vy;
-        this.vy += GRAVITY;
+        this.vy += GRAVITY;     // 直接加加速度
         this.vx *= FRICTION;
         this.vy *= FRICTION;
-        this.alpha -= this.decay;
+        this.alpha -= this.decay;  // 直接减衰减量
+
         return this.alpha > 0;
       }
+
       draw() {
+        // 【拖尾绘制】从历史点连线到当前位置
         ctx.globalCompositeOperation = 'lighter';
+
+        // 绘制拖尾：线条从历史位置到当前位置
         for (let i = 0; i < this.history.length; i++) {
           const p = this.history[i];
-          const progress = i / this.history.length;
+          const progress = i / this.history.length;  // 从 0 到 1（Demo2 从 1/length 开始）
+          // 亮度随进度增加（从 55% 到 80%）
           ctx.strokeStyle = `hsla(${this.hue}, 90%, ${55 + progress * 25}%, ${this.alpha * progress})`;
-          ctx.lineWidth = 1.5 + progress * 2;
+          ctx.lineWidth = 1.5 + progress * 2;  // 线宽从 1.5px 到 3.5px（比 Demo2 更粗）
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(this.x, this.y);
           ctx.stroke();
         }
+
+        // 绘制粒子本体（圆形）
         ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.alpha})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
@@ -134,12 +178,16 @@
       }
     }
 
+    // ==================== 爆炸处理 ====================
+    // 在指定位置生成粒子
     function explode(x, y, hue) {
       for (let i = 0; i < PARTICLES_PER_BURST; i++) {
-        particles.push(new Particle(x, y, hue));
+        particles.push(new Particle(x, y, hue));  // 创建 40 个粒子
       }
     }
 
+    // ==================== 烟花发射 ====================
+    // 在屏幕随机位置发射一个烟花
     function launchRandom() {
       const w = canvas.width / DPR;
       const h = canvas.height / DPR;
@@ -148,16 +196,39 @@
       rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
     }
 
+    // ==================== 核心创新：逐帧褪色函数 ====================
+    // 【关键】这是 Demo3 的核心创新，用于替代 clearRect
+    // 不清除画布，而是使用 'destination-out' 混合模式逐帧降低亮度
     function fadeCanvas() {
+      // 步骤 1：切换到 'destination-out' 混合模式
+      // 这种模式会删除与新绘制区域重叠的旧像素（按透明度比例）
       ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = `rgba(0,0,0,${1 - TRAIL_FADE})`;
+
+      // 步骤 2：用半透明黑色覆盖整个画布
+      // alpha = 0.12 表示删除原像素的 12% 亮度，保留 88% 的亮度
+      // 这就是 TRAIL_FADE = 0.88 的含义
+      ctx.fillStyle = `rgba(0,0,0,${1 - TRAIL_FADE})`;  // 1 - 0.88 = 0.12
       ctx.fillRect(0, 0, canvas.width / DPR, canvas.height / DPR);
+
+      // 步骤 3：恢复默认绘制模式
       ctx.globalCompositeOperation = 'source-over';
     }
+    // 【效果】
+    // 每帧执行 fadeCanvas() 后：
+    // - 新绘制的内容 100% 亮
+    // - 上一帧的内容 88% 亮
+    // - 上上一帧的内容 88% × 88% = 77% 亮
+    // - 以此类推，形成指数衰减的拖尾效果
+    //
+    // 性能优势：
+    // - Demo2：每帧调用 100 个粒子 × 40 个历史点 = 4000 次 stroke()
+    // - Demo3：每帧只调用 1 次 fillRect()，性能提升 4000 倍
 
+    // ==================== 用户交互 ====================
     canvas.addEventListener('pointerdown', spawnAt);
-    canvas.addEventListener('pointermove', (e) => { if (e.buttons === 1) spawnAt(e); });
+    canvas.addEventListener('pointermove', (e) => { if (e.buttons === 1) spawnAt(e); });  // 拖动发射
 
+    // 在鼠标位置发射烟花
     function spawnAt(e) {
       const rect = canvas.getBoundingClientRect();
       const x = (e.clientX - rect.left);
@@ -165,30 +236,49 @@
       rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
     }
 
+    // ==================== 更新逻辑 ====================
+    // 【固定时间步】不使用 delta 时间制，粒子 update() 无参数
     function update(delta) {
       accumulator += delta;
+      // 自动发射：每 900ms 发射一个烟花
       if (accumulator > FIREWORK_INTERVAL) {
         launchRandom();
         accumulator = 0;
       }
+
+      // 更新所有火箭（仍使用 delta 时间制）
       rockets = rockets.filter(r => r.update(delta * 0.06));
+
+      // 更新所有粒子（不使用 delta，固定时间步）
       particles = particles.filter(p => p.update());
     }
 
+    // ==================== 渲染逻辑 ====================
+    // 【逐帧褪色法】核心差异：使用 fadeCanvas() 而不是 clearRect()
     function render() {
+      // 【关键】逐帧褪色：保留上一帧内容，但降低亮度
       fadeCanvas();
+
+      // 绘制所有火箭及其拖尾
       rockets.forEach(r => r.draw());
+
+      // 绘制所有粒子及其拖尾
       particles.forEach(p => p.draw());
     }
+    // 【效果对比】
+    // Demo2：clearRect() → 完全删除上一帧 → 拖尾清晰断裂
+    // Demo3：fadeCanvas() → 保留并褪色上一帧 → 拖尾连贯梦幻
 
+    // ==================== 动画循环 ====================
+    // 使用 requestAnimationFrame 实现高效动画循环
     function loop(timestamp) {
-      const delta = timestamp - lastTime;
+      const delta = timestamp - lastTime;  // 计算帧间隔（毫秒）
       lastTime = timestamp;
-      update(delta);
-      render();
+      update(delta);  // 更新物理状态
+      render();       // 逐帧褪色并重新绘制
       requestAnimationFrame(loop);
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(loop);  // 启动动画循环
   </script>
 </body>
 </html>

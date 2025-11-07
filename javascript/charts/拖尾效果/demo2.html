@@ -28,105 +28,137 @@
   <canvas id="stage"></canvas>
 
   <script>
+    // ==================== 初始化配置 ====================
     const canvas = document.getElementById('stage');
     const ctx = canvas.getContext('2d');
-    const DPR = window.devicePixelRatio || 1;
+    const DPR = window.devicePixelRatio || 1;  // 设备像素比（高清屏幕适配）
 
-    const FIREWORK_INTERVAL = 850;
-    const ROCKET_TRAIL = 40;
-    const PARTICLE_TRAIL = 40;
-    const PARTICLES_PER_BURST = 55;
-    const GRAVITY = 0.08;
-    const FRICTION = 0.981;
+    // ==================== 参数配置 ====================
+    // 【拖尾策略】Demo2 采用 "完全清除法"：每帧 clearRect() 清除所有内容，通过 history 数组重绘拖尾
+    const FIREWORK_INTERVAL = 850;        // 自动发射烟花的时间间隔（毫秒）
+    const ROCKET_TRAIL = 40;              // 火箭拖尾的长度（保存最近 40 帧位置）
+    const PARTICLE_TRAIL = 40;            // 粒子拖尾的长度（保存最近 40 帧位置）
+    const PARTICLES_PER_BURST = 55;       // 每次爆炸产生的粒子数量
+    const GRAVITY = 0.08;                 // 重力加速度（越大下落越快）
+    const FRICTION = 0.981;               // 摩擦系数（粒子速度衰减：vx *= FRICTION）
 
-    let rockets = [];
-    let particles = [];
-    let lastTime = performance.now();
-    let accumulator = 0;
+    // ==================== 状态变量 ====================
+    let rockets = [];                     // 活跃火箭数组
+    let particles = [];                   // 活跃粒子数组
+    let lastTime = performance.now();     // 上一帧的时间戳（用于计算 delta）
+    let accumulator = 0;                  // 时间累加器（用于自动发射）
 
     function resize() {
       const { innerWidth: w, innerHeight: h } = window;
-      canvas.width = w * DPR;
+      canvas.width = w * DPR;                  // Canvas 分辨率（物理像素）
       canvas.height = h * DPR;
-      canvas.style.width = w + 'px';
+      canvas.style.width = w + 'px';          // CSS 显示大小
       canvas.style.height = h + 'px';
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0); // 设置转换矩阵适应高清屏幕
     }
     resize();
     window.addEventListener('resize', resize);
 
+    // ==================== 火箭类 ====================
+    // 【拖尾机制】火箭维护 history 数组，每帧存储位置，draw() 时重绘所有历史点
     class Rocket {
       constructor(x, targetY, hue) {
         const h = canvas.height / DPR;
-        this.x = x;
-        this.y = h;
-        this.targetY = targetY;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = -6 - Math.random() * 1.5;
-        this.hue = hue;
-        this.history = [];
+        this.x = x;                    // 当前 X 坐标
+        this.y = h;                    // 起始 Y 坐标（屏幕底部）
+        this.targetY = targetY;        // 目标爆炸高度
+        this.vx = (Math.random() - 0.5) * 0.7;  // 水平速度（±0.35）
+        this.vy = -6 - Math.random() * 1.5;     // 垂直速度（向上，-6 到 -7.5）
+        this.hue = hue;                // 颜色（0-360）
+        this.history = [];             // 位置历史数组（用于拖尾绘制）
       }
+
       update(dt) {
+        // 【关键】存储当前位置到 history（拖尾数据源）
         this.history.push({ x: this.x, y: this.y });
-        if (this.history.length > ROCKET_TRAIL) this.history.shift();
+        if (this.history.length > ROCKET_TRAIL) this.history.shift();  // 限制长度
+
+        // 更新物理位置
         this.x += this.vx * dt;
         this.y += this.vy * dt;
-        this.vy += GRAVITY * 0.4 * dt;
+        this.vy += GRAVITY * 0.4 * dt;  // 重力作用（向下加速）
 
+        // 检查是否到达爆炸点
         if (this.vy >= 0 || this.y <= this.targetY) {
-          explode(this.x, this.y, this.hue);
-          return false;
+          explode(this.x, this.y, this.hue);  // 触发爆炸（生成粒子）
+          return false;  // 移除该火箭
         }
-        return true;
+        return true;  // 继续存活
       }
+
       draw() {
+        // 【拖尾绘制】使用 'lighter' 混合模式创建发光效果
         ctx.globalCompositeOperation = 'lighter';
+
+        // 绘制拖尾：从最旧的历史点到最新的点，透明度递增
         this.history.forEach((p, i) => {
-          const alpha = (i + 1) / this.history.length;
-          ctx.fillStyle = `hsla(${this.hue}, 90%, 70%, ${alpha * 0.7})`;
-          ctx.fillRect(p.x - 1, p.y - 1, 2, 2);
+          const alpha = (i + 1) / this.history.length;  // 从 1/40 到 40/40（从透明到不透明）
+          ctx.fillStyle = `hsla(${this.hue}, 90%, 70%, ${alpha * 0.7})`;  // 饱和度 90%, 亮度 70%, 透明度最大 49%
+          ctx.fillRect(p.x - 1, p.y - 1, 2, 2);  // 绘制小方块拖尾
         });
+
+        // 绘制火箭头部（最亮）
         ctx.fillStyle = `hsla(${this.hue}, 100%, 85%, 1)`;
-        ctx.fillRect(this.x - 1, this.y - 6, 2, 8);
+        ctx.fillRect(this.x - 1, this.y - 6, 2, 8);  // 火箭头（2x8 的矩形）
       }
     }
 
+    // ==================== 粒子类 ====================
+    // 【拖尾机制】粒子也维护 history，draw() 时绘制从历史点到当前位置的连线
     class Particle {
       constructor(x, y, hue) {
+        // 随机方向和速度
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 4 + 1.5;
-        this.x = x;
-        this.y = y;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.alpha = 1;
-        this.decay = Math.random() * 0.02 + 0.01;
-        this.hue = hue + (Math.random() * 40 - 20);
-        this.history = [];
+        const speed = Math.random() * 4 + 1.5;  // 速度 1.5-5.5
+
+        this.x = x;                 // 爆炸中心 X
+        this.y = y;                 // 爆炸中心 Y
+        this.vx = Math.cos(angle) * speed;  // X 方向速度分量
+        this.vy = Math.sin(angle) * speed;  // Y 方向速度分量
+        this.alpha = 1;             // 透明度（从 1 逐渐衰减到 0）
+        this.decay = Math.random() * 0.02 + 0.01;  // 透明度衰减速率（0.01-0.03）
+        this.hue = hue + (Math.random() * 40 - 20);  // 颜色随机偏移（±20）
+        this.history = [];          // 位置历史数组
       }
+
       update(dt) {
+        // 【关键】存储当前位置到 history
         this.history.push({ x: this.x, y: this.y });
         if (this.history.length > PARTICLE_TRAIL) this.history.shift();
 
+        // 更新物理位置
         this.x += this.vx * dt;
         this.y += this.vy * dt;
-        this.vy += GRAVITY * dt;
-        this.vx *= FRICTION;
+        this.vy += GRAVITY * dt;    // 重力作用
+        this.vx *= FRICTION;        // 摩擦衰减
         this.vy *= FRICTION;
-        this.alpha -= this.decay * dt;
-        return this.alpha > 0;
+        this.alpha -= this.decay * dt;  // 透明度衰减
+
+        return this.alpha > 0;  // 当透明度 <= 0 时移除
       }
+
       draw() {
+        // 【拖尾绘制】使用 'lighter' 混合模式和线条连接历史点
         ctx.globalCompositeOperation = 'lighter';
+
+        // 绘制拖尾：从历史点连线到当前位置
         this.history.forEach((p, i) => {
-          const progress = (i + 1) / this.history.length;
+          const progress = (i + 1) / this.history.length;  // 0 到 1 的进度
+          // 亮度随进度增加（从 55% 到 80%）
           ctx.strokeStyle = `hsla(${this.hue}, 90%, ${55 + progress * 25}%, ${this.alpha * progress})`;
-          ctx.lineWidth = 1 + progress * 1.6;
+          ctx.lineWidth = 1 + progress * 1.6;  // 线宽从 1px 到 2.6px
           ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(this.x, this.y);
-          ctx.stroke();
+          ctx.moveTo(p.x, p.y);       // 从历史位置
+          ctx.lineTo(this.x, this.y); // 到当前位置
+          ctx.stroke();               // 绘制连线
         });
+
+        // 绘制粒子本体（圆形）
         ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.alpha})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
@@ -134,23 +166,29 @@
       }
     }
 
+    // ==================== 爆炸处理 ====================
+    // 在指定位置生成一定数量的粒子
     function explode(x, y, hue) {
       for (let i = 0; i < PARTICLES_PER_BURST; i++) {
-        particles.push(new Particle(x, y, hue));
+        particles.push(new Particle(x, y, hue));  // 创建 55 个粒子
       }
     }
 
+    // ==================== 烟花发射 ====================
+    // 在屏幕随机位置发射一个烟花
     function launchRandom() {
       const w = canvas.width / DPR;
       const h = canvas.height / DPR;
-      const x = Math.random() * w * 0.8 + w * 0.1;
-      const targetY = Math.random() * h * 0.4 + h * 0.1;
+      const x = Math.random() * w * 0.8 + w * 0.1;      // X: 屏幕中间 60% 区域
+      const targetY = Math.random() * h * 0.4 + h * 0.1;  // Y: 上方 40% 区域
       rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
     }
 
+    // ==================== 用户交互 ====================
     canvas.addEventListener('pointerdown', spawnAt);
-    canvas.addEventListener('pointermove', (e) => { if (e.buttons === 1) spawnAt(e); });
+    canvas.addEventListener('pointermove', (e) => { if (e.buttons === 1) spawnAt(e); });  // 拖动发射
 
+    // 在鼠标位置发射烟花
     function spawnAt(e) {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -158,30 +196,46 @@
       rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
     }
 
+    // ==================== 更新逻辑 ====================
+    // 【Delta 时间制】使用帧间隔时间计算，确保运动与帧率无关
     function update(delta) {
       accumulator += delta;
+      // 自动发射：每 850ms 发射一个烟花
       if (accumulator > FIREWORK_INTERVAL) {
         launchRandom();
         accumulator = 0;
       }
+
+      // 更新所有火箭（乘以 0.06 是时间缩放因子）
       rockets = rockets.filter(r => r.update(delta * 0.06));
+
+      // 更新所有粒子
       particles = particles.filter(p => p.update(delta * 0.06));
     }
 
+    // ==================== 渲染逻辑 ====================
+    // 【完全清除法】每帧完全清除，然后重新绘制所有对象和它们的拖尾
     function render() {
+      // 清除整个 Canvas（删除上一帧的所有内容）
       ctx.clearRect(0, 0, canvas.width / DPR, canvas.height / DPR);
+
+      // 重新绘制所有火箭及其拖尾
       rockets.forEach(r => r.draw());
+
+      // 重新绘制所有粒子及其拖尾
       particles.forEach(p => p.draw());
     }
 
+    // ==================== 动画循环 ====================
+    // 使用 requestAnimationFrame 实现高效动画循环
     function loop(timestamp) {
-      const delta = timestamp - lastTime;
+      const delta = timestamp - lastTime;  // 计算帧间隔（毫秒）
       lastTime = timestamp;
-      update(delta);
-      render();
-      requestAnimationFrame(loop);
+      update(delta);  // 更新物理状态
+      render();       // 重新绘制所有内容
+      requestAnimationFrame(loop);  // 请求下一帧
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(loop);  // 启动动画循环
   </script>
 </body>
 </html>
