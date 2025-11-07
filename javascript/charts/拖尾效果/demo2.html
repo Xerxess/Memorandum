@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>透明背景烟花拖尾</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0b0c10; /* 仅为预览背景，canvas 透明 */
+      color: #eee;
+      font-family: sans-serif;
+      user-select: none;
+    }
+    #info {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      font-size: 13px;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <div id="info">点击 / 拖动释放烟花（Canvas 透明无残影）</div>
+  <canvas id="stage"></canvas>
+
+  <script>
+    const canvas = document.getElementById('stage');
+    const ctx = canvas.getContext('2d');
+    const DPR = window.devicePixelRatio || 1;
+
+    const FIREWORK_INTERVAL = 850;
+    const ROCKET_TRAIL = 40;
+    const PARTICLE_TRAIL = 40;
+    const PARTICLES_PER_BURST = 55;
+    const GRAVITY = 0.08;
+    const FRICTION = 0.981;
+
+    let rockets = [];
+    let particles = [];
+    let lastTime = performance.now();
+    let accumulator = 0;
+
+    function resize() {
+      const { innerWidth: w, innerHeight: h } = window;
+      canvas.width = w * DPR;
+      canvas.height = h * DPR;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Rocket {
+      constructor(x, targetY, hue) {
+        const h = canvas.height / DPR;
+        this.x = x;
+        this.y = h;
+        this.targetY = targetY;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = -6 - Math.random() * 1.5;
+        this.hue = hue;
+        this.history = [];
+      }
+      update(dt) {
+        this.history.push({ x: this.x, y: this.y });
+        if (this.history.length > ROCKET_TRAIL) this.history.shift();
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
+        this.vy += GRAVITY * 0.4 * dt;
+
+        if (this.vy >= 0 || this.y <= this.targetY) {
+          explode(this.x, this.y, this.hue);
+          return false;
+        }
+        return true;
+      }
+      draw() {
+        ctx.globalCompositeOperation = 'lighter';
+        this.history.forEach((p, i) => {
+          const alpha = (i + 1) / this.history.length;
+          ctx.fillStyle = `hsla(${this.hue}, 90%, 70%, ${alpha * 0.7})`;
+          ctx.fillRect(p.x - 1, p.y - 1, 2, 2);
+        });
+        ctx.fillStyle = `hsla(${this.hue}, 100%, 85%, 1)`;
+        ctx.fillRect(this.x - 1, this.y - 6, 2, 8);
+      }
+    }
+
+    class Particle {
+      constructor(x, y, hue) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4 + 1.5;
+        this.x = x;
+        this.y = y;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.02 + 0.01;
+        this.hue = hue + (Math.random() * 40 - 20);
+        this.history = [];
+      }
+      update(dt) {
+        this.history.push({ x: this.x, y: this.y });
+        if (this.history.length > PARTICLE_TRAIL) this.history.shift();
+
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
+        this.vy += GRAVITY * dt;
+        this.vx *= FRICTION;
+        this.vy *= FRICTION;
+        this.alpha -= this.decay * dt;
+        return this.alpha > 0;
+      }
+      draw() {
+        ctx.globalCompositeOperation = 'lighter';
+        this.history.forEach((p, i) => {
+          const progress = (i + 1) / this.history.length;
+          ctx.strokeStyle = `hsla(${this.hue}, 90%, ${55 + progress * 25}%, ${this.alpha * progress})`;
+          ctx.lineWidth = 1 + progress * 1.6;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(this.x, this.y);
+          ctx.stroke();
+        });
+        ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function explode(x, y, hue) {
+      for (let i = 0; i < PARTICLES_PER_BURST; i++) {
+        particles.push(new Particle(x, y, hue));
+      }
+    }
+
+    function launchRandom() {
+      const w = canvas.width / DPR;
+      const h = canvas.height / DPR;
+      const x = Math.random() * w * 0.8 + w * 0.1;
+      const targetY = Math.random() * h * 0.4 + h * 0.1;
+      rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
+    }
+
+    canvas.addEventListener('pointerdown', spawnAt);
+    canvas.addEventListener('pointermove', (e) => { if (e.buttons === 1) spawnAt(e); });
+
+    function spawnAt(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const targetY = e.clientY - rect.top;
+      rockets.push(new Rocket(x, targetY, Math.floor(Math.random() * 360)));
+    }
+
+    function update(delta) {
+      accumulator += delta;
+      if (accumulator > FIREWORK_INTERVAL) {
+        launchRandom();
+        accumulator = 0;
+      }
+      rockets = rockets.filter(r => r.update(delta * 0.06));
+      particles = particles.filter(p => p.update(delta * 0.06));
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width / DPR, canvas.height / DPR);
+      rockets.forEach(r => r.draw());
+      particles.forEach(p => p.draw());
+    }
+
+    function loop(timestamp) {
+      const delta = timestamp - lastTime;
+      lastTime = timestamp;
+      update(delta);
+      render();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

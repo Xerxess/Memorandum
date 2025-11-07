@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Trail with Transparent Background</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      width:100%;
+      background: #fff; /* Demo contrast; remove if fully transparent page */
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+
+<script>
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const DPR = window.devicePixelRatio || 1;
+
+function resize() {
+  const { innerWidth: w, innerHeight: h } = window;
+  canvas.width = w ;
+  canvas.height = h;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  ctx.scale(DPR, DPR);
+}
+resize();
+window.addEventListener('resize', resize);
+
+const hasOffscreen = typeof OffscreenCanvas !== 'undefined';
+const offscreen = hasOffscreen ? new OffscreenCanvas(canvas.width, canvas.height) : document.createElement('canvas');
+const tailCtx = offscreen.getContext('2d');
+
+if (!hasOffscreen) {
+  offscreen.width = canvas.width;
+  offscreen.height = canvas.height;
+}
+
+// trail particles
+const particles = Array.from({ length: 60 }, (_, i) => ({
+  angle: (Math.PI * 2 * i) / 60,
+  radius: 60 + Math.random() * 40,
+  speed: 0.005 + Math.random() * 0.01
+}));
+
+let time = 0;
+
+function drawTrail() {
+  const w = canvas.width;
+  const h = canvas.height;
+
+  // fade previous frame using destination-in to shrink alpha
+  tailCtx.globalCompositeOperation = 'destination-in';
+  tailCtx.fillStyle = 'rgba(0,0,0,0.8)'; // adjust decay speed
+  tailCtx.fillRect(0, 0, w, h);
+
+  tailCtx.globalCompositeOperation = 'lighter'; // additive blending within trail
+  particles.forEach((p, idx) => {
+    const theta = p.angle + time * p.speed;
+    const x = w / 3 + Math.cos(theta) * p.radius;
+    const y = h / 3 + Math.sin(theta) * p.radius;
+    const size = 8 + Math.sin(time * 0.01 + idx) * 4;
+
+    const grd = tailCtx.createRadialGradient(x, y, 0, x, y, size);
+    grd.addColorStop(0, `hsla(${(time * 0.3 + idx * 6) % 360}, 90%, 60%, 0.9)`);
+    grd.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+    tailCtx.fillStyle = grd;
+    tailCtx.beginPath();
+    tailCtx.arc(x, y, size, 0, Math.PI * 2);
+    tailCtx.fill();
+  });
+
+  // composite tail layer onto main canvas with destination-in mask to keep transparency
+  ctx.clearRect(0, 0, w, h);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.drawImage(offscreen, 0, 0);
+}
+
+function animate() {
+  time += 1;
+  drawTrail();
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

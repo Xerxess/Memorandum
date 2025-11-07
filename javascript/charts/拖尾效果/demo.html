@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>透明背景拖尾粒子</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #121212;
+      font-family: sans-serif;
+    }
+    canvas {
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    const width = 640;
+    const height = 420;
+    const radius = 24;
+    const trailLength = 80;
+    const trailOpacity = 0.85;
+    const backgroundFill = null; // 透明背景
+
+    const canvas = document.getElementById('myCanvas');
+    canvas.width = width;
+    canvas.height = height;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+
+    const trail = [];
+    let x = 90;
+    let y = height / 2;
+    let vx = 2.5;
+    let vy = 1.9;
+
+    function updatePosition() {
+      x += vx;
+      y += vy;
+      if (x + radius > width || x - radius < 0) vx = -vx;
+      if (y + radius > height || y - radius < 0) vy = -vy;
+
+      trail.push({ x, y });
+      if (trail.length > trailLength) trail.shift();
+    }
+
+    function drawTrail() {
+      for (let i = 0; i < trail.length; i++) {
+        const p = trail[i];
+        const progress = i / trail.length;
+        const alpha = progress * trailOpacity;
+        const hue = (performance.now() * 0.04 + i * 10) % 360;
+
+        ctx.fillStyle = `hsla(${hue}, 90%, 65%, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius * (0.3 + 0.7 * progress), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawBall() {
+      ctx.fillStyle = '#00c0ff';
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+      if (backgroundFill) {
+        ctx.fillStyle = backgroundFill;
+        ctx.fillRect(0, 0, width, height);
+      }
+      drawTrail();
+      drawBall();
+    }
+
+    function animate() {
+      updatePosition();
+      render();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
