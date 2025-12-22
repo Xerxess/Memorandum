@@ -1,0 +1,27 @@
+# nginx-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3 # 创建 3 个 Pod
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx-1
+          image: nginx:1.25
+          resources:
+            requests: # 保证资源
+              memory: "64Mi" # 请求 64 MiB 内存
+              cpu: "250m" # 请求 0.25 核 CPU (1000m = 1 CPU)
+            limits: # 限制资源
+              memory: "128Mi" # 最多使用 128 MiB 内存
+              cpu: "500m" # 最多使用 0.5 核 CPU
+          ports:
+            - containerPort: 80

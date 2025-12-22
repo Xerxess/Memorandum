@@ -1,0 +1,26 @@
+# nginx-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: default # 明确指定命名空间是好习惯
+  annotations:
+    # 这个注解告诉 NGINX Ingress Controller 将所有路径重定向到根路径
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  # 明确指定使用哪个 Ingress Controller
+  # Minikube 的 ingress addon 创建的通常是 "nginx"
+  ingressClassName: nginx
+  rules:
+  - host: "test.local" # 你要通过这个域名访问
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            # 指向你的 Service 名称
+            name: nginx-service
+            port:
+              # 指向你的 Service 端口
+              number: 80
