@@ -24,25 +24,25 @@ struct EnvironmentObject<ObjectType> where ObjectType : ObservableObject
 ```
 
 ```swift
-class 用户设置: ObservableObject {
+class UserSettings: ObservableObject {
     @Published var 主题颜色 = Color.blue
     @Published var 字体大小: CGFloat = 16
     @Published var 深色模式 = false
 }
 
-struct 根视图: View {
-    @StateObject private var 设置 = 用户设置()
+struct RootView: View {
+    @StateObject private var setting = UserSettings()
     
     var body: some View {
         NavigationView {
-            内容视图()
+            ContentView()
         }
-        .environmentObject(设置)
+        .environmentObject(setting)
     }
 }
 
-struct 内容视图: View {
-    @EnvironmentObject var 设置: 用户设置
+struct ContentView: View {
+    @EnvironmentObject var setting: UserSettings
     var body: some View {
         List {
             Text("示例文本")

@@ -10,17 +10,101 @@
 
 # NavigationStack
 
+<https://developer.apple.com/documentation/swiftui/understanding-the-navigation-stack?changes=l_7&language=objc>
+
+- NavigationStack是应用程序导航结构的容器
 使用导航堆栈在根视图上呈现视图堆栈。用户可以通过点击或点击Navigation Link将视图添加到堆栈顶部，并使用内置的、适合平台的控件（如“返回”按钮或滑动手势）移除视图。堆栈始终显示最近添加且未被移除的视图，并且不允许移除根视图。
 
 要创建导航链接，请在堆栈的视图层次结构中添加 navigationDestination(for:destination:) 修饰符，将视图与数据类型关联。然后初始化显示相同类型数据实例的Navigation Link 。
 
+- 将视图直接推送到导航堆栈方式：
+  - 即发即弃: NavigationLink -> init(destination:label:)
+  - View -> navigationDestination(for:destination:) 修饰符将附加路径的数据类型映射到特定的目标视图
+  - View -> navigationDestination(isPresented:destination:) 修饰符通过布尔以编程方式将视图推送到导航堆栈上
+  - View -> navigationDestination(item:destination:) 修饰符通过值的有无以编程方式将视图推送到导航堆栈上
+
+> 即发即弃: NavigationLink -> init(destination:label:)
+
 ```swift
+// 即发即弃: NavigationLink -> init(destination:label:)
+struct DestinationView: View {
+    var body: some View {
+        NavigationStack {
+            NavigationLink {
+                ColorDetail(color: .mint, text: "Mint")
+            } label: {
+                Text("Mint")
+            }
+            
+            NavigationLink {
+                ColorDetail(color: .red, text: "Red")
+            } label: {
+                Text("Red")
+            }
+        }
+    }
+}
+
+struct ColorDetail: View {
+    var color: Color
+    var text: String
+    var body: some View {
+        VStack {
+            Text(text)
+            color
+         }
+    }
+}
+```
+
+> View -> navigationDestination(for:destination:) 修饰符将附加路径的数据类型映射到特定的目标视图
+
+```swift
+// View -> navigationDestination(for:destination:) 修饰符将附加路径的数据类型映射到特定的目标视图
 NavigationStack {
     List(parks) { park in
         NavigationLink(park.name, value: park)
     }
     .navigationDestination(for: Park.self) { park in
         ParkDetails(park: park)
+    }
+}
+```
+
+> View -> navigationDestination(isPresented:destination:) 修饰符通过布尔以编程方式将视图推送到导航堆栈上
+
+```swift
+// View -> navigationDestination(isPresented:destination:) 修饰符通过布尔以编程方式将视图推送到导航堆栈上
+struct DestinationView: View { 
+    @State private var showDetails = false
+    var favoriteColor: Color
+    
+    NavigationStack {
+        VStack {
+            Circle()
+                .fill(favoriteColor)
+            Button("Show details") {
+                showDetails = true
+            }
+        }
+        .navigationDestination(isPresented: $showDetails) {
+            ColorDetail(color: favoriteColor, text: color.description)
+        }
+    }
+}
+```
+
+> View -> navigationDestination(item:destination:) 修饰符通过值的有无以编程方式将视图推送到导航堆栈上
+
+```swift
+// View -> navigationDestination(item:destination:) 修饰符通过值的有无以编程方式将视图推送到导航堆栈上
+NavigationStack {
+    List {
+        NavigationLink("Mint", value: Color.mint)
+        NavigationLink("Red", value: Color.red)
+    }
+    .navigationDestination(for: Color.self) { color in
+        ColorDetail(color: color, text: color.description)
     }
 }
 ```
@@ -86,6 +170,7 @@ struct ContentView: View {
 
 NavigationPath 是 SwiftUI 在 iOS 16/macOS 13 及更高版本中引入的一个现代化导航状态管理工具，用于在使用 NavigationStack 时控制导航栈的内容。它解决了 SwiftUI 早期版本中导航状态管理的许多限制和复杂性。
 s
+
 - 类型安全：NavigationPath 可以存储不同类型的值，但在使用时保持类型安全。
 - 可编程操作：提供了添加、删除和清空路径的方法。
 
