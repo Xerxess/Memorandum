@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>旋转发光边框完整 Demo</title>
+    <style>
+      /* 
+         * 核心 1：注册自定义属性。
+         * 必须放在最前面，告诉浏览器 --retool-angle 是一个角度值，
+         * 这样浏览器才知道如何在 0deg 到 360deg 之间平滑过渡。
+         */
+      @property --retool-angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #121212; /* 深色背景凸显光效 */
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      /* 核心 2：输入框基础样式 */
+      .input-card.jazzy {
+        position: relative; /* 必须设置 relative，作为伪元素的定位参照 */
+        width: 320px;
+        height: 50px;
+        border-radius: 12px; /* 父元素圆角 */
+        background-color: #1e1e1e; /* 输入框内部背景 */
+        color: #fff;
+        padding: 0 15px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      /* 核心 3：旋转光效边框 */
+      .input-card.jazzy::before {
+        content: '';
+        position: absolute;
+
+        /* 关键：向外扩展 2px，刚好包裹住输入框 */
+        inset: -2px;
+
+        /* 圆角需要比父元素大 2px，才能完美贴合 */
+        border-radius: 14px;
+
+        /* 不阻挡输入框点击 */
+        pointer-events: none;
+
+        /* 核心 4：变量兜底。如果 @property 失效，至少能显示静态边框 */
+        background: conic-gradient(
+          from var(--retool-angle, 0deg),
+          rgba(0, 0, 0, 0) 0deg,
+          rgba(0, 0, 0, 0) 210deg,
+          rgba(70, 160, 255, 0.1) 230deg,
+          rgba(70, 160, 255, 0.3) 255deg,
+          rgba(70, 160, 255, 0.6) 280deg,
+          rgba(200, 235, 255, 0.95) 300deg,
+          rgba(70, 160, 255, 0.7) 315deg,
+          rgba(70, 160, 255, 0.35) 335deg,
+          rgba(70, 160, 255, 0.12) 355deg,
+          rgba(0, 0, 0, 0) 360deg
+        );
+
+        /* 4.2秒匀速无限循环 */
+        animation: retool-gradient-spin 4.2s linear infinite;
+
+        /* 核心 5：双重 Mask 兜底（挖空中间，只保留 2px 边框） */
+        padding: 2px;
+
+        /* 标准语法 */
+        mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        mask-composite: exclude;
+
+        /* Webkit 前缀兼容（针对 Chrome/Safari/Edge） */
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+      }
+
+      /* 核心 6：旋转动画关键帧 */
+      @keyframes retool-gradient-spin {
+        to {
+          --retool-angle: 360deg;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 带有 jazzy 类的输入框 -->
+    <div class="input-card jazzy">
+      <input
+        type="text"
+        class=" "
+        placeholder="输入点什么试试..." />
+    </div>
+  </body>
+</html>
