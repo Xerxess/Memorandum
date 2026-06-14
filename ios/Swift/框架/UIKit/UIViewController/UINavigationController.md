@@ -1,3 +1,23 @@
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [UINavigationController](#uinavigationcontroller)
+- [导航控制器视图](#导航控制器视图)
+- [Topics](#topics)
+  - [Creating a navigation controller 创建导航控制器](#creating-a-navigation-controller-创建导航控制器)
+  - [Customizing the navigation interface behavior 自定义导航界面行为](#customizing-the-navigation-interface-behavior-自定义导航界面行为)
+  - [Accessing items on the navigation stack 访问导航堆栈上的项目](#accessing-items-on-the-navigation-stack-访问导航堆栈上的项目)
+  - [Pushing and popping stack items 压入和弹出堆栈项目](#pushing-and-popping-stack-items-压入和弹出堆栈项目)
+  - [Configuring navigation bars 配置导航栏](#configuring-navigation-bars-配置导航栏)
+  - [Configuring custom toolbars 配置自定义工具栏](#configuring-custom-toolbars-配置自定义工具栏)
+  - [Hiding the navigation bar 隐藏导航栏](#hiding-the-navigation-bar-隐藏导航栏)
+  - [Displaying view controllers 显示视图控制器](#displaying-view-controllers-显示视图控制器)
+- [小笔记](#小笔记)
+  - [屏蔽长按显示历史栈菜单](#屏蔽长按显示历史栈菜单)
+
+<!-- /code_chunk_output -->
+
 # UINavigationController
 
 一个容器视图控制器，定义了用于导航分层内容的基于堆栈的方案。
@@ -11,7 +31,6 @@
 导航控制器管理界面顶部的`导航栏`和`界面底部的可选工具栏`。
 
 # 导航控制器视图
-
 
 # Topics
 
@@ -144,4 +163,54 @@ func show(
     _ vc: UIViewController,
     sender: Any?
 )
+```
+
+# 小笔记
+
+## 屏蔽长按显示历史栈菜单
+
+- 通过自定义 BackBarButtonItem
+- 通过 backBarButtonItem
+- 不知道有什么后遗问题
+
+```swift
+class ExampleNavigationController: UINavigationController {
+    
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        delegate = self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        delegate = self
+    }
+    
+    override func viewDidLoad() {
+        
+    }
+}
+
+extension ExampleNavigationController:UINavigationControllerDelegate{
+    
+    class BackBarButtonItem: UIBarButtonItem {
+    @available(iOS 14.0, *)
+    override var menu: UIMenu? {
+        set {
+            // Don't set the menu here
+            // super.menu = menu
+        }
+        get {
+            return super.menu
+        }
+    }
+}
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController, animated: Bool) {
+        // 通过 backBarButtonItem
+        let backButton = BackBarButtonItem(title: "返回", style: .plain, target: nil, action: nil)
+        viewController.navigationItem.backBarButtonItem = backButton        
+    }
+}
+
 ```

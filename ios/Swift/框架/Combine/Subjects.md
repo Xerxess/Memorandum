@@ -10,6 +10,7 @@
 
 # Subjects
 
+- Subject 是 Combine 中一种非常特殊的角色：它既是 Publisher（发布者），又是 Subscriber（订阅者）。
 - 向外部调用者公开发布元素的方法的发布者
 - 通过调用其send(_:)方法将值“注入”到流中。这对于将现有的命令式代码适配到 Combine 模型非常有用
 

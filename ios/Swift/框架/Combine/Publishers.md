@@ -3,112 +3,30 @@
 <!-- code_chunk_output -->
 
 - [Publishers](#publishers)
-  - [Convenience Publishers 便利Publishers](#convenience-publishers-便利publishers)
-    - [Publishers.Sequence 用于将一个序列（sequence）转换为一个发布者，并按顺序将序列中的元素发送给订阅者](#publisherssequence-用于将一个序列sequence转换为一个发布者并按顺序将序列中的元素发送给订阅者)
-    - [Publishers.Catch 一个操作符（operator）,通过将上游发布者替换为另一个发布者来处理来自上游发布者的错误](#publisherscatch-一个操作符operator通过将上游发布者替换为另一个发布者来处理来自上游发布者的错误)
-  - [Working with Subscribers 使用订阅者](#working-with-subscribers-使用订阅者)
-    - [Publishers.ReceiveOn 一个操作符（operator），指定从发布者接收元素的调度程序](#publishersreceiveon-一个操作符operator指定从发布者接收元素的调度程序)
-    - [Publishers.SubscribeOn 一个操作符（operator），指定执行订阅、取消和请求操作的调度程序](#publisherssubscribeon-一个操作符operator指定执行订阅-取消和请求操作的调度程序)
-  - [Mapping Elements 映射元素](#mapping-elements-映射元素)
-    - [Publishers.Map 一个操作符（operator），使用提供的闭包转换上游发布者中的所有元素的发布者](#publishersmap-一个操作符operator使用提供的闭包转换上游发布者中的所有元素的发布者)
-    - [Publishers.TryMap 一个发布者，它使用提供的错误引发闭包转换上游发布者中的所有元素](#publisherstrymap-一个发布者它使用提供的错误引发闭包转换上游发布者中的所有元素)
-    - [Publishers.MapError 将上游发布服务器的任何故障转换为新错误的发布服务器](#publishersmaperror-将上游发布服务器的任何故障转换为新错误的发布服务器)
-    - [Publishers.Scan 一个发布者，它通过向闭包提供当前元素以及闭包返回的最后一个值来转换上游发布者中的元素](#publishersscan-一个发布者它通过向闭包提供当前元素以及闭包返回的最后一个值来转换上游发布者中的元素)
-    - [Publishers.TryScan](#publisherstryscan)
-    - [Publishers.TSetFailureTyperyScan](#publisherstsetfailuretyperyscan)
-  - [Filtering Elements 过滤](#filtering-elements-过滤)
-    - [Publishers.Filter 一个操作符（operator），用于根据指定的条件筛选发布者（publisher）发出的元素](#publishersfilter-一个操作符operator用于根据指定的条件筛选发布者publisher发出的元素)
-    - [Publishers.TryFilter](#publisherstryfilter)
-    - [Publishers.CompactMap 一个操作符（operator），用于对发布者（publisher）的输出值进行转换，并过滤掉转换结果为 nil 的元素](#publisherscompactmap-一个操作符operator用于对发布者publisher的输出值进行转换并过滤掉转换结果为-nil-的元素)
-    - [Publishers.TryCompactMap](#publisherstrycompactmap)
-    - [Publishers.RemoveDuplicates 一个操作符（operator），用于去除发布者（publisher）发出的重复元素](#publishersremoveduplicates-一个操作符operator用于去除发布者publisher发出的重复元素)
-    - [Publishers.TryRemoveDuplicates](#publisherstryremoveduplicates)
-    - [Publishers.ReplaceEmpty 一个操作符（operator），用于在发布者（publisher）为空时替换为指定的元素或另一个发布者](#publishersreplaceempty-一个操作符operator用于在发布者publisher为空时替换为指定的元素或另一个发布者)
-    - [Publishers.ReplaceError](#publishersreplaceerror)
-  - [Reducing Elements 减少元素](#reducing-elements-减少元素)
-    - [Publishers.Collect 一个操作符（operator），用于将发布者（publisher）的元素收集到一个数组中，并在完成时将该数组作为单个输出发出](#publisherscollect-一个操作符operator用于将发布者publisher的元素收集到一个数组中并在完成时将该数组作为单个输出发出)
-    - [Publishers.CollectByCount 一个操作符（operator），用于将指定数量的发布者（publisher）的元素收集到一个数组中，并在完成时将该数组作为单个输出发出](#publisherscollectbycount-一个操作符operator用于将指定数量的发布者publisher的元素收集到一个数组中并在完成时将该数组作为单个输出发出)
-    - [Publishers.CollectByTime 一个操作符（operator），用于根据时间窗口将发布者（publisher）的元素收集到一个数组中，并在时间窗口结束时将该数组作为单个输出发出](#publisherscollectbytime-一个操作符operator用于根据时间窗口将发布者publisher的元素收集到一个数组中并在时间窗口结束时将该数组作为单个输出发出)
-    - [Publishers.TimeGroupingStrategy](#publisherstimegroupingstrategy)
-    - [Publishers.IgnoreOutput 一个操作符（operator），它会忽略发布者（publisher）发出的所有元素，只接收完成事件或错误事件](#publishersignoreoutput-一个操作符operator它会忽略发布者publisher发出的所有元素只接收完成事件或错误事件)
-    - [Publishers.Reduce 一个操作符（operator），用于将发布者（publisher）的元素进行累积操作，并发出最终的累积结果](#publishersreduce-一个操作符operator用于将发布者publisher的元素进行累积操作并发出最终的累积结果)
-    - [Publishers.TryReduce](#publisherstryreduce)
-  - [Applying Mathematical Operations on Elements 对元素应用数学运算](#applying-mathematical-operations-on-elements-对元素应用数学运算)
-    - [Publishers.Count 一个操作符（operator），用于统计发布者（publisher）发出的元素数量，并将该数量作为一个单独的元素发出](#publisherscount-一个操作符operator用于统计发布者publisher发出的元素数量并将该数量作为一个单独的元素发出)
-    - [Publishers.Comparison](#publisherscomparison)
-    - [Publishers.TryComparison](#publisherstrycomparison)
-  - [Applying Matching Criteria to Elements 将匹配条件应用于元素](#applying-matching-criteria-to-elements-将匹配条件应用于元素)
-    - [Publishers.Contains 一个操作符（operator），用于判断发布者（publisher）是否包含特定的元素，并将结果作为布尔值发出](#publisherscontains-一个操作符operator用于判断发布者publisher是否包含特定的元素并将结果作为布尔值发出)
-    - [Publishers.ContainsWhere 一个操作符（operator），用于闭包判断发布者（publisher）是否包含特定的元素，并将结果作为布尔值发出](#publisherscontainswhere-一个操作符operator用于闭包判断发布者publisher是否包含特定的元素并将结果作为布尔值发出)
-    - [Publishers.TryContainsWhere](#publisherstrycontainswhere)
-    - [Publishers.AllSatisfy 一个操作符（operator），用于判断发布者（publisher）的所有元素是否都满足特定的条件，并将结果作为布尔值发出](#publishersallsatisfy-一个操作符operator用于判断发布者publisher的所有元素是否都满足特定的条件并将结果作为布尔值发出)
-    - [Publishers.TryAllSatisfy](#publisherstryallsatisfy)
-  - [Applying Sequence Operations to Elements 将序列操作应用于元素](#applying-sequence-operations-to-elements-将序列操作应用于元素)
-    - [Publishers.DropUntilOutput 一个操作符（operator），用于在接收到特定元素之前丢弃发布者（publisher）发出的所有元素，并在接收到该特定元素后开始转发后续的元素](#publishersdropuntiloutput-一个操作符operator用于在接收到特定元素之前丢弃发布者publisher发出的所有元素并在接收到该特定元素后开始转发后续的元素)
-    - [Publishers.Drop 一个操作符（operator），用于丢弃发布者（publisher）发出的前几个元素，并开始转发后续的元素](#publishersdrop-一个操作符operator用于丢弃发布者publisher发出的前几个元素并开始转发后续的元素)
-    - [Publishers.DropWhile 一个操作符（operator），在重新发布所有剩余元素之前，从上游发布器中删除元素，直到给定闭包返回 false](#publishersdropwhile-一个操作符operator在重新发布所有剩余元素之前从上游发布器中删除元素直到给定闭包返回-false)
-    - [Publishers.TryDropWhile](#publisherstrydropwhile)
-    - [Publishers.Concatenate 一个操作符（operator），用于连接多个发布者（publishers），按照顺序将它们的元素进行串联](#publishersconcatenate-一个操作符operator用于连接多个发布者publishers按照顺序将它们的元素进行串联)
-    - [Publishers.PrefixWhile 一个操作符（operator），用于从发布者（publisher）的开头开始，根据指定的条件收集元素，直到条件不再满足为止](#publishersprefixwhile-一个操作符operator用于从发布者publisher的开头开始根据指定的条件收集元素直到条件不再满足为止)
-    - [Publishers.TryPrefixWhile](#publisherstryprefixwhile)
-    - [Publishers.PrefixUntilOutput 一个操作符（operator）,重新发布元素，直到另一个发布者发布元素](#publishersprefixuntiloutput-一个操作符operator重新发布元素直到另一个发布者发布元素)
-  - [Selecting Specific Elements](#selecting-specific-elements)
-    - [Publishers.First 一个操作符（operator），用于从发布者（publisher）中获取第一个元素或满足特定条件的第一个元素](#publishersfirst-一个操作符operator用于从发布者publisher中获取第一个元素或满足特定条件的第一个元素)
-    - [Publishers.FirstWhere](#publishersfirstwhere)
-    - [Publishers.TryFirstWhere](#publisherstryfirstwhere)
-    - [Publishers.Last 一个操作符（operator），用于从发布者（publisher）中获取最后一个元素或满足特定条件的第一个元素](#publisherslast-一个操作符operator用于从发布者publisher中获取最后一个元素或满足特定条件的第一个元素)
-    - [Publishers.LastWhere](#publisherslastwhere)
-    - [Publishers.TryLastWhere](#publisherstrylastwhere)
-    - [Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量](#publishersoutput-一个操作符operator重新发布元素最多不超过指定的最大数量)
-  - [Combining Elements from Multiple Publishers 合并来自多个发布者的元素](#combining-elements-from-multiple-publishers-合并来自多个发布者的元素)
-    - [Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合](#publisherscombinelatest-一个操作符operator用于将多个发布者publishers的最新值进行组合)
-    - [Publishers.CombineLatest3](#publisherscombinelatest3)
-    - [Publishers.CombineLatest4](#publisherscombinelatest4)
-    - [Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者](#publishersmerge-一个操作符operator用于将多个发布者publishers的值合并成一个发布者)
-    - [Publishers.Merge3](#publishersmerge3)
-    - [Publishers.Merge4](#publishersmerge4)
-    - [Publishers.Merge5](#publishersmerge5)
-    - [Publishers.Merge6](#publishersmerge6)
-    - [Publishers.Merge7](#publishersmerge7)
-    - [Publishers.Merge8](#publishersmerge8)
-    - [Publishers.MergeMany](#publishersmergemany)
-    - [Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对](#publisherszip-一个操作符operator用于将多个发布者publishers的值进行配对)
-    - [Publishers.Zip4](#publisherszip4)
-  - [Republishing Elements by Subscribing to New Publishers 通过订阅新发布者重新发布元素](#republishing-elements-by-subscribing-to-new-publishers-通过订阅新发布者重新发布元素)
-    - [Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者](#publishersflatmap-一个操作符operator用于将发布者publisher的每个值映射到另一个发布者并将结果合并为一个单一的发布者)
-    - [Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅](#publishersswitchtolatest-一个操作符operator用于将一个发布者publisher中的最新发布者的值进行合并和订阅)
-  - [Handling Errors 处理错误](#handling-errors-处理错误)
-    - [Publishers.AssertNoFailure](#publishersassertnofailure)
-    - [Publishers.Catch](#publisherscatch)
-    - [Publishers.TryCatch](#publisherstrycatch)
-    - [Publishers.Retry](#publishersretry)
-  - [Controlling Timing 控制时序](#controlling-timing-控制时序)
-    - [Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔](#publishersmeasureinterval-一个操作符operator用于测量两次值发出之间的时间间隔)
-    - [Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值](#publishersdebounce-一个操作符operator用于限制发布者publisher发出值的频率并在指定的时间间隔内只发出最新的值)
-    - [Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间](#publishersdelay-一个操作符operator用于延迟发布者publisher发出值的时间)
-    - [Publishers.Throttle 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出第一个值](#publishersthrottle-一个操作符operator用于限制发布者publisher发出值的频率并在指定的时间间隔内只发出第一个值)
-    - [Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间](#publisherstimeout-一个操作符operator用于设置发布者publisher的超时时间)
-  - [Encoding and Decoding 编码和解码](#encoding-and-decoding-编码和解码)
-    - [Publishers.Decode](#publishersdecode)
-    - [Publishers.Encode](#publishersencode)
-  - [Identifying Properties with Key Paths 使用键路径标识属性](#identifying-properties-with-key-paths-使用键路径标识属性)
-    - [Publishers.MapKeyPath](#publishersmapkeypath)
-    - [Publishers.MapKeyPath2](#publishersmapkeypath2)
-    - [Publishers.MapKeyPath3](#publishersmapkeypath3)
-  - [Working with Multiple Subscribers 使用多个订阅者](#working-with-multiple-subscribers-使用多个订阅者)
-    - [Publishers.Multicast 一个操作符（operator），用于将一个发布者（publisher）转换为多个订阅者共享的可连接发布者（connectable publisher）](#publishersmulticast-一个操作符operator用于将一个发布者publisher转换为多个订阅者共享的可连接发布者connectable-publisher)
-    - [Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值](#publishersshare-一个操作符operator用于在多个订阅者之间共享一个发布者publisher的订阅关系和接收到的值)
-  - [Buffering Elements 缓冲元素](#buffering-elements-缓冲元素)
-    - [Publishers.Buffer](#publishersbuffer)
-    - [Publishers.BufferingStrategy](#publishersbufferingstrategy)
-    - [Publishers.PrefetchStrategy](#publishersprefetchstrategy)
-  - [Using Explicit Publisher Connections 使用显式发布者连接](#using-explicit-publisher-connections-使用显式发布者连接)
-    - [Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者](#publishersautoconnect-一个操作符operator用于自动连接一个可连接发布者connectable-publisher到其第一个订阅者)
-    - [Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型](#publishersmakeconnectable-一个操作符operator用于将一个可连接发布者connectable-publisher转换为可连接的发布者类型)
-  - [Debugging 调试](#debugging-调试)
-    - [Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误](#publishersbreakpoint-一个调试操作符operator用于在管道中设置断点以便在特定条件下打印调试信息和错误)
-    - [Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作](#publishershandleevents-一个操作符operator用于在管道中插入处理事件的操作)
-    - [Publishers.Print](#publishersprint)
+  - [Working with subscribers 指定的订阅者](#working-with-subscribers-指定的订阅者)
+  - [map、replaceNil、scan](#map-replacenil-scan)
+  - [filter、compactMap、removeDuplicates、replaceEmpty](#filter-compactmap-removeduplicates-replaceempty)
+  - [collect、ignoreOutput、reduce](#collect-ignoreoutput-reduce)
+  - [count、max、min](#count-max-min)
+  - [contains、allSatisfy](#contains-allsatisfy)
+  - [drop、append、prepend、prefix](#drop-append-prepend-prefix)
+  - [first、last、output](#first-last-output)
+  - [combineLatest](#combinelatest)
+  - [merge](#merge)
+  - [zip](#zip)
+  - [flatMap、switchToLatest](#flatmap-switchtolatest)
+  - [assertNoFailure、catch、tryCatch、retry](#assertnofailure-catch-trycatch-retry)
+  - [measureInterval、debounce、delay、throttle、timeout](#measureinterval-debounce-delay-throttle-timeout)
+  - [encode、decode](#encode-decode)
+  - [map(KeyPath提取)](#mapkeypath提取)
+  - [multicast、share(共享)](#multicast-share共享)
+  - [buffer](#buffer)
+  - [eraseToAnyPublisher 类型擦除](#erasetoanypublisher-类型擦除)
+  - [schedulers 线程调度](#schedulers-线程调度)
+  - [makeConnectable](#makeconnectable)
+  - [assign、sink（subscribers）](#assign-sinksubscribers)
+  - [Accessing elements asynchronously](#accessing-elements-asynchronously)
+  - [breakpoint、handleEvents、print](#breakpoint-handleevents-print)
 
 <!-- /code_chunk_output -->
 
@@ -116,95 +34,41 @@
 
 Operator 就像一个管道。它本质上是一个发布者，将其他发布者作为其上游，并将订阅者作为其下游。在管道之间，我们可以做一些过滤工作、转换或我们想做的任何事情。
 
-## Convenience Publishers 便利Publishers
-
-### Publishers.Sequence 用于将一个序列（sequence）转换为一个发布者，并按顺序将序列中的元素发送给订阅者
+## Working with subscribers 指定的订阅者
 
 ```swift
-// demo1
-let array = [1, 2, 3, 4, 5]
-let publisher = Publishers.Sequence<[Int], Never>(sequence: array)
-let cancellable = publisher.sink { value in
-    print("Received value: \(value)")
-}
+// 将指定的订阅者附加到该发布者。 不直接调用，由创建自定义Publisher 覆盖
+func receive<S>(subscriber: S)
 
-// demo2
-[1, 2, 3, 4, 5].publisher.sink(receiveValue: {x in print(x)})
+// 将指定的订阅者附加到该发布者。 会调用func receive<S>(subscriber: S)
+func subscribe<S>(S)
+func subscribe<S>(S) -> AnyCancellable
 ```
 
-### Publishers.Catch 一个操作符（operator）,通过将上游发布者替换为另一个发布者来处理来自上游发布者的错误
+## map、replaceNil、scan
 
 ```swift
-func `catch`<P>(_ handler: @escaping (Self.Failure) -> P) -> Publishers.Catch<Self, P> where P : Publisher, Self.Output == P.Output
-```
+// 使用提供的闭包转换来自上游出版商的所有元素。
+func map<T>((Self.Output) -> T) -> Publishers.Map<Self, T>
 
-```swift
-enum MyError: Error {
-    case error
-}
-let originalPublisher = Fail<Int, MyError>(error: MyError.error)
-let fallbackPublisher = Just(42)
+// 使用提供的错误抛出闭包转换来自上游发布者的所有元素。
+func tryMap<T>((Self.Output) throws -> T) -> Publishers.TryMap<Self, T>
 
-let publisher = originalPublisher.catch { error -> Just<Int> in
-    print("Error caught: \(error)")
-    return fallbackPublisher
-}
+// 将发布者发出的错误（Failure）转换成另一种你定义的错误类型。
+func mapError<E>((Self.Failure) -> E) -> Publishers.MapError<Self, E>
 
-let cancellable = publisher.sink { completion in
-    print("Received completion: \(completion)")
-} receiveValue: { value in
-    print("Received value: \(value)")
-}
-```
+// 如果数据流中出现了 nil，将其替换为一个具体的非空值。
+func replaceNil<T>(with: T) -> Publishers.Map<Self, T>
 
-## Working with Subscribers 使用订阅者
+// 会保存上一次的计算结果，并与当前发出的新值进行合并。
+func scan<T>(T, (T, Self.Output) -> T) -> Publishers.Scan<Self, T>
+func tryScan<T>(T, (T, Self.Output) throws -> T) -> Publishers.TryScan<Self, T>
 
-### Publishers.ReceiveOn 一个操作符（operator），指定从发布者接收元素的调度程序
+// 为一个原本“永不报错”的发布者（Failure 是 Never）强行指定一个错误类型。
+func setFailureType<E>(to: E.Type) -> Publishers.SetFailureType<Self, E>
 
-```swift
-func receive<S>(on scheduler: S, options: S.SchedulerOptions? = nil) -> Publishers.ReceiveOn<Self, S> where S : Scheduler
-```
 
-### Publishers.SubscribeOn 一个操作符（operator），指定执行订阅、取消和请求操作的调度程序
-
-```swift
-func subscribe<S>(
-    on scheduler: S,
-    options: S.SchedulerOptions? = nil
-) -> Publishers.SubscribeOn<Self, S> where S : Scheduler
-```
-
-## Mapping Elements 映射元素
-
-### Publishers.Map 一个操作符（operator），使用提供的闭包转换上游发布者中的所有元素的发布者
-
-```swift
-func map<T>(_ transform: @escaping (Self.Output) -> T) -> Publishers.Map<Self, T>
-func replaceNil<T>(with output: T) -> Publishers.Map<Self, T> where Self.Output == T?
-```
-
-### Publishers.TryMap 一个发布者，它使用提供的错误引发闭包转换上游发布者中的所有元素
-
-```swift
-func tryMap<T>(_ transform: @escaping (Self.Output) throws -> T) -> Publishers.TryMap<Self, T>
-```
-
-### Publishers.MapError 将上游发布服务器的任何故障转换为新错误的发布服务器
-
-```swift
-func mapError<E>(_ transform: @escaping (Self.Failure) -> E) -> Publishers.MapError<Self, E> where E : Error
-```
-
-### Publishers.Scan 一个发布者，它通过向闭包提供当前元素以及闭包返回的最后一个值来转换上游发布者中的元素
-
-```swift
-func scan<T>(
-    _ initialResult: T,
-    _ nextPartialResult: @escaping (T, Self.Output) -> T
-) -> Publishers.Scan<Self, T>
-```
-
-```swift
+// 示例 scan
 let publisher = [1, 2, 3, 4, 5].publisher
 let scanPublisher = publisher.scan(0) { (accumulator, value) in
     return accumulator + value
@@ -220,39 +84,30 @@ let cancellable = scanPublisher.sink { value in
 // 15
 ```
 
-### Publishers.TryScan
-
-### Publishers.TSetFailureTyperyScan
-
-## Filtering Elements 过滤
-
-### Publishers.Filter 一个操作符（operator），用于根据指定的条件筛选发布者（publisher）发出的元素
+## filter、compactMap、removeDuplicates、replaceEmpty
 
 ```swift
-func filter(_ isIncluded: @escaping (Self.Output) -> Bool) -> Publishers.Filter<Self>
-```
+// 只有满足条件的（返回 true）值才能通过。
+func filter((Self.Output) -> Bool) -> Publishers.Filter<Self>
+func tryFilter((Self.Output) throws -> Bool) -> Publishers.TryFilter<Self>
 
-```swift
-let publisher = [1, 2, 3, 4, 5].publisher
-let filteredPublisher = publisher.filter { value in
-    return value % 2 == 0
-}
-let cancellable = filteredPublisher.sink { value in
-    print(value)
-}
-// 2
-// 4 
-```
+// 尝试转换数据，如果是 nil 则自动过滤掉（类似数组的 compactMap）。
+func compactMap<T>((Self.Output) -> T?) -> Publishers.CompactMap<Self, T>
+func tryCompactMap<T>((Self.Output) throws -> T?) -> Publishers.TryCompactMap<Self, T>
 
-### Publishers.TryFilter
+// 跳过连续重复的值。
+func removeDuplicates() -> Publishers.RemoveDuplicates<Self>
+func removeDuplicates(by: (Self.Output, Self.Output) -> Bool) -> Publishers.RemoveDuplicates<Self>
+func tryRemoveDuplicates(by: (Self.Output, Self.Output) throws -> Bool) -> Publishers.TryRemoveDuplicates<Self>
 
-### Publishers.CompactMap 一个操作符（operator），用于对发布者（publisher）的输出值进行转换，并过滤掉转换结果为 nil 的元素
+// 如果 Publisher 一个值都没发就结束了，则发出这个预设的默认值。
+func replaceEmpty(with: Self.Output) -> Publishers.ReplaceEmpty<Self>
 
-```swift
-func compactMap<T>(_ transform: @escaping (Self.Output) -> T?) -> Publishers.CompactMap<Self, T>
-```
+// 一旦发生错误，就发回这个预设值，并正常结束流。
+func replaceError(with: Self.Output) -> Publishers.ReplaceError<Self>
 
-```swift
+
+// 示例 compactMap
 let publisher = ["1", "2", "3", "four", "5"].publisher
 let compactMapPublisher = publisher.compactMap { value in
     return Int(value)
@@ -265,13 +120,9 @@ let cancellable = compactMapPublisher.sink { value in
 // 2
 // 3 
 // 5
-```
 
-### Publishers.TryCompactMap
 
-### Publishers.RemoveDuplicates 一个操作符（operator），用于去除发布者（publisher）发出的重复元素
-
-```swift
+// 示例 removeDuplicates
 let publisher = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4].publisher
 let removeDuplicatesPublisher = publisher.removeDuplicates()
 let cancellable = removeDuplicatesPublisher.sink { value in
@@ -285,28 +136,27 @@ let cancellable = removeDuplicatesPublisher.sink { value in
 // 4
 ```
 
-### Publishers.TryRemoveDuplicates
-
-### Publishers.ReplaceEmpty 一个操作符（operator），用于在发布者（publisher）为空时替换为指定的元素或另一个发布者
+## collect、ignoreOutput、reduce
 
 ```swift
-let emptyPublisher = Empty<Int, Never>()
-let replaceEmptyPublisher = emptyPublisher.replaceEmpty(with: 42)
-let cancellable = replaceEmptyPublisher.sink { value in
-    print(value)
-}
+// collect 系列（打包分发）
+// 将流中散落的单个元素收集起来，改为发送一个数组。
+// 无限期收集，直到流完成时，一次性把所有值作为一个数组发出。
+func collect() -> Publishers.Collect<Self> 
+// 按数量收集。比如 collect(3)，每攒满 3 个值就发一个数组。
+func collect(Int) -> Publishers.CollectByCount<Self>
+// 按时间收集。比如“每 2 秒打包一次收到的数据”。
+func collect<S>(Publishers.TimeGroupingStrategy<S>, options: S.SchedulerOptions?) -> Publishers.CollectByTime<Self, S>
 
-// Output:
-// 42
-```
+// 完全忽略发出的值，只转发“完成”或“错误”信号。
+func ignoreOutput() -> Publishers.IgnoreOutput<Self>
 
-### Publishers.ReplaceError
+// 与 scan 非常相似，但有一个重大区别——scan 每次计算都会发值，而 reduce 只在流结束时发一次最终值。
+func reduce<T>(T, (T, Self.Output) -> T) -> Publishers.Reduce<Self, T>
+Applies a closure that collects each element of a stream and publishes a final result upon completion.
+func tryReduce<T>(T, (T, Self.Output) throws -> T) -> Publishers.TryReduce<Self, T>
 
-## Reducing Elements 减少元素
-
-### Publishers.Collect 一个操作符（operator），用于将发布者（publisher）的元素收集到一个数组中，并在完成时将该数组作为单个输出发出
-
-```swift
+// 示例 collect
 let publisher = [1, 2, 3, 4, 5].publisher
 let collectPublisher = publisher.collect()
 let cancellable = collectPublisher.sink { values in
@@ -315,11 +165,10 @@ let cancellable = collectPublisher.sink { values in
 
 // Output:
 // [1, 2, 3, 4, 5]
-```
 
-### Publishers.CollectByCount 一个操作符（operator），用于将指定数量的发布者（publisher）的元素收集到一个数组中，并在完成时将该数组作为单个输出发出
 
-```swift
+
+// 示例 collect(3)
 let publisher = [1, 2, 3, 4, 5].publisher
 let collectByCountPublisher = publisher.collect(3)
 let cancellable = collectByCountPublisher.sink { values in
@@ -329,57 +178,10 @@ let cancellable = collectByCountPublisher.sink { values in
 // Output:
 // [1, 2, 3]
 // [4, 5]
-```
 
-### Publishers.CollectByTime 一个操作符（operator），用于根据时间窗口将发布者（publisher）的元素收集到一个数组中，并在时间窗口结束时将该数组作为单个输出发出
 
-```swift
-let publisher = Timer.publish(every: 1, on: .main, in: .default)
-    .autoconnect()
-    .scan(0..<(2 * 10)) { range, _ in
-        range.dropFirst()
-    }
-    .map { Array($0) }
-    .eraseToAnyPublisher()
-let collectByTimePublisher = publisher.collect(.byTime(RunLoop.main, .seconds(5)))
-let cancellable = collectByTimePublisher.sink { values in
-    print(values)
-}
-DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
-    cancellable.cancel()  // 取消订阅
-}
 
-// 第5秒： [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]]
-
-// 第10秒： [[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]]
-
-// 第15秒：[[10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [11, 12, 13, 14, 15, 16, 17, 18, 19], [12, 13, 14, 15, 16, 17, 18, 19], [13, 14, 15, 16, 17, 18, 19], [14, 15, 16, 17, 18, 19]]
-```
-
-### Publishers.TimeGroupingStrategy
-
-### Publishers.IgnoreOutput 一个操作符（operator），它会忽略发布者（publisher）发出的所有元素，只接收完成事件或错误事件
-
-```swift
-let publisher = [1, 2, 3].publisher
-let ignoreOutputPublisher = publisher.ignoreOutput()
-let cancellable = ignoreOutputPublisher.sink(
-    receiveCompletion: { completion in
-        switch completion {
-        case .finished:
-            print("Publisher finished successfully.")
-        case .failure(let error):
-            print("Publisher finished with error: \(error)")
-        }
-    },
-    receiveValue: { _ in }
-)
-// Publisher finished successfully.
-```
-
-### Publishers.Reduce 一个操作符（operator），用于将发布者（publisher）的元素进行累积操作，并发出最终的累积结果
-
-```swift
+// 示例 reduce
 let publisher = [1, 2, 3, 4, 5].publisher
 let reducePublisher = publisher.reduce(0) { (result, value) -> Int in
     return result + value
@@ -391,214 +193,116 @@ let cancellable = reducePublisher.sink { value in
 // 15
 ```
 
-### Publishers.TryReduce
-
-## Applying Mathematical Operations on Elements 对元素应用数学运算
-
-### Publishers.Count 一个操作符（operator），用于统计发布者（publisher）发出的元素数量，并将该数量作为一个单独的元素发出
+## count、max、min
 
 ```swift
-let publisher = [1, 2, 3, 4, 5].publisher
-let countPublisher = publisher.count()
-let cancellable = countPublisher.sink { count in
-    print("Element count: \(count)")
-}
-// Output:
-// Element count: 5
+// 统计流中一共发出了多少个元素。
+func count() -> Publishers.Count<Self>
+
+// max() & min() 系列（最值查找）
+func max() -> Publishers.Comparison<Self>
+func max(by: (Self.Output, Self.Output) -> Bool) -> Publishers.Comparison<Self>
+func tryMax(by: (Self.Output, Self.Output) throws -> Bool) -> Publishers.TryComparison<Self>
+func min() -> Publishers.Comparison<Self>
+func min(by: (Self.Output, Self.Output) -> Bool) -> Publishers.Comparison<Self>
+func tryMin(by: (Self.Output, Self.Output) throws -> Bool) -> Publishers.TryComparison<Self>
 ```
 
-### Publishers.Comparison
+## contains、allSatisfy
 
 ```swift
-let numbers = [0, 10, 5]
-let cancellable = numbers.publisher
-    .max()
-    .sink { print("\($0)") }
-// 10
+// contains 系列（是否存在）
+// 检查流中是否包含某个特定的值，或者是否有值满足某个条件。
+func contains(Self.Output) -> Publishers.Contains<Self>
+func contains(where: (Self.Output) -> Bool) -> Publishers.ContainsWhere<Self>
+func tryContains(where: (Self.Output) throws -> Bool) -> Publishers.TryContainsWhere<Self>
+
+// allSatisfy 系列（是否全部满足）
+// 检查流中的所有元素是否都符合某个条件。
+func allSatisfy((Self.Output) -> Bool) -> Publishers.AllSatisfy<Self>
+func tryAllSatisfy((Self.Output) throws -> Bool) -> Publishers.TryAllSatisfy<Self>
 ```
 
+## drop、append、prepend、prefix
+
 ```swift
-enum Rank: Int {
-    case ace = 1, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
-}
-let cards: [Rank] = [.five, .queen, .ace, .eight, .jack]
-let cancellable = cards.publisher
-    .max {
-        return  $0.rawValue < $1.rawValue
+// drop 系列（丢弃/跳过）
+func drop<P>(untilOutputFrom: P) -> Publishers.DropUntilOutput<Self, P>
+func dropFirst(Int) -> Publishers.Drop<Self>
+func drop(while: (Self.Output) -> Bool) -> Publishers.DropWhile<Self>
+func tryDrop(while: (Self.Output) throws -> Bool) -> Publishers.TryDropWhile<Self>
+
+// append 系列（末尾追加）
+func append(Self.Output...) -> Publishers.Concatenate<Self, Publishers.Sequence<[Self.Output], Self.Failure>>
+func append<S>(S) -> Publishers.Concatenate<Self, Publishers.Sequence<S, Self.Failure>>
+func append<P>(P) -> Publishers.Concatenate<Self, P>
+
+// prepend 系列（头部插入）
+func prepend(Self.Output...) -> Publishers.Concatenate<Publishers.Sequence<[Self.Output], Self.Failure>, Self>
+func prepend<S>(S) -> Publishers.Concatenate<Publishers.Sequence<S, Self.Failure>, Self>
+func prepend<P>(P) -> Publishers.Concatenate<P, Self>
+
+// prefix 系列（截取/限流）
+func prefix(Int) -> Publishers.Output<Self>
+func prefix(while: (Self.Output) -> Bool) -> Publishers.PrefixWhile<Self>
+func tryPrefix(while: (Self.Output) throws -> Bool) -> Publishers.TryPrefixWhile<Self>
+func prefix<P>(untilOutputFrom: P) -> Publishers.PrefixUntilOutput<Self, P>
+```
+
+## first、last、output
+
+```swift
+// first 系列（提取首个
+func first() -> Publishers.First<Self>
+func first(where: (Self.Output) -> Bool) -> Publishers.FirstWhere<Self>
+func tryFirst(where: (Self.Output) throws -> Bool) -> Publishers.TryFirstWhere<Self>
+
+// last 系列（提取末尾）
+func last() -> Publishers.Last<Self>
+func last(where: (Self.Output) -> Bool) -> Publishers.LastWhere<Self>
+func tryLast(where: (Self.Output) throws -> Bool) -> Publishers.TryLastWhere<Self>
+
+// output 系列（按索引提取）
+func output(at: Int) -> Publishers.Output<Self>
+func output<R>(in: R) -> Publishers.Output<Self>
+```
+
+## combineLatest
+
+```swift
+// 用于将多个发布者（publishers）的最新值进行组合
+// 常见场景
+// - 表单验证：只有当“用户名”、“密码”和“验证码”三个输入框都有内容，且内容合法时，才启用“登录”按钮。
+// - 多状态合成：比如 UI 依赖于“网络请求结果”和“用户本地设置”两个源。
+func combineLatest<P, T>(P, (Self.Output, P.Output) -> T) -> Publishers.Map<Publishers.CombineLatest<Self, P>, T>
+func combineLatest<P>(P) -> Publishers.CombineLatest<Self, P>
+func combineLatest<P, Q, T>(P, Q, (Self.Output, P.Output, Q.Output) -> T) -> 
+func combineLatest<P, Q>(P, Q) -> Publishers.CombineLatest3<Self, P, Q>
+func combineLatest<P, Q, R, T>(P, Q, R, (Self.Output, P.Output, Q.Output, R.Output) -> T) -> Publishers.Map<Publishers.CombineLatest4<Self, P, Q, R>, T>
+func combineLatest<P, Q, R>(P, Q, R) -> Publishers.CombineLatest4<Self, P, Q, R>
+
+
+
+// 代码示例：登录表单
+let username = PassthroughSubject<String, Never>()
+let password = PassthroughSubject<String, Never>()
+
+// 协作：合并两个流
+let isLoginButtonEnabled = username.combineLatest(password)
+    .map { user, pass in
+        return !user.isEmpty && pass.count >= 6
     }
-    .sink { print("\($0)") }
-// Prints: "queen"
-```
+    .sink { isEnabled in
+        print("登录按钮是否可用: \(isEnabled)")
+    }
 
-```swift
-let numbers = [0, 10, 5]
-let cancellable = numbers.publisher
-    .min()
-    .sink { print("\($0)") }
-// 0
-```
+username.send("john")    // 此时什么都不打印（因为密码还没发过值）
+password.send("123")    // 打印：false (密码不够长)
+password.send("123456") // 打印：true (两者都满足了)
+username.send("smith")   // 打印：true (用户名更新了，取密码最新的 123456)
 
-### Publishers.TryComparison
 
-## Applying Matching Criteria to Elements 将匹配条件应用于元素
-
-### Publishers.Contains 一个操作符（operator），用于判断发布者（publisher）是否包含特定的元素，并将结果作为布尔值发出
-
-```swift
-let publisher = [1, 2, 3, 4, 5].publisher
-let containsPublisher = publisher.contains(3)
-let cancellable = containsPublisher.sink { contains in
-    print("Contains 3: \(contains)")
-}
-
-// Output:
-// Contains 3: true
-
-```
-
-### Publishers.ContainsWhere 一个操作符（operator），用于闭包判断发布者（publisher）是否包含特定的元素，并将结果作为布尔值发出
-
-### Publishers.TryContainsWhere
-
-### Publishers.AllSatisfy 一个操作符（operator），用于判断发布者（publisher）的所有元素是否都满足特定的条件，并将结果作为布尔值发出
-
-```swift
-let targetRange = (-1...100)
-let numbers = [-1, 0, 10, 5]
-numbers.publisher
-    .allSatisfy { targetRange.contains($0) }
-    .sink { print("\($0)") }
-// Prints: "true"
-```
-
-### Publishers.TryAllSatisfy
-
-## Applying Sequence Operations to Elements 将序列操作应用于元素
-
-### Publishers.DropUntilOutput 一个操作符（operator），用于在接收到特定元素之前丢弃发布者（publisher）发出的所有元素，并在接收到该特定元素后开始转发后续的元素
-
-```swift
-let upstream = PassthroughSubject<Int,Never>()
-let second = PassthroughSubject<String,Never>()
-let cancellable = upstream
-    .drop(untilOutputFrom: second)
-    .sink { print("\($0)") }
-
-upstream.send(1)
-upstream.send(2)
-second.send("A")
-upstream.send(3)
-upstream.send(4)
-// 3
-// 4
-```
-
-### Publishers.Drop 一个操作符（operator），用于丢弃发布者（publisher）发出的前几个元素，并开始转发后续的元素
-
-```swift
-let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-let cancellable = numbers.publisher
-    .dropFirst(5)
-    .sink { print("\($0)") }
-// 6
-// 7
-// 8
-// 9
-// 10
-```
-
-### Publishers.DropWhile 一个操作符（operator），在重新发布所有剩余元素之前，从上游发布器中删除元素，直到给定闭包返回 false
-
-```swift
-let numbers = [-62, -1, 0, 10, 0, 22, 41, -1, 5]
-let cancellable = numbers.publisher
-    .drop { $0 <= 0 }
-    .sink { print("\($0)") }
-// 10
-// 0
-// 22
-// 41
-// -1
-// 5
-```
-
-### Publishers.TryDropWhile
-
-### Publishers.Concatenate 一个操作符（operator），用于连接多个发布者（publishers），按照顺序将它们的元素进行串联
-
-```swift
-let numbers = (0...1)
-let otherNumbers = (32...35)
-let cancellable = numbers.publisher
-    .append(otherNumbers.publisher)
-    .sink { print("\($0)") }
-// 0
-// 1
-// 32
-// 33
-// 34
-// 35
-```
-
-### Publishers.PrefixWhile 一个操作符（operator），用于从发布者（publisher）的开头开始，根据指定的条件收集元素，直到条件不再满足为止
-
-```swift
-let numbers = (0...10)
-numbers.publisher
-    .prefix { $0 < 5 }
-    .sink { print("\($0)", terminator: " ") }
-// 0 1 2 3 4 
-```
-
-### Publishers.TryPrefixWhile
-
-### Publishers.PrefixUntilOutput 一个操作符（operator）,重新发布元素，直到另一个发布者发布元素
-
-## Selecting Specific Elements
-
-### Publishers.First 一个操作符（operator），用于从发布者（publisher）中获取第一个元素或满足特定条件的第一个元素
-
-```swift
-let numbers = (-10...10)
-cancellable = numbers.publisher
-    .first()
-    .sink { print("\($0)") }
-// Print: "-10"
-```
-
-### Publishers.FirstWhere
-
-### Publishers.TryFirstWhere
-
-### Publishers.Last 一个操作符（operator），用于从发布者（publisher）中获取最后一个元素或满足特定条件的第一个元素
-
-```swift
-let numbers = (-10...10)
-cancellable = numbers.publisher
-    .last()
-    .sink { print("\($0)") }
-// Prints: "10"
-```
-
-### Publishers.LastWhere
-
-### Publishers.TryLastWhere
-
-### Publishers.Output 一个操作符（operator），重新发布元素，最多不超过指定的最大数量
-
-```swift
-let numbers = (0...10)
-cancellable = numbers.publisher
-    .prefix(2)
-    .sink { print("\($0)", terminator: " ") }
-// Prints: "0 1"
-```
-
-## Combining Elements from Multiple Publishers 合并来自多个发布者的元素
-
-### Publishers.CombineLatest 一个操作符（operator），用于将多个发布者（publishers）的最新值进行组合
-
-```swift
+// 示例 combineLatest
 let pub1 = PassthroughSubject<Int, Never>()
 let pub2 = PassthroughSubject<Int, Never>()
 cancellable = pub1
@@ -616,9 +320,10 @@ pub2.send(22)
 //    Result: (3, 2).    // pub1 latest = 3, pub2 latest = 2
 //    Result: (45, 2).   // pub1 latest = 45, pub2 latest = 2
 //    Result: (45, 22).  // pub1 latest = 45, pub2 latest = 22
-```
 
-```swift
+
+
+// 示例 combineLatest
 let pub1 = PassthroughSubject<Int, Never>()
 let pub2 = PassthroughSubject<Int, Never>()
 let cancellable = pub1
@@ -648,13 +353,40 @@ pub1.send(13)
 // 组合规则 【pub1.send(2)，pub2.send(2)] , [pub1.send(9),pub2.send(2)] ,[pub1.send(3),pub2.send(2)] ,[pub1.send(3),pub2.send(12)]  ,[pub1.send(13),pub2.send(12)] 
 ```
 
-### Publishers.CombineLatest3
-
-### Publishers.CombineLatest4
-
-### Publishers.Merge 一个操作符（operator），用于将多个发布者（publishers）的值合并成一个发布者
+## merge
 
 ```swift
+// 常见场景
+// - 多源数据流合一：比如你有一个页面，数据既可以来自“下拉刷新”，也可以来自“自动轮询”，还可以来自“底部加载更多”。你可以把这三个 Publisher merge 起来，统一交给一个处理逻辑。
+// - UI 事件聚合：界面上有三个不同的按钮（加、减、清空），点击它们都会改变同一个数值。
+
+// 合并 将来自多个发布者的元素作为交错流重新发布
+func merge(with: Self) -> Publishers.MergeMany<Self>
+func merge<P>(with: P) -> Publishers.Merge<Self, P>
+func merge<B, C>(with: B, C) -> Publishers.Merge3<Self, B, C>
+func merge<B, C, D>(with: B, C, D) -> Publishers.Merge4<Self, B, C, D>
+func merge<B, C, D, E>(with: B, C, D, E) -> Publishers.Merge5<Self, B, C, D, E>
+func merge<B, C, D, E, F>(with: B, C, D, E, F) -> Publishers.Merge6<Self, B, C, D, E, F>
+func merge<B, C, D, E, F, G>(with: B, C, D, E, F, G) -> Publishers.Merge7<Self, B, C, D, E, F, G>
+func merge<B, C, D, E, F, G, H>(with: B, C, D, E, F, G, H) -> Publishers.Merge8<Self, B, C, D, E, F, G, H>
+
+
+// 代码示例：多按钮触发
+let tapButtonA = PassthroughSubject<String, Never>()
+let tapButtonB = PassthroughSubject<String, Never>()
+
+// 协作：把两个按钮事件合并
+tapButtonA.merge(with: tapButtonB)
+    .sink { value in
+        print("收到了来自 \(value) 的点击")
+    }
+
+tapButtonA.send("按钮A") // 输出：收到了来自 按钮A 的点击
+tapButtonB.send("按钮B") // 输出：收到了来自 按钮B 的点击
+
+
+
+// 示例 merge(with)
 let publisher = PassthroughSubject<Int, Never>()
 let pub2 = PassthroughSubject<Int, Never>()
 cancellable = publisher
@@ -670,23 +402,37 @@ publisher.send(17)
 // Prints: "2 2 3 22 45 22 17"
 ```
 
-### Publishers.Merge3
-
-### Publishers.Merge4
-
-### Publishers.Merge5
-
-### Publishers.Merge6
-
-### Publishers.Merge7
-
-### Publishers.Merge8
-
-### Publishers.MergeMany
-
-### Publishers.Zip 一个操作符（operator），用于将多个发布者（publishers）的值进行配对
+## zip
 
 ```swift
+// 成对等待：zip 会等待所有参与的 Publisher 都发出“第 N 个”值。只有当所有源都凑齐了第 N 个值，它才会把它们打包成元组（Tuple）发出来。
+
+// 常见场景
+// - 并行且相关的异步任务：比如你需要同时调用“获取用户信息”和“获取用户头像”两个接口。只有当两个都返回成功时，才一起渲染 UI。
+// - 多步确认逻辑：比如一个流程中需要“用户输入”和“系统验证码”同时匹配。
+func zip<P>(P) -> Publishers.Zip<Self, P>
+func zip<P, T>(P, (Self.Output, P.Output) -> T) -> Publishers.Map<Publishers.Zip<Self, P>, T>
+func zip<P, Q>(P, Q) -> Publishers.Zip3<Self, P, Q>
+func zip<P, Q, T>(P, Q, (Self.Output, P.Output, Q.Output) -> T) -> Publishers.Map<Publishers.Zip3<Self, P, Q>, T>
+func zip<P, Q, R>(P, Q, R) -> Publishers.Zip4<Self, P, Q, R>
+func zip<P, Q, R, T>(P, Q, R, (Self.Output, P.Output, Q.Output, R.Output) -> T) -> Publishers.Map<Publishers.Zip4<Self, P, Q, R>, T>
+
+
+// 代码示例：双接口同步
+let userProfile = PassthroughSubject<String, Never>()
+let userAvatar = PassthroughSubject<String, Never>()
+// 协作：严格配对
+userProfile.zip(userAvatar)
+    .sink { profile, avatar in
+        print("✅ 组合成功：使用 \(profile) 和 \(avatar) 渲染页面")
+    }
+userProfile.send("张三")     // 此时什么都不打印（在等头像）
+userProfile.send("李四")     // 依然不打印（头像一个都没来）
+userAvatar.send("头像1")     // 打印：张三 + 头像1（配成第一对）
+userAvatar.send("头像2")     // 打印：李四 + 头像2（配成第二对）
+
+
+// 示例 zip
 let numbersPub = PassthroughSubject<Int, Never>()
 let lettersPub = PassthroughSubject<String, Never>()
 let cancellable = numbersPub
@@ -702,13 +448,30 @@ lettersPub.send("B")     // numbers: 1,2,3     letters: "B"       zip output: (2
 //  (2, "B")
 ```
 
-### Publishers.Zip4
-
-## Republishing Elements by Subscribing to New Publishers 通过订阅新发布者重新发布元素
-
-### Publishers.FlatMap 一个操作符（operator），用于将发布者（publisher）的每个值映射到另一个发布者，并将结果合并为一个单一的发布者
+## flatMap、switchToLatest
 
 ```swift
+// flatMap（并行转换）
+// 作用：每当上游发来一个值，flatMap 都会为其创建一个新的（Publisher），并将所有Publisher的数据汇聚到一起。
+func flatMap<T, P>(maxPublishers: Subscribers.Demand, (Self.Output) -> P) -> Publishers.FlatMap<P, Self>
+func flatMap<P>(maxPublishers: Subscribers.Demand, (Self.Output) -> P) -> Publishers.FlatMap<P, Publishers.SetFailureType<Self, P.Failure>>
+func flatMap<P>(maxPublishers: Subscribers.Demand, (Self.Output) -> P) -> Publishers.FlatMap<P, Self>
+func flatMap<P>(maxPublishers: Subscribers.Demand, (Self.Output) -> P) -> Publishers.FlatMap<Publishers.SetFailureType<P, Self.Failure>, Self>
+
+// 最新优先/自动取消
+// 作用：如果你正在处理一个子Publisher，此时上游发来了一个新的Publisher，switchToLatest 会立即取消掉旧的，只听最新的。
+// 要求：上游 Publisher 发出的值必须也是一个 Publisher 类型。
+// 场景（经典应用）
+//  - 搜索框（Search-as-you-type）：用户输入 a 发起请求，紧接着输入 ap。此时旧的 a 请求已经没意义了，应立即掐断，改听 ap 的结果。
+//  - 点击切换：点击 Tab A 加载数据，中途点击 Tab B。Tab A 的请求应该被自动取消。
+func switchToLatest() -> Publishers.SwitchToLatest<Self.Output, Self>
+func switchToLatest() -> Publishers.SwitchToLatest<Self.Output, Publishers.SetFailureType<Self, Self.Output.Failure>>
+func switchToLatest() -> Publishers.SwitchToLatest<Publishers.SetFailureType<Self.Output, Self.Failure>, Publishers.Map<Self, Publishers.SetFailureType<Self.Output, Self.Failure>>>
+func switchToLatest() -> Publishers.SwitchToLatest<Self.Output, Self>
+
+
+
+// 示例 flatMap
 let numbers = [1, 2, 3, 4, 5]
 let numberPublisher = numbers.publisher
 let mappedPublisher = numberPublisher.flatMap { number in
@@ -726,23 +489,67 @@ let cancellable = mappedPublisher.sink { value in
 // 10
 ```
 
-### Publishers.SwitchToLatest 一个操作符（operator），用于将一个发布者（publisher）中的最新发布者的值进行合并和订阅
-
-## Handling Errors 处理错误
-
-### Publishers.AssertNoFailure
-
-### Publishers.Catch
-
-### Publishers.TryCatch
-
-### Publishers.Retry
-
-## Controlling Timing 控制时序
-
-### Publishers.MeasureInterval 一个操作符（operator），用于测量两次值发出之间的时间间隔
+## assertNoFailure、catch、tryCatch、retry
 
 ```swift
+// 开发调试断言
+func assertNoFailure(String, file: StaticString, line: UInt) -> Publishers.AssertNoFailure<Self>
+
+// 错误修补/分支切换
+// 捕获上游的错误，并返回一个新的 Publisher 来替代失败的流。
+func `catch`<P>((Self.Failure) -> P) -> Publishers.Catch<Self, P>
+// tryCatch 的闭包中可以再次抛出错误（throws）。
+func tryCatch<P>((Self.Failure) throws -> P) -> Publishers.TryCatch<Self, P>
+
+// 自动重试
+// 当收到错误信号时，重新订阅上游 Publisher。
+func retry(Int) -> Publishers.Retry<Self>
+
+
+
+
+// 示例
+enum MyError: Error {
+    case error
+}
+let originalPublisher = Fail<Int, MyError>(error: MyError.error)
+let fallbackPublisher = Just(42)
+
+let publisher = originalPublisher.catch { error -> Just<Int> in
+    print("Error caught: \(error)")
+    return fallbackPublisher
+}
+
+let cancellable = publisher.sink { completion in
+    print("Received completion: \(completion)")
+} receiveValue: { value in
+    print("Received value: \(value)")
+}
+```
+
+## measureInterval、debounce、delay、throttle、timeout
+
+```swift
+// 测量：测测间隔
+func measureInterval<S>(using: S, options: S.SchedulerOptions?) -> Publishers.MeasureInterval<Self, S>
+
+// 防抖：等你不动了再发
+// 场景：搜索框输入。防止用户每打一个字母就发一次 API 请求，而是等用户停顿 0.5 秒后再发。
+func debounce<S>(for: S.SchedulerTimeType.Stride, scheduler: S, options: S.SchedulerOptions?) -> Publishers.Debounce<Self, S>
+
+// 延迟：整体延后
+func delay<S>(for: S.SchedulerTimeType.Stride, tolerance: S.SchedulerTimeType.Stride?, scheduler: S, options: S.SchedulerOptions?) -> Publishers.Delay<Self, S>
+
+// 节流：固定频率发
+// 场景：按钮连点、滚动监听。不管用户点多快，每 1 秒只处理一次。
+func throttle<S>(for: S.SchedulerTimeType.Stride, scheduler: S, latest: Bool) -> Publishers.Throttle<Self, S>
+
+// 超时：到点没回就报错
+// 场景：网络请求兜底。如果 API 超过 10 秒没响应，直接提示“网络连接超时”。
+func timeout<S>(S.SchedulerTimeType.Stride, scheduler: S, options: S.SchedulerOptions?, customError: (() -> Self.Failure)?) -> Publishers.Timeout<Self, S>
+
+
+// 示例 measureInterval
 Timer.publish(every: 1, on: .main, in: .default)
     .autoconnect()
     .measureInterval(using: RunLoop.main)
@@ -752,165 +559,131 @@ Timer.publish(every: 1, on: .main, in: .default)
 //      Stride(magnitude: 0.9992760419845581)
 ```
 
-### Publishers.Debounce 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出最新的值
+## encode、decode
 
 ```swift
-let bounces:[(Int,TimeInterval)] = [
-    (0, 0),
-    (1, 0.25),  // 0.25s interval since last index
-    (2, 0.25),     // 0.75s interval since last index
-    (3, 0.25),  // 0.25s interval since last index
-    (4, 0.25),   // 0.25s interval since last index
-    (5, 2)      // 0.5s interval since last index
-]
+// 序列化：对象 -> 数据
+// 作用：将上游发出的 Encodable 对象转换成 Data。
+// encoder: 执行编码的对象（通常是 JSONEncoder()）。
+func encode<Coder>(encoder: Coder) -> Publishers.Encode<Self, Coder>
 
-
-let subject = PassthroughSubject<Int, Never>()
-let cancellable = subject
-    .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-    .sink { index in
-        print ("Received index \(index)")
-    }
-
-
-for bounce in bounces {
-    DispatchQueue.main.asyncAfter(deadline: .now() + bounce.1) {        
-        subject.send(bounce.0)
-    }
-}
-// Received index 4
-// Received index 5
+// 反序列化：数据 -> 对象
+// 作用：将上游传来的 Data 尝试解析为指定的 Decodable 类型。
+// type: 你想要转换的目标类型（例如 User.self）。
+// decoder: 执行解析的对象（通常是 JSONDecoder()）。
+func decode<Item, Coder>(type: Item.Type, decoder: Coder) -> Publishers.Decode<Self, Item, Coder>
 ```
 
-### Publishers.Delay 一个操作符（operator），用于延迟发布者（publisher）发出值的时间
+## map(KeyPath提取)
 
 ```swift
-let publisher = PassthroughSubject<Int, Never>()
-let delayedPublisher = publisher.delay(for: .seconds(5), scheduler: DispatchQueue.main)
-let cancellable = delayedPublisher.sink { value in
-    print(value)
-}
-publisher.send(1)
+// 单属性提取
+// 作用：将上游发出的对象转换成该对象的某个属性值。
+func map<T>(KeyPath<Self.Output, T>) -> Publishers.MapKeyPath<Self, T>
+
+// 双/三属性提取
+// 作用：同时提取多个属性，并将它们打包成一个**元组（Tuple）**发出来。
+func map<T0, T1>(KeyPath<Self.Output, T0>, KeyPath<Self.Output, T1>) -> Publishers.MapKeyPath2<Self, T0, T1>
+func map<T0, T1, T2>(KeyPath<Self.Output, T0>, KeyPath<Self.Output, T1>, KeyPath<Self.Output, T2>) -> Publishers.MapKeyPath3<Self, T0, T1, T2>
 ```
 
-### Publishers.Throttle 一个操作符（operator），用于限制发布者（publisher）发出值的频率，并在指定的时间间隔内，只发出第一个值
+## multicast、share(共享)
 
 ```swift
-let cancellable = Timer.publish(every: 3.0, on: .main, in: .default)
-    .autoconnect()
-    .print("\(Date().description)")
-    .throttle(for: 10.0, scheduler: RunLoop.main, latest: true)
-    .sink(
-        receiveCompletion: { print ("Completion: \($0).") },
-        receiveValue: { print("Received Timestamp \($0).") }
-     )
+// 深度定制共享
+// 作用：它让你手动指定一个 Subject（如 CurrentValueSubject）作为中转站来广播数据。
+// 手动提供 Subject
+// 调用 .connect() 时启动
+// 手动控制连接与断开
+func multicast<S>(() -> S) -> Publishers.Multicast<Self, S>
+func multicast<S>(subject: S) -> Publishers.Multicast<Self, S>
+
+// 简单共享
+// 作用：底层自动创建一个 PassthroughSubject。当第一个订阅者到来时，它开始订阅上游；后续的所有订阅者都共享这同一个上游发出的值。
+// 特性：它是 multicast 的简化版。只要有人订阅，它就开始工作。
+// 第一个人订阅时立即启动
+func share() -> Publishers.Share<Self>
 ```
 
-### Publishers.Timeout 一个操作符（operator），用于设置发布者（publisher）的超时时间
+## buffer
 
 ```swift
-let publisher = PassthroughSubject<Int, Error>()
-
-let timeoutPublisher = publisher.timeout(.seconds(2), scheduler: DispatchQueue.main, customError: { () -> Error in
-    return NSError(domain: "CustomErrorDomain", code: 0, userInfo: nil)
-})
-
-let cancellable = timeoutPublisher.sink(receiveCompletion: { completion in
-    switch completion {
-    case .finished:
-        print("Publisher finished successfully.")
-    case .failure(let error):
-        print("Publisher failed with error: \(error)")
-    }
-}, receiveValue: { value in
-    print("Received value: \(value)")
-})
-
-DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-    publisher.send(1)
-}
-
-// Received value: 1
-// Publisher failed with error: Error Domain=CustomErrorDomain Code=0 "(null)"
+func buffer(size: Int, prefetch: Publishers.PrefetchStrategy, whenFull: Publishers.BufferingStrategy<Self.Failure>) -> Publishers.Buffer<Self>
+enum PrefetchStrategy
 ```
 
-## Encoding and Decoding 编码和解码
-
-### Publishers.Decode
-
-### Publishers.Encode
-
-## Identifying Properties with Key Paths 使用键路径标识属性
-
-### Publishers.MapKeyPath
+## eraseToAnyPublisher 类型擦除
 
 ```swift
-struct DiceRoll {
-    let die: Int
-}
-cancellable = Just(DiceRoll(die:Int.random(in:1...6)))
-    .map(\.die)
-    .sink {
-        print ("Rolled: \($0)")
-    }
+// 类型擦除
+// Combine 中最常用、也最能体现“封装意识”的操作符。它的作用是类型擦除（Type Erasure）。
+// eraseToAnyPublisher 会把那一长串复杂的类型“打包”成一个简洁的 AnyPublisher<Output, Failure>。
+func eraseToAnyPublisher() -> AnyPublisher<Self.Output, Self.Failure>
 ```
 
-### Publishers.MapKeyPath2
-
-### Publishers.MapKeyPath3
-
-## Working with Multiple Subscribers 使用多个订阅者
-
-### Publishers.Multicast 一个操作符（operator），用于将一个发布者（publisher）转换为多个订阅者共享的可连接发布者（connectable publisher）
+## schedulers 线程调度
 
 ```swift
-let pub = ["First", "Second", "Third"].publisher
-    .map( { return ($0, Int.random(in: 0...100)) } )
-    .print("Random")
-    .multicast { PassthroughSubject<(String, Int), Never>() }
+// 在什么线程执行（影响上游）
+// 作用：决定 Publisher 的订阅逻辑、资源加载、耗时计算在哪个线程启动。
+func subscribe<S>(on: S, options: S.SchedulerOptions?) -> Publishers.SubscribeOn<Self, S>
 
-
-let cancellable1 = pub
-   .sink { print ("Stream 1 received: \($0)")}
-let  cancellable2 = pub
-   .sink { print ("Stream 2 received: \($0)")}
-pub.connect()
+// 在什么线程执行(影响下游)
+// 作用：决定其后面的操作符以及最终的 Subscriber（订阅者） 在哪个线程接收数据。
+func receive<S>(on: S, options: S.SchedulerOptions?) -> Publishers.ReceiveOn<Self, S>
 ```
 
-### Publishers.Share 一个操作符（operator），用于在多个订阅者之间共享一个发布者（publisher）的订阅关系和接收到的值
+## makeConnectable
 
 ```swift
-let pub = (1...3).publisher
-    .delay(for: 1, scheduler: DispatchQueue.main)
-    .map( { _ in return Int.random(in: 0...100) } )
-    .print("Random")
-    .share()
-let cancellable1 = pub
-    .sink { print ("Stream 1 received: \($0)")}
-let cancellable2 = pub
-    .sink { print ("Stream 2 received: \($0)")}
+// 将一个普通 Publisher 变成一个Connectable的发布者。
+// 手动调用 .connect() 发送数据
+// 有人订阅后，它只是“排队等候”。只有当你手动调用 .connect() 时，它才真正开始发送数据。
+func makeConnectable() -> Publishers.MakeConnectable<Self>
 ```
 
-## Buffering Elements 缓冲元素
+## assign、sink（subscribers）
 
-### Publishers.Buffer
+```swift
+// Combine 的最终归宿，也就是我们之前聊到的 Subscriber（订阅者）。它们的作用是将数据流里的值“消费”掉，或者绑定到具体的业务模型上。
 
-### Publishers.BufferingStrategy
 
-### Publishers.PrefetchStrategy
+// 作用：将收到的值自动赋值给某个对象的属性（通过 KeyPath）。
+func assign<Root>(to: ReferenceWritableKeyPath<Root, Self.Output>, on: Root) -> AnyCancellable
+func assign(to: inout Published<Self.Output>.Publisher)
 
-## Using Explicit Publisher Connections 使用显式发布者连接
+// 作用：提供一个闭包，让你手动处理每一个发出的值。
+func sink(receiveCompletion: (Subscribers.Completion<Self.Failure>) -> Void, receiveValue: (Self.Output) -> Void) -> AnyCancellable
+func sink(receiveValue: (Self.Output) -> Void) -> AnyCancellable
+```
 
-### Publishers.Autoconnect 一个操作符（operator），用于自动连接一个可连接发布者（connectable publisher）到其第一个订阅者
+## Accessing elements asynchronously
 
-当订阅者首次连接时，该发布者会调用上游 ConnectablePublisher 的 connect() 功能。
+```swift
+var values: AsyncPublisher<Self>
+The elements produced by the publisher, as an asynchronous sequence.
+var values: AsyncThrowingPublisher<Self>
+The elements produced by the publisher, as a throwing asynchronous sequence.
+```
 
-### Publishers.MakeConnectable 一个操作符（operator），用于将一个可连接发布者（connectable publisher）转换为可连接的发布者类型
+## breakpoint、handleEvents、print
 
-## Debugging 调试
+```swift
+// 自动断点调试
+// 作用：当满足你设定的闭包条件（返回 true）时，直接触发 Xcode 调试器断点，让程序停在那一行。
+func breakpoint(receiveSubscription: ((any Subscription) -> Bool)?, receiveOutput: ((Self.Output) -> Bool)?, receiveCompletion: ((Subscribers.Completion<Self.Failure>) -> Bool)?) -> Publishers.Breakpoint<Self>
+func breakpointOnError() -> Publishers.Breakpoint<Self>
 
-### Publishers.Breakpoint 一个调试操作符（operator），用于在管道中设置断点，以便在特定条件下打印调试信息和错误
+// 全能监控
+// 作用：允许你在流的各个生命周期阶段注入一段自定义代码（Side Effects）。
+// receiveSubscription 当订阅者拿到 Subscription 对象时触发。
+// receiveOutput 每当一个值流过时触发。
+// receiveCompletion 收到 finished 或 failure 时触发。
+// receiveCancel 当订阅者主动取消（调用 cancel()）时触发。
+// receiveRequest 当订阅者要求更多数据（Demand）时触发。
+func handleEvents(receiveSubscription: ((any Subscription) -> Void)?, receiveOutput: ((Self.Output) -> Void)?, receiveCompletion: ((Subscribers.Completion<Self.Failure>) -> Void)?, receiveCancel: (() -> Void)?, receiveRequest: ((Subscribers.Demand) -> Void)?) -> Publishers.HandleEvents<Self>
 
-### Publishers.HandleEvents 一个操作符（operator），用于在管道中插入处理事件的操作
-
-### Publishers.Print
+// 最简单的日志打印
+// 场景：当你不知道为什么流突然断了，或者想确认数据发出的精确时机时。
+func print(String, to: (any TextOutputStream)?) -> Publishers.Print<Self>
+```

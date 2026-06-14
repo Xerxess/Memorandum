@@ -1,18 +1,23 @@
-<!-- TOC -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [UILabel](#uilabel)
-- [Customize the Label's Appearance 自定义标签的外观](#customize-the-labels-appearance-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E7%9A%84%E5%A4%96%E8%A7%82)
-- [为广大受众设计label](#%E4%B8%BA%E5%B9%BF%E5%A4%A7%E5%8F%97%E4%BC%97%E8%AE%BE%E8%AE%A1label)
+- [Customize the Label's Appearance 自定义标签的外观](#customize-the-labels-appearance-自定义标签的外观)
+- [为广大受众设计label](#为广大受众设计label)
 - [API](#api)
-    - [Accessing the Text Attributes 访问文本属性](#accessing-the-text-attributes-%E8%AE%BF%E9%97%AE%E6%96%87%E6%9C%AC%E5%B1%9E%E6%80%A7)
-    - [Sizing the Label’s Text 调整标签文本的大小](#sizing-the-labels-text-%E8%B0%83%E6%95%B4%E6%A0%87%E7%AD%BE%E6%96%87%E6%9C%AC%E7%9A%84%E5%A4%A7%E5%B0%8F)
-    - [Managing Highlight Values 管理高亮价值观](#managing-highlight-values-%E7%AE%A1%E7%90%86%E9%AB%98%E4%BA%AE%E4%BB%B7%E5%80%BC%E8%A7%82)
-    - [Drawing a Shadow 画一个阴影](#drawing-a-shadow-%E7%94%BB%E4%B8%80%E4%B8%AA%E9%98%B4%E5%BD%B1)
-    - [Drawing and Positioning Overrides 绘图和定位覆盖](#drawing-and-positioning-overrides-%E7%BB%98%E5%9B%BE%E5%92%8C%E5%AE%9A%E4%BD%8D%E8%A6%86%E7%9B%96)
-    - [Getting the Layout Constraints 获得布局约束](#getting-the-layout-constraints-%E8%8E%B7%E5%BE%97%E5%B8%83%E5%B1%80%E7%BA%A6%E6%9D%9F)
-    - [访问其他属性](#%E8%AE%BF%E9%97%AE%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7)
+  - [Accessing the Text Attributes 访问文本属性](#accessing-the-text-attributes-访问文本属性)
+  - [Sizing the Label’s Text 调整标签文本的大小](#sizing-the-labels-text-调整标签文本的大小)
+  - [Managing Highlight Values 管理高亮价值观](#managing-highlight-values-管理高亮价值观)
+  - [Drawing a Shadow 画一个阴影](#drawing-a-shadow-画一个阴影)
+  - [Drawing and Positioning Overrides 绘图和定位覆盖](#drawing-and-positioning-overrides-绘图和定位覆盖)
+  - [Getting the Layout Constraints 获得布局约束](#getting-the-layout-constraints-获得布局约束)
+  - [访问其他属性](#访问其他属性)
+- [小笔记](#小笔记)
+  - [设置 text 提取 attributedText](#设置-text-提取-attributedtext)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
 
 # UILabel
 
@@ -225,4 +230,32 @@ var preferredMaxLayoutWidth: CGFloat { get set }
 // UILabel从UIView父类继承此属性。
 // 该类将此属性的默认值更改为false。
 var isUserInteractionEnabled: Bool { get set }
+```
+
+# 小笔记
+
+## 设置 text 提取 attributedText
+
+- 此时 attributedText 由系统自动生成，但不会包含label 的属性设置
+- 导致的问题，直接使用字体不同步、不换行
+- 注意font、lineBreakMode等，不会自己合并到attributedText,具体可print(attributedText)查看
+
+```swift
+// 1. 将现有的不可变字符串转为可变版本
+let mutableAttributedText = NSMutableAttributedString(attributedString: myLabel.attributedText!)
+            
+// 2. 定义新的段落样式
+let newParagraphStyle = NSMutableParagraphStyle()
+newParagraphStyle.lineBreakMode = .byWordWrapping // 修复不换行的问题
+newParagraphStyle.alignment = .left
+
+// 3. 覆盖原有样式 (应用于整段文字)
+mutableAttributedText.addAttribute(
+    .paragraphStyle,
+    value: newParagraphStyle,
+    range: NSRange(location: 0, length: mutableAttributedText.length)
+)
+            
+// 4. 重新赋值回 TextView
+textView.attributedText = mutableAttributedText
 ```

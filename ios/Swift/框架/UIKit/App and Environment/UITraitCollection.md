@@ -239,7 +239,7 @@ var traitCollection: UITraitCollection
 // 必填。
 func traitCollectionDidChange(UITraitCollection?)
 
-````
+```
 
 # UIAdaptivePresentationControllerDelegate
 
@@ -247,6 +247,7 @@ func traitCollectionDidChange(UITraitCollection?)
 
 ```swift
 @MainActor protocol UIAdaptivePresentationControllerDelegate
+
 ```
 
 ## API 
@@ -267,6 +268,7 @@ func adaptivePresentationStyle(for: UIPresentationController) -> UIModalPresenta
 // 要求委托在适应指定的演示风格时显示视图控制器。
 func presentationController(UIPresentationController, viewControllerForAdaptivePresentationStyle: UIModalPresentationStyle) -> UIViewController?
 ```
+
 ### Responding to Adaptive Transitions 应对适应性转变
 
 ```swift

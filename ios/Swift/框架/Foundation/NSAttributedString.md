@@ -578,6 +578,9 @@ class ViewController: UIViewController {
 
 # AttributedString (ios15)
 
+- AttributedString 是 Swift 原生的 值类型（Struct），这意味着它具有写时复制（Copy-on-Write）的特性，在多线程环境下更安全，且符合 Swift 的编程惯例。
+- NSAttributedString 是 引用类型（Class）。如果你需要修改它，必须显式将其转换为 NSMutableAttributedString。
+
 ```swift
 class ViewController: UIViewController {
     

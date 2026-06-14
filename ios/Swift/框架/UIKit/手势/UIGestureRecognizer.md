@@ -76,6 +76,7 @@ func location(ofTouch: Int, in: UIView?) -> CGPoint
 // 如果 otherGestureRecognizer 转换为 UIGestureRecognizer.State.failed ，则当前手势识别器将转换为其正常的下一个状态。
 // 如果 otherGestureRecognizer 转换为 recognized 或 UIGestureRecognizer.State.began ，则当前手势识别器转换为 UIGestureRecognizer.State.failed 。
 // 举个例子，当你希望单击手势要求双击手势失败时，可能会调用此方法
+// 简单理解 当前 手势 需要 otherGestureRecognizer 直到失败后再识别
 func require(toFail otherGestureRecognizer: UIGestureRecognizer)
 
 
@@ -159,14 +160,16 @@ func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognize
     return false
 }
 
-//returns true : 识别 gestureRecognizer  -> 需要 otherGestureRecognizer 失败.即先执行 otherGestureRecognizer(失败后) ->  gestureRecognizer
-//returns false : 识别 gestureRecognizer -> 不需要 otherGestureRecognizer 失败.即先执行gestureRecognizer -> otherGestureRecognizer
+// 简单理解 gestureRecognizer 要求 otherGestureRecognizer 失败后 再识别 gestureRecognizer
+// returns true : 识别 gestureRecognizer  -> 需要 otherGestureRecognizer 失败.即先执行 otherGestureRecognizer(失败后) ->  gestureRecognizer
+// returns false : 识别 gestureRecognizer -> 不需要 otherGestureRecognizer 失败
 func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return false
 }
 
-//returns true : gestureRecognizer 失败后 -> 识别 otherGestureRecognizer.即先执行 gestureRecognizer(失败后) -> otherGestureRecognizer
-//returns false : gestureRecognizer 不需要失败 -> 识别 otherGestureRecognizer.即先执行 otherGestureRecognizer -> gestureRecognizer
+// 简单理解 gestureRecognizer 被 otherGestureRecognizer 要求 gestureRecognizer 失败后 再识别 otherGestureRecognizer
+// returns true : gestureRecognizer 失败后 -> 识别 otherGestureRecognizer.即先执行 gestureRecognizer(失败后) -> otherGestureRecognizer
+// returns false : gestureRecognizer 不需要失败 -> 也识别 otherGestureRecognizer
 func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return false
 }

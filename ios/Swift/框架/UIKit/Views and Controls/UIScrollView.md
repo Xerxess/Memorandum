@@ -37,9 +37,15 @@
     - [通过递归](#通过递归)
     - [通过数学计算](#通过数学计算)
   - [UIScrollView 嵌套分析](#uiscrollview-嵌套分析)
+    - [痛点分析](#痛点分析)
+    - [冲突根源](#冲突根源)
     - [默认嵌套](#默认嵌套)
     - [嵌套方式一：同时滚动](#嵌套方式一同时滚动)
     - [嵌套方式二：子视图完全接管滚动，不透传到父视图](#嵌套方式二子视图完全接管滚动不透传到父视图)
+  - [UIScrollView 要能取消子视图点击并接管滑动](#uiscrollview-要能取消子视图点击并接管滑动)
+    - [核心机制](#核心机制)
+    - [关键属性](#关键属性)
+    - [UIScrollView 的 Touch 仲裁系统](#uiscrollview-的-touch-仲裁系统)
 
 <!-- /code_chunk_output -->
 
@@ -665,6 +671,15 @@ private func decelerate(_ velocity:CGFloat,startOffsetY:CGFloat = 0.0) -> CGFloa
 
 ## UIScrollView 嵌套分析
 
+### 痛点分析
+
+- 手势竞争：触摸事件（TouchEvent）在视图树中传递时，由哪个ScrollView来消费ACTION_MOVE事件并执行滚动？缺乏协调机制会导致冲突。
+- 惯性滚动不连贯：当快速滑动一个嵌套的滚动区域时，滚动停止后，动量（惯性）无法在父、子滚动视图间自然传递，滚动体验生硬割裂。
+
+### 冲突根源
+
+
+
 ### 默认嵌套
 
 - 父视图滚动，子视图不滚动
@@ -734,3 +749,41 @@ class MyUIScrollView:UIScrollView,UIGestureRecognizerDelegate{
     
 }
 ```
+
+## UIScrollView 要能取消子视图点击并接管滑动
+
+```
+scrollView.panGestureRecognizer 识别为滚动
+    → UIKit 手势仲裁判定滚动胜出
+    → 子视图 touch 收到 touchesCancelled
+    → 子视图 tap 手势 failed/cancelled
+    → scrollView 接管 touchesMoved 并滚动
+```
+
+### 核心机制
+
+UIScrollView 内部有自己的 panGestureRecognizer。当手指落在内容子视图上时，系统大致流程是：
+
+- 手指按下。
+- UIScrollView 判断要不要延迟把 touchesBegan 发给子视图
+- 如果用户只是点按，子视图收到点击事件。
+- 如果用户开始拖动，UIScrollView.panGestureRecognizer 识别成功。
+- UIScrollView 尝试取消子视图当前触摸。
+- 子视图收到 touchesCancelled，取消高亮，UIScrollView 开始滚动。
+
+### 关键属性
+
+```swift
+// 含义是：手指按下后，UIScrollView 会先等一小段时间，判断你是不是要滑动。
+// 默认通常是 true。
+scrollView.delaysContentTouches 
+
+// 含义是：当子视图已经收到 touchesBegan 后，如果用户开始滑动，UIScrollView 是否可以发送 touchesCancelled 给子视图。
+// 默认通常是 true。
+scrollView.canCancelContentTouches
+scrollView.touchesShouldCancel(in:)
+```
+
+### UIScrollView 的 Touch 仲裁系统
+
+

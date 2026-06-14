@@ -3,12 +3,28 @@
 <!-- code_chunk_output -->
 
 - [Subscribers](#subscribers)
+  - [Subscriber 协议](#subscriber-协议)
 - [sink](#sink)
 - [assign](#assign)
 
 <!-- /code_chunk_output -->
 
 # Subscribers
+
+在 Combine 的模型中，Subscriber（订阅者） 是数据的终点。
+
+## Subscriber 协议
+
+- 关联类型
+  - Input：能接收的数据类型（必须匹配 Publisher 的 Output）。
+  - Failure：能处理的错误类型（必须匹配 Publisher 的 Failure）。
+- 核心方法
+  - receive(subscription:)：建立连接。订阅者收到 Subscription 后，必须通过Subscription请求数据（request(.unlimited) 或特定数量）。
+  - receive(_ input:)：处理数据。每当发布者发来一个值，这个方法就会被调用。它会返回一个 Demand，告诉发布者我还需要多少。
+  - receive(completion:)：处理终结。收到“完成”或“错误”信号，订阅结束。
+- 内置订阅者 95% 的开发场景中，你不需要自己写 Subscriber 协议
+  - sink (最常用) 最直接的闭包处理方式
+  - assign (UI 绑定神器) 直接将收到的值赋给某个对象的属性
 
 # sink
 
